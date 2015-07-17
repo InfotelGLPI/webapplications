@@ -1,2 +1,2 @@
 # webapplications
-Plugin webapplications pour GLPI
+Plugin webapplications pour GLPI 0.90
