@@ -101,7 +101,7 @@ function plugin_version_webapplications() {
                 'license'        => 'GPLv2+',
                 'oldname'        => 'appweb',
                 'author'  => "<a href='http://infotel.com/services/expertise-technique/glpi/'>Infotel</a>",
-                'homepage'       =>'https://forge.indepnet.net/projects/webapplications',
+                'homepage'       =>'https://github.com/InfotelGLPI/webapplications',
                 'minGlpiVersion' => '0.90');
 }
 
