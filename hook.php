@@ -177,12 +177,13 @@ function plugin_webapplications_uninstall() {
                         "glpi_bookmarks",
                         "glpi_logs",
                         "glpi_items_tickets",
-                        "glpi_notepads");
+                        "glpi_notepads",
+                        "glpi_dropdowntranslations");
 
    foreach($tables_glpi as $table_glpi) {
       $DB->query("DELETE
                   FROM `$table_glpi`
-                  WHERE `itemtype` = 'PluginWebapplicationsWebapplication'");
+                  WHERE `itemtype` LIKE 'PluginWebapplications'");
    }
 
    if (class_exists('PluginDatainjectionModel')) {
