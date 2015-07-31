@@ -183,7 +183,7 @@ function plugin_webapplications_uninstall() {
    foreach($tables_glpi as $table_glpi) {
       $DB->query("DELETE
                   FROM `$table_glpi`
-                  WHERE `itemtype` LIKE 'PluginWebapplications'");
+                  WHERE `itemtype` LIKE 'PluginWebapplications%'");
    }
 
    if (class_exists('PluginDatainjectionModel')) {
