@@ -10,14 +10,15 @@
          <en><![CDATA[Web applications management. This plugin allows you to list your Web applications of your network and associate them with elements of the inventory.]]></en>
       </short>
       <long>
-         <fr><![CDATA[Ce plugin vous permet de lister les applications web de votre réseau et de les associer à des éléments de l’inventaire.<br />-Utilisable depuis le helpdesk,<br />-Utilisable avec le plugin PDF,<br />-Utilisable avec le plugin Environment]]></fr>
-         <en><![CDATA[This plugin allows you to list your Web applications of your network and associate them with elements of the inventory.<br />-Can be used with helpdesk,<br />-Can be used with PDF plugin,<br />-Can be used with Environment plugin]]></en>
+         <fr><![CDATA[Ce plugin vous permet de lister les applications web de votre réseau et de les associer à des éléments de l’inventaire.<br />- Utilisable depuis le helpdesk,<br />- Utilisable avec le plugin PDF,<br />- Utilisable avec le plugin Environment]]></fr>
+         <en><![CDATA[This plugin allows you to list your Web applications of your network and associate them with elements of the inventory.<br />- Can be used with helpdesk,<br />- Can be used with PDF plugin,<br />- Can be used with Environment plugin]]></en>
       </long>
    </description>
    <homepage>https://github.com/InfotelGLPI/webapplications</homepage>
    <download>https://github.com/InfotelGLPI/webapplications/releases</download>
    <authors>
-      <author>Xavier Caillaud / Infotel</author>
+      <author>Xavier Caillaud</author>
+      <author>Infotel</author>
    </authors>
    <versions>
       <version>
