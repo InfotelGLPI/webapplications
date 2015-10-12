@@ -50,11 +50,11 @@ class PluginWebapplicationsMenu extends CommonGLPI {
    }
 
    static function removeRightsFromSession() {
-      if (isset($_SESSION['glpimenu']['tools']['types']['PluginWebapplicationsMenu'])) {
-         unset($_SESSION['glpimenu']['tools']['types']['PluginWebapplicationsMenu']); 
+      if (isset($_SESSION['glpimenu']['assets']['types']['PluginWebapplicationsMenu'])) {
+         unset($_SESSION['glpimenu']['assets']['types']['PluginWebapplicationsMenu']); 
       }
-      if (isset($_SESSION['glpimenu']['tools']['content']['pluginwebapplicationsmenu'])) {
-         unset($_SESSION['glpimenu']['tools']['content']['pluginwebapplicationsmenu']); 
+      if (isset($_SESSION['glpimenu']['assets']['content']['pluginwebapplicationsmenu'])) {
+         unset($_SESSION['glpimenu']['assets']['content']['pluginwebapplicationsmenu']); 
       }
    }
 }
