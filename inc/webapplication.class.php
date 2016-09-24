@@ -2,28 +2,28 @@
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
- Webapplications plugin for GLPI
- Copyright (C) 2003-2011 by the Webapplications Development Team.
+ webapplications plugin for GLPI
+ Copyright (C) 2009-2016 by the webapplications Development Team.
 
- https://forge.indepnet.net/projects/webapplications
+ https://github.com/InfotelGLPI/webapplications
  -------------------------------------------------------------------------
 
  LICENSE
       
- This file is part of Webapplications.
+ This file is part of webapplications.
 
- Webapplications is free software; you can redistribute it and/or modify
+ webapplications is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
  (at your option) any later version.
 
- Webapplications is distributed in the hope that it will be useful,
+ webapplications is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
 
  You should have received a copy of the GNU General Public License
- along with Webapplications. If not, see <http://www.gnu.org/licenses/>.
+ along with webapplications. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
 
@@ -39,7 +39,8 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
    
    static $types = array('Computer', 'Monitor', 'NetworkEquipment', 'Peripheral', 'Phone',
                             'Printer', 'Software', 'Entity');
-
+   static $tags = '[WEBAPPLICATION_URL]';
+   
    static function getTypeName($nb=0) {
 
       return _n('Web application', 'Web applications', $nb, 'webapplications');
@@ -207,6 +208,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       $this->addStandardTab('Item_Problem', $ong, $options);
       $this->addStandardTab('Contract_Item', $ong, $options);
       $this->addStandardTab('Document_Item', $ong, $options);
+      $this->addStandardTab('Link', $ong, $options);
       $this->addStandardTab('Notepad', $ong, $options);
       $this->addStandardTab('Log', $ong, $options);
       return $ong;
@@ -329,8 +331,6 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       echo "</td>";
 
       echo "<td class='center' colspan = '2'>";
-      printf(__('Last update on %s'), Html::convDateTime($this->fields["date_mod"]));
-      echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -676,6 +676,16 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
             return;
       }
       parent::processMassiveActionsForOneItemtype($ma, $item, $ids);
+   }
+   
+   static function generateLinkContents($link, CommonDBTM $item) {
+
+      if (strstr($link,"[WEBAPPLICATION_URL]")) {
+         $link = str_replace("[WEBAPPLICATION_URL]", $item->fields['address'],$link);
+         return array($link);
+      }
+
+      return parent::generateLinkContents($link, $item);
    }
 }
 ?>
