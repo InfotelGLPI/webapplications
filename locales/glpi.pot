@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin 1.9.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-17 11:52+0200\n"
+"POT-Creation-Date: 2016-09-26 14:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,23 +22,23 @@ msgstr ""
 msgid "Associate a web application"
 msgstr ""
 
-#: setup.php:99 inc/menu.class.php:35 inc/profile.class.php:146
-#: inc/webapplication.class.php:45
+#: setup.php:103 inc/menu.class.php:34 inc/profile.class.php:146
+#: inc/webapplication.class.php:46
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: setup.php:113
+#: setup.php:117
 msgid "This plugin requires GLPI >= 0.90"
 msgstr ""
 
-#: inc/webapplication.class.php:145 inc/webapplication.class.php:322
+#: inc/webapplication.class.php:146 inc/webapplication.class.php:328
 msgid "Backoffice URL"
 msgstr ""
 
-#: inc/webapplication.class.php:158 inc/webapplication.class.php:301
-#: inc/webapplication.class.php:468
+#: inc/webapplication.class.php:159 inc/webapplication.class.php:307
+#: inc/webapplication.class.php:472
 msgid "Editor"
 msgstr ""
 

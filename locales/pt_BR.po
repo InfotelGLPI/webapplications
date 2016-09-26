@@ -3,68 +3,65 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Rafael Ferreira <rafael.f.f1@gmail.com>, 2012-2013
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2012-2013
 # Xavier CAILLAUD <tsmr@thetsmr.fr>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-19 15:53+0100\n"
-"PO-Revision-Date: 2013-11-20 09:39+0000\n"
-"Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/GLPI_webapplications/language/pt_BR/)\n"
+"POT-Creation-Date: 2015-09-17 11:52+0200\n"
+"PO-Revision-Date: 2015-09-17 09:53+0000\n"
+"Last-Translator: Xavier CAILLAUD <tsmr@thetsmr.fr>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/tsmr/GLPI_webapplications/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: hook.php:356 inc/webapplication_item.class.php:413
+#: hook.php:403 inc/webapplication_item.class.php:454
 msgid "Associate a web application"
 msgstr "Associar uma aplicação web"
 
-#: setup.php:131 inc/webapplication.class.php:43
+#: setup.php:99 inc/menu.class.php:35 inc/profile.class.php:146
+#: inc/webapplication.class.php:45
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "Aplicação web"
 msgstr[1] "Aplicações web"
 
-#: setup.php:145
-msgid "This plugin requires GLPI >= 0.84"
-msgstr "Este plug-in requer GLPI >= 0.84"
+#: setup.php:113
+msgid "This plugin requires GLPI >= 0.90"
+msgstr ""
 
-#: inc/profile.class.php:37 inc/profile.class.php:133
-msgid "Rights management"
-msgstr "Gerenciar Direitos"
-
-#: inc/webapplication.class.php:154 inc/webapplication.class.php:331
+#: inc/webapplication.class.php:145 inc/webapplication.class.php:322
 msgid "Backoffice URL"
 msgstr "URL de retaguarda"
 
-#: inc/webapplication.class.php:167 inc/webapplication.class.php:310
-#: inc/webapplication.class.php:455
+#: inc/webapplication.class.php:158 inc/webapplication.class.php:301
+#: inc/webapplication.class.php:468
 msgid "Editor"
 msgstr "Editor"
 
-#: inc/webapplication_item.class.php:763
+#: inc/webapplication_item.class.php:814
 msgid "Associated web application"
 msgid_plural "Associated web applications"
 msgstr[0] "Aplicação web associada"
 msgstr[1] "Aplicações web associadas"
 
-#: inc/webapplicationservertype.class.php:38
+#: inc/webapplicationservertype.class.php:41
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] "Tipo de servidor de tratamento"
 msgstr[1] "Tipos de servidores de tratamento"
 
-#: inc/webapplicationtechnic.class.php:38
+#: inc/webapplicationtechnic.class.php:41
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
 msgstr[0] "Idioma de tratamento"
 msgstr[1] "Idiomas de tratamento"
 
-#: inc/webapplicationtype.class.php:39
+#: inc/webapplicationtype.class.php:42
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Categoria"
