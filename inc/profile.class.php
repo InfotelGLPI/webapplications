@@ -53,6 +53,7 @@ class PluginWebapplicationsProfile extends Profile {
 
          self::addDefaultProfileInfos($ID, 
                                     array('plugin_webapplications'               => 0,
+                                          'plugin_webapplications_dropdown'      => 0,
                                           'plugin_webapplications_open_ticket'   => 0));
          $prof->showForm($ID);
       }
@@ -63,6 +64,7 @@ class PluginWebapplicationsProfile extends Profile {
       //85
       self::addDefaultProfileInfos($ID,
                                     array('plugin_webapplications'               => 127,
+                                          'plugin_webapplications_dropdown'      => 31,
                                           'plugin_webapplications_open_ticket'     => 1), true);
    }
    
@@ -146,6 +148,15 @@ class PluginWebapplicationsProfile extends Profile {
                 'label'     => _n('Web application', 'Web applications', 2, 'webapplications'),
                 'field'     => 'plugin_webapplications'
           ),
+          array('itemtype'  => 'PluginWebapplicationsWebapplication',
+                'label'     => _n('Dropdown', 'Dropdowns', 2),
+                'field'     => 'plugin_webapplications_dropdown',
+                'rights' => array(CREATE  => __('Create'),
+                      READ    => __('Read'),
+                      UPDATE  => __('Update'),
+                      PURGE   => array('short' => __('Purge'),
+                                       'long'  => _x('button', 'Delete permanently')))
+          ),
       );
 
       if ($all) {
@@ -194,8 +205,9 @@ class PluginWebapplicationsProfile extends Profile {
       foreach ($DB->request('glpi_plugin_webapplications_profiles', 
                             "`profiles_id`='$profiles_id'") as $profile_data) {
 
-         $matching = array('webapplications'    => 'plugin_webapplications', 
-                           'open_ticket' => 'plugin_webapplications_open_ticket');
+         $matching       = array('webapplications'          => 'plugin_webapplications',
+                                 'webapplications_dropdown' => 'plugin_webapplications_dropdown',
+                                 'open_ticket'              => 'plugin_webapplications_open_ticket');
          $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
          foreach ($matching as $old => $new) {
             if (!isset($current_rights[$old])) {
