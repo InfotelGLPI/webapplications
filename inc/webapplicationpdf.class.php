@@ -1,4 +1,5 @@
 <?php
+
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
@@ -26,23 +27,44 @@
  along with webapplications. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
- 
-class PluginWebapplicationsWebapplicationPDF extends PluginPdfCommon {
+
+/**
+ * Class PluginWebapplicationsWebapplicationPDF
+ */
+class PluginWebapplicationsWebapplicationPDF extends PluginPdfCommon
+{
 
 
-   function __construct( CommonGLPI $obj=NULL) {
+   /**
+    * PluginWebapplicationsWebapplicationPDF constructor.
+    * @param CommonGLPI|NULL $obj
+    */
+   function __construct(CommonGLPI $obj = NULL)
+   {
 
       $this->obj = ($obj ? $obj : new  PluginWebapplicationsWebapplication());
    }
-   
-   function defineAllTabs($options=array()) {
+
+   /**
+    * @param array $options
+    * @return mixed
+    */
+   function defineAllTabs($options = array())
+   {
 
       $onglets = parent::defineAllTabs($options);
       unset($onglets['Item_Problem$1']); // TODO add method to print linked Problems
       return $onglets;
    }
 
-   static function displayTabContentForPDF(PluginPdfSimplePDF $pdf, CommonGLPI $item, $tab) {
+   /**
+    * @param PluginPdfSimplePDF $pdf
+    * @param CommonGLPI $item
+    * @param $tab
+    * @return bool
+    */
+   static function displayTabContentForPDF(PluginPdfSimplePDF $pdf, CommonGLPI $item, $tab)
+   {
 
       switch ($tab) {
          case '_main_' :

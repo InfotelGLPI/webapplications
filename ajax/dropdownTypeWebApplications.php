@@ -27,8 +27,8 @@
  --------------------------------------------------------------------------
  */
 
-if (strpos($_SERVER['PHP_SELF'],"dropdownTypeWebApplications.php")) {
-   include ('../../../inc/includes.php');
+if (strpos($_SERVER['PHP_SELF'], "dropdownTypeWebApplications.php")) {
+   include('../../../inc/includes.php');
    header("Content-Type: text/html; charset=UTF-8");
    Html::header_nocache();
 }
@@ -43,8 +43,8 @@ if (isset($_POST["webapplicationtype"])) {
    if (isset($_POST['used']) && is_array($_POST['used']) && (count($_POST['used']) > 0)) {
       $query = "SELECT `id`
                 FROM `glpi_plugin_webapplications_webapplications`
-                WHERE `id` IN (".implode(',',$_POST['used']).")
-                      AND `plugin_webapplications_webapplicationtypes_id` = '".$_POST["webapplicationtype"]."'";
+                WHERE `id` IN (" . implode(',', $_POST['used']) . ")
+                      AND `plugin_webapplications_webapplicationtypes_id` = '" . $_POST["webapplicationtype"] . "'";
 
       foreach ($DB->request($query) AS $data) {
          $used[$data['id']] = $data['id'];
@@ -52,12 +52,11 @@ if (isset($_POST["webapplicationtype"])) {
    }
 
    Dropdown::show('PluginWebapplicationsWebapplication',
-                  array('name'      => $_POST['myname'],
-                        'used'      => $used,
-                        'width'     => '50%',
-                        'entity'    => $_POST['entity'],
-                        'rand'      => $_POST['rand'],
-                        'condition' => "glpi_plugin_webapplications_webapplications.plugin_webapplications_webapplicationtypes_id='".$_POST["webapplicationtype"]."'"));
+      array('name' => $_POST['myname'],
+         'used' => $used,
+         'width' => '50%',
+         'entity' => $_POST['entity'],
+         'rand' => $_POST['rand'],
+         'condition' => "glpi_plugin_webapplications_webapplications.plugin_webapplications_webapplicationtypes_id='" . $_POST["webapplicationtype"] . "'"));
 
 }
-?>

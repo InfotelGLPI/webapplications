@@ -27,15 +27,15 @@
  --------------------------------------------------------------------------
  */
 
-include ('../../../inc/includes.php');
+include('../../../inc/includes.php');
 
 //check environment meta-plugin installation for change header
 $plugin = new Plugin();
 if ($plugin->isActivated("environment")) {
    Html::header(PluginWebapplicationsWebapplication::getTypeName(2)
-                  ,'',"assets","pluginenvironmentdisplay","webapplications");
-}else {
-   Html::header(PluginWebapplicationsWebapplication::getTypeName(2), '', "assets","pluginwebapplicationsmenu");
+      , '', "assets", "pluginenvironmentdisplay", "webapplications");
+} else {
+   Html::header(PluginWebapplicationsWebapplication::getTypeName(2), '', "assets", "pluginwebapplicationsmenu");
 }
 
 $web = new PluginWebapplicationsWebapplication();
@@ -45,9 +45,7 @@ if ($web->canView()) {
    Search::show("PluginWebapplicationsWebapplication");
 
 } else {
-   
+
    Html::displayRightError();
 }
 Html::footer();
-
-?>

@@ -26,10 +26,8 @@
  along with webapplications. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
- 
-include ('../../../inc/includes.php');
+
+include('../../../inc/includes.php');
 
 $dropdown = new PluginWebapplicationsWebapplicationServerType();
-include (GLPI_ROOT . "/front/dropdown.common.php");
-
-?>
+include(GLPI_ROOT . "/front/dropdown.common.php");

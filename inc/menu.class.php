@@ -1,4 +1,5 @@
 <?php
+
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
@@ -26,34 +27,46 @@
  along with webapplications. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
- 
-class PluginWebapplicationsMenu extends CommonGLPI {
+
+/**
+ * Class PluginWebapplicationsMenu
+ */
+class PluginWebapplicationsMenu extends CommonGLPI
+{
    static $rightname = 'plugin_webapplications';
 
-   static function getMenuName() {
+   /**
+    * @return translated
+    */
+   static function getMenuName()
+   {
       return _n('Web application', 'Web applications', 2, 'webapplications');
    }
 
-   static function getMenuContent() {
-      global $CFG_GLPI;
+   /**
+    * @return array
+    */
+   static function getMenuContent()
+   {
 
-      $menu                                           = array();
-      $menu['title']                                  = self::getMenuName();
-      $menu['page']                                   = "/plugins/webapplications/front/webapplication.php";
-      $menu['links']['search']                        = PluginWebapplicationsWebapplication::getSearchURL(false);
+      $menu = array();
+      $menu['title'] = self::getMenuName();
+      $menu['page'] = "/plugins/webapplications/front/webapplication.php";
+      $menu['links']['search'] = PluginWebapplicationsWebapplication::getSearchURL(false);
       if (PluginWebapplicationsWebapplication::canCreate()) {
-         $menu['links']['add']                        = PluginWebapplicationsWebapplication::getFormURL(false);
+         $menu['links']['add'] = PluginWebapplicationsWebapplication::getFormURL(false);
       }
 
       return $menu;
    }
 
-   static function removeRightsFromSession() {
+   static function removeRightsFromSession()
+   {
       if (isset($_SESSION['glpimenu']['assets']['types']['PluginWebapplicationsMenu'])) {
-         unset($_SESSION['glpimenu']['assets']['types']['PluginWebapplicationsMenu']); 
+         unset($_SESSION['glpimenu']['assets']['types']['PluginWebapplicationsMenu']);
       }
       if (isset($_SESSION['glpimenu']['assets']['content']['pluginwebapplicationsmenu'])) {
-         unset($_SESSION['glpimenu']['assets']['content']['pluginwebapplicationsmenu']); 
+         unset($_SESSION['glpimenu']['assets']['content']['pluginwebapplicationsmenu']);
       }
    }
 }
