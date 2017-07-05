@@ -110,7 +110,7 @@ function plugin_version_webapplications() {
                 'oldname'        => 'appweb',
                 'author'         => "<a href='http://infotel.com/services/expertise-technique/glpi/'>Infotel</a>",
                 'homepage'       => 'https://github.com/InfotelGLPI/webapplications',
-                'minGlpiVersion' => '0.90');
+                'minGlpiVersion' => '9.1');
 }
 
 
@@ -121,8 +121,8 @@ function plugin_version_webapplications() {
  */
 function plugin_webapplications_check_prerequisites() {
 
-   if (version_compare(GLPI_VERSION, '0.90', 'lt') || version_compare(GLPI_VERSION, '9.2', 'ge')) {
-      echo __('This plugin requires GLPI >= 0.90', 'webapplications');
+   if (version_compare(GLPI_VERSION, '9.1', 'lt') || version_compare(GLPI_VERSION, '9.2', 'ge')) {
+      echo __('This plugin requires GLPI >= 9.1', 'webapplications');
       return false;
    }
    return true;
