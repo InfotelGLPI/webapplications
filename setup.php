@@ -28,14 +28,13 @@
  */
 
 // Init the hooks of the plugins -Needed
-function plugin_init_webapplications()
-{
+function plugin_init_webapplications() {
    global $PLUGIN_HOOKS;
 
    $PLUGIN_HOOKS['csrf_compliant']['webapplications'] = true;
    //load changeprofile function
-   $PLUGIN_HOOKS['change_profile']['webapplications'] = array('PluginWebapplicationsProfile',
-      'initProfile');
+   $PLUGIN_HOOKS['change_profile']['webapplications']   = array('PluginWebapplicationsProfile',
+                                                                'initProfile');
    $PLUGIN_HOOKS['assign_to_ticket']['webapplications'] = true;
 
    if (class_exists('PluginWebapplicationsWebapplication_Item')) { // only if plugin activated
@@ -45,14 +44,14 @@ function plugin_init_webapplications()
 
    // Params : plugin name - string type - number - class - table - form page
    Plugin::registerClass('PluginWebapplicationsWebapplication',
-      array('linkgroup_tech_types' => true,
-         'linkuser_tech_types' => true,
-         'document_types' => true,
-         'contract_types' => true,
-         'ticket_types' => true,
-         'helpdesk_visible_types' => true,
-         'link_types' => true,
-         'addtabon' => 'Supplier'));
+                         array('linkgroup_tech_types'   => true,
+                               'linkuser_tech_types'    => true,
+                               'document_types'         => true,
+                               'contract_types'         => true,
+                               'ticket_types'           => true,
+                               'helpdesk_visible_types' => true,
+                               'link_types'             => true,
+                               'addtabon'               => 'Supplier'));
 
    if (class_exists('PluginWebapplicationsWebapplication')) {
       Link::registerTag(PluginWebapplicationsWebapplication::$tags);
@@ -73,8 +72,7 @@ function plugin_init_webapplications()
       //if environment plugin is installed
       $plugin = new Plugin();
       if (!$plugin->isActivated('environment')
-         && Session::haveRight("plugin_webapplications", READ)
-      ) {
+          && Session::haveRight("plugin_webapplications", READ)) {
 
          $PLUGIN_HOOKS['menu_toadd']['webapplications'] = array('assets' => 'PluginWebapplicationsMenu');
       }
@@ -84,12 +82,11 @@ function plugin_init_webapplications()
       }
 
       if (Session::haveRight("plugin_webapplications", READ)
-         || Session::haveRight("config", UPDATE)
-      ) {
+          || Session::haveRight("config", UPDATE)) {
       }
 
       // Import from Data_Injection plugin
-//      $PLUGIN_HOOKS['migratetypes']['webapplications']
+      //      $PLUGIN_HOOKS['migratetypes']['webapplications']
       //                                   = 'plugin_datainjection_migratetypes_webapplications';
       $PLUGIN_HOOKS['plugin_pdf']['PluginWebapplicationsWebapplication']
          = 'PluginWebapplicationsWebapplicationPDF';
@@ -100,29 +97,29 @@ function plugin_init_webapplications()
 }
 
 
-// Get the name and the version of the plugin - Needed
 /**
+ * Get the name and the version of the plugin - Needed
+ *
  * @return array
  */
-function plugin_version_webapplications()
-{
+function plugin_version_webapplications() {
 
-   return array('name' => _n('Web application', 'Web applications', 2, 'webapplications'),
-      'version' => '2.2.0',
-      'license' => 'GPLv2+',
-      'oldname' => 'appweb',
-      'author' => "<a href='http://infotel.com/services/expertise-technique/glpi/'>Infotel</a>",
-      'homepage' => 'https://github.com/InfotelGLPI/webapplications',
-      'minGlpiVersion' => '0.90');
+   return array('name'           => _n('Web application', 'Web applications', 2, 'webapplications'),
+                'version'        => '2.3.1',
+                'license'        => 'GPLv2+',
+                'oldname'        => 'appweb',
+                'author'         => "<a href='http://infotel.com/services/expertise-technique/glpi/'>Infotel</a>",
+                'homepage'       => 'https://github.com/InfotelGLPI/webapplications',
+                'minGlpiVersion' => '0.90');
 }
 
 
-// Optional : check prerequisites before install : may print errors or add to message after redirect
 /**
+ * Optional : check prerequisites before install : may print errors or add to message after redirect
+ *
  * @return bool
  */
-function plugin_webapplications_check_prerequisites()
-{
+function plugin_webapplications_check_prerequisites() {
 
    if (version_compare(GLPI_VERSION, '0.90', 'lt') || version_compare(GLPI_VERSION, '9.2', 'ge')) {
       echo __('This plugin requires GLPI >= 0.90', 'webapplications');
@@ -132,21 +129,21 @@ function plugin_webapplications_check_prerequisites()
 }
 
 
-// Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
 /**
+ * Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
+ *
  * @return bool
  */
-function plugin_webapplications_check_config()
-{
+function plugin_webapplications_check_config() {
    return true;
 }
 
 /**
  * @param $types
+ *
  * @return mixed
  */
-function plugin_datainjection_migratetypes_webapplications($types)
-{
+function plugin_datainjection_migratetypes_webapplications($types) {
 
    $types[1300] = 'PluginWebapplicationsWebapplication';
    return $types;

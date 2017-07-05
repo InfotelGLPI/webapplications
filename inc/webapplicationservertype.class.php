@@ -34,18 +34,17 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsWebapplicationServerType
  */
-class PluginWebapplicationsWebapplicationServerType extends CommonDropdown
-{
+class PluginWebapplicationsWebapplicationServerType extends CommonDropdown {
 
-   static $rightname = "dropdown";
-   var $can_be_translated = true;
+   static $rightname         = "dropdown";
+   var    $can_be_translated = true;
 
    /**
     * @param int $nb
+    *
     * @return translated
     */
-   static function getTypeName($nb = 0)
-   {
+   static function getTypeName($nb = 0) {
 
       return _n('Type of treatment server', 'Types of treatment server', $nb, 'webapplications');
    }

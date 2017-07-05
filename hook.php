@@ -30,17 +30,15 @@
 /**
  * @return bool
  */
-function plugin_webapplications_install()
-{
+function plugin_webapplications_install() {
    global $DB;
 
    include_once(GLPI_ROOT . "/plugins/webapplications/inc/profile.class.php");
 
    $update = false;
    if (!TableExists("glpi_application")
-      && !TableExists("glpi_plugin_appweb")
-      && !TableExists("glpi_plugin_webapplications_webapplications")
-   ) {
+       && !TableExists("glpi_plugin_appweb")
+       && !TableExists("glpi_plugin_webapplications_webapplications")) {
 
       $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-2.0.0.sql");
 
@@ -64,15 +62,13 @@ function plugin_webapplications_install()
       }
 
       if (TableExists("glpi_plugin_appweb_profiles")
-         && FieldExists("glpi_plugin_appweb_profiles", "interface")
-      ) {
+          && FieldExists("glpi_plugin_appweb_profiles", "interface")) {
          $update = true;
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.5.0.sql");
       }
 
       if (TableExists("glpi_plugin_appweb")
-         && !FieldExists("glpi_plugin_appweb", "helpdesk_visible")
-      ) {
+          && !FieldExists("glpi_plugin_appweb", "helpdesk_visible")) {
          $update = true;
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.5.1.sql");
       }
@@ -84,8 +80,7 @@ function plugin_webapplications_install()
 
       //from 1.6 version
       if (TableExists("glpi_plugin_webapplications_webapplications")
-         && !FieldExists("glpi_plugin_webapplications_webapplications", "users_id_tech")
-      ) {
+          && !FieldExists("glpi_plugin_webapplications_webapplications", "users_id_tech")) {
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.8.0.sql");
       }
    }
@@ -115,7 +110,7 @@ function plugin_webapplications_install()
    }
 
    if ($update) {
-      $query_ = "SELECT *
+      $query_  = "SELECT *
                 FROM `glpi_plugin_webapplications_profiles` ";
       $result_ = $DB->query($query_);
       if ($DB->numrows($result_) > 0) {
@@ -133,13 +128,13 @@ function plugin_webapplications_install()
       $DB->query($query);
 
       Plugin::migrateItemType(array(1300 => 'PluginWebapplicationsWebapplication'),
-         array("glpi_bookmarks", "glpi_bookmarks_users",
-            "glpi_displaypreferences", "glpi_documents_items",
-            "glpi_infocoms", "glpi_logs", "glpi_items_tickets"),
-         array("glpi_plugin_webapplications_webapplications_items"));
+                              array("glpi_bookmarks", "glpi_bookmarks_users",
+                                    "glpi_displaypreferences", "glpi_documents_items",
+                                    "glpi_infocoms", "glpi_logs", "glpi_items_tickets"),
+                              array("glpi_plugin_webapplications_webapplications_items"));
 
       Plugin::migrateItemType(array(1200 => "PluginAppliancesAppliance"),
-         array("glpi_plugin_webapplications_webapplications_items"));
+                              array("glpi_plugin_webapplications_webapplications_items"));
    }
 
    PluginWebapplicationsProfile::initProfile();
@@ -154,18 +149,17 @@ function plugin_webapplications_install()
 /**
  * @return bool
  */
-function plugin_webapplications_uninstall()
-{
+function plugin_webapplications_uninstall() {
    global $DB;
 
    include_once(GLPI_ROOT . "/plugins/webapplications/inc/profile.class.php");
    include_once(GLPI_ROOT . "/plugins/webapplications/inc/menu.class.php");
 
    $tables = array("glpi_plugin_webapplications_webapplications",
-      "glpi_plugin_webapplications_webapplicationtypes",
-      "glpi_plugin_webapplications_webapplicationservertypes",
-      "glpi_plugin_webapplications_webapplicationtechnics",
-      "glpi_plugin_webapplications_webapplications_items");
+                   "glpi_plugin_webapplications_webapplicationtypes",
+                   "glpi_plugin_webapplications_webapplicationservertypes",
+                   "glpi_plugin_webapplications_webapplicationtechnics",
+                   "glpi_plugin_webapplications_webapplications_items");
 
    foreach ($tables as $table) {
       $DB->query("DROP TABLE IF EXISTS `$table`;");
@@ -173,24 +167,24 @@ function plugin_webapplications_uninstall()
 
    //old versions
    $tables = array("glpi_plugin_appweb",
-      "glpi_dropdown_plugin_appweb_type",
-      "glpi_dropdown_plugin_appweb_server_type",
-      "glpi_dropdown_plugin_appweb_technic",
-      "glpi_plugin_appweb_device",
-      "glpi_plugin_appweb_profiles",
-      "glpi_plugin_webapplications_profiles");
+                   "glpi_dropdown_plugin_appweb_type",
+                   "glpi_dropdown_plugin_appweb_server_type",
+                   "glpi_dropdown_plugin_appweb_technic",
+                   "glpi_plugin_appweb_device",
+                   "glpi_plugin_appweb_profiles",
+                   "glpi_plugin_webapplications_profiles");
 
    foreach ($tables as $table) {
       $DB->query("DROP TABLE IF EXISTS `$table`;");
    }
 
    $tables_glpi = array("glpi_displaypreferences",
-      "glpi_documents_items",
-      "glpi_bookmarks",
-      "glpi_logs",
-      "glpi_items_tickets",
-      "glpi_notepads",
-      "glpi_dropdowntranslations");
+                        "glpi_documents_items",
+                        "glpi_bookmarks",
+                        "glpi_logs",
+                        "glpi_items_tickets",
+                        "glpi_notepads",
+                        "glpi_dropdowntranslations");
 
    foreach ($tables_glpi as $table_glpi) {
       $DB->query("DELETE
@@ -218,37 +212,36 @@ function plugin_webapplications_uninstall()
 /**
  * @return array
  */
-function plugin_webapplications_getDatabaseRelations()
-{
+function plugin_webapplications_getDatabaseRelations() {
 
    $plugin = new Plugin();
 
    if ($plugin->isActivated("webapplications")) {
       return array("glpi_plugin_webapplications_webapplicationtypes"
-      => array("glpi_plugin_webapplications_webapplications"
-         => "plugin_webapplications_webapplicationtypes_id"),
-         "glpi_plugin_webapplications_webapplicationservertypes"
-         => array("glpi_plugin_webapplications_webapplications"
-         => "plugin_webapplications_webapplicationservertypes_id"),
-         "glpi_plugin_webapplications_webapplicationtechnics"
-         => array("glpi_plugin_webapplications_webapplications"
-         => "plugin_webapplications_webapplicationtechnics_id"),
-         "glpi_users"
-         => array("glpi_plugin_webapplications_webapplications" => "users_id_tech"),
-         "glpi_groups"
-         => array("glpi_plugin_webapplications_webapplications" => "groups_id_tech"),
-         "glpi_suppliers"
-         => array("glpi_plugin_webapplications_webapplications" => "suppliers_id"),
-         "glpi_manufacturers"
-         => array("glpi_plugin_webapplications_webapplications" => "manufacturers_id"),
-         "glpi_locations"
-         => array("glpi_plugin_webapplications_webapplications" => "locations_id"),
-         "glpi_plugin_webapplications_webapplications"
-         => array("glpi_plugin_webapplications_webapplications_items"
-         => "plugin_webapplications_webapplications_id"),
-         "glpi_entities"
-         => array("glpi_plugin_webapplications_webapplications" => "entities_id",
-            "glpi_plugin_webapplications_webapplicationtypes" => "entities_id"));
+                   => array("glpi_plugin_webapplications_webapplications"
+                            => "plugin_webapplications_webapplicationtypes_id"),
+                   "glpi_plugin_webapplications_webapplicationservertypes"
+                   => array("glpi_plugin_webapplications_webapplications"
+                            => "plugin_webapplications_webapplicationservertypes_id"),
+                   "glpi_plugin_webapplications_webapplicationtechnics"
+                   => array("glpi_plugin_webapplications_webapplications"
+                            => "plugin_webapplications_webapplicationtechnics_id"),
+                   "glpi_users"
+                   => array("glpi_plugin_webapplications_webapplications" => "users_id_tech"),
+                   "glpi_groups"
+                   => array("glpi_plugin_webapplications_webapplications" => "groups_id_tech"),
+                   "glpi_suppliers"
+                   => array("glpi_plugin_webapplications_webapplications" => "suppliers_id"),
+                   "glpi_manufacturers"
+                   => array("glpi_plugin_webapplications_webapplications" => "manufacturers_id"),
+                   "glpi_locations"
+                   => array("glpi_plugin_webapplications_webapplications" => "locations_id"),
+                   "glpi_plugin_webapplications_webapplications"
+                   => array("glpi_plugin_webapplications_webapplications_items"
+                            => "plugin_webapplications_webapplications_id"),
+                   "glpi_entities"
+                   => array("glpi_plugin_webapplications_webapplications"     => "entities_id",
+                            "glpi_plugin_webapplications_webapplicationtypes" => "entities_id"));
    }
    return array();
 }
@@ -258,18 +251,17 @@ function plugin_webapplications_getDatabaseRelations()
 /**
  * @return array
  */
-function plugin_webapplications_getDropdown()
-{
+function plugin_webapplications_getDropdown() {
 
    $plugin = new Plugin();
 
    if ($plugin->isActivated("webapplications")) {
       return array('PluginWebapplicationsWebapplicationType'
-      => PluginWebapplicationsWebapplicationType::getTypeName(2),
-         'PluginWebapplicationsWebapplicationServerType'
-         => PluginWebapplicationsWebapplicationServerType::getTypeName(2),
-         'PluginWebapplicationsWebapplicationTechnic'
-         => PluginWebapplicationsWebapplicationTechnic::getTypeName(2));
+                   => PluginWebapplicationsWebapplicationType::getTypeName(2),
+                   'PluginWebapplicationsWebapplicationServerType'
+                   => PluginWebapplicationsWebapplicationServerType::getTypeName(2),
+                   'PluginWebapplicationsWebapplicationTechnic'
+                   => PluginWebapplicationsWebapplicationTechnic::getTypeName(2));
    }
    return array();
 }
@@ -277,10 +269,10 @@ function plugin_webapplications_getDropdown()
 
 /**
  * @param $types
+ *
  * @return mixed
  */
-function plugin_webapplications_AssignToTicket($types)
-{
+function plugin_webapplications_AssignToTicket($types) {
 
    if (Session::haveRight("plugin_webapplications_open_ticket", "1")) {
       $types['PluginWebapplicationsWebapplication'] = PluginWebapplicationsWebapplication::getTypeName(2);
@@ -293,38 +285,38 @@ function plugin_webapplications_AssignToTicket($types)
 
 /**
  * @param $itemtype
+ *
  * @return array
  */
-function plugin_webapplications_getAddSearchOptions($itemtype)
-{
+function plugin_webapplications_getAddSearchOptions($itemtype) {
 
    $sopt = array();
 
    if (in_array($itemtype, PluginWebapplicationsWebapplication::getTypes(true))) {
 
       if (Session::haveRight("plugin_webapplications", READ)) {
-         $sopt[1310]['table'] = 'glpi_plugin_webapplications_webapplications';
-         $sopt[1310]['field'] = 'name';
-         $sopt[1310]['name'] = PluginWebapplicationsWebapplication::getTypeName(2) . " - " .
-            __('Name');
-         $sopt[1310]['forcegroupby'] = true;
-         $sopt[1310]['datatype'] = 'itemlink';
+         $sopt[1310]['table']         = 'glpi_plugin_webapplications_webapplications';
+         $sopt[1310]['field']         = 'name';
+         $sopt[1310]['name']          = PluginWebapplicationsWebapplication::getTypeName(2) . " - " .
+                                        __('Name');
+         $sopt[1310]['forcegroupby']  = true;
+         $sopt[1310]['datatype']      = 'itemlink';
          $sopt[1310]['massiveaction'] = false;
          $sopt[1310]['itemlink_type'] = 'PluginWebapplicationsWebapplication';
-         $sopt[1310]['joinparams'] = array('beforejoin'
-         => array('table' => 'glpi_plugin_webapplications_webapplications_items',
-               'joinparams' => array('jointype' => 'itemtype_item')));
+         $sopt[1310]['joinparams']    = array('beforejoin'
+                                              => array('table'      => 'glpi_plugin_webapplications_webapplications_items',
+                                                       'joinparams' => array('jointype' => 'itemtype_item')));
 
-         $sopt[1311]['table'] = 'glpi_plugin_webapplications_webapplicationtypes';
-         $sopt[1311]['field'] = 'name';
-         $sopt[1311]['name'] = PluginWebapplicationsWebapplication::getTypeName(2) . " - " .
-            PluginWebapplicationsWebapplicationType::getTypeName(1);
-         $sopt[1311]['forcegroupby'] = true;
-         $sopt[1311]['datatype'] = 'dropdown';
+         $sopt[1311]['table']         = 'glpi_plugin_webapplications_webapplicationtypes';
+         $sopt[1311]['field']         = 'name';
+         $sopt[1311]['name']          = PluginWebapplicationsWebapplication::getTypeName(2) . " - " .
+                                        PluginWebapplicationsWebapplicationType::getTypeName(1);
+         $sopt[1311]['forcegroupby']  = true;
+         $sopt[1311]['datatype']      = 'dropdown';
          $sopt[1311]['massiveaction'] = false;
-         $sopt[1311]['joinparams'] = array('beforejoin' => array(
-            array('table' => 'glpi_plugin_webapplications_webapplications',
-               'joinparams' => $sopt[1310]['joinparams'])));
+         $sopt[1311]['joinparams']    = array('beforejoin' => array(
+            array('table'      => 'glpi_plugin_webapplications_webapplications',
+                  'joinparams' => $sopt[1310]['joinparams'])));
       }
    }
 
@@ -337,30 +329,30 @@ function plugin_webapplications_getAddSearchOptions($itemtype)
  * @param $ID
  * @param $data
  * @param $num
+ *
  * @return string
  */
-function plugin_webapplications_giveItem($type, $ID, $data, $num)
-{
+function plugin_webapplications_giveItem($type, $ID, $data, $num) {
    global $DB;
 
    $searchopt = &Search::getOptions($type);
-   $table = $searchopt[$ID]["table"];
-   $field = $searchopt[$ID]["field"];
+   $table     = $searchopt[$ID]["table"];
+   $field     = $searchopt[$ID]["field"];
 
    switch ($table . '.' . $field) {
       //display associated items with webapplications
       case "glpi_plugin_webapplications_webapplications_items.items_id" :
-         $query_device = "SELECT DISTINCT `itemtype`
+         $query_device    = "SELECT DISTINCT `itemtype`
                               FROM `glpi_plugin_webapplications_webapplications_items`
                               WHERE `plugin_webapplications_webapplications_id` = '" . $data['id'] . "'
                               ORDER BY `itemtype`";
-         $result_device = $DB->query($query_device);
-         $number_device = $DB->numrows($result_device);
-         $out = '';
+         $result_device   = $DB->query($query_device);
+         $number_device   = $DB->numrows($result_device);
+         $out             = '';
          $webapplications = $data['id'];
          if ($number_device > 0) {
             for ($i = 0; $i < $number_device; $i++) {
-               $column = "name";
+               $column   = "name";
                $itemtype = $DB->result($result_device, $i, "itemtype");
                if (!class_exists($itemtype)) {
                   continue;
@@ -380,8 +372,8 @@ function plugin_webapplications_giveItem($type, $ID, $data, $num)
                                WHERE `" . $table_item . "`.`id` = `glpi_plugin_webapplications_webapplications_items`.`items_id`
                                      AND `glpi_plugin_webapplications_webapplications_items`.`itemtype` = '$itemtype'
                                      AND `glpi_plugin_webapplications_webapplications_items`.`plugin_webapplications_webapplications_id` = '" . $webapplications . "' "
-                        . getEntitiesRestrictRequest(" AND ", $table_item, '', '',
-                           $item->maybeRecursive());
+                              . getEntitiesRestrictRequest(" AND ", $table_item, '', '',
+                                                           $item->maybeRecursive());
 
                      if ($item->maybeTemplate()) {
                         $query .= " AND " . $table_item . ".is_template = '0'";
@@ -397,8 +389,8 @@ function plugin_webapplications_giveItem($type, $ID, $data, $num)
                                WHERE `" . $table_item . "`.`id` = `glpi_plugin_webapplications_webapplications_items`.`items_id`
                                      AND `glpi_plugin_webapplications_webapplications_items`.`itemtype` = '$itemtype'
                                      AND `glpi_plugin_webapplications_webapplications_items`.`plugin_webapplications_webapplications_id` = '" . $webapplications . "' "
-                        . getEntitiesRestrictRequest(" AND ", $table_item, '', '',
-                           $item->maybeRecursive());
+                              . getEntitiesRestrictRequest(" AND ", $table_item, '', '',
+                                                           $item->maybeRecursive());
 
                      if ($item->maybeTemplate()) {
                         $query .= " AND " . $table_item . ".is_template = '0'";
@@ -436,14 +428,14 @@ function plugin_webapplications_giveItem($type, $ID, $data, $num)
 
 /**
  * @param $type
+ *
  * @return array
  */
-function plugin_webapplications_MassiveActions($type)
-{
+function plugin_webapplications_MassiveActions($type) {
 
    if (in_array($type, PluginWebapplicationsWebapplication::getTypes(true))) {
       return array('PluginWebapplicationsWebapplication' . MassiveAction::CLASS_ACTION_SEPARATOR . 'plugin_webapplications_add_item' =>
-         __('Associate a web application', 'webapplications'));
+                      __('Associate a web application', 'webapplications'));
    }
    return array();
 }
@@ -492,8 +484,8 @@ function plugin_webapplications_MassiveActionsProcess($data) {
    return $res;
 }
 */
-function plugin_webapplications_postinit()
-{
+
+function plugin_webapplications_postinit() {
    global $PLUGIN_HOOKS;
 
    $PLUGIN_HOOKS['item_purge']['webapplications'] = array();
@@ -507,8 +499,7 @@ function plugin_webapplications_postinit()
    }
 }
 
-function plugin_datainjection_populate_webapplications()
-{
+function plugin_datainjection_populate_webapplications() {
    global $INJECTABLE_TYPES;
 
    $INJECTABLE_TYPES['PluginWebapplicationsWebapplicationInjection'] = 'webapplications';

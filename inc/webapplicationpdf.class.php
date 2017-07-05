@@ -31,26 +31,25 @@
 /**
  * Class PluginWebapplicationsWebapplicationPDF
  */
-class PluginWebapplicationsWebapplicationPDF extends PluginPdfCommon
-{
+class PluginWebapplicationsWebapplicationPDF extends PluginPdfCommon {
 
 
    /**
     * PluginWebapplicationsWebapplicationPDF constructor.
+    *
     * @param CommonGLPI|NULL $obj
     */
-   function __construct(CommonGLPI $obj = NULL)
-   {
+   function __construct(CommonGLPI $obj = NULL) {
 
       $this->obj = ($obj ? $obj : new  PluginWebapplicationsWebapplication());
    }
 
    /**
     * @param array $options
+    *
     * @return mixed
     */
-   function defineAllTabs($options = array())
-   {
+   function defineAllTabs($options = array()) {
 
       $onglets = parent::defineAllTabs($options);
       unset($onglets['Item_Problem$1']); // TODO add method to print linked Problems
@@ -59,12 +58,12 @@ class PluginWebapplicationsWebapplicationPDF extends PluginPdfCommon
 
    /**
     * @param PluginPdfSimplePDF $pdf
-    * @param CommonGLPI $item
-    * @param $tab
+    * @param CommonGLPI         $item
+    * @param                    $tab
+    *
     * @return bool
     */
-   static function displayTabContentForPDF(PluginPdfSimplePDF $pdf, CommonGLPI $item, $tab)
-   {
+   static function displayTabContentForPDF(PluginPdfSimplePDF $pdf, CommonGLPI $item, $tab) {
 
       switch ($tab) {
          case '_main_' :

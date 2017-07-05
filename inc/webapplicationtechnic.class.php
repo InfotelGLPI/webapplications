@@ -34,18 +34,17 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsWebapplicationTechnic
  */
-class PluginWebapplicationsWebapplicationTechnic extends CommonDropdown
-{
+class PluginWebapplicationsWebapplicationTechnic extends CommonDropdown {
 
-   static $rightname = "dropdown";
-   var $can_be_translated = true;
+   static $rightname         = "dropdown";
+   var    $can_be_translated = true;
 
    /**
     * @param int $nb
+    *
     * @return translated
     */
-   static function getTypeName($nb = 0)
-   {
+   static function getTypeName($nb = 0) {
 
       return _n('Language of treatment', 'Languages of treatment', $nb, 'webapplications');
    }

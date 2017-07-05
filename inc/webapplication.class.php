@@ -34,23 +34,22 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsWebapplication
  */
-class PluginWebapplicationsWebapplication extends CommonDBTM
-{
+class PluginWebapplicationsWebapplication extends CommonDBTM {
 
-   public $dohistory = true;
-   static $rightname = "plugin_webapplications";
+   public    $dohistory  = true;
+   static    $rightname  = "plugin_webapplications";
    protected $usenotepad = true;
 
    static $types = array('Computer', 'Monitor', 'NetworkEquipment', 'Peripheral', 'Phone',
-      'Printer', 'Software', 'Entity');
-   static $tags = '[WEBAPPLICATION_URL]';
+                         'Printer', 'Software', 'Entity');
+   static $tags  = '[WEBAPPLICATION_URL]';
 
    /**
     * @param int $nb
+    *
     * @return translated
     */
-   static function getTypeName($nb = 0)
-   {
+   static function getTypeName($nb = 0) {
 
       return _n('Web application', 'Web applications', $nb, 'webapplications');
    }
@@ -59,8 +58,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
    /**
     *
     */
-   function cleanDBonPurge()
-   {
+   function cleanDBonPurge() {
 
       $temp = new PluginWebapplicationsWebapplication_Item();
       $temp->deleteByCriteria(array('plugin_webapplications_webapplications_id' => $this->fields['id']));
@@ -68,11 +66,11 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
 
    /**
     * @param CommonGLPI $item
-    * @param int $withtemplate
+    * @param int        $withtemplate
+    *
     * @return array|string|translated
     */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
-   {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
       if ($item->getType() == 'Supplier') {
          if ($_SESSION['glpishow_count_on_tabs']) {
@@ -86,12 +84,12 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
 
    /**
     * @param CommonGLPI $item
-    * @param int $tabnum
-    * @param int $withtemplate
+    * @param int        $tabnum
+    * @param int        $withtemplate
+    *
     * @return bool
     */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
-   {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       if ($item->getType() == 'Supplier') {
          PluginWebapplicationsWebapplication_Item::showForSupplier($item);
@@ -101,131 +99,130 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
 
    /**
     * @param CommonDBTM $item
+    *
     * @return int
     */
-   static function countForItem(CommonDBTM $item)
-   {
+   static function countForItem(CommonDBTM $item) {
 
       return countElementsInTable('glpi_plugin_webapplications_webapplications',
-         "`suppliers_id` = '" . $item->getID() . "'");
+                                  "`suppliers_id` = '" . $item->getID() . "'");
    }
 
    /**
     * @return array
     */
-   function getSearchOptions()
-   {
+   function getSearchOptions() {
 
       $tab = array();
 
       $tab['common'] = self::getTypeName(2);
 
-      $tab[1]['table'] = $this->getTable();
-      $tab[1]['field'] = 'name';
-      $tab[1]['name'] = __('Name');
-      $tab[1]['datatype'] = 'itemlink';
+      $tab[1]['table']         = $this->getTable();
+      $tab[1]['field']         = 'name';
+      $tab[1]['name']          = __('Name');
+      $tab[1]['datatype']      = 'itemlink';
       $tab[1]['itemlink_type'] = $this->getType();
 
-      $tab[2]['table'] = 'glpi_plugin_webapplications_webapplicationtypes';
-      $tab[2]['field'] = 'name';
-      $tab[2]['name'] = PluginWebapplicationsWebapplicationType::getTypeName(1);
+      $tab[2]['table']    = 'glpi_plugin_webapplications_webapplicationtypes';
+      $tab[2]['field']    = 'name';
+      $tab[2]['name']     = PluginWebapplicationsWebapplicationType::getTypeName(1);
       $tab[2]['datatype'] = 'dropdown';
 
-      $tab[3]['table'] = $this->getTable();
-      $tab[3]['field'] = 'address';
-      $tab[3]['name'] = __('URL');
+      $tab[3]['table']    = $this->getTable();
+      $tab[3]['field']    = 'address';
+      $tab[3]['name']     = __('URL');
       $tab[3]['datatype'] = 'weblink';
 
-      $tab[4]['table'] = 'glpi_plugin_webapplications_webapplicationservertypes';
-      $tab[4]['field'] = 'name';
-      $tab[4]['name'] = PluginWebapplicationsWebapplicationServerType::getTypeName(1);
+      $tab[4]['table']    = 'glpi_plugin_webapplications_webapplicationservertypes';
+      $tab[4]['field']    = 'name';
+      $tab[4]['name']     = PluginWebapplicationsWebapplicationServerType::getTypeName(1);
       $tab[4]['datatype'] = 'dropdown';
 
-      $tab[5]['table'] = 'glpi_plugin_webapplications_webapplicationtechnics';
-      $tab[5]['field'] = 'name';
-      $tab[5]['name'] = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
+      $tab[5]['table']    = 'glpi_plugin_webapplications_webapplicationtechnics';
+      $tab[5]['field']    = 'name';
+      $tab[5]['name']     = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
       $tab[5]['datatype'] = 'dropdown';
 
-      $tab[6]['table'] = 'glpi_locations';
-      $tab[6]['field'] = 'completename';
-      $tab[6]['name'] = __('Location');
+      $tab[6]['table']    = 'glpi_locations';
+      $tab[6]['field']    = 'completename';
+      $tab[6]['name']     = __('Location');
       $tab[6]['datatype'] = 'dropdown';
 
-      $tab[7]['table'] = 'glpi_suppliers';
-      $tab[7]['field'] = 'name';
-      $tab[7]['name'] = __('Supplier');
+      $tab[7]['table']    = 'glpi_suppliers';
+      $tab[7]['field']    = 'name';
+      $tab[7]['name']     = __('Supplier');
       $tab[7]['datatype'] = 'itemlink';
 
       $tab[8]['table'] = $this->getTable();
       $tab[8]['field'] = 'version';
-      $tab[8]['name'] = __('Version');
+      $tab[8]['name']  = __('Version');
 
-      $tab[9]['table'] = 'glpi_users';
-      $tab[9]['field'] = 'name';
+      $tab[9]['table']     = 'glpi_users';
+      $tab[9]['field']     = 'name';
       $tab[9]['linkfield'] = 'users_id_tech';
-      $tab[9]['name'] = __('Technician in charge of the hardware');
-      $tab[9]['datatype'] = 'dropdown';
-      $tab[9]['right'] = 'interface';
+      $tab[9]['name']      = __('Technician in charge of the hardware');
+      $tab[9]['datatype']  = 'dropdown';
+      $tab[9]['right']     = 'interface';
 
-      $tab[10]['table'] = 'glpi_groups';
-      $tab[10]['field'] = 'name';
+      $tab[10]['table']     = 'glpi_groups';
+      $tab[10]['field']     = 'name';
       $tab[10]['linkfield'] = 'groups_id_tech';
-      $tab[10]['name'] = __('Group in charge of the hardware');
+      $tab[10]['name']      = __('Group in charge of the hardware');
       $tab[10]['condition'] = '`is_assign`';
-      $tab[10]['datatype'] = 'dropdown';
+      $tab[10]['datatype']  = 'dropdown';
 
-      $tab[11]['table'] = $this->getTable();
-      $tab[11]['field'] = 'backoffice';
-      $tab[11]['name'] = __('Backoffice URL', 'webapplications');
+      $tab[11]['table']    = $this->getTable();
+      $tab[11]['field']    = 'backoffice';
+      $tab[11]['name']     = __('Backoffice URL', 'webapplications');
       $tab[11]['datatype'] = 'weblink';
 
-      $tab[13]['table'] = 'glpi_plugin_webapplications_webapplications_items';
-      $tab[13]['field'] = 'items_id';
-      $tab[13]['nosearch'] = true;
+      $tab[13]['table']         = 'glpi_plugin_webapplications_webapplications_items';
+      $tab[13]['field']         = 'items_id';
+      $tab[13]['nosearch']      = true;
       $tab[13]['massiveaction'] = false;
-      $tab[13]['name'] = _n('Associated item', 'Associated items', 2);
-      $tab[13]['forcegroupby'] = true;
-      $tab[13]['joinparams'] = array('jointype' => 'child');
+      $tab[13]['name']          = _n('Associated item', 'Associated items', 2);
+      $tab[13]['forcegroupby']  = true;
+      $tab[13]['joinparams']    = array('jointype' => 'child');
 
-      $tab[14]['table'] = 'glpi_manufacturers';
-      $tab[14]['field'] = 'name';
-      $tab[14]['name'] = __('Editor', 'webapplications');
+      $tab[14]['table']    = 'glpi_manufacturers';
+      $tab[14]['field']    = 'name';
+      $tab[14]['name']     = __('Editor', 'webapplications');
       $tab[14]['datatype'] = 'dropdown';
 
-      $tab[15]['table'] = $this->getTable();
-      $tab[15]['field'] = 'is_recursive';
-      $tab[15]['name'] = __('Child entities');
+      $tab[15]['table']    = $this->getTable();
+      $tab[15]['field']    = 'is_recursive';
+      $tab[15]['name']     = __('Child entities');
       $tab[15]['datatype'] = 'bool';
 
-      $tab[16]['table'] = $this->getTable();
-      $tab[16]['field'] = 'comment';
-      $tab[16]['name'] = __('Comments');
+      $tab[16]['table']    = $this->getTable();
+      $tab[16]['field']    = 'comment';
+      $tab[16]['name']     = __('Comments');
       $tab[16]['datatype'] = 'text';
 
-      $tab[17]['table'] = $this->getTable();
-      $tab[17]['field'] = 'date_mod';
+      $tab[17]['table']         = $this->getTable();
+      $tab[17]['field']         = 'date_mod';
       $tab[17]['massiveaction'] = false;
-      $tab[17]['name'] = __('Last update');
-      $tab[17]['datatype'] = 'datetime';
+      $tab[17]['name']          = __('Last update');
+      $tab[17]['datatype']      = 'datetime';
 
-      $tab[18]['table'] = $this->getTable();
-      $tab[18]['field'] = 'is_helpdesk_visible';
-      $tab[18]['name'] = __('Associable to a ticket');
+      $tab[18]['table']    = $this->getTable();
+      $tab[18]['field']    = 'is_helpdesk_visible';
+      $tab[18]['name']     = __('Associable to a ticket');
       $tab[18]['datatype'] = 'bool';
 
-      $tab[30]['table'] = $this->getTable();
-      $tab[30]['field'] = 'id';
-      $tab[30]['name'] = __('ID');
+      $tab[30]['table']    = $this->getTable();
+      $tab[30]['field']    = 'id';
+      $tab[30]['name']     = __('ID');
       $tab[30]['datatype'] = 'number';
 
-      $tab[80]['table'] = 'glpi_entities';
-      $tab[80]['field'] = 'completename';
-      $tab[80]['name'] = __('Entity');
+      $tab[80]['table']    = 'glpi_entities';
+      $tab[80]['field']    = 'completename';
+      $tab[80]['name']     = __('Entity');
       $tab[80]['datatype'] = 'dropdown';
 
       $tab[81]['table'] = 'glpi_entities';
       $tab[81]['field'] = 'entities_id';
-      $tab[81]['name'] = __('Entity') . "-" . __('ID');
+      $tab[81]['name']  = __('Entity') . "-" . __('ID');
 
       return $tab;
    }
@@ -234,10 +231,10 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
    //define header form
    /**
     * @param array $options
+    *
     * @return array
     */
-   function defineTabs($options = array())
-   {
+   function defineTabs($options = array()) {
 
       $ong = array();
       $this->addDefaultFormTab($ong);
@@ -259,8 +256,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
     *
     * @return a SQL command which return a set of (itemtype, items_id)
     **/
-   function getSelectLinkedItem()
-   {
+   function getSelectLinkedItem() {
 
       return "SELECT `itemtype`, `items_id`
               FROM `glpi_plugin_webapplications_webapplications_items`
@@ -269,12 +265,12 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
 
 
    /**
-    * @param $ID
+    * @param       $ID
     * @param array $options
+    *
     * @return bool
     */
-   function showForm($ID, $options = array())
-   {
+   function showForm($ID, $options = array()) {
 
       $this->initForm($ID, $options);
       $this->showFormHeader($options);
@@ -297,14 +293,14 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
       echo "<td>" . PluginWebapplicationsWebapplicationType::getTypeName(1) . "</td>";
       echo "<td>";
       Dropdown::show('PluginWebapplicationsWebapplicationType',
-         array('value' => $this->fields["plugin_webapplications_webapplicationtypes_id"],
-            'entity' => $this->fields["entities_id"]));
+                     array('value'  => $this->fields["plugin_webapplications_webapplicationtypes_id"],
+                           'entity' => $this->fields["entities_id"]));
       echo "</td>";
       //server type of webapplications
       echo "<td>" . PluginWebapplicationsWebapplicationServerType::getTypeName(1) . "</td>";
       echo "<td>";
       Dropdown::show('PluginWebapplicationsWebapplicationServerType',
-         array('value' => $this->fields["plugin_webapplications_webapplicationservertypes_id"]));
+                     array('value' => $this->fields["plugin_webapplications_webapplicationservertypes_id"]));
       echo "</td>";
       echo "</tr>";
 
@@ -312,47 +308,47 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
       //location of webapplications
       echo "<td>" . __('Location') . "</td>";
       echo "<td>";
-      Dropdown::show('Location', array('value' => $this->fields["locations_id"],
-         'entity' => $this->fields["entities_id"]));
+      Dropdown::show('Location', array('value'  => $this->fields["locations_id"],
+                                       'entity' => $this->fields["entities_id"]));
       echo "</td>";
       //language of webapplications
       echo "<td>" . PluginWebapplicationsWebapplicationTechnic::getTypeName(1) . "</td>";
       echo "<td>";
       Dropdown::show('PluginWebapplicationsWebapplicationTechnic',
-         array('value' => $this->fields["plugin_webapplications_webapplicationtechnics_id"]));
+                     array('value' => $this->fields["plugin_webapplications_webapplicationtechnics_id"]));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       //users
       echo "<td>" . __('Technician in charge of the hardware') . "</td><td>";
-      User::dropdown(array('name' => "users_id_tech",
-         'value' => $this->fields["users_id_tech"],
-         'entity' => $this->fields["entities_id"],
-         'right' => 'interface'));
+      User::dropdown(array('name'   => "users_id_tech",
+                           'value'  => $this->fields["users_id_tech"],
+                           'entity' => $this->fields["entities_id"],
+                           'right'  => 'interface'));
       echo "</td>";
       //supplier of webapplications
       echo "<td>" . __('Supplier') . "</td>";
       echo "<td>";
-      Dropdown::show('Supplier', array('value' => $this->fields["suppliers_id"],
-         'entity' => $this->fields["entities_id"]));
+      Dropdown::show('Supplier', array('value'  => $this->fields["suppliers_id"],
+                                       'entity' => $this->fields["entities_id"]));
       echo "</td>";
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       //groups
       echo "<td>" . __('Group in charge of the hardware') . "</td><td>";
-      Dropdown::show('Group', array('name' => "groups_id_tech",
-         'value' => $this->fields["groups_id_tech"],
-         'entity' => $this->fields["entities_id"],
-         'condition' => '`is_assign`'));
+      Dropdown::show('Group', array('name'      => "groups_id_tech",
+                                    'value'     => $this->fields["groups_id_tech"],
+                                    'entity'    => $this->fields["entities_id"],
+                                    'condition' => '`is_assign`'));
       echo "</td>";
 
       //manufacturer of webapplications
       echo "<td>" . __('Editor', 'webapplications') . "</td>";
       echo "<td>";
-      Dropdown::show('Manufacturer', array('value' => $this->fields["manufacturers_id"],
-         'entity' => $this->fields["entities_id"]));
+      Dropdown::show('Manufacturer', array('value'  => $this->fields["manufacturers_id"],
+                                           'entity' => $this->fields["entities_id"]));
       echo "</td>";
       echo "</tr>";
 
@@ -384,7 +380,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
       echo "</tr>";
       echo "<tr class='tab_bg_1'>";
       echo "<td class='top center' colspan='4'><textarea cols='125' rows='3' name='comment' >" .
-         $this->fields["comment"] . "</textarea>";
+           $this->fields["comment"] . "</textarea>";
       echo "</tr>";
 
       $this->showFormButtons($options);
@@ -406,14 +402,13 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
     *
     * @return nothing (print out an HTML select box)
     **/
-   static function dropdownWebapplication($options = array())
-   {
+   static function dropdownWebapplication($options = array()) {
       global $DB, $CFG_GLPI;
 
 
-      $p['name'] = 'plugin_webapplications_webapplications_id';
-      $p['entity'] = '';
-      $p['used'] = array();
+      $p['name']    = 'plugin_webapplications_webapplications_id';
+      $p['entity']  = '';
+      $p['used']    = array();
       $p['display'] = true;
 
       if (is_array($options) && count($options)) {
@@ -423,14 +418,14 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
       }
 
       $where = " WHERE `glpi_plugin_webapplications_webapplications`.`is_deleted` = '0' " .
-         getEntitiesRestrictRequest("AND", "glpi_plugin_webapplications_webapplications", '', $p['entity'], true);
+               getEntitiesRestrictRequest("AND", "glpi_plugin_webapplications_webapplications", '', $p['entity'], true);
 
       $p['used'] = array_filter($p['used']);
       if (count($p['used'])) {
          $where .= " AND `id` NOT IN (0, " . implode(",", $p['used']) . ")";
       }
 
-      $query = "SELECT *
+      $query  = "SELECT *
                 FROM `glpi_plugin_webapplications_webapplicationtypes`
                 WHERE `id` IN (SELECT DISTINCT `plugin_webapplications_webapplicationtypes_id`
                                FROM `glpi_plugin_webapplications_webapplications`
@@ -443,28 +438,28 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
       while ($data = $DB->fetch_assoc($result)) {
          $values[$data['id']] = $data['name'];
       }
-      $rand = mt_rand();
-      $out = Dropdown::showFromArray('_webapplicationtype', $values, array('width' => '30%',
-         'rand' => $rand,
-         'display' => false));
+      $rand     = mt_rand();
+      $out      = Dropdown::showFromArray('_webapplicationtype', $values, array('width'   => '30%',
+                                                                                'rand'    => $rand,
+                                                                                'display' => false));
       $field_id = Html::cleanId("dropdown__webapplicationtype$rand");
 
       $params = array('webapplicationtype' => '__VALUE__',
-         'entity' => $p['entity'],
-         'rand' => $rand,
-         'myname' => $p['name'],
-         'used' => $p['used']);
+                      'entity'             => $p['entity'],
+                      'rand'               => $rand,
+                      'myname'             => $p['name'],
+                      'used'               => $p['used']);
 
       $out .= Ajax::updateItemOnSelectEvent($field_id, "show_" . $p['name'] . $rand,
-         $CFG_GLPI["root_doc"] . "/plugins/webapplications/ajax/dropdownTypeWebApplications.php",
-         $params, false);
+                                            $CFG_GLPI["root_doc"] . "/plugins/webapplications/ajax/dropdownTypeWebApplications.php",
+                                            $params, false);
       $out .= "<span id='show_" . $p['name'] . "$rand'>";
       $out .= "</span>\n";
 
       $params['webapplicationtype'] = 0;
       $out .= Ajax::updateItem("show_" . $p['name'] . $rand,
-         $CFG_GLPI["root_doc"] . "/plugins/webapplications/ajax/dropdownTypeWebApplications.php",
-         $params, false);
+                               $CFG_GLPI["root_doc"] . "/plugins/webapplications/ajax/dropdownTypeWebApplications.php",
+                               $params, false);
       if ($p['display']) {
          echo $out;
          return $rand;
@@ -477,10 +472,10 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
     * Show for PDF an webapplications
     *
     * @param $pdf object for the output
+    *
     * @internal param of $ID the webapplications
     */
-   function show_PDF($pdf)
-   {
+   function show_PDF($pdf) {
       $pdf->setColumnsSize(50, 50);
       $col1 = '<b>' . __('ID') . ' ' . $this->fields['id'] . '</b>';
       if (isset($this->fields["date_mod"])) {
@@ -494,21 +489,21 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
          '<b><i>' . __('Name') . ':</i></b> ' . $this->fields['name'],
          '<b><i>' . PluginWebapplicationsWebapplicationType::getTypeName(1) . ' :</i></b> ' .
          Html::clean(Dropdown::getDropdownName('glpi_plugin_webapplications_webapplicationtypes',
-            $this->fields['plugin_webapplications_webapplicationtypes_id'])));
+                                               $this->fields['plugin_webapplications_webapplicationtypes_id'])));
       $pdf->displayLine(
          '<b><i>' . __('Technician in charge of the hardware') . ':</i></b> ' . getUserName($this->fields['users_id_tech']),
          '<b><i>' . __('Group in charge of the hardware') . ':</i></b> ' . Html::clean(Dropdown::getDropdownName('glpi_groups',
-            $this->fields['groups_id_tech'])));
+                                                                                                                 $this->fields['groups_id_tech'])));
       $pdf->displayLine(
          '<b><i>' . __('Location') . ':</i></b> ' .
          Html::clean(Dropdown::getDropdownName('glpi_locations', $this->fields['locations_id'])),
          '<b><i>' . PluginWebapplicationsWebapplicationServerType::getTypeName(1) . ':</i></b> ' .
          Html::clean(Dropdown::getDropdownName('glpi_plugin_webapplications_webapplicationservertypes',
-            $this->fields["plugin_webapplications_webapplicationservertypes_id"])));
+                                               $this->fields["plugin_webapplications_webapplicationservertypes_id"])));
       $pdf->displayLine(
          '<b><i>' . PluginWebapplicationsWebapplicationTechnic::getTypeName(1) . ' :</i></b> ' .
          Html::clean(Dropdown::getDropdownName('glpi_plugin_webapplications_webapplicationtechnics',
-            $this->fields['plugin_webapplications_webapplicationtechnics_id'])),
+                                               $this->fields['plugin_webapplications_webapplicationtechnics_id'])),
          '<b><i>' . __('Version') . ':</i></b> ' . $this->fields['version']);
 
       $pdf->displayLine(
@@ -516,7 +511,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
          Html::clean(Dropdown::getDropdownName('glpi_suppliers', $this->fields['suppliers_id'])),
          '<b><i>' . __('Editor', 'webapplications') . ':</i></b> ' .
          Html::clean(Dropdown::getDropdownName('glpi_manufacturers',
-            $this->fields["manufacturers_id"])));
+                                               $this->fields["manufacturers_id"])));
 
       $pdf->displayLine(
          '<b><i>' . __('URL') . ':</i></b> ' . $this->fields['address'], '');
@@ -535,8 +530,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
     *
     * @param $type string class name
     **/
-   static function registerType($type)
-   {
+   static function registerType($type) {
       if (!in_array($type, self::$types)) {
          self::$types[] = $type;
       }
@@ -550,8 +544,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
     *
     * @return array of types
     **/
-   static function getTypes($all = false)
-   {
+   static function getTypes($all = false) {
 
       if ($all) {
          return self::$types;
@@ -578,22 +571,22 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
     * @since version 0.85
     *
     * @see CommonDBTM::getSpecificMassiveActions()
+    *
     * @param null $checkitem
+    *
     * @return an
     */
-   function getSpecificMassiveActions($checkitem = NULL)
-   {
+   function getSpecificMassiveActions($checkitem = NULL) {
       $isadmin = static::canUpdate();
       $actions = parent::getSpecificMassiveActions($checkitem);
 
       if ($_SESSION['glpiactiveprofile']['interface'] == 'central') {
          if ($isadmin) {
-            $actions['PluginWebapplicationsWebapplication' . MassiveAction::CLASS_ACTION_SEPARATOR . 'install'] = _x('button', 'Associate');
+            $actions['PluginWebapplicationsWebapplication' . MassiveAction::CLASS_ACTION_SEPARATOR . 'install']   = _x('button', 'Associate');
             $actions['PluginWebapplicationsWebapplication' . MassiveAction::CLASS_ACTION_SEPARATOR . 'uninstall'] = _x('button', 'Dissociate');
 
             if (Session::haveRight('transfer', READ)
-               && Session::isMultiEntitiesMode()
-            ) {
+                && Session::isMultiEntitiesMode()) {
                $actions['PluginWebapplicationsWebapplication' . MassiveAction::CLASS_ACTION_SEPARATOR . 'transfer'] = __('Transfer');
             }
          }
@@ -606,36 +599,37 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
     * @since version 0.85
     *
     * @see CommonDBTM::showMassiveActionsSubForm()
+    *
     * @param MassiveAction $ma
+    *
     * @return bool|false
     */
-   static function showMassiveActionsSubForm(MassiveAction $ma)
-   {
+   static function showMassiveActionsSubForm(MassiveAction $ma) {
 
       switch ($ma->getAction()) {
          case 'plugin_webapplications_add_item':
             self::dropdownWebapplication(array());
             echo "&nbsp;" .
-               Html::submit(_x('button', 'Post'), array('name' => 'massiveaction'));
+                 Html::submit(_x('button', 'Post'), array('name' => 'massiveaction'));
             return true;
             break;
          case "install" :
             Dropdown::showSelectItemFromItemtypes(array('items_id_name' => 'item_item',
-               'itemtype_name' => 'typeitem',
-               'itemtypes' => self::getTypes(true),
-               'checkright'
-               => true,
-            ));
+                                                        'itemtype_name' => 'typeitem',
+                                                        'itemtypes'     => self::getTypes(true),
+                                                        'checkright'
+                                                                        => true,
+                                                  ));
             echo Html::submit(_x('button', 'Post'), array('name' => 'massiveaction'));
             return true;
             break;
          case "uninstall" :
             Dropdown::showSelectItemFromItemtypes(array('items_id_name' => 'item_item',
-               'itemtype_name' => 'typeitem',
-               'itemtypes' => self::getTypes(true),
-               'checkright'
-               => true,
-            ));
+                                                        'itemtype_name' => 'typeitem',
+                                                        'itemtypes'     => self::getTypes(true),
+                                                        'checkright'
+                                                                        => true,
+                                                  ));
             echo Html::submit(_x('button', 'Post'), array('name' => 'massiveaction'));
             return true;
             break;
@@ -653,14 +647,15 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
     * @since version 0.85
     *
     * @see CommonDBTM::processMassiveActionsForOneItemtype()
+    *
     * @param MassiveAction $ma
-    * @param CommonDBTM $item
-    * @param array $ids
+    * @param CommonDBTM    $item
+    * @param array         $ids
+    *
     * @return nothing|void
     */
    static function processMassiveActionsForOneItemtype(MassiveAction $ma, CommonDBTM $item,
-                                                       array $ids)
-   {
+                                                       array $ids) {
 
       $web_item = new PluginWebapplicationsWebapplication_Item();
 
@@ -669,8 +664,8 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
             $input = $ma->getInput();
             foreach ($ids as $id) {
                $input = array('plugin_webapplications_webapplications_id' => $input['plugin_webapplications_webapplications_id'],
-                  'items_id' => $id,
-                  'itemtype' => $item->getType());
+                              'items_id'                                  => $id,
+                              'itemtype'                                  => $item->getType());
                if ($web_item->can(-1, UPDATE, $input)) {
                   if ($web_item->add($input)) {
                      $ma->itemDone($item->getType(), $id, MassiveAction::ACTION_OK);
@@ -690,13 +685,13 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
                   $item->getFromDB($key);
                   $type = PluginWebapplicationsWebapplicationType::transfer($item->fields["plugin_webapplications_webapplicationtypes_id"], $input['entities_id']);
                   if ($type > 0) {
-                     $values["id"] = $key;
+                     $values["id"]                                            = $key;
                      $values["plugin_webapplications_webapplicationtypes_id"] = $type;
                      $item->update($values);
                   }
 
                   unset($values);
-                  $values["id"] = $key;
+                  $values["id"]          = $key;
                   $values["entities_id"] = $input['entities_id'];
 
                   if ($item->update($values)) {
@@ -713,8 +708,8 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
             foreach ($ids as $key) {
                if ($item->can($key, UPDATE)) {
                   $values = array('plugin_webapplications_webapplications_id' => $key,
-                     'items_id' => $input["item_item"],
-                     'itemtype' => $input['typeitem']);
+                                  'items_id'                                  => $input["item_item"],
+                                  'itemtype'                                  => $input['typeitem']);
                   if ($web_item->add($values)) {
                      $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
                   } else {
@@ -742,12 +737,12 @@ class PluginWebapplicationsWebapplication extends CommonDBTM
    }
 
    /**
-    * @param string $link
+    * @param string     $link
     * @param CommonDBTM $item
+    *
     * @return array
     */
-   static function generateLinkContents($link, CommonDBTM $item)
-   {
+   static function generateLinkContents($link, CommonDBTM $item) {
 
       if (strstr($link, "[WEBAPPLICATION_URL]")) {
          $link = str_replace("[WEBAPPLICATION_URL]", $item->fields['address'], $link);

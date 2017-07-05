@@ -52,11 +52,11 @@ if (isset($_POST["webapplicationtype"])) {
    }
 
    Dropdown::show('PluginWebapplicationsWebapplication',
-      array('name' => $_POST['myname'],
-         'used' => $used,
-         'width' => '50%',
-         'entity' => $_POST['entity'],
-         'rand' => $_POST['rand'],
-         'condition' => "glpi_plugin_webapplications_webapplications.plugin_webapplications_webapplicationtypes_id='" . $_POST["webapplicationtype"] . "'"));
+                  array('name'      => $_POST['myname'],
+                        'used'      => $used,
+                        'width'     => '50%',
+                        'entity'    => $_POST['entity'],
+                        'rand'      => $_POST['rand'],
+                        'condition' => "glpi_plugin_webapplications_webapplications.plugin_webapplications_webapplicationtypes_id='" . $_POST["webapplicationtype"] . "'"));
 
 }

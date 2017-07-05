@@ -31,27 +31,24 @@
 /**
  * Class PluginWebapplicationsMenu
  */
-class PluginWebapplicationsMenu extends CommonGLPI
-{
+class PluginWebapplicationsMenu extends CommonGLPI {
    static $rightname = 'plugin_webapplications';
 
    /**
     * @return translated
     */
-   static function getMenuName()
-   {
+   static function getMenuName() {
       return _n('Web application', 'Web applications', 2, 'webapplications');
    }
 
    /**
     * @return array
     */
-   static function getMenuContent()
-   {
+   static function getMenuContent() {
 
-      $menu = array();
-      $menu['title'] = self::getMenuName();
-      $menu['page'] = "/plugins/webapplications/front/webapplication.php";
+      $menu                    = array();
+      $menu['title']           = self::getMenuName();
+      $menu['page']            = "/plugins/webapplications/front/webapplication.php";
       $menu['links']['search'] = PluginWebapplicationsWebapplication::getSearchURL(false);
       if (PluginWebapplicationsWebapplication::canCreate()) {
          $menu['links']['add'] = PluginWebapplicationsWebapplication::getFormURL(false);
@@ -60,8 +57,7 @@ class PluginWebapplicationsMenu extends CommonGLPI
       return $menu;
    }
 
-   static function removeRightsFromSession()
-   {
+   static function removeRightsFromSession() {
       if (isset($_SESSION['glpimenu']['assets']['types']['PluginWebapplicationsMenu'])) {
          unset($_SESSION['glpimenu']['assets']['types']['PluginWebapplicationsMenu']);
       }

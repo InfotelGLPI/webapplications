@@ -32,20 +32,17 @@ if (!defined('GLPI_ROOT')) {
 }
 
 
-/// PluginWebapplicationsWebapplicationInjection class
 /**
  * Class PluginWebapplicationsWebapplicationInjection
  */
-class PluginWebapplicationsWebapplicationInjection extends PluginWebapplicationsWebapplication
-{
+class PluginWebapplicationsWebapplicationInjection extends PluginWebapplicationsWebapplication {
    //  implements PluginDatainjectionInjectionInterface {
 
 
    /**
     * @return mixed
     */
-   static function getTable()
-   {
+   static function getTable() {
 
       $parenttype = get_parent_class();
       return $parenttype::getTable();
@@ -56,8 +53,7 @@ class PluginWebapplicationsWebapplicationInjection extends PluginWebapplications
    /**
     * @return bool
     */
-   function isPrimaryType()
-   {
+   function isPrimaryType() {
       return true;
    }
 
@@ -65,18 +61,17 @@ class PluginWebapplicationsWebapplicationInjection extends PluginWebapplications
    /**
     * @return array
     */
-   function connectedTo()
-   {
+   function connectedTo() {
       return array();
    }
 
 
    /**
     * @param string $primary_type
+    *
     * @return array|the
     */
-   function getOptions($primary_type = '')
-   {
+   function getOptions($primary_type = '') {
 
       $tab = Search::getOptions(get_parent_class($this));
 
@@ -84,12 +79,12 @@ class PluginWebapplicationsWebapplicationInjection extends PluginWebapplications
       $tab[6]['linkfield'] = 'locations_id';
       //$blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable = array(13, 17, 30, 80);
+      $notimportable            = array(13, 17, 30, 80);
       $options['ignore_fields'] = $notimportable;
-      $options['displaytype'] = array("dropdown" => array(2, 4, 5, 7, 10, 14),
-         "user" => array(9),
-         "multiline_text" => array(16),
-         "bool" => array(15, 18));
+      $options['displaytype']   = array("dropdown"       => array(2, 4, 5, 7, 10, 14),
+                                        "user"           => array(9),
+                                        "multiline_text" => array(16),
+                                        "bool"           => array(15, 18));
 
       $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
@@ -101,15 +96,15 @@ class PluginWebapplicationsWebapplicationInjection extends PluginWebapplications
     * Standard method to delete an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
     *
-    * @param array $values
+    * @param array         $values
     * @param array|options $options
+    *
     * @return an
     * @internal param fields $fields to add into glpi
     * @internal param options $options used during creation
     *
     */
-   function deleteObject($values = array(), $options = array())
-   {
+   function deleteObject($values = array(), $options = array()) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->deleteObject();
@@ -120,15 +115,15 @@ class PluginWebapplicationsWebapplicationInjection extends PluginWebapplications
     * Standard method to add an object into glpi
     * WILL BE INTEGRATED INTO THE CORE IN 0.80
     *
-    * @param array|fields $values
+    * @param array|fields  $values
     * @param array|options $options
+    *
     * @return an array of IDs of newly created objects : for example array(Computer=>1, Networkport=>10)
     * @internal param fields $values to add into glpi
     * @internal param options $options used during creation
     *
     */
-   function addOrUpdateObject($values = array(), $options = array())
-   {
+   function addOrUpdateObject($values = array(), $options = array()) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

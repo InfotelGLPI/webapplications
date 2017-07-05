@@ -36,7 +36,7 @@ if (!isset($_GET["withtemplate"])) {
    $_GET["withtemplate"] = "";
 }
 
-$web = new PluginWebapplicationsWebapplication();
+$web      = new PluginWebapplicationsWebapplication();
 $web_item = new PluginWebapplicationsWebapplication_Item();
 
 if (isset($_POST["add"])) {
@@ -85,7 +85,7 @@ if (isset($_POST["add"])) {
    }
    Html::back();
 
-//unlink webapplications to items of glpi from the items form
+   //unlink webapplications to items of glpi from the items form
 } else if (isset($_POST["deletewebapplications"])) {
    $input = array('id' => $_POST["id"]);
    $web_item->check($_POST["id"], UPDATE);
@@ -99,7 +99,7 @@ if (isset($_POST["add"])) {
    $plugin = new Plugin();
    if ($plugin->isActivated("environment")) {
       Html::header(PluginWebapplicationsWebapplication::getTypeName(2),
-         '', "assets", "pluginenvironmentdisplay", "webapplications");
+                   '', "assets", "pluginenvironmentdisplay", "webapplications");
    } else {
       Html::header(PluginWebapplicationsWebapplication::getTypeName(2), '', "assets", "pluginwebapplicationsmenu");
    }
