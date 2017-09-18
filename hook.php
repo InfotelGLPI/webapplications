@@ -36,62 +36,62 @@ function plugin_webapplications_install() {
    include_once(GLPI_ROOT . "/plugins/webapplications/inc/profile.class.php");
 
    $update = false;
-   if (!TableExists("glpi_application")
-       && !TableExists("glpi_plugin_appweb")
-       && !TableExists("glpi_plugin_webapplications_webapplications")) {
+   if (!$DB->tableExists("glpi_application")
+       && !$DB->tableExists("glpi_plugin_appweb")
+       && !$DB->tableExists("glpi_plugin_webapplications_webapplications")) {
 
       $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-2.0.0.sql");
 
    } else {
 
-      if (TableExists("glpi_application") && !TableExists("glpi_plugin_appweb")) {
+      if ($DB->tableExists("glpi_application") && !$DB->tableExists("glpi_plugin_appweb")) {
          $update = true;
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.1.sql");
       }
 
       //from 1.1 version
-      if (TableExists("glpi_plugin_appweb") && !FieldExists("glpi_plugin_appweb", "location")) {
+      if ($DB->tableExists("glpi_plugin_appweb") && !$DB->fieldExists("glpi_plugin_appweb", "location")) {
          $update = true;
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.3.sql");
       }
 
       //from 1.3 version
-      if (TableExists("glpi_plugin_appweb") && !FieldExists("glpi_plugin_appweb", "recursive")) {
+      if ($DB->tableExists("glpi_plugin_appweb") && !$DB->fieldExists("glpi_plugin_appweb", "recursive")) {
          $update = true;
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.4.sql");
       }
 
-      if (TableExists("glpi_plugin_appweb_profiles")
-          && FieldExists("glpi_plugin_appweb_profiles", "interface")) {
+      if ($DB->tableExists("glpi_plugin_appweb_profiles")
+          && $DB->fieldExists("glpi_plugin_appweb_profiles", "interface")) {
          $update = true;
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.5.0.sql");
       }
 
-      if (TableExists("glpi_plugin_appweb")
-          && !FieldExists("glpi_plugin_appweb", "helpdesk_visible")) {
+      if ($DB->tableExists("glpi_plugin_appweb")
+          && !$DB->fieldExists("glpi_plugin_appweb", "helpdesk_visible")) {
          $update = true;
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.5.1.sql");
       }
 
-      if (!TableExists("glpi_plugin_webapplications_webapplications")) {
+      if (!$DB->tableExists("glpi_plugin_webapplications_webapplications")) {
          $update = true;
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.6.0.sql");
       }
 
       //from 1.6 version
-      if (TableExists("glpi_plugin_webapplications_webapplications")
-          && !FieldExists("glpi_plugin_webapplications_webapplications", "users_id_tech")) {
+      if ($DB->tableExists("glpi_plugin_webapplications_webapplications")
+          && !$DB->fieldExists("glpi_plugin_webapplications_webapplications", "users_id_tech")) {
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.8.0.sql");
       }
    }
 
-   if (TableExists("glpi_plugin_webapplications_profiles")) {
+   if ($DB->tableExists("glpi_plugin_webapplications_profiles")) {
 
       $notepad_tables = array('glpi_plugin_webapplications_webapplications');
 
       foreach ($notepad_tables as $t) {
          // Migrate data
-         if (FieldExists($t, 'notepad')) {
+         if ($DB->fieldExists($t, 'notepad')) {
             $query = "SELECT id, notepad
                       FROM `$t`
                       WHERE notepad IS NOT NULL
