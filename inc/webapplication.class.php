@@ -103,9 +103,9 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
     * @return int
     */
    static function countForItem(CommonDBTM $item) {
-
-      return countElementsInTable('glpi_plugin_webapplications_webapplications',
-                                  "`suppliers_id` = '" . $item->getID() . "'");
+      $dbu = new DbUtils();
+      return $dbu->countElementsInTable('glpi_plugin_webapplications_webapplications',
+                                        "`suppliers_id` = '" . $item->getID() . "'");
    }
 
    /**

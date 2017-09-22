@@ -114,14 +114,14 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
     * @return int
     */
    static function countForWebapplication(PluginWebapplicationsWebapplication $item) {
-
+      $dbu   = new DbUtils();
       $types = implode("','", $item->getTypes());
       if (empty($types)) {
          return 0;
       }
-      return countElementsInTable('glpi_plugin_webapplications_webapplications_items',
-                                  "`itemtype` IN ('$types')
-                                   AND `plugin_webapplications_webapplications_id` = '" . $item->getID() . "'");
+      return $dbu->countElementsInTable('glpi_plugin_webapplications_webapplications_items',
+                                        "`itemtype` IN ('$types')
+                                         AND `plugin_webapplications_webapplications_id` = '" . $item->getID() . "'");
    }
 
 
@@ -131,10 +131,10 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
     * @return int
     */
    static function countForItem(CommonDBTM $item) {
-
-      return countElementsInTable('glpi_plugin_webapplications_webapplications_items',
-                                  "`itemtype`='" . $item->getType() . "'
-                                   AND `items_id` = '" . $item->getID() . "'");
+      $dbu = new DbUtils();
+      return $dbu->countElementsInTable('glpi_plugin_webapplications_webapplications_items',
+                                        "`itemtype`='" . $item->getType() . "'
+                                          AND `items_id` = '" . $item->getID() . "'");
    }
 
    /**
