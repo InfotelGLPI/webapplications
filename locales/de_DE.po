@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-17 11:52+0200\n"
-"PO-Revision-Date: 2017-07-05 07:59+0000\n"
-"Last-Translator: Daniel Fallenstein <daniel@fallenste.in>\n"
+"POT-Creation-Date: 2017-10-05 10:10+0200\n"
+"PO-Revision-Date: 2017-10-05 08:25+0000\n"
+"Last-Translator: Amandine Manceau\n"
 "Language-Team: German (Germany) (http://www.transifex.com/tsmr/GLPI_webapplications/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,49 +18,45 @@ msgstr ""
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: hook.php:403 inc/webapplication_item.class.php:454
+#: hook.php:438 inc/webapplication_item.class.php:508
 msgid "Associate a web application"
 msgstr "Eine Webanwendung verknüpfen"
 
-#: setup.php:99 inc/menu.class.php:35 inc/profile.class.php:146
-#: inc/webapplication.class.php:45
+#: setup.php:107 inc/menu.class.php:41 inc/profile.class.php:175
+#: inc/webapplication.class.php:54
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "Webanwendung"
 msgstr[1] "Webanwendungen"
 
-#: setup.php:113
-msgid "This plugin requires GLPI >= 0.90"
-msgstr "Dieses Plugin erfordert GLPI >= 0.90"
-
-#: inc/webapplication.class.php:145 inc/webapplication.class.php:322
+#: inc/webapplication.class.php:176 inc/webapplication.class.php:369
 msgid "Backoffice URL"
 msgstr "Administrations-URL"
 
-#: inc/webapplication.class.php:158 inc/webapplication.class.php:301
-#: inc/webapplication.class.php:468
+#: inc/webapplication.class.php:189 inc/webapplication.class.php:348
+#: inc/webapplication.class.php:512
 msgid "Editor"
 msgstr "Editor"
 
-#: inc/webapplication_item.class.php:814
+#: inc/webapplication_item.class.php:874
 msgid "Associated web application"
 msgid_plural "Associated web applications"
 msgstr[0] "Verknüpfte Webanwendung"
 msgstr[1] "Verknüpfte Webanwendungen"
 
-#: inc/webapplicationservertype.class.php:41
+#: inc/webapplicationservertype.class.php:49
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] "Art des Webservers"
 msgstr[1] "Arten von Webservern"
 
-#: inc/webapplicationtechnic.class.php:41
+#: inc/webapplicationtechnic.class.php:49
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
 msgstr[0] "Programmiersprache"
 msgstr[1] "Programmiersprachen"
 
-#: inc/webapplicationtype.class.php:42
+#: inc/webapplicationtype.class.php:50
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Kategorie"
