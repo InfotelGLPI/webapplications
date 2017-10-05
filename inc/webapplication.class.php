@@ -41,7 +41,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
    protected $usenotepad = true;
 
    static $types = array('Computer', 'Monitor', 'NetworkEquipment', 'Peripheral', 'Phone',
-                         'Printer', 'Software', 'Entity');
+                         'Printer', 'Software', 'Entity', 'SoftwareLicense');
    static $tags  = '[WEBAPPLICATION_URL]';
 
    /**

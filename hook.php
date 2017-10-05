@@ -440,51 +440,6 @@ function plugin_webapplications_MassiveActions($type) {
    return array();
 }
 
-/*
-function plugin_webapplications_MassiveActionsDisplay($options=array()) {
-
-   $web = new PluginWebapplicationsWebapplication();
-
-   if (in_array($options['itemtype'], PluginWebapplicationsWebapplication::getTypes(true))) {
-      $web->dropdownWebApplications("plugin_webapplications_webapplications_id");
-      echo "<input type=\"submit\" name=\"massiveaction\" class=\"submit\" value=\"" . _sx('button','Post') . "\" >";
-   }
-   return "";
-}
-
-
-function plugin_webapplications_MassiveActionsProcess($data) {
-   
-   $web_item = new PluginWebapplicationsWebapplication_Item();
-   
-   $res = array('ok' => 0,
-               'ko' => 0,
-               'noright' => 0);
-
-   switch ($data['action']) {
-      case "plugin_webapplications_add_item":     
-         foreach ($data["item"] as $key => $val) {
-            if ($val == 1) {
-               $input = array('plugin_webapplications_webapplications_id' => $data['plugin_webapplications_webapplications_id'],
-                        'items_id'      => $key,
-                        'itemtype'      => $data['itemtype']);
-               if ($web_item->can(-1,'w',$input)) {
-                  if ($web_item->add($input)){
-                     $res['ok']++;
-                  } else {
-                     $res['ko']++;
-                  }
-               } else {
-                  $res['noright']++;
-               }
-            }
-         }
-         break;
-   }
-   return $res;
-}
-*/
-
 function plugin_webapplications_postinit() {
    global $PLUGIN_HOOKS;
 
