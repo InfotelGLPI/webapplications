@@ -10,7 +10,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of webapplications.
 
  webapplications is free software; you can redistribute it and/or modify
@@ -46,7 +46,7 @@ class PluginWebapplicationsMenu extends CommonGLPI {
     */
    static function getMenuContent() {
 
-      $menu                    = array();
+      $menu                    = [];
       $menu['title']           = self::getMenuName();
       $menu['page']            = "/plugins/webapplications/front/webapplication.php";
       $menu['links']['search'] = PluginWebapplicationsWebapplication::getSearchURL(false);

@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of webapplications.
 
  webapplications is free software; you can redistribute it and/or modify
@@ -32,8 +32,7 @@ include('../../../inc/includes.php');
 //check environment meta-plugin installation for change header
 $plugin = new Plugin();
 if ($plugin->isActivated("environment")) {
-   Html::header(PluginWebapplicationsWebapplication::getTypeName(2)
-      , '', "assets", "pluginenvironmentdisplay", "webapplications");
+   Html::header(PluginWebapplicationsWebapplication::getTypeName(2), '', "assets", "pluginenvironmentdisplay", "webapplications");
 } else {
    Html::header(PluginWebapplicationsWebapplication::getTypeName(2), '', "assets", "pluginwebapplicationsmenu");
 }

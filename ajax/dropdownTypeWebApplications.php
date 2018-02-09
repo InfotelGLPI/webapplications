@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of webapplications.
 
  webapplications is free software; you can redistribute it and/or modify
@@ -37,7 +37,7 @@ Session::checkCentralAccess();
 
 // Make a select box
 if (isset($_POST["webapplicationtype"])) {
-   $used = array();
+   $used = [];
 
    // Clean used array
    if (isset($_POST['used']) && is_array($_POST['used']) && (count($_POST['used']) > 0)) {
@@ -52,11 +52,11 @@ if (isset($_POST["webapplicationtype"])) {
    }
 
    Dropdown::show('PluginWebapplicationsWebapplication',
-                  array('name'      => $_POST['myname'],
+                  ['name'      => $_POST['myname'],
                         'used'      => $used,
                         'width'     => '50%',
                         'entity'    => $_POST['entity'],
                         'rand'      => $_POST['rand'],
-                        'condition' => "glpi_plugin_webapplications_webapplications.plugin_webapplications_webapplicationtypes_id='" . $_POST["webapplicationtype"] . "'"));
+                        'condition' => "glpi_plugin_webapplications_webapplications.plugin_webapplications_webapplicationtypes_id='" . $_POST["webapplicationtype"] . "'"]);
 
 }

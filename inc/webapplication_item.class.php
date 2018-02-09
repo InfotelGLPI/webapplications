@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of webapplications.
 
  webapplications is free software; you can redistribute it and/or modify
@@ -54,8 +54,8 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
 
       $temp = new self();
       $temp->deleteByCriteria(
-         array('itemtype' => $item->getType(),
-               'items_id' => $item->getField('id'))
+         ['itemtype' => $item->getType(),
+               'items_id' => $item->getField('id')]
       );
    }
 
@@ -172,10 +172,10 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
     */
    function addItem($values) {
 
-      $this->add(array('plugin_webapplications_webapplications_id'
+      $this->add(['plugin_webapplications_webapplications_id'
                                   => $values["plugin_webapplications_webapplications_id"],
                        'items_id' => $values["items_id"],
-                       'itemtype' => $values["itemtype"]));
+                       'itemtype' => $values["itemtype"]]);
 
    }
 
@@ -190,7 +190,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
 
       if ($this->getFromDBbyWebApplicationsAndItem($plugin_webapplications_webapplications_id,
                                                    $items_id, $itemtype)) {
-         $this->delete(array('id' => $this->fields["id"]));
+         $this->delete(['id' => $this->fields["id"]]);
       }
    }
 
@@ -233,16 +233,16 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
          echo "<tr class='tab_bg_2'><th colspan='2'>" . __('Add an item') . "</th></tr>";
 
          echo "<tr class='tab_bg_1'><td class='right'>";
-         Dropdown::showSelectItemFromItemtypes(array('items_id_name' => 'items_id',
+         Dropdown::showSelectItemFromItemtypes(['items_id_name' => 'items_id',
                                                      'itemtypes'     => PluginWebapplicationsWebapplication::getTypes(true),
                                                      'entity_restrict'
                                                                      => ($webapplication->fields['is_recursive']
                                                         ? getSonsOf('glpi_entities',
                                                                     $webapplication->fields['entities_id'])
-                                                        : $webapplication->fields['entities_id']),
+                                                                     : $webapplication->fields['entities_id']),
                                                      'checkright'
                                                                      => true,
-                                               ));
+                                               ]);
          echo "</td><td class='center'>";
          echo "<input type='submit' name='additem' value=\"" . _sx('button', 'Add') . "\" class='submit'>";
          echo "<input type='hidden' name='plugin_webapplications_webapplications_id' value='$instID'>";
@@ -255,7 +255,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       echo "<div class='spaced'>";
       if ($canedit && $number) {
          Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
-         $massiveactionparams = array();
+         $massiveactionparams = [];
          Html::showMassiveActions($massiveactionparams);
       }
       echo "<table class='tab_cadre_fixe'>";
@@ -447,9 +447,9 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       $number = $DB->numrows($result);
       $i      = 0;
 
-      $webs = array();
+      $webs = [];
       $web  = new PluginWebapplicationsWebapplication();
-      $used = array();
+      $used = [];
       if ($numrows = $DB->numrows($result)) {
          while ($data = $DB->fetch_assoc($result)) {
             $webs[$data['assocID']] = $data;
@@ -485,7 +485,6 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
 
          echo "<div class='firstbloc'>";
 
-
          if (Session::haveRight("plugin_webapplications", READ)
              && ($nb > count($used))) {
             echo "<form name='webapplication_form$rand' id='webapplication_form$rand' method='post'
@@ -501,8 +500,8 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                echo "<input type='hidden' name='tickets_id' value='$ID'>";
             }
 
-            PluginWebapplicationsWebapplication::dropdownWebapplication(array('entity' => $entities,
-                                                                              'used'   => $used));
+            PluginWebapplicationsWebapplication::dropdownWebapplication(['entity' => $entities,
+                                                                              'used'   => $used]);
             echo "</td><td class='center' width='20%'>";
             echo "<input type='submit' name='additem' value=\"" .
                  __s('Associate a web application', 'webapplications') . "\" class='submit'>";
@@ -518,7 +517,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       echo "<div class='spaced'>";
       if ($canedit && $number && ($withtemplate < 2)) {
          Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
-         $massiveactionparams = array('num_displayed' => $number);
+         $massiveactionparams = ['num_displayed' => $number];
          Html::showMassiveActions($massiveactionparams);
       }
       echo "<table class='tab_cadre_fixe'>";
@@ -538,7 +537,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       echo "<th>" . __('Version') . "</th>";
       echo "<th>" . __('Comments') . "</th>";
       echo "</tr>";
-      $used = array();
+      $used = [];
 
       if ($number) {
 
@@ -547,7 +546,6 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
             //        %2$s is the name of the item (used for headings of a list)
                                         sprintf(__('%1$s = %2$s'),
                                                 $item->getTypeName(1), $item->getName()));
-
 
          foreach ($webs as $data) {
             $webID = $data["id"];
@@ -594,7 +592,6 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
             $i++;
          }
       }
-
 
       echo "</table>";
       if ($canedit && $number && ($withtemplate < 2)) {
@@ -664,7 +661,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       $number = $DB->numrows($result);
       $i      = 0;
 
-      $webs = array();
+      $webs = [];
       if ($numrows = $DB->numrows($result)) {
          while ($data = $DB->fetch_assoc($result)) {
             $webs[$data['assocID']] = $data;
@@ -676,8 +673,9 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
 
       echo "<tr>";
       echo "<th>" . __('Name') . "</th>";
-      if (Session::isMultiEntitiesMode())
+      if (Session::isMultiEntitiesMode()) {
          echo "<th>" . __('Entity') . "</th>";
+      }
       echo "<th>" . PluginWebapplicationsWebapplicationType::getTypeName(1) . "</th>";
       echo "<th>" . __('URL') . "</th>";
       echo "<th>" . __('Server') . "</th>";
@@ -685,7 +683,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       echo "<th>" . __('Version') . "</th>";
       echo "<th>" . __('Comments') . "</th>";
       echo "</tr>";
-      $used = array();
+      $used = [];
 
       if ($number) {
 
@@ -734,7 +732,6 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
             $i++;
          }
       }
-
 
       echo "</table>";
       echo "</div>";
@@ -805,15 +802,16 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                         . " WHERE `" . $table . "`.`id` = `glpi_plugin_webapplications_webapplications_items`.`items_id` 
                   AND `glpi_plugin_webapplications_webapplications_items`.`itemtype` = '$type' 
                   AND `glpi_plugin_webapplications_webapplications_items`.`plugin_webapplications_webapplications_id` = '$ID' ";
-               if ($type != 'User')
+               if ($type != 'User') {
                   $query .= getEntitiesRestrictRequest(" AND ", $table, '', '', $items->maybeRecursive());
+               }
 
                if ($items->maybeTemplate()) {
                   $query .= " AND `" . $table . "`.`is_template` = '0'";
                }
                $query .= " ORDER BY `glpi_entities`.`completename`, `" . $table . "`.`$column`";
 
-               if ($result_linked = $DB->query($query))
+               if ($result_linked = $DB->query($query)) {
                   if ($DB->numrows($result_linked)) {
 
                      while ($data = $DB->fetch_assoc($result_linked)) {
@@ -822,11 +820,14 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                         }
                         $items_id_display = "";
 
-                        if ($_SESSION["glpiis_ids_visible"] || empty($data["name"])) $items_id_display = " (" . $data["id"] . ")";
-                        if ($type == 'User')
+                        if ($_SESSION["glpiis_ids_visible"] || empty($data["name"])) {
+                           $items_id_display = " (" . $data["id"] . ")";
+                        }
+                        if ($type == 'User') {
                            $name = Html::clean(getUserName($data["id"])) . $items_id_display;
-                        else
+                        } else {
                            $name = $data["name"] . $items_id_display;
+                        }
 
                         if ($type != 'User') {
                            $entity = Html::clean(Dropdown::getDropdownName("glpi_entities", $data['entity']));
@@ -837,23 +838,24 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                         if (Session::isMultiEntitiesMode()) {
                            $pdf->setColumnsSize(12, 27, 25, 18, 18);
                            $pdf->displayLine(
-                              $items->getTypeName(),
-                              $name,
-                              $entity,
-                              (isset($data["serial"]) ? "" . $data["serial"] . "" : "-"),
-                              (isset($data["otherserial"]) ? "" . $data["otherserial"] . "" : "-")
+                           $items->getTypeName(),
+                           $name,
+                           $entity,
+                           (isset($data["serial"]) ? "" . $data["serial"] . "" : "-"),
+                           (isset($data["otherserial"]) ? "" . $data["otherserial"] . "" : "-")
                            );
                         } else {
                            $pdf->setColumnsSize(25, 31, 22, 22);
                            $pdf->displayTitle(
-                              $items->getTypeName(),
-                              $name,
-                              (isset($data["serial"]) ? "" . $data["serial"] . "" : "-"),
-                              (isset($data["otherserial"]) ? "" . $data["otherserial"] . "" : "-")
+                           $items->getTypeName(),
+                           $name,
+                           (isset($data["serial"]) ? "" . $data["serial"] . "" : "-"),
+                           (isset($data["otherserial"]) ? "" . $data["otherserial"] . "" : "-")
                            );
                         }
                      } // Each device
                   } // numrows device
+               }
             } // type right
          } // each type
       } // numrows type

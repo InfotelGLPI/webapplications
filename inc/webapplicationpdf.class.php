@@ -10,7 +10,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of webapplications.
 
  webapplications is free software; you can redistribute it and/or modify
@@ -39,7 +39,7 @@ class PluginWebapplicationsWebapplicationPDF extends PluginPdfCommon {
     *
     * @param CommonGLPI|NULL $obj
     */
-   function __construct(CommonGLPI $obj = NULL) {
+   function __construct(CommonGLPI $obj = null) {
 
       $this->obj = ($obj ? $obj : new  PluginWebapplicationsWebapplication());
    }
@@ -49,7 +49,7 @@ class PluginWebapplicationsWebapplicationPDF extends PluginPdfCommon {
     *
     * @return mixed
     */
-   function defineAllTabs($options = array()) {
+   function defineAllTabs($options = []) {
 
       $onglets = parent::defineAllTabs($options);
       unset($onglets['Item_Problem$1']); // TODO add method to print linked Problems

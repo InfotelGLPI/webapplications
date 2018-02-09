@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of webapplications.
 
  webapplications is free software; you can redistribute it and/or modify
@@ -62,7 +62,7 @@ class PluginWebapplicationsWebapplicationInjection extends PluginWebapplications
     * @return array
     */
    function connectedTo() {
-      return array();
+      return [];
    }
 
 
@@ -79,12 +79,12 @@ class PluginWebapplicationsWebapplicationInjection extends PluginWebapplications
       $tab[6]['linkfield'] = 'locations_id';
       //$blacklist = PluginDatainjectionCommonInjectionLib::getBlacklistedOptions();
       //Remove some options because some fields cannot be imported
-      $notimportable            = array(13, 17, 30, 80);
+      $notimportable            = [13, 17, 30, 80];
       $options['ignore_fields'] = $notimportable;
-      $options['displaytype']   = array("dropdown"       => array(2, 4, 5, 7, 10, 14),
-                                        "user"           => array(9),
-                                        "multiline_text" => array(16),
-                                        "bool"           => array(15, 18));
+      $options['displaytype']   = ["dropdown"       => [2, 4, 5, 7, 10, 14],
+                                        "user"           => [9],
+                                        "multiline_text" => [16],
+                                        "bool"           => [15, 18]];
 
       $tab = PluginDatainjectionCommonInjectionLib::addToSearchOptions($tab, $options, $this);
 
@@ -104,7 +104,7 @@ class PluginWebapplicationsWebapplicationInjection extends PluginWebapplications
     * @internal param options $options used during creation
     *
     */
-   function deleteObject($values = array(), $options = array()) {
+   function deleteObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->deleteObject();
@@ -123,7 +123,7 @@ class PluginWebapplicationsWebapplicationInjection extends PluginWebapplications
     * @internal param options $options used during creation
     *
     */
-   function addOrUpdateObject($values = array(), $options = array()) {
+   function addOrUpdateObject($values = [], $options = []) {
 
       $lib = new PluginDatainjectionCommonInjectionLib($this, $values, $options);
       $lib->processAddOrUpdate();

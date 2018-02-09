@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of webapplications.
 
  webapplications is free software; you can redistribute it and/or modify
@@ -33,8 +33,8 @@ function plugin_init_webapplications() {
 
    $PLUGIN_HOOKS['csrf_compliant']['webapplications'] = true;
    //load changeprofile function
-   $PLUGIN_HOOKS['change_profile']['webapplications']   = array('PluginWebapplicationsProfile',
-                                                                'initProfile');
+   $PLUGIN_HOOKS['change_profile']['webapplications']   = ['PluginWebapplicationsProfile',
+                                                                'initProfile'];
    $PLUGIN_HOOKS['assign_to_ticket']['webapplications'] = true;
 
    if (class_exists('PluginWebapplicationsWebapplication_Item')) { // only if plugin activated
@@ -44,19 +44,19 @@ function plugin_init_webapplications() {
 
    // Params : plugin name - string type - number - class - table - form page
    Plugin::registerClass('PluginWebapplicationsWebapplication',
-                         array('linkgroup_tech_types'   => true,
+                         ['linkgroup_tech_types'   => true,
                                'linkuser_tech_types'    => true,
                                'document_types'         => true,
                                'contract_types'         => true,
                                'ticket_types'           => true,
                                'helpdesk_visible_types' => true,
                                'link_types'             => true,
-                               'addtabon'               => 'Supplier'));
+                               'addtabon'               => 'Supplier']);
 
    if (class_exists('PluginWebapplicationsWebapplication')) {
       Link::registerTag(PluginWebapplicationsWebapplication::$tags);
    }
-   Plugin::registerClass('PluginWebapplicationsProfile', array('addtabon' => array('Profile')));
+   Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
 
    if (class_exists('PluginAccountsAccount')) {
       PluginAccountsAccount::registerType('PluginWebapplicationsWebapplication');
@@ -74,7 +74,7 @@ function plugin_init_webapplications() {
       if (!$plugin->isActivated('environment')
           && Session::haveRight("plugin_webapplications", READ)) {
 
-         $PLUGIN_HOOKS['menu_toadd']['webapplications'] = array('assets' => 'PluginWebapplicationsMenu');
+         $PLUGIN_HOOKS['menu_toadd']['webapplications'] = ['assets' => 'PluginWebapplicationsMenu'];
       }
 
       if (Session::haveRight("plugin_webapplications", UPDATE)) {
@@ -104,13 +104,13 @@ function plugin_init_webapplications() {
  */
 function plugin_version_webapplications() {
 
-   return array('name'           => _n('Web application', 'Web applications', 2, 'webapplications'),
+   return ['name'           => _n('Web application', 'Web applications', 2, 'webapplications'),
                 'version'        => '2.4.0',
                 'license'        => 'GPLv2+',
                 'oldname'        => 'appweb',
                 'author'         => "<a href='http://infotel.com/services/expertise-technique/glpi/'>Infotel</a>",
                 'homepage'       => 'https://github.com/InfotelGLPI/webapplications',
-                'minGlpiVersion' => '9.2');
+                'minGlpiVersion' => '9.2'];
 }
 
 

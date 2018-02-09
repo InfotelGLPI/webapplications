@@ -9,7 +9,7 @@
  -------------------------------------------------------------------------
 
  LICENSE
-      
+
  This file is part of webapplications.
 
  webapplications is free software; you can redistribute it and/or modify
@@ -77,7 +77,7 @@ if (isset($_POST["add"])) {
 
 } else if (isset($_POST["deleteitem"])) {
    foreach ($_POST["item"] as $key => $val) {
-      $input = array('id' => $key);
+      $input = ['id' => $key];
       if ($val == 1) {
          $web_item->check($key, UPDATE);
          $web_item->delete($input);
@@ -87,7 +87,7 @@ if (isset($_POST["add"])) {
 
    //unlink webapplications to items of glpi from the items form
 } else if (isset($_POST["deletewebapplications"])) {
-   $input = array('id' => $_POST["id"]);
+   $input = ['id' => $_POST["id"]];
    $web_item->check($_POST["id"], UPDATE);
    $web_item->delete($input);
    Html::back();
