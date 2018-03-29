@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Webapplications Development Team
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the GLPI - Webapplications plugin package.
 # 
 # Translators:
 # Xavier CAILLAUD <thetsmr@gmail.com>, 2012
@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 10:10+0200\n"
+"POT-Creation-Date: 2018-03-29 15:35+0200\n"
 "PO-Revision-Date: 2017-10-05 08:25+0000\n"
 "Last-Translator: Amandine Manceau\n"
 "Language-Team: French (France) (http://www.transifex.com/tsmr/GLPI_webapplications/language/fr_FR/)\n"
@@ -18,8 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: hook.php:438 inc/webapplication_item.class.php:508
+#: hook.php:438 inc/webapplication_item.class.php:507
 msgid "Associate a web application"
 msgstr "Associer une application web"
 
@@ -35,11 +36,11 @@ msgid "Backoffice URL"
 msgstr "URL d'administration"
 
 #: inc/webapplication.class.php:189 inc/webapplication.class.php:348
-#: inc/webapplication.class.php:512
+#: inc/webapplication.class.php:511
 msgid "Editor"
 msgstr "Editeur "
 
-#: inc/webapplication_item.class.php:874
+#: inc/webapplication_item.class.php:876
 msgid "Associated web application"
 msgid_plural "Associated web applications"
 msgstr[0] "Application Web associée"

@@ -1,24 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Webapplications Development Team
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the GLPI - Webapplications plugin package.
 # 
 # Translators:
 # David Stepan <stepand@tiscali.cz>, 2015
+# Pavel Borecki <pavel.borecki@gmail.com>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-05 10:10+0200\n"
-"PO-Revision-Date: 2017-10-05 08:25+0000\n"
-"Last-Translator: Amandine Manceau\n"
+"POT-Creation-Date: 2018-03-29 15:35+0200\n"
+"PO-Revision-Date: 2018-03-21 09:28+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech (Czech Republic) (http://www.transifex.com/tsmr/GLPI_webapplications/language/cs_CZ/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs_CZ\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Poedit 2.0.6\n"
 
-#: hook.php:438 inc/webapplication_item.class.php:508
+#: hook.php:438 inc/webapplication_item.class.php:507
 msgid "Associate a web application"
 msgstr "Přiřadit webovou aplikaci"
 
@@ -35,34 +37,34 @@ msgid "Backoffice URL"
 msgstr "Koncová URL adresa"
 
 #: inc/webapplication.class.php:189 inc/webapplication.class.php:348
-#: inc/webapplication.class.php:512
+#: inc/webapplication.class.php:511
 msgid "Editor"
 msgstr "Editor"
 
-#: inc/webapplication_item.class.php:874
+#: inc/webapplication_item.class.php:876
 msgid "Associated web application"
 msgid_plural "Associated web applications"
 msgstr[0] "Přiřazená webová aplikace"
 msgstr[1] "Přiřazené webové aplikace"
-msgstr[2] "Přiřazené webové aplikace"
+msgstr[2] "Přiřazených webových aplikací"
 
 #: inc/webapplicationservertype.class.php:49
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Typ ošetřujícího serveru"
+msgstr[1] "Typy ošetřujících serverů"
+msgstr[2] "Typů ošetřujících serverů"
 
 #: inc/webapplicationtechnic.class.php:49
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Jazyk ošetření"
+msgstr[1] "Jazyky ošetření"
+msgstr[2] "Jazyků ošetření"
 
 #: inc/webapplicationtype.class.php:50
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Kategorie"
 msgstr[1] "Kategorie"
-msgstr[2] "Kategorie"
+msgstr[2] "Kategorií"
