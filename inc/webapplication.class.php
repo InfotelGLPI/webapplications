@@ -111,118 +111,191 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
    /**
     * @return array
     */
-   function getSearchOptions() {
+   function rawSearchOptions() {
 
       $tab = [];
 
-      $tab['common'] = self::getTypeName(2);
+      $tab[] = [
+         'id'                 => 'common',
+         'name'               => self::getTypeName(2)
+      ];
 
-      $tab[1]['table']         = $this->getTable();
-      $tab[1]['field']         = 'name';
-      $tab[1]['name']          = __('Name');
-      $tab[1]['datatype']      = 'itemlink';
-      $tab[1]['itemlink_type'] = $this->getType();
+      $tab[] = [
+         'id'                 => '1',
+         'table'              => $this->getTable(),
+         'field'              => 'name',
+         'name'               => __('Name'),
+         'datatype'           => 'itemlink',
+         'itemlink_type'      => $this->getType()
+      ];
 
-      $tab[2]['table']    = 'glpi_plugin_webapplications_webapplicationtypes';
-      $tab[2]['field']    = 'name';
-      $tab[2]['name']     = PluginWebapplicationsWebapplicationType::getTypeName(1);
-      $tab[2]['datatype'] = 'dropdown';
+      $tab[] = [
+         'id'                 => '2',
+         'table'              => 'glpi_plugin_webapplications_webapplicationtypes',
+         'field'              => 'name',
+         'name'               => PluginWebapplicationsWebapplicationType::getTypeName(1),
+         'datatype'           => 'dropdown'
+      ];
 
-      $tab[3]['table']    = $this->getTable();
-      $tab[3]['field']    = 'address';
-      $tab[3]['name']     = __('URL');
-      $tab[3]['datatype'] = 'weblink';
+      $tab[] = [
+         'id'                 => '3',
+         'table'              => $this->getTable(),
+         'field'              => 'address',
+         'name'               => __('URL'),
+         'datatype'           => 'weblink'
+      ];
 
-      $tab[4]['table']    = 'glpi_plugin_webapplications_webapplicationservertypes';
-      $tab[4]['field']    = 'name';
-      $tab[4]['name']     = PluginWebapplicationsWebapplicationServerType::getTypeName(1);
-      $tab[4]['datatype'] = 'dropdown';
+      $tab[] = [
+         'id'                 => '4',
+         'table'              => 'glpi_plugin_webapplications_webapplicationservertypes',
+         'field'              => 'name',
+         'name'               => PluginWebapplicationsWebapplicationServerType::getTypeName(1),
+         'datatype'           => 'dropdown'
+      ];
 
-      $tab[5]['table']    = 'glpi_plugin_webapplications_webapplicationtechnics';
-      $tab[5]['field']    = 'name';
-      $tab[5]['name']     = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
-      $tab[5]['datatype'] = 'dropdown';
+      $tab[] = [
+         'id'                 => '5',
+         'table'              => 'glpi_plugin_webapplications_webapplicationtechnics',
+         'field'              => 'name',
+         'name'               => PluginWebapplicationsWebapplicationTechnic::getTypeName(1),
+         'datatype'           => 'dropdown'
+      ];
 
-      $tab[6]['table']    = 'glpi_locations';
-      $tab[6]['field']    = 'completename';
-      $tab[6]['name']     = __('Location');
-      $tab[6]['datatype'] = 'dropdown';
+      $tab[] = [
+         'id'                 => '6',
+         'table'              => 'glpi_locations',
+         'field'              => 'completename',
+         'name'               => __('Location'),
+         'datatype'           => 'dropdown'
+      ];
 
-      $tab[7]['table']    = 'glpi_suppliers';
-      $tab[7]['field']    = 'name';
-      $tab[7]['name']     = __('Supplier');
-      $tab[7]['datatype'] = 'itemlink';
+      $tab[] = [
+         'id'                 => '7',
+         'table'              => 'glpi_suppliers',
+         'field'              => 'name',
+         'name'               => __('Supplier'),
+         'datatype'           => 'itemlink'
+      ];
 
-      $tab[8]['table'] = $this->getTable();
-      $tab[8]['field'] = 'version';
-      $tab[8]['name']  = __('Version');
+      $tab[] = [
+         'id'                 => '8',
+         'table'              => $this->getTable(),
+         'field'              => 'version',
+         'name'               => __('Version')
+      ];
 
-      $tab[9]['table']     = 'glpi_users';
-      $tab[9]['field']     = 'name';
-      $tab[9]['linkfield'] = 'users_id_tech';
-      $tab[9]['name']      = __('Technician in charge of the hardware');
-      $tab[9]['datatype']  = 'dropdown';
-      $tab[9]['right']     = 'interface';
+      $tab[] = [
+         'id'                 => '9',
+         'table'              => 'glpi_users',
+         'field'              => 'name',
+         'linkfield'          => 'users_id_tech',
+         'name'               => __('Technician in charge of the hardware'),
+         'datatype'           => 'dropdown',
+         'right'              => 'interface'
+      ];
 
-      $tab[10]['table']     = 'glpi_groups';
-      $tab[10]['field']     = 'name';
-      $tab[10]['linkfield'] = 'groups_id_tech';
-      $tab[10]['name']      = __('Group in charge of the hardware');
-      $tab[10]['condition'] = '`is_assign`';
-      $tab[10]['datatype']  = 'dropdown';
+      $tab[] = [
+         'id'                 => '10',
+         'table'              => 'glpi_groups',
+         'field'              => 'name',
+         'linkfield'          => 'groups_id_tech',
+         'name'               => __('Group in charge of the hardware'),
+         'condition'          => '`is_assign`',
+         'datatype'           => 'dropdown'
+      ];
 
-      $tab[11]['table']    = $this->getTable();
-      $tab[11]['field']    = 'backoffice';
-      $tab[11]['name']     = __('Backoffice URL', 'webapplications');
-      $tab[11]['datatype'] = 'weblink';
+      $tab[] = [
+         'id'                 => '11',
+         'table'              => $this->getTable(),
+         'field'              => 'backoffice',
+         'name'               => __('Backoffice URL', 'webapplications'),
+         'datatype'           => 'weblink'
+      ];
 
-      $tab[13]['table']         = 'glpi_plugin_webapplications_webapplications_items';
-      $tab[13]['field']         = 'items_id';
-      $tab[13]['nosearch']      = true;
-      $tab[13]['massiveaction'] = false;
-      $tab[13]['name']          = _n('Associated item', 'Associated items', 2);
-      $tab[13]['forcegroupby']  = true;
-      $tab[13]['joinparams']    = ['jointype' => 'child'];
+      $tab[] = [
+         'id'                 => '13',
+         'table'              => 'glpi_plugin_webapplications_webapplications_items',
+         'field'              => 'items_id',
+         'nosearch'           => true,
+         'massiveaction'      => false,
+         'name'               => _n('Associated item', 'Associated items', 2),
+         'forcegroupby'       => true,
+         'joinparams'         => [
+            'jointype'           => 'child'
+         ]
+      ];
 
-      $tab[14]['table']    = 'glpi_manufacturers';
-      $tab[14]['field']    = 'name';
-      $tab[14]['name']     = __('Editor', 'webapplications');
-      $tab[14]['datatype'] = 'dropdown';
+      $tab[] = [
+         'id'                 => '14',
+         'table'              => 'glpi_manufacturers',
+         'field'              => 'name',
+         'name'               => __('Editor', 'webapplications'),
+         'datatype'           => 'dropdown'
+      ];
 
-      $tab[15]['table']    = $this->getTable();
-      $tab[15]['field']    = 'is_recursive';
-      $tab[15]['name']     = __('Child entities');
-      $tab[15]['datatype'] = 'bool';
+      $tab[] = [
+         'id'                 => '15',
+         'table'              => $this->getTable(),
+         'field'              => 'is_recursive',
+         'name'               => __('Child entities'),
+         'datatype'           => 'bool'
+      ];
 
-      $tab[16]['table']    = $this->getTable();
-      $tab[16]['field']    = 'comment';
-      $tab[16]['name']     = __('Comments');
-      $tab[16]['datatype'] = 'text';
+      $tab[] = [
+         'id'                 => '16',
+         'table'              => $this->getTable(),
+         'field'              => 'comment',
+         'name'               => __('Comments'),
+         'datatype'           => 'text'
+      ];
 
-      $tab[17]['table']         = $this->getTable();
-      $tab[17]['field']         = 'date_mod';
-      $tab[17]['massiveaction'] = false;
-      $tab[17]['name']          = __('Last update');
-      $tab[17]['datatype']      = 'datetime';
+      $tab[] = [
+         'id'                 => '17',
+         'table'              => $this->getTable(),
+         'field'              => 'date_mod',
+         'massiveaction'      => false,
+         'name'               => __('Last update'),
+         'datatype'           => 'datetime'
+      ];
 
-      $tab[18]['table']    = $this->getTable();
-      $tab[18]['field']    = 'is_helpdesk_visible';
-      $tab[18]['name']     = __('Associable to a ticket');
-      $tab[18]['datatype'] = 'bool';
+      $tab[] = [
+         'id'                 => '18',
+         'table'              => $this->getTable(),
+         'field'              => 'is_helpdesk_visible',
+         'name'               => __('Associable to a ticket'),
+         'datatype'           => 'bool'
+      ];
 
-      $tab[30]['table']    = $this->getTable();
-      $tab[30]['field']    = 'id';
-      $tab[30]['name']     = __('ID');
-      $tab[30]['datatype'] = 'number';
+      $tab[] = [
+         'id'                 => '30',
+         'table'              => $this->getTable(),
+         'field'              => 'id',
+         'name'               => __('ID'),
+         'datatype'           => 'number'
+      ];
 
-      $tab[80]['table']    = 'glpi_entities';
-      $tab[80]['field']    = 'completename';
-      $tab[80]['name']     = __('Entity');
-      $tab[80]['datatype'] = 'dropdown';
+      $tab[] = [
+         'id'                 => '80',
+         'table'              => 'glpi_entities',
+         'field'              => 'completename',
+         'name'               => __('Entity'),
+         'datatype'           => 'dropdown'
+      ];
 
-      $tab[81]['table'] = 'glpi_entities';
-      $tab[81]['field'] = 'entities_id';
-      $tab[81]['name']  = __('Entity') . "-" . __('ID');
+      $tab[] = [
+         'id'                 => '81',
+         'table'              => 'glpi_entities',
+         'field'              => 'entities_id',
+         'name'               => __('Entity') . "-" . __('ID')
+      ];
+
+      /*$tab[] = [
+         'id'                 => '86',
+         'table'              => $this->getTable(),
+         'field'              => 'is_recursive',
+         'name'               => __('Child entities'),
+         'datatype'           => 'bool'
+      ];*/
 
       return $tab;
    }
