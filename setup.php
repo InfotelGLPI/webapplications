@@ -105,7 +105,7 @@ function plugin_init_webapplications() {
 function plugin_version_webapplications() {
 
    return ['name'           => _n('Web application', 'Web applications', 2, 'webapplications'),
-                'version'        => '2.4.0',
+                'version'        => '2.4.1',
                 'license'        => 'GPLv2+',
                 'oldname'        => 'appweb',
                 'author'         => "<a href='http://infotel.com/services/expertise-technique/glpi/'>Infotel</a>",
