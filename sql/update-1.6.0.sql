@@ -90,7 +90,6 @@ COMMENT 'RELATION to various tables, according to itemtype (id)',
   CHANGE `device_type` `itemtype` VARCHAR(100)
 COLLATE utf8_unicode_ci NOT NULL
 COMMENT 'see .class.php file',
-  DROP INDEX `FK_compte`,
   DROP INDEX `FK_appweb_2`,
   DROP INDEX `FK_device`,
   ADD UNIQUE `unicity` (`plugin_webapplications_webapplications_id`, `itemtype`, `items_id`),
