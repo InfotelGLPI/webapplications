@@ -76,6 +76,14 @@ function plugin_webapplications_install() {
       if (!$DB->tableExists("glpi_plugin_webapplications_webapplications")) {
          $update = true;
          $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.6.0.sql");
+
+         //not same index name depending on installation version for (`FK_appweb`, `FK_device`, `device_type`)
+         $query = "ALTER TABLE `glpi_plugin_webapplications_webapplications_items` DROP INDEX `FK_compte`;";
+         $DB->query($query);
+
+         //index with install version 1.5.0 & 1.5.1
+         $query = "ALTER TABLE `glpi_plugin_webapplications_webapplications_items` DROP INDEX `FK_appweb`;";
+         $DB->query($query);
       }
 
       //from 1.6 version
