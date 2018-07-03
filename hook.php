@@ -40,7 +40,7 @@ function plugin_webapplications_install() {
        && !$DB->tableExists("glpi_plugin_appweb")
        && !$DB->tableExists("glpi_plugin_webapplications_webapplications")) {
 
-      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-2.0.0.sql");
+      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-2.5.0.sql");
 
    } else {
 
