@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 15:35+0200\n"
+"POT-Creation-Date: 2018-07-04 09:27+0200\n"
 "PO-Revision-Date: 2017-10-05 08:25+0000\n"
 "Last-Translator: Amandine Manceau\n"
 "Language-Team: Turkish (Turkey) (http://www.transifex.com/tsmr/GLPI_webapplications/language/tr_TR/)\n"
@@ -17,9 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.0.6\n"
 
-#: hook.php:438 inc/webapplication_item.class.php:507
+#: hook.php:446 inc/webapplication_item.class.php:507
 msgid "Associate a web application"
 msgstr "Bir web uygulaması ekleyin"
 
@@ -30,12 +29,12 @@ msgid_plural "Web applications"
 msgstr[0] "Web uygulamaları"
 msgstr[1] "Web uygulamaları"
 
-#: inc/webapplication.class.php:176 inc/webapplication.class.php:369
+#: inc/webapplication.class.php:211 inc/webapplication.class.php:432
 msgid "Backoffice URL"
 msgstr "Arka Ofis İnternet Adresi"
 
-#: inc/webapplication.class.php:189 inc/webapplication.class.php:348
-#: inc/webapplication.class.php:511
+#: inc/webapplication.class.php:230 inc/webapplication.class.php:411
+#: inc/webapplication.class.php:574
 msgid "Editor"
 msgstr "Düzenleyen"
 

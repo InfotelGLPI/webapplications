@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-29 15:35+0200\n"
+"POT-Creation-Date: 2018-07-04 09:27+0200\n"
 "PO-Revision-Date: 2017-12-26 10:48+0000\n"
 "Last-Translator: Roman O <master_bb@e1.ru>\n"
 "Language-Team: Russian (Russia) (http://www.transifex.com/tsmr/GLPI_webapplications/language/ru_RU/)\n"
@@ -17,9 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru_RU\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Poedit 2.0.6\n"
 
-#: hook.php:438 inc/webapplication_item.class.php:507
+#: hook.php:446 inc/webapplication_item.class.php:507
 msgid "Associate a web application"
 msgstr "Связать веб-приложение"
 
@@ -32,12 +31,12 @@ msgstr[1] "Веб-приложений"
 msgstr[2] "Веб-приложений"
 msgstr[3] "Веб-приложение"
 
-#: inc/webapplication.class.php:176 inc/webapplication.class.php:369
+#: inc/webapplication.class.php:211 inc/webapplication.class.php:432
 msgid "Backoffice URL"
 msgstr "URL Бэк-офиса"
 
-#: inc/webapplication.class.php:189 inc/webapplication.class.php:348
-#: inc/webapplication.class.php:511
+#: inc/webapplication.class.php:230 inc/webapplication.class.php:411
+#: inc/webapplication.class.php:574
 msgid "Editor"
 msgstr "Редактор"
 
