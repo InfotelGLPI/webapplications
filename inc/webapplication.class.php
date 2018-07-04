@@ -161,6 +161,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
          'datatype'           => 'dropdown'
       ];
 
+      $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
       $tab[] = [
          'id'                 => '6',
          'table'              => 'glpi_locations',
