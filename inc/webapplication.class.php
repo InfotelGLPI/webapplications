@@ -138,7 +138,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       ];
 
       $tab[] = [
-         'id'                 => '3',
+         'id'                 => '6',
          'table'              => $this->getTable(),
          'field'              => 'address',
          'name'               => __('URL'),
@@ -162,13 +162,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       ];
 
       $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
-      $tab[] = [
-         'id'                 => '6',
-         'table'              => 'glpi_locations',
-         'field'              => 'completename',
-         'name'               => __('Location'),
-         'datatype'           => 'dropdown'
-      ];
+      
 
       $tab[] = [
          'id'                 => '7',
