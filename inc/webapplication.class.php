@@ -162,7 +162,6 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       ];
 
       $tab = array_merge($tab, Location::rawSearchOptionsToAdd());
-      
 
       $tab[] = [
          'id'                 => '7',
@@ -473,9 +472,9 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
             $p[$key] = $val;
          }
       }
-
+      $dbu = new DbUtils();
       $where = " WHERE `glpi_plugin_webapplications_webapplications`.`is_deleted` = '0' " .
-               getEntitiesRestrictRequest("AND", "glpi_plugin_webapplications_webapplications", '', $p['entity'], true);
+               $dbu->getEntitiesRestrictRequest("AND", "glpi_plugin_webapplications_webapplications", '', $p['entity'], true);
 
       $p['used'] = array_filter($p['used']);
       if (count($p['used'])) {
@@ -547,8 +546,9 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
          '<b><i>' . PluginWebapplicationsWebapplicationType::getTypeName(1) . ' :</i></b> ' .
          Html::clean(Dropdown::getDropdownName('glpi_plugin_webapplications_webapplicationtypes',
                                                $this->fields['plugin_webapplications_webapplicationtypes_id'])));
+      $dbu = new DbUtils();
       $pdf->displayLine(
-         '<b><i>' . __('Technician in charge of the hardware') . ':</i></b> ' . getUserName($this->fields['users_id_tech']),
+         '<b><i>' . __('Technician in charge of the hardware') . ':</i></b> ' . $dbu->getUserName($this->fields['users_id_tech']),
          '<b><i>' . __('Group in charge of the hardware') . ':</i></b> ' . Html::clean(Dropdown::getDropdownName('glpi_groups',
                                                                                                                  $this->fields['groups_id_tech'])));
       $pdf->displayLine(

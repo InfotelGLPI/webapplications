@@ -223,6 +223,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       $result = $DB->query($query);
       $number = $DB->numrows($result);
       $rand   = mt_rand();
+      $dbu    = new DbUtils();
 
       if ($canedit) {
          echo "<div class='firstbloc'>";
@@ -237,7 +238,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                                                      'itemtypes'     => PluginWebapplicationsWebapplication::getTypes(true),
                                                      'entity_restrict'
                                                                      => ($webapplication->fields['is_recursive']
-                                                        ? getSonsOf('glpi_entities',
+                                                        ? $dbu->getSonsOf('glpi_entities',
                                                                     $webapplication->fields['entities_id'])
                                                                      : $webapplication->fields['entities_id']),
                                                      'checkright'
@@ -274,7 +275,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
 
       for ($i = 0; $i < $number; $i++) {
          $itemtype = $DB->result($result, $i, "itemtype");
-         if (!($item = getItemForItemtype($itemtype))) {
+         if (!($item = $dbu->getItemForItemtype($itemtype))) {
             continue;
          }
 
@@ -284,7 +285,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                $column = "id";
             }
 
-            $itemtable = getTableForItemType($itemtype);
+            $itemtable = $dbu->getTableForItemType($itemtype);
             $query     = "SELECT `$itemtable`.*,
                                  `glpi_plugin_webapplications_webapplications_items`.`id` AS IDD, ";
 
@@ -319,7 +320,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                   }
                }
             } else {
-               $query .= getEntitiesRestrictRequest(" AND ", $itemtable, '', '',
+               $query .= $dbu->getEntitiesRestrictRequest(" AND ", $itemtable, '', '',
                                                     $item->maybeRecursive());
             }
 
@@ -427,6 +428,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       $canedit      = $item->canAddItem('PluginWebapplicationsWebapplication');
       $rand         = mt_rand();
       $is_recursive = $item->isRecursive();
+      $dbu          = new DbUtils();
 
       $query = "SELECT `glpi_plugin_webapplications_webapplications_items`.`id` AS assocID,
                        `glpi_entities`.`id` AS entity,
@@ -439,7 +441,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                 WHERE `glpi_plugin_webapplications_webapplications_items`.`items_id` = '$ID'
                       AND `glpi_plugin_webapplications_webapplications_items`.`itemtype` = '" . $item->getType() . "' ";
 
-      $query .= getEntitiesRestrictRequest(" AND", "glpi_plugin_webapplications_webapplications", '', '', true);
+      $query .= $dbu->getEntitiesRestrictRequest(" AND", "glpi_plugin_webapplications_webapplications", '', '', true);
 
       $query .= " ORDER BY `assocName`";
 
@@ -469,12 +471,12 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
             }
 
             if ($item->isRecursive()) {
-               $entities = getSonsOf('glpi_entities', $entity);
+               $entities = $dbu->getSonsOf('glpi_entities', $entity);
             } else {
                $entities = $entity;
             }
          }
-         $limit = getEntitiesRestrictRequest(" AND ", "glpi_plugin_webapplications_webapplications", '', $entities, true);
+         $limit = $dbu->getEntitiesRestrictRequest(" AND ", "glpi_plugin_webapplications_webapplications", '', $entities, true);
          $q     = "SELECT COUNT(*)
                FROM `glpi_plugin_webapplications_webapplications`
                WHERE `is_deleted` = '0'
@@ -558,7 +560,6 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
             Session::addToNavigateListItems('PluginWebapplicationsWebapplication', $webID);
 
             $used[$webID] = $webID;
-            $assocID      = $data["assocID"];
 
             echo "<tr class='tab_bg_1" . ($data["is_deleted"] ? "_2" : "") . "'>";
             if ($canedit && ($withtemplate < 2)) {
@@ -638,12 +639,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
          return false;
       }
 
-      if (empty($withtemplate)) {
-         $withtemplate = 0;
-      }
-
-      $rand         = mt_rand();
-      $is_recursive = $item->isRecursive();
+      $dbu = new DbUtils();
 
       $query = "SELECT `glpi_entities`.`id` AS entity,
                         `glpi_plugin_webapplications_webapplications`.`id` AS assocID,
@@ -653,7 +649,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                 LEFT JOIN `glpi_entities` ON (`glpi_plugin_webapplications_webapplications`.`entities_id`=`glpi_entities`.`id`)
                 WHERE `glpi_plugin_webapplications_webapplications`.`suppliers_id` = '$ID' ";
 
-      $query .= getEntitiesRestrictRequest(" AND", "glpi_plugin_webapplications_webapplications", '', '', true);
+      $query .= $dbu->getEntitiesRestrictRequest(" AND", "glpi_plugin_webapplications_webapplications", '', '', true);
 
       $query .= " ORDER BY `assocName`";
 
@@ -683,7 +679,6 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       echo "<th>" . __('Version') . "</th>";
       echo "<th>" . __('Comments') . "</th>";
       echo "</tr>";
-      $used = [];
 
       if ($number) {
 
@@ -792,8 +787,9 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                continue;
             }
             if ($item->canView()) {
+               $dbu = new DbUtils();
                $column = "name";
-               $table  = getTableForItemType($type);
+               $table  = $dbu->getTableForItemType($type);
                $items  = new $type();
 
                $query = "SELECT `" . $table . "`.*, `glpi_entities`.`id` AS entity "
@@ -803,7 +799,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                   AND `glpi_plugin_webapplications_webapplications_items`.`itemtype` = '$type' 
                   AND `glpi_plugin_webapplications_webapplications_items`.`plugin_webapplications_webapplications_id` = '$ID' ";
                if ($type != 'User') {
-                  $query .= getEntitiesRestrictRequest(" AND ", $table, '', '', $items->maybeRecursive());
+                  $query .= $dbu->getEntitiesRestrictRequest(" AND ", $table, '', '', $items->maybeRecursive());
                }
 
                if ($items->maybeTemplate()) {
@@ -824,7 +820,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                            $items_id_display = " (" . $data["id"] . ")";
                         }
                         if ($type == 'User') {
-                           $name = Html::clean(getUserName($data["id"])) . $items_id_display;
+                           $name = Html::clean($dbu->getUserName($data["id"])) . $items_id_display;
                         } else {
                            $name = $data["name"] . $items_id_display;
                         }
@@ -877,6 +873,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
 
       $ID       = $item->getField('id');
       $itemtype = get_class($item);
+      $dbu      = new DbUtils();
 
       $web = new PluginWebapplicationsWebapplication();
 
@@ -886,7 +883,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                . " WHERE `glpi_plugin_webapplications_webapplications_items`.`items_id` = '" . $ID . "' 
          AND `glpi_plugin_webapplications_webapplications_items`.`itemtype` = '" . $itemtype . "' 
          AND `glpi_plugin_webapplications_webapplications_items`.`plugin_webapplications_webapplications_id` = `glpi_plugin_webapplications_webapplications`.`id` "
-               . getEntitiesRestrictRequest(" AND ", "glpi_plugin_webapplications_webapplications", '', '', $web->maybeRecursive());
+               . $dbu->getEntitiesRestrictRequest(" AND ", "glpi_plugin_webapplications_webapplications", '', '', $web->maybeRecursive());
 
       $result = $DB->query($query);
       $number = $DB->numrows($result);
@@ -915,7 +912,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                $pdf->displayLine($data["name"],
                                  Html::clean(Dropdown::getDropdownName("glpi_entities",
                                                                        $data['entities_id'])),
-                                 Html::clean(getUserName("glpi_users", $data["users_id_tech"])),
+                                 Html::clean($dbu->getUserName("glpi_users", $data["users_id_tech"])),
                                  Html::clean(Dropdown::getDropdownName("glpi_groups",
                                                                        $data["groups_id_tech"])),
                                  Html::clean(Dropdown::getDropdownName("glpi_plugin_webapplications_webapplicationtypes",
@@ -924,7 +921,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                $pdf->setColumnsSize(50, 25, 25);
                $pdf->displayLine(
                   $data["name"],
-                  Html::clean(getUserName("glpi_users", $data["users_id_tech"])),
+                  Html::clean($dbu->getUserName("glpi_users", $data["users_id_tech"])),
                   Html::clean(Dropdown::getDropdownName("glpi_groups", $data["groups_id_tech"])),
                   Html::clean(Dropdown::getDropdownName("glpi_plugin_webapplications_webapplicationtypes",
                                                         $data["plugin_webapplications_webapplicationtypes_id"])));

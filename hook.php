@@ -96,6 +96,7 @@ function plugin_webapplications_install() {
    if ($DB->tableExists("glpi_plugin_webapplications_profiles")) {
 
       $notepad_tables = ['glpi_plugin_webapplications_webapplications'];
+      $dbu = new DbUtils();
 
       foreach ($notepad_tables as $t) {
          // Migrate data
@@ -107,7 +108,7 @@ function plugin_webapplications_install() {
             foreach ($DB->request($query) as $data) {
                $iq = "INSERT INTO `glpi_notepads`
                              (`itemtype`, `items_id`, `content`, `date`, `date_mod`)
-                      VALUES ('" . getItemTypeForTable($t) . "', '" . $data['id'] . "',
+                      VALUES ('" . $dbu->getItemTypeForTable($t) . "', '" . $data['id'] . "',
                               '" . addslashes($data['notepad']) . "', NOW(), NOW())";
                $DB->queryOrDie($iq, "0.85 migrate notepad data");
             }
@@ -346,6 +347,7 @@ function plugin_webapplications_giveItem($type, $ID, $data, $num) {
    $searchopt = &Search::getOptions($type);
    $table     = $searchopt[$ID]["table"];
    $field     = $searchopt[$ID]["field"];
+   $dbu       = new DbUtils();
 
    switch ($table . '.' . $field) {
       //display associated items with webapplications
@@ -367,7 +369,7 @@ function plugin_webapplications_giveItem($type, $ID, $data, $num) {
                }
                $item = new $itemtype();
                if ($item->canView()) {
-                  $table_item = getTableForItemType($itemtype);
+                  $table_item = $dbu->getTableForItemType($itemtype);
 
                   if ($itemtype != 'Entity') {
                      $query = "SELECT `" . $table_item . "`.*,
@@ -380,7 +382,7 @@ function plugin_webapplications_giveItem($type, $ID, $data, $num) {
                                WHERE `" . $table_item . "`.`id` = `glpi_plugin_webapplications_webapplications_items`.`items_id`
                                      AND `glpi_plugin_webapplications_webapplications_items`.`itemtype` = '$itemtype'
                                      AND `glpi_plugin_webapplications_webapplications_items`.`plugin_webapplications_webapplications_id` = '" . $webapplications . "' "
-                              . getEntitiesRestrictRequest(" AND ", $table_item, '', '',
+                              . $dbu->getEntitiesRestrictRequest(" AND ", $table_item, '', '',
                                                            $item->maybeRecursive());
 
                      if ($item->maybeTemplate()) {
@@ -397,7 +399,7 @@ function plugin_webapplications_giveItem($type, $ID, $data, $num) {
                                WHERE `" . $table_item . "`.`id` = `glpi_plugin_webapplications_webapplications_items`.`items_id`
                                      AND `glpi_plugin_webapplications_webapplications_items`.`itemtype` = '$itemtype'
                                      AND `glpi_plugin_webapplications_webapplications_items`.`plugin_webapplications_webapplications_id` = '" . $webapplications . "' "
-                              . getEntitiesRestrictRequest(" AND ", $table_item, '', '',
+                              . $dbu->getEntitiesRestrictRequest(" AND ", $table_item, '', '',
                                                            $item->maybeRecursive());
 
                      if ($item->maybeTemplate()) {
