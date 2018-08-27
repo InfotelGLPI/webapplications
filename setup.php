@@ -92,6 +92,8 @@ function plugin_init_webapplications() {
          = 'PluginWebapplicationsWebapplicationPDF';
    }
 
+   $PLUGIN_HOOKS['plugin_fields']['webapplications'] = 'PluginWebapplicationsWebapplication';
+
    // End init, when all types are registered
    $PLUGIN_HOOKS['post_init']['webapplications'] = 'plugin_webapplications_postinit';
 }
