@@ -579,7 +579,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       $isadmin = static::canUpdate();
       $actions = parent::getSpecificMassiveActions($checkitem);
 
-      if (Session::getCurrentInterface() == 'central') {
+      if ($_SESSION['glpiactiveprofile']['interface'] == 'central') {
          if ($isadmin) {
             $actions['PluginWebapplicationsWebapplication' . MassiveAction::CLASS_ACTION_SEPARATOR . 'install']   = _x('button', 'Associate');
             $actions['PluginWebapplicationsWebapplication' . MassiveAction::CLASS_ACTION_SEPARATOR . 'uninstall'] = _x('button', 'Dissociate');
