@@ -40,7 +40,7 @@ function plugin_webapplications_install() {
        && !$DB->tableExists("glpi_plugin_appweb")
        && !$DB->tableExists("glpi_plugin_webapplications_webapplications")) {
 
-      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-2.5.0.sql");
+      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-2.6.0.sql");
 
    } else {
 
@@ -116,6 +116,10 @@ function plugin_webapplications_install() {
             $DB->query($query);
          }
       }
+   }
+
+   if (!$DB->fieldExists("glpi_plugin_webapplications_webapplicationtypes", "is_recursive")) {
+      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.9.0.sql");
    }
 
    if ($update) {
