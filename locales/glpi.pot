@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-04 09:27+0200\n"
+"POT-Creation-Date: 2018-12-11 08:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,27 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: hook.php:446 inc/webapplication_item.class.php:507
+#: hook.php:452 inc/webapplication_item.class.php:509
 msgid "Associate a web application"
 msgstr ""
 
-#: setup.php:107 inc/menu.class.php:41 inc/profile.class.php:175
+#: setup.php:108 inc/menu.class.php:41 inc/profile.class.php:175
 #: inc/webapplication.class.php:54
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/webapplication.class.php:211 inc/webapplication.class.php:432
+#: inc/webapplication.class.php:205 inc/webapplication.class.php:426
 msgid "Backoffice URL"
 msgstr ""
 
-#: inc/webapplication.class.php:230 inc/webapplication.class.php:411
-#: inc/webapplication.class.php:574
+#: inc/webapplication.class.php:224 inc/webapplication.class.php:405
+#: inc/webapplication.class.php:569
 msgid "Editor"
 msgstr ""
 
-#: inc/webapplication_item.class.php:876
+#: inc/webapplication_item.class.php:872
 msgid "Associated web application"
 msgid_plural "Associated web applications"
 msgstr[0] ""
