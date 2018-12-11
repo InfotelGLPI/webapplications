@@ -446,10 +446,13 @@ function plugin_webapplications_giveItem($type, $ID, $data, $num) {
  * @return array
  */
 function plugin_webapplications_MassiveActions($type) {
-
-   if (in_array($type, PluginWebapplicationsWebapplication::getTypes(true))) {
-      return ['PluginWebapplicationsWebapplication' . MassiveAction::CLASS_ACTION_SEPARATOR . 'plugin_webapplications_add_item' =>
-                      __('Associate a web application', 'webapplications')];
+   
+   $plugin = new Plugin();
+   if ($plugin->isActivated('webapplications')) {
+      if (in_array($type, PluginWebapplicationsWebapplication::getTypes(true))) {
+         return ['PluginWebapplicationsWebapplication' . MassiveAction::CLASS_ACTION_SEPARATOR . 'plugin_webapplications_add_item' =>
+                         __('Associate a web application', 'webapplications')];
+      }
    }
    return [];
 }
