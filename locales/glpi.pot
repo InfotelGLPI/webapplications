@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-11 08:56+0100\n"
+"POT-Creation-Date: 2019-02-25 10:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: hook.php:452 inc/webapplication_item.class.php:509
+#: hook.php:454 inc/webapplication_item.class.php:509
 msgid "Associate a web application"
 msgstr ""
 
-#: setup.php:108 inc/menu.class.php:41 inc/profile.class.php:175
+#: setup.php:110 inc/menu.class.php:41 inc/profile.class.php:175
 #: inc/webapplication.class.php:54
 msgid "Web application"
 msgid_plural "Web applications"
