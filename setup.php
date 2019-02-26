@@ -111,7 +111,7 @@ function plugin_version_webapplications() {
                 'version'        => PLUGIN_WEBAPPLICATIONS_VERSION,
                 'license'        => 'GPLv2+',
                 'oldname'        => 'appweb',
-                'author'         => "<a href='http://infotel.com/services/expertise-technique/glpi/'>Infotel</a>",
+                'author'         => "<a href='http://blogglpi.infotel.com'>Infotel</a>",
                 'homepage'       => 'https://github.com/InfotelGLPI/webapplications',
                 'requirements'   => [
                   'glpi' => [
