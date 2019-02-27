@@ -2,10 +2,10 @@
 Plugin webapplications pour GLPI
 
 Ce plugin est sur Transifex - Aidez-nous à le traduire :
-https://www.transifex.com/tsmr/GLPI_webapplications/
+https://www.transifex.com/infotelGLPI/GLPI_webapplications/
 
 This plugin is on Transifex - Help us to translate :
-https://www.transifex.com/tsmr/GLPI_webapplications/
+https://www.transifex.com/infotelGLPI/GLPI_webapplications/
 
 Ce plugin vous permet de lister les applications web de votre réseau et de les associer à des éléments de l'inventaire.
 > * Utilisable depuis le helpdesk
