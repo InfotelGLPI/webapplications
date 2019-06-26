@@ -428,7 +428,14 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       Html::autocompletionTextField($this, "backoffice", ['size' => "65"]);
       echo "</td>";
 
-      echo "<td class='center' colspan = '2'>";
+      $randDropdown = mt_rand();
+      echo "<td><label for='dropdown_states_id$randDropdown'>".__('Status')."</label></td>";
+      echo "<td>";
+      State::dropdown([
+         'value'     => $this->fields["states_id"],
+         'entity'    => $this->fields["entities_id"],
+         'rand'      => $randDropdown
+      ]);
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
