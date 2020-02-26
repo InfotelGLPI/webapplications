@@ -277,7 +277,7 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       $tab[] = [
          'id'                 => '81',
          'table'              => 'glpi_entities',
-         'field'              => 'entities_id',
+         'field'              => 'id',
          'name'               => __('Entity') . "-" . __('ID')
       ];
       return $tab;
