@@ -27,7 +27,7 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_WEBAPPLICATIONS_VERSION', '2.6.0');
+define('PLUGIN_WEBAPPLICATIONS_VERSION', '2.7.0');
 
 // Init the hooks of the plugins -Needed
 function plugin_init_webapplications() {

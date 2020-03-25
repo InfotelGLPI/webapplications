@@ -40,7 +40,7 @@ function plugin_webapplications_install() {
        && !$DB->tableExists("glpi_plugin_appweb")
        && !$DB->tableExists("glpi_plugin_webapplications_webapplications")) {
 
-      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-2.6.0.sql");
+      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-2.7.0.sql");
 
    } else {
 
@@ -154,6 +154,10 @@ function plugin_webapplications_install() {
    PluginWebapplicationsProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
    $migration = new Migration("2.2.0");
    $migration->dropTable('glpi_plugin_webapplications_profiles');
+
+   if (!$DB->fieldExists("glpi_plugin_webapplications_webapplications", "states_id")) {
+      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-2.7.0.sql");
+   }
 
    return true;
 }
