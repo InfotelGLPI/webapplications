@@ -343,6 +343,14 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       echo "<td>";
       Html::autocompletionTextField($this, "version", ['size' => "15"]);
       echo "</td>";
+    
+      //version description
+    	 echo "<tr class='tab_bg_1'>";
+	     echo "<td>" . __('Descripción') . "</td>";
+      echo "<td>";
+      Html::autocompletionTextField($this, "descwebapp");
+      echo "</td>";
+    
       echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
@@ -391,6 +399,18 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
                                        'entity' => $this->fields["entities_id"]]);
       echo "</td>";
       echo "</tr>";
+    
+      echo "<tr class='tab_bg_1'>";
+      //version ddministrative manager
+      echo "<td>Responsable Administrativo</td><td>";
+      User::dropdown(['name'   => "users_id_resp_adm",
+                           'value'  => $this->fields["users_id_resp_adm"],
+                           'entity' => $this->fields["entities_id"],
+                           'right'  => 'interface']);
+      echo "</td>";
+      echo "<td></td>";
+      echo "<td></td>";
+      echo "</tr>";
 
       echo "<tr class='tab_bg_1'>";
       //groups
@@ -427,6 +447,47 @@ class PluginWebapplicationsWebapplication extends CommonDBTM {
       echo "<td>";
       Html::autocompletionTextField($this, "backoffice", ['size' => "65"]);
       echo "</td>";
+    
+      // version server and database complements
+      echo "<tr class=\"tab_bg_1 rowHover\" style=\"background-color: #f1f1f1;\">";
+      echo "<td><h3>Servidor de Aplicaciones</h3></td>";
+      echo "<td></td>";
+      echo "<td><h3>Base de Datos</h3></td>";
+      echo "<td></td>";
+      echo "</tr>";
+	  
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" . __('Nombre Servidor') . "</td>";
+      echo "<td>";
+      Html::autocompletionTextField($this, "nameappsrv");
+      echo "</td>";
+	     echo "<td>" . __('Nombre Base de Datos') . "</td>";
+      echo "<td>";
+      Html::autocompletionTextField($this, "namedbrv");
+      echo "</td>";
+	     echo "</tr>";
+	  
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" . __('IP Servidor') . "</td>";
+      echo "<td>";
+      Html::autocompletionTextField($this, "ipappsrv");
+      echo "</td>";
+	     echo "<td>" . __('IP Base de Datos') . "</td>";
+      echo "<td>";
+      Html::autocompletionTextField($this, "ipdbrv");
+      echo "</td>";
+	     echo "</tr>";
+	  
+      echo "<tr class='tab_bg_1'>";
+      echo "<td>" . __('Puerto Servidor') . "</td>";
+      echo "<td>";
+      Html::autocompletionTextField($this, "puertoappsrv");
+      echo "</td>";
+	     echo "<td>" . __('Puerto Base de Datos') . "</td>";
+      echo "<td>";
+      Html::autocompletionTextField($this, "puertodbsrv");
+      echo "</td>";
+	     echo "</tr>";
 
       echo "<td class='center' colspan = '2'>";
       echo "</tr>";
