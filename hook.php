@@ -128,7 +128,7 @@ function plugin_webapplications_install() {
       $result_ = $DB->query($query_);
       if ($DB->numrows($result_) > 0) {
 
-         while ($data = $DB->fetch_array($result_)) {
+         while ($data = $DB->fetchArray($result_)) {
             $query = "UPDATE `glpi_plugin_webapplications_profiles`
                       SET `profiles_id` = '" . $data["id"] . "'
                       WHERE `id` = '" . $data["id"] . "';";
@@ -416,7 +416,7 @@ function plugin_webapplications_giveItem($type, $ID, $data, $num) {
                   if ($result_linked = $DB->query($query)) {
                      if ($DB->numrows($result_linked)) {
                         $item = new $itemtype();
-                        while ($datal = $DB->fetch_assoc($result_linked)) {
+                        while ($datal = $DB->fetchAssoc($result_linked)) {
                            if ($item->getFromDB($datal['id'])) {
                               $out .= $item->getTypeName() . " - " . $item->getLink() . "<br>";
                            }

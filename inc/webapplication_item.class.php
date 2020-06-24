@@ -159,7 +159,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
          if ($DB->numrows($result) != 1) {
             return false;
          }
-         $this->fields = $DB->fetch_assoc($result);
+         $this->fields = $DB->fetchAssoc($result);
          if (is_array($this->fields) && count($this->fields)) {
             return true;
          }
@@ -341,7 +341,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
             if ($result_linked = $DB->query($query)) {
                if ($DB->numrows($result_linked)) {
 
-                  while ($data = $DB->fetch_assoc($result_linked)) {
+                  while ($data = $DB->fetchAssoc($result_linked)) {
 
                      if ($itemtype == 'Ticket') {
                         $data["name"] = sprintf(__('%1$s: %2$s'), __('Ticket'), $data["id"]);
@@ -453,7 +453,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
       $web  = new PluginWebapplicationsWebapplication();
       $used = [];
       if ($numrows = $DB->numrows($result)) {
-         while ($data = $DB->fetch_assoc($result)) {
+         while ($data = $DB->fetchAssoc($result)) {
             $webs[$data['assocID']] = $data;
             $used[$data['id']]      = $data['id'];
          }
@@ -659,7 +659,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
 
       $webs = [];
       if ($numrows = $DB->numrows($result)) {
-         while ($data = $DB->fetch_assoc($result)) {
+         while ($data = $DB->fetchAssoc($result)) {
             $webs[$data['assocID']] = $data;
          }
       }
@@ -810,7 +810,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                if ($result_linked = $DB->query($query)) {
                   if ($DB->numrows($result_linked)) {
 
-                     while ($data = $DB->fetch_assoc($result_linked)) {
+                     while ($data = $DB->fetchAssoc($result_linked)) {
                         if (!$items->getFromDB($data["id"])) {
                            continue;
                         }
@@ -905,7 +905,7 @@ class PluginWebapplicationsWebapplication_Item extends CommonDBRelation {
                                __('Group in charge of the hardware'),
                                PluginWebapplicationsWebapplicationType::getTypeName(1) . '</i></b>');
          }
-         while ($data = $DB->fetch_array($result)) {
+         while ($data = $DB->fetchArray($result)) {
 
             if (Session::isMultiEntitiesMode()) {
                $pdf->setColumnsSize(25, 25, 15, 15, 20);
