@@ -67,8 +67,8 @@ class PluginWebapplicationsProfile extends Profile {
          $prof = new self();
 
          self::addDefaultProfileInfos($ID,
-                                      ['plugin_webapplications'             => 0,
-                                            'plugin_webapplications_open_ticket' => 0]);
+            ['plugin_webapplications'             => 0,
+               'plugin_webapplications_open_ticket' => 0]);
          $prof->showForm($ID);
       }
       return true;
@@ -80,8 +80,8 @@ class PluginWebapplicationsProfile extends Profile {
    static function createFirstAccess($ID) {
       //85
       self::addDefaultProfileInfos($ID,
-                                   ['plugin_webapplications'             => 127,
-                                         'plugin_webapplications_open_ticket' => 1], true);
+         ['plugin_webapplications'             => 127,
+            'plugin_webapplications_open_ticket' => 1], true);
    }
 
    /**
@@ -96,11 +96,11 @@ class PluginWebapplicationsProfile extends Profile {
       $profileRight = new ProfileRight();
       foreach ($rights as $right => $value) {
          if ($dbu->countElementsInTable('glpi_profilerights',
-                                  ["profiles_id" => $profiles_id, "name" => $right]) && $drop_existing) {
+               ["profiles_id" => $profiles_id, "name" => $right]) && $drop_existing) {
             $profileRight->deleteByCriteria(['profiles_id' => $profiles_id, 'name' => $right]);
          }
          if (!$dbu->countElementsInTable('glpi_profilerights',
-                                   ["profiles_id" => $profiles_id, "name" => $right])) {
+            ["profiles_id" => $profiles_id, "name" => $right])) {
             $myright['profiles_id'] = $profiles_id;
             $myright['name']        = $right;
             $myright['rights']      = $value;
@@ -128,7 +128,7 @@ class PluginWebapplicationsProfile extends Profile {
 
       echo "<div class='firstbloc'>";
       if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
-          && $openform) {
+         && $openform) {
          $profile = new Profile();
          echo "<form method='post' action='" . $profile->getFormURL() . "'>";
       }
@@ -138,8 +138,8 @@ class PluginWebapplicationsProfile extends Profile {
       if ($profile->getField('interface') == 'central') {
          $rights = $this->getAllRights();
          $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
-                                                            'default_class' => 'tab_bg_2',
-                                                            'title'         => __('General')]);
+            'default_class' => 'tab_bg_2',
+            'title'         => __('General')]);
       }
       echo "<table class='tab_cadre_fixehov'>";
       echo "<tr class='tab_bg_1'><th colspan='4'>" . __('Helpdesk') . "</th></tr>\n";
@@ -149,12 +149,12 @@ class PluginWebapplicationsProfile extends Profile {
       echo "<td width='20%'>" . __('Associable items to a ticket') . "</td>";
       echo "<td colspan='5'>";
       Html::showCheckbox(['name'    => '_plugin_webapplications_open_ticket',
-                               'checked' => $effective_rights['plugin_webapplications_open_ticket']]);
+         'checked' => $effective_rights['plugin_webapplications_open_ticket']]);
       echo "</td></tr>\n";
       echo "</table>";
 
       if ($canedit
-          && $closeform) {
+         && $closeform) {
          echo "<div class='center'>";
          echo Html::hidden('id', ['value' => $profiles_id]);
          echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
@@ -172,15 +172,15 @@ class PluginWebapplicationsProfile extends Profile {
    static function getAllRights($all = false) {
       $rights = [
          ['itemtype' => 'PluginWebapplicationsWebapplication',
-               'label'    => _n('Web application', 'Web applications', 2, 'webapplications'),
-               'field'    => 'plugin_webapplications'
+            'label'    => _n('Web application', 'Web applications', 2, 'webapplications'),
+            'field'    => 'plugin_webapplications'
          ],
       ];
 
       if ($all) {
          $rights[] = ['itemtype' => 'PluginWebapplicationsWebapplication',
-                           'label'    => __('Associable items to a ticket'),
-                           'field'    => 'plugin_webapplications_open_ticket'];
+            'label'    => __('Associable items to a ticket'),
+            'field'    => 'plugin_webapplications_open_ticket'];
       }
 
       return $rights;
@@ -227,10 +227,10 @@ class PluginWebapplicationsProfile extends Profile {
       }
 
       foreach ($DB->request('glpi_plugin_webapplications_profiles',
-                            "`profiles_id`='$profiles_id'") as $profile_data) {
+         "`profiles_id`='$profiles_id'") as $profile_data) {
 
          $matching       = ['webapplications' => 'plugin_webapplications',
-                                 'open_ticket'     => 'plugin_webapplications_open_ticket'];
+            'open_ticket'     => 'plugin_webapplications_open_ticket'];
          $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
          foreach ($matching as $old => $new) {
             if (!isset($current_rights[$old])) {
@@ -253,7 +253,7 @@ class PluginWebapplicationsProfile extends Profile {
       //Add new rights in glpi_profilerights table
       foreach ($profile->getAllRights(true) as $data) {
          if ($dbu->countElementsInTable("glpi_profilerights",
-                                        ["name" => $data['field']]) == 0) {
+               ["name" => $data['field']]) == 0) {
             ProfileRight::addProfileRights([$data['field']]);
          }
       }
