@@ -65,13 +65,12 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
          $migrate_webapps = 'INSERT INTO `glpi_appliances` (`entities_id`, `is_recursive`, `name`, `is_deleted`,
                                                `comment`, `locations_id`, `manufacturers_id`, `users_id_tech`,`groups_id_tech`,
-                                                       `is_helpdesk_visible`, `old_id`
+                                                       `old_id`
                                                )
               VALUES("' . $webapp['entities_id'] . '","' . $webapp['is_recursive'] . '","' . $webapp['name'] . '",
                            "' . $webapp['is_deleted'] . '", "' . addslashes($webapp['comment']) . '",
                                  "' . $webapp['locations_id'] . '", "' . $webapp['manufacturers_id'] . '",
-                                    "' . $webapp['users_id_tech'] . '","' . $webapp['groups_id_tech'] . '",
-                                              "' . $webapp['is_helpdesk_visible'] . '", "' . $webapp['id'] . '")';
+                                    "' . $webapp['users_id_tech'] . '","' . $webapp['groups_id_tech'] . '", "' . $webapp['id'] . '")';
 
          $DB->query($migrate_webapps);
 
@@ -100,7 +99,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
       $DB->queryOrDie($remove_temporary_column_query);
 
       echo "<br>";
-      __('Tables purge', 'webapplications');
+      echo __('Tables purge', 'webapplications');
 
       $tables = ["glpi_plugin_webapplications_webapplications",
                  "glpi_plugin_webapplications_webapplications_items"];
@@ -120,14 +119,14 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
          $DB->query("DROP TABLE IF EXISTS `$oldtable`;");
 
       echo "<br>";
-      __('_plugins folder purge', 'projet');
+      echo __('_plugins folder purge', 'webapplications');
 
-      $rep_files_projet = GLPI_PLUGIN_DOC_DIR."/projet";
+      $rep_files_projet = GLPI_PLUGIN_DOC_DIR."/webapplications";
 
       Toolbox::deleteDir($rep_files_projet);
 
       echo "<br>";
-      __('Link with core purge', 'projet');
+      echo __('Link with core purge', 'webapplications');
 
 
       $in = "IN (" . implode(',', array (
@@ -138,7 +137,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
          "glpi_displaypreferences",
          "glpi_documents_items",
          "glpi_contracts_items",
-         "glpi_bookmarks",
+         //"glpi_bookmarks",
          "glpi_logs",
          "glpi_notepads"
       );
@@ -148,7 +147,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
          $DB->query($query);
       }
 
-   __('Migration was successful', 'webapplications');
+   echo __('Migration was successful', 'webapplications');
 }
 
 
