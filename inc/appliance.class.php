@@ -34,6 +34,27 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginWebapplicationsAppliance extends CommonDBTM {
 
+   /**
+    * @param $field
+    * @param $values
+    * @param $options   array
+    *
+    * @return return|status|string
+    */
+   static function getSpecificValueToDisplay($field, $values, array $options = []) {
+      if (!is_array($values)) {
+         $values = [$field => $values];
+      }
+      switch ($field) {
+         case 'global_validation':
+            return self::getStatus($values[$field]);
+         case 'actiontime':
+            $AllDay = PluginActivityReport::getAllDay();
+            return PluginActivityReport::TotalTpsPassesArrondis($values[$field]/$AllDay)." "._n('Day', 'Days', 2);
+      }
+      return parent::getSpecificValueToDisplay($field, $values, $options);
+   }
+
    static function addFields($params) {
 
       $item             = $params['item'];

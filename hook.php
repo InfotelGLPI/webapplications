@@ -259,3 +259,86 @@ function plugin_webapplications_getDropdown() {
    }
    return [];
 }
+
+// Define search option for types of the plugins
+function plugin_webapplications_getAddSearchOptions($itemtype) {
+
+   $sopt = [];
+
+   if ($itemtype == "Appliance") {
+      if (Session::haveRight("plugin_webapplications", READ)) {
+         $sopt[8102]['table']         = 'glpi_plugin_webapplications_appliances';
+         $sopt[8102]['field']         = 'address';
+         $sopt[8102]['name']          = __('URL');
+         $sopt[8102]['massiveaction'] = false;
+         $sopt[8102]['datatype']      = 'text';
+         $sopt[8102]['linkfield']     = 'appliances_id';
+         $sopt[8102]['joinparams']    = array('jointype' => 'child');
+         $sopt[8102]['forcegroupby']  = false;
+
+         $sopt[8103]['table']         = 'glpi_plugin_webapplications_appliances';
+         $sopt[8103]['field']         = 'backoffice';
+         $sopt[8103]['name']          = __('Backoffice URL', 'webapplications');
+         $sopt[8103]['massiveaction'] = false;
+         $sopt[8103]['datatype']      = 'text';
+         $sopt[8103]['linkfield']     = 'appliances_id';
+         $sopt[8103]['joinparams']    = array('jointype' => 'child');
+         $sopt[8103]['forcegroupby']  = false;
+
+         $sopt[8104]['table']         = 'glpi_plugin_webapplications_webapplicationtypes';
+         $sopt[8104]['field']         = 'name';
+         $sopt[8104]['datatype']  = 'dropdown';
+         $sopt[8104]['name']          = PluginWebapplicationsWebapplicationType::getTypeName(1);
+         $sopt[8104]['forcegroupby']  = true;
+         $sopt[8104]['massiveaction'] = false;
+         $sopt[8104]['linkfield']     = 'webapplicationtypes_id';
+         $sopt[8104]['joinparams']    = [
+            'beforejoin' => [
+               'table'      => 'glpi_plugin_webapplications_appliances',
+               'joinparams' => [
+                  'jointype'  => 'child',
+                  'condition' => ''
+               ]
+            ]
+         ];
+
+         $sopt[8105]['table']         = 'glpi_plugin_webapplications_webapplicationservertypes';
+         $sopt[8105]['field']         = 'name';
+         $sopt[8105]['datatype']      = 'dropdown';
+         $sopt[8105]['name']          = PluginWebapplicationsWebapplicationServerType::getTypeName(1);
+         $sopt[8105]['forcegroupby']  = true;
+         $sopt[8105]['massiveaction'] = false;
+         $sopt[8105]['linkfield']     = 'webapplicationservertypes_id';
+         $sopt[8105]['joinparams']    = [
+            'beforejoin' => [
+               'table'      => 'glpi_plugin_webapplications_appliances',
+               'joinparams' => [
+                  'jointype'  => 'child',
+                  'condition' => ''
+               ]
+            ]
+         ];
+
+         $sopt[8106]['table']         = 'glpi_plugin_webapplications_webapplicationtechnics';
+         $sopt[8106]['field']         = 'name';
+         $sopt[8106]['datatype']      = 'dropdown';
+         $sopt[8106]['name']          = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
+         $sopt[8106]['forcegroupby']  = true;
+         $sopt[8106]['massiveaction'] = false;
+         $sopt[8106]['linkfield']     = 'webapplicationtechnics_id';
+         $sopt[8106]['joinparams']    = [
+            'beforejoin' => [
+               'table'      => 'glpi_plugin_webapplications_appliances',
+               'joinparams' => [
+                  'jointype'  => 'child',
+                  'condition' => ''
+               ]
+            ]
+         ];
+
+
+
+      }
+   }
+   return $sopt;
+}
