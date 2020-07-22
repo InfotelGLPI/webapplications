@@ -53,13 +53,14 @@ class PluginWebapplicationsMenu extends CommonGLPI {
       if (PluginWebapplicationsWebapplication::canCreate()) {
          $menu['links']['add'] = PluginWebapplicationsWebapplication::getFormURL(false);
       }
-      $menu['icon']            = Self::getIcon();
+
+      $menu['icon']            = self::getIcon();
 
       return $menu;
    }
 
    static function getIcon() {
-      return "fas fa-share-alt";
+      return "fas fa-cubes";
    }
 
    static function removeRightsFromSession() {

@@ -27,46 +27,23 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_WEBAPPLICATIONS_VERSION', '2.7.0');
+define('PLUGIN_WEBAPPLICATIONS_VERSION', '3.0.0');
 
 // Init the hooks of the plugins -Needed
 function plugin_init_webapplications() {
    global $PLUGIN_HOOKS;
 
    $PLUGIN_HOOKS['csrf_compliant']['webapplications']   = true;
-   //load changeprofile function
-   $PLUGIN_HOOKS['change_profile']['webapplications']   = ['PluginWebapplicationsProfile',
-                                                                'initProfile'];
-   $PLUGIN_HOOKS['assign_to_ticket']['webapplications'] = true;
 
-   if (class_exists('PluginWebapplicationsWebapplication_Item')) { // only if plugin activated
-      $PLUGIN_HOOKS['plugin_datainjection_populate']['webapplications']
-         = 'plugin_datainjection_populate_webapplications';
-   }
 
-   // Params : plugin name - string type - number - class - table - form page
-   Plugin::registerClass('PluginWebapplicationsWebapplication',
-                         ['linkgroup_tech_types'   => true,
-                               'linkuser_tech_types'    => true,
-                               'document_types'         => true,
-                               'contract_types'         => true,
-                               'ticket_types'           => true,
-                               'helpdesk_visible_types' => true,
-                               'link_types'             => true,
-                               'addtabon'               => 'Supplier']);
-
-   if (class_exists('PluginWebapplicationsWebapplication')) {
-      Link::registerTag(PluginWebapplicationsWebapplication::$tags);
-   }
-   Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
-
-   if (class_exists('PluginAccountsAccount')) {
-      PluginAccountsAccount::registerType('PluginWebapplicationsWebapplication');
-   }
-
-   if (class_exists('PluginCertificatesCertificate')) {
-      PluginCertificatesCertificate::registerType('PluginWebapplicationsWebapplication');
-   }
+   // TODO ??
+//   if (class_exists('PluginAccountsAccount')) {
+//      PluginAccountsAccount::registerType('PluginWebapplicationsWebapplication');
+//   }
+//
+//   if (class_exists('PluginCertificatesCertificate')) {
+//      PluginCertificatesCertificate::registerType('PluginWebapplicationsWebapplication');
+//   }
 
    //if glpi is loaded
    if (Session::getLoginUserID()) {
@@ -86,17 +63,24 @@ function plugin_init_webapplications() {
       if (Session::haveRight("plugin_webapplications", READ)
           || Session::haveRight("config", UPDATE)) {
       }
-
-      // Import from Data_Injection plugin
-      //      $PLUGIN_HOOKS['migratetypes']['webapplications']
-      //                                   = 'plugin_datainjection_migratetypes_webapplications';
-      $PLUGIN_HOOKS['plugin_pdf']['PluginWebapplicationsWebapplication']
-         = 'PluginWebapplicationsWebapplicationPDF';
    }
    $PLUGIN_HOOKS['plugin_fields']['webapplications'] = 'PluginWebapplicationsWebapplication';
 
    // End init, when all types are registered
    $PLUGIN_HOOKS['post_init']['webapplications'] = 'plugin_webapplications_postinit';
+
+   $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsAppliance', 'addFields'];
+
+   $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = ['PluginWebapplicationsAppliance', 'cleanRelationToAppliance'];
+
+   // Other fields inherited from webapplications
+   if (strpos($_SERVER['REQUEST_URI'],"appliance")) {
+      $PLUGIN_HOOKS['item_add']['webapplications']       = ['Appliance' => ['PluginWebapplicationsAppliance',
+         'applianceAdd']];
+
+      $PLUGIN_HOOKS['pre_item_update']['webapplications'] = ['Appliance' => ['PluginWebapplicationsAppliance',
+         'applianceUpdate']];
+   }
 }
 
 
@@ -148,15 +132,4 @@ function plugin_webapplications_check_prerequisites() {
  */
 function plugin_webapplications_check_config() {
    return true;
-}
-
-/**
- * @param $types
- *
- * @return mixed
- */
-function plugin_datainjection_migratetypes_webapplications($types) {
-
-   $types[1300] = 'PluginWebapplicationsWebapplication';
-   return $types;
 }

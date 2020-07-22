@@ -50,39 +50,4 @@ class PluginWebapplicationsWebapplicationType extends CommonDropdown {
       return _n('Category', 'Categories', $nb, 'webapplications');
    }
 
-   /**
-    * @param $ID
-    * @param $entity
-    *
-    * @return ID|int|the
-    */
-   static function transfer($ID, $entity) {
-      global $DB;
-
-      if ($ID > 0) {
-         // Not already transfer
-         // Search init item
-         $query = "SELECT *
-                   FROM `glpi_plugin_webapplications_webapplicationtypes`
-                   WHERE `id` = '$ID'";
-
-         if ($result = $DB->query($query)) {
-            if ($DB->numrows($result)) {
-               $data                 = $DB->fetchAssoc($result);
-               $data                 = Toolbox::addslashes_deep($data);
-               $input['name']        = $data['name'];
-               $input['entities_id'] = $entity;
-               $temp                 = new self();
-               $newID                = $temp->getID();
-
-               if ($newID < 0) {
-                  $newID = $temp->import($input);
-               }
-
-               return $newID;
-            }
-         }
-      }
-      return 0;
-   }
 }
