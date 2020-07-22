@@ -38,9 +38,6 @@ class PluginWebapplicationsWebapplication extends CommonDBTM  {
 
    public    $dohistory  = true;
    static    $rightname  = "plugin_webapplications";
-   protected $usenotepad = true;
-
-
    /**
     * @param int $nb
     *

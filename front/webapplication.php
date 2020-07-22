@@ -120,7 +120,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
    echo "<br>";
    echo __('Link with core purge', 'webapplications');
-
+   echo "<br>";
 
    $in = "IN (" . implode(',', array(
          "'PluginWebapplicationsWebapplication'"
@@ -142,7 +142,6 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
    echo __('Migration was successful', 'webapplications');
 }
-
 
 echo "</div>";
 Html::footer();
