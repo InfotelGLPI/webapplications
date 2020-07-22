@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Webapplications Development Team
 # This file is distributed under the same license as the GLPI - Webapplications plugin package.
-# 
+#
 # Translators:
 # Xavier CAILLAUD <thetsmr@gmail.com>, 2012
 # Xavier CAILLAUD <thetsmr@gmail.com>, 2013,2015
@@ -9,41 +9,59 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-04 09:27+0200\n"
-"PO-Revision-Date: 2017-10-05 08:25+0000\n"
+"POT-Creation-Date: 2020-07-22 10:08+0200\n"
+"PO-Revision-Date: 2020-07-22 10:10+0200\n"
 "Last-Translator: Amandine Manceau\n"
-"Language-Team: French (France) (http://www.transifex.com/tsmr/GLPI_webapplications/language/fr_FR/)\n"
+"Language-Team: French (France) (http://www.transifex.com/tsmr/"
+"GLPI_webapplications/language/fr_FR/)\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr_FR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.2.4\n"
 
-#: hook.php:446 inc/webapplication_item.class.php:507
-msgid "Associate a web application"
-msgstr "Associer une application web"
-
-#: setup.php:107 inc/menu.class.php:41 inc/profile.class.php:175
-#: inc/webapplication.class.php:54
+#: setup.php:94 inc/menu.class.php:41 inc/webapplication.class.php:51
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "Application Web"
 msgstr[1] "Applications Web"
 
-#: inc/webapplication.class.php:211 inc/webapplication.class.php:432
+#: front/webapplication.php:42 front/webapplication.php:45
+msgid "Core migration"
+msgstr "Migration du coeur"
+
+#: front/webapplication.php:47
+msgid "Are you sure you want to do core migration ??"
+msgstr "Voulez-vous vraiment effectuer la migration du cœur ?"
+
+#: front/webapplication.php:59
+msgid "Data migration"
+msgstr "Migration des données"
+
+#: front/webapplication.php:103
+msgid "Tables purge"
+msgstr "Purge des tables"
+
+#: front/webapplication.php:123
+msgid "_plugins folder purge"
+msgstr "_plugins folder purge"
+
+#: front/webapplication.php:130
+msgid "Link with core purge"
+msgstr "Lien avec la purge du coeur"
+
+#: front/webapplication.php:151
+msgid "Migration was successful"
+msgstr "La migration a réussie"
+
+#: inc/appliance.class.php:59
 msgid "Backoffice URL"
 msgstr "URL d'administration"
 
-#: inc/webapplication.class.php:230 inc/webapplication.class.php:411
-#: inc/webapplication.class.php:574
+#: inc/appliance.class.php:83
 msgid "Editor"
-msgstr "Editeur "
-
-#: inc/webapplication_item.class.php:876
-msgid "Associated web application"
-msgid_plural "Associated web applications"
-msgstr[0] "Application Web associée"
-msgstr[1] "Applications Web associées"
+msgstr "Editeur"
 
 #: inc/webapplicationservertype.class.php:49
 msgid "Type of treatment server"
@@ -62,3 +80,11 @@ msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Catégorie"
 msgstr[1] "Catégories"
+
+#~ msgid "Associate a web application"
+#~ msgstr "Associer une application web"
+
+#~ msgid "Associated web application"
+#~ msgid_plural "Associated web applications"
+#~ msgstr[0] "Application Web associée"
+#~ msgstr[1] "Applications Web associées"

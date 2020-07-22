@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-25 10:01+0100\n"
+"POT-Creation-Date: 2020-07-22 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,31 +18,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: hook.php:454 inc/webapplication_item.class.php:509
-msgid "Associate a web application"
-msgstr ""
-
-#: setup.php:110 inc/menu.class.php:41 inc/profile.class.php:175
-#: inc/webapplication.class.php:54
+#: setup.php:94 inc/menu.class.php:41 inc/webapplication.class.php:51
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/webapplication.class.php:205 inc/webapplication.class.php:426
+#: front/webapplication.php:42 front/webapplication.php:45
+msgid "Core migration"
+msgstr ""
+
+#: front/webapplication.php:47
+msgid "Are you sure you want to do core migration ??"
+msgstr ""
+
+#: front/webapplication.php:59
+msgid "Data migration"
+msgstr ""
+
+#: front/webapplication.php:103
+msgid "Tables purge"
+msgstr ""
+
+#: front/webapplication.php:123
+msgid "_plugins folder purge"
+msgstr ""
+
+#: front/webapplication.php:130
+msgid "Link with core purge"
+msgstr ""
+
+#: front/webapplication.php:151
+msgid "Migration was successful"
+msgstr ""
+
+#: inc/appliance.class.php:59
 msgid "Backoffice URL"
 msgstr ""
 
-#: inc/webapplication.class.php:224 inc/webapplication.class.php:405
-#: inc/webapplication.class.php:569
+#: inc/appliance.class.php:83
 msgid "Editor"
 msgstr ""
-
-#: inc/webapplication_item.class.php:872
-msgid "Associated web application"
-msgid_plural "Associated web applications"
-msgstr[0] ""
-msgstr[1] ""
 
 #: inc/webapplicationservertype.class.php:49
 msgid "Type of treatment server"
