@@ -37,7 +37,8 @@ function plugin_webapplications_install() {
 
    $update = false;
    //from 3.0 version (glpi 9.5)
-   if (!$DB->tableExists("glpi_plugin_webapplications_appliances")) {
+   if (!$DB->tableExists("glpi_plugin_webapplications_webapplicationtypes")
+       && !$DB->tableExists("glpi_plugin_webapplications_appliances")) {
 
       $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-3.0.0.sql");
 
