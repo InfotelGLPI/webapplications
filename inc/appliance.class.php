@@ -34,9 +34,6 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginWebapplicationsAppliance extends CommonDBTM {
 
-   static $types = ['Computer', 'Monitor', 'NetworkEquipment', 'Peripheral', 'Phone',
-      'Printer', 'Software', 'Entity', 'SoftwareLicense', 'PluginWebapplicationsWebapplication','Certificate'];
-
    static function addFields($params) {
 
       $item      = $params['item'];
@@ -141,35 +138,6 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
          }
       }
 
-
-   /**
-    * Type than could be linked to a Rack
-    *
-    * @param $all boolean, all type, or only allowed ones
-    *
-    * @return array of types
-    **/
-   static function getTypes($all = false) {
-
-      if ($all) {
-         return self::$types;
-      }
-
-      // Only allowed types
-      $types = self::$types;
-
-      foreach ($types as $key => $type) {
-         if (!class_exists($type)) {
-            continue;
-         }
-
-         $item = new $type();
-         if (!$item->canView()) {
-            unset($types[$key]);
-         }
-      }
-      return $types;
-   }
 
    /**
     * @param $ID

@@ -40,52 +40,25 @@ function plugin_init_webapplications() {
 
    Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
 
-
-   // TODO ??
-//   if (class_exists('PluginAccountsAccount')) {
-//      PluginAccountsAccount::registerType('PluginWebapplicationsWebapplication');
-//   }
-//
-//   if (class_exists('PluginCertificatesCertificate')) {
-//      PluginCertificatesCertificate::registerType('PluginWebapplicationsWebapplication');
-//   }
-
    //if glpi is loaded
    if (Session::getLoginUserID()) {
 
-      //if environment plugin is installed
-      $plugin = new Plugin();
-      if (!$plugin->isActivated('environment')
-          && Session::haveRight("plugin_webapplications", READ)) {
-
-         $PLUGIN_HOOKS['menu_toadd']['webapplications'] = ['assets' => 'PluginWebapplicationsMenu'];
-      }
-
-      if (Session::haveRight("plugin_webapplications", UPDATE)) {
-         $PLUGIN_HOOKS['use_massive_action']['webapplications'] = 1;
-      }
-
       if (Session::haveRight("plugin_webapplications", READ)
           || Session::haveRight("config", UPDATE)) {
+         $PLUGIN_HOOKS['config_page']['webapplications']        = 'front/webapplication.php';
       }
    }
-   $PLUGIN_HOOKS['plugin_fields']['webapplications'] = 'PluginWebapplicationsWebapplication';
-
-   // End init, when all types are registered
-   $PLUGIN_HOOKS['post_init']['webapplications'] = 'plugin_webapplications_postinit';
 
    $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsAppliance', 'addFields'];
 
    $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = ['PluginWebapplicationsAppliance', 'cleanRelationToAppliance'];
 
    // Other fields inherited from webapplications
-   if (strpos($_SERVER['REQUEST_URI'],"appliance")) {
-      $PLUGIN_HOOKS['item_add']['webapplications']       = ['Appliance' => ['PluginWebapplicationsAppliance',
-         'applianceAdd']];
+   $PLUGIN_HOOKS['item_add']['webapplications']       = ['Appliance' => ['PluginWebapplicationsAppliance',
+                                                                         'applianceAdd']];
 
-      $PLUGIN_HOOKS['pre_item_update']['webapplications'] = ['Appliance' => ['PluginWebapplicationsAppliance',
-         'applianceUpdate']];
-   }
+   $PLUGIN_HOOKS['pre_item_update']['webapplications'] = ['Appliance' => ['PluginWebapplicationsAppliance',
+                                                                          'applianceUpdate']];
 }
 
 
