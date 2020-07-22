@@ -34,7 +34,7 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsWebapplication
  */
-class PluginWebapplicationsWebapplication extends CommonGLPI {
+class PluginWebapplicationsWebapplication extends CommonDBTM  {
 
    public    $dohistory  = true;
    static    $rightname  = "plugin_webapplications";

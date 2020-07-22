@@ -158,6 +158,9 @@ if ($update) {
       ["glpi_plugin_webapplications_webapplications_items"]);
 }
 
+PluginWebapplicationsProfile::initProfile();
+PluginWebapplicationsProfile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
+
 $migration = new Migration("2.2.0");
 $migration->dropTable('glpi_plugin_webapplications_profiles');
 
@@ -212,7 +215,14 @@ function plugin_webapplications_uninstall() {
                   WHERE `itemtype` LIKE 'PluginWebapplications%'");
    }
 
+   //Delete rights associated with the plugin
+   $profileRight = new ProfileRight();
+   foreach (PluginWebapplicationsProfile::getAllRights() as $right) {
+      $profileRight->deleteByCriteria(['name' => $right['field']]);
+   }
+
    PluginWebapplicationsMenu::removeRightsFromSession();
+   PluginWebapplicationsProfile::removeRightsFromSession();
 
    return true;
 }

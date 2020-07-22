@@ -35,6 +35,11 @@ function plugin_init_webapplications() {
 
    $PLUGIN_HOOKS['csrf_compliant']['webapplications']   = true;
 
+   $PLUGIN_HOOKS['change_profile']['webapplications']   = ['PluginWebapplicationsProfile',
+      'initProfile'];
+
+   Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
+
 
    // TODO ??
 //   if (class_exists('PluginAccountsAccount')) {
