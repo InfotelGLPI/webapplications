@@ -8,22 +8,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-04 09:27+0200\n"
-"PO-Revision-Date: 2017-10-05 08:25+0000\n"
-"Last-Translator: Amandine Manceau\n"
-"Language-Team: Polish (Poland) (http://www.transifex.com/tsmr/GLPI_webapplications/language/pl_PL/)\n"
+"POT-Creation-Date: 2020-07-23 08:39+0200\n"
+"PO-Revision-Date: 2020-07-23 06:48+0000\n"
+"Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>\n"
+"Language-Team: Polish (Poland) (http://www.transifex.com/infotelGLPI/GLPI_webapplications/language/pl_PL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pl_PL\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
-#: hook.php:446 inc/webapplication_item.class.php:507
-msgid "Associate a web application"
-msgstr "Połącz z aplikacją internetową"
+#: hook.php:281 inc/appliance.class.php:57
+msgid "Backoffice URL"
+msgstr "Administracyjny URL"
 
-#: setup.php:107 inc/menu.class.php:41 inc/profile.class.php:175
-#: inc/webapplication.class.php:54
+#: setup.php:72 inc/profile.class.php:175 inc/webapplication.class.php:48
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "Aplikacja internetowa"
@@ -31,22 +30,33 @@ msgstr[1] "Aplikacje internetowe"
 msgstr[2] "Aplikacji internetowych"
 msgstr[3] "Aplikacji internetowych"
 
-#: inc/webapplication.class.php:211 inc/webapplication.class.php:432
-msgid "Backoffice URL"
-msgstr "Administracyjny URL"
+#: front/webapplication.php:42 front/webapplication.php:45
+msgid "Core migration"
+msgstr ""
 
-#: inc/webapplication.class.php:230 inc/webapplication.class.php:411
-#: inc/webapplication.class.php:574
+#: front/webapplication.php:47
+msgid "Are you sure you want to do core migration ??"
+msgstr ""
+
+#: front/webapplication.php:58
+msgid "Data migration"
+msgstr ""
+
+#: front/webapplication.php:100
+msgid "Tables purge"
+msgstr ""
+
+#: front/webapplication.php:122
+msgid "Link with core purge"
+msgstr ""
+
+#: front/webapplication.php:143
+msgid "Migration was successful"
+msgstr ""
+
+#: inc/appliance.class.php:81
 msgid "Editor"
 msgstr "Producent"
-
-#: inc/webapplication_item.class.php:876
-msgid "Associated web application"
-msgid_plural "Associated web applications"
-msgstr[0] "Połączona aplikacja internetowa"
-msgstr[1] "Połączone aplikacje internetowe"
-msgstr[2] "Połączonych aplikacji internetowych"
-msgstr[3] "Połączonych aplikacji internetowych"
 
 #: inc/webapplicationservertype.class.php:49
 msgid "Type of treatment server"
