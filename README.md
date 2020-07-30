@@ -3,9 +3,9 @@ Plugin webapplications pour GLPI
 
 Information :
 
-En version 9.5 de GLPI, les applications webs seront migrés dans le coeur de GLPI (au niveau des applicatifs). Il faut lancer le script de migration depuis la page de configuration du plugin : /glpi/plugins/webapplications/front/webapplication.php
+En version 9.5 de GLPI, les applications webs seront migrées dans le cœur de GLPI (au niveau des applicatifs). Il faut lancer le script de migration depuis la page de configuration du plugin : /glpi/plugins/webapplications/front/webapplication.php
 
-Le plugin sera conservé pour stocker plusieurs champs : URL, URL d'administration, Catégorie, Type de serveur de traitement, Editeur, Langue de traitement
+Le plugin sera conservé pour stocker plusieurs champs : URL, URL d'administration, Catégorie, Type de serveur de traitement, Éditeur, Langue de traitement
 
 Ce plugin est sur Transifex - Aidez-nous à le traduire :
 https://www.transifex.com/infotelGLPI/GLPI_webapplications/
