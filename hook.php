@@ -176,7 +176,6 @@ function plugin_webapplications_uninstall() {
    global $DB;
 
    include_once(GLPI_ROOT . "/plugins/webapplications/inc/profile.class.php");
-   include_once(GLPI_ROOT . "/plugins/webapplications/inc/menu.class.php");
 
    $tables = ["glpi_plugin_webapplications_appliances",
               "glpi_plugin_webapplications_webapplicationtypes",
@@ -221,7 +220,6 @@ function plugin_webapplications_uninstall() {
       $profileRight->deleteByCriteria(['name' => $right['field']]);
    }
 
-   PluginWebapplicationsMenu::removeRightsFromSession();
    PluginWebapplicationsProfile::removeRightsFromSession();
 
    return true;

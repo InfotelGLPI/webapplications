@@ -14,8 +14,8 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationservertypes` (
 INSERT INTO `glpi_plugin_webapplications_webapplicationservertypes` VALUES ('1', 'Apache', '');
 INSERT INTO `glpi_plugin_webapplications_webapplicationservertypes` VALUES ('2', 'IIS', '');
 INSERT INTO `glpi_plugin_webapplications_webapplicationservertypes` VALUES ('3', 'Nginx', '');
-INSERT INTO `glpi_plugin_webapplications_webapplicationservertypes` VALUES ('3', 'PRTG', '');
-INSERT INTO `glpi_plugin_webapplications_webapplicationservertypes` VALUES ('3', 'Tomcat', '');
+INSERT INTO `glpi_plugin_webapplications_webapplicationservertypes` VALUES ('4', 'PRTG', '');
+INSERT INTO `glpi_plugin_webapplications_webapplicationservertypes` VALUES ('5', 'Tomcat', '');
 
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationtypes`;
