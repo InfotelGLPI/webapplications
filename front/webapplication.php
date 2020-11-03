@@ -44,7 +44,7 @@ echo "<div align='center'><h1>" . __('Core migration', 'webapplications') . "</h
 echo "<table align='center'><tr><td>";
 Html::showSimpleForm($_SERVER['PHP_SELF'], 'migration', __('Core migration', 'webapplications'),
                      ['do_migration' => '1'], '', '',
-                     [__('Are you sure you want to do core migration ??', 'webapplications')]);
+                     [__('Are you sure you want to do core migration ?', 'webapplications')]);
 
 echo "</td></tr></table>";
 
@@ -57,27 +57,39 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
    echo __('Data migration', 'webapplications');
 
+   $webappstypes = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplicationtypes');
+   $add_temporary_column_query = "ALTER TABLE `glpi_appliancetypes` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
+   $DB->queryOrDie($add_temporary_column_query);
+
+   foreach ($webappstypes as $webapptype) {
+      $migrate_webapptypes = 'INSERT INTO `glpi_appliancetypes` (`entities_id`, `is_recursive`, `name`, `comment`, `old_id`)
+              VALUES("' . $webapptype['entities_id'] . '","' . $webapptype['is_recursive'] . '","' . $webapptype['name']
+                        . '", "' . addslashes($webapptype['comment']) . '" ,"' . $webapptype['id']. '" );';
+
+      $DB->query($migrate_webapptypes);
+   }
+
+
    $webapps                    = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplications');
    $add_temporary_column_query = "ALTER TABLE `glpi_appliances` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
    $DB->queryOrDie($add_temporary_column_query);
    foreach ($webapps as $webapp) {
 
-      $migrate_webapps = 'INSERT INTO `glpi_appliances` (`entities_id`, `is_recursive`, `name`, `is_deleted`,
+      $migrate_webapps = 'INSERT INTO `glpi_appliances` (`entities_id`, `is_recursive`, `name`, `is_deleted`, `appliancetypes_id`,
                                                `comment`, `locations_id`, `manufacturers_id`, `users_id_tech`,`groups_id_tech`, `old_id`
                                                )
               VALUES("' . $webapp['entities_id'] . '","' . $webapp['is_recursive'] . '","' . $webapp['name'] . '",
-                           "' . $webapp['is_deleted'] . '", "' . addslashes($webapp['comment']) . '",
+                           "' . $webapp['is_deleted'] . '", "' . addslashes($webapp['comment']) . '", "' . $webapp['plugin_webapplications_webapplicationtypes_id'] . '",
                                  "' . $webapp['locations_id'] . '", "' . $webapp['manufacturers_id'] . '",
                                     "' . $webapp['users_id_tech'] . '","' . $webapp['groups_id_tech'] . '","' . $webapp['id'] . '")';
 
       $DB->query($migrate_webapps);
 
-      $migrate_webapps_additional_fields = 'INSERT INTO `glpi_plugin_webapplications_appliances` (`appliances_id`, `webapplicationtypes_id`,
+      $migrate_webapps_additional_fields = 'INSERT INTO `glpi_plugin_webapplications_appliances` (`appliances_id`, 
                                                `webapplicationservertypes_id`, `webapplicationtechnics_id`, `address`, `backoffice`) VALUES
-                                              ("' . $webapp['id'] . '", "' . $webapp['plugin_webapplications_webapplicationtypes_id'] . '",
-                                                "' . $webapp['plugin_webapplications_webapplicationservertypes_id'] . '",
-                                                "' . $webapp['plugin_webapplications_webapplicationtechnics_id'] . '",
-                                                 "' . $webapp['address'] . '", "' . $webapp['backoffice'] . '")';
+                                              ("' . $webapp['id'] . '", "' . $webapp['plugin_webapplications_webapplicationservertypes_id'] . '",
+                                                      "' . $webapp['plugin_webapplications_webapplicationtechnics_id'] . '",
+                                                         "' . $webapp['address'] . '", "' . $webapp['backoffice'] . '")';
 
 
       $DB->query($migrate_webapps_additional_fields);
@@ -94,6 +106,18 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
    }
 
    $remove_temporary_column_query = "ALTER TABLE `glpi_appliances` DROP `old_id`;";
+   $DB->queryOrDie($remove_temporary_column_query);
+
+   $appliance_types = $dbu->getAllDataFromTable('glpi_appliancetypes', ['old_id' => ['>', 0]]);
+
+   foreach ($appliance_types as $appliance_type) {
+      $update_appliancetypes = "UPDATE `glpi_appliances`
+                                     SET `appliancetypes_id`='" . $appliance_type['id'] . "'
+                                     WHERE `appliancetypes_id`= " . $appliance_type['old_id'] . ";";
+      $DB->query($update_appliancetypes);
+   }
+
+   $remove_temporary_column_query = "ALTER TABLE `glpi_appliancetypes` DROP `old_id`;";
    $DB->queryOrDie($remove_temporary_column_query);
 
    echo "<br>";
