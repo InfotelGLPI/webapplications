@@ -121,22 +121,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
    $DB->queryOrDie($remove_temporary_column_query);
 
    $plugin = new Plugin();
-
-   echo "<br>";
-   echo __('Purge associated items', 'webapplications');
-
-   if ($plugin->isActivated('accounts')) {
-      $queryDeleteAssociatedItems = "DELETE FROM `glpi_plugin_accounts_accounts_items` 
-                                        WHERE `glpi_plugin_accounts_accounts_items`.`itemtype` = 'PluginWebapplicationsWebapplication';";
-      $DB->query($queryDeleteAssociatedItems);
-   }
-   if ($plugin->isActivated('databases')) {
-      $queryDeleteAssociatedItems = "DELETE FROM `glpi_plugin_databases_databases_items` 
-                                                WHERE `glpi_plugin_databases_databases_items`.`itemtype` = 'PluginWebapplicationsWebapplication';";
-
-      $DB->query($queryDeleteAssociatedItems);
-   }
-
+   
 
    echo "<br>";
    echo __('Tables purge', 'webapplications');
