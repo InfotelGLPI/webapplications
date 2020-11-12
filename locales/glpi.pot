@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-12 09:24+0000\n"
+"POT-Creation-Date: 2020-11-12 15:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,15 +40,15 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: front/webapplication.php:127
+#: front/webapplication.php:144
 msgid "Tables purge"
 msgstr ""
 
-#: front/webapplication.php:149
+#: front/webapplication.php:166
 msgid "Link with core purge"
 msgstr ""
 
-#: front/webapplication.php:170
+#: front/webapplication.php:187
 msgid "Migration was successful"
 msgstr ""
 
