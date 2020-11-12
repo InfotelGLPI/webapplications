@@ -79,7 +79,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                                                `comment`, `locations_id`, `manufacturers_id`, `users_id_tech`,`groups_id_tech`, `old_id`
                                                )
               VALUES("' . $webapp['entities_id'] . '","' . $webapp['is_recursive'] . '","' . $webapp['name'] . '",
-                           "' . $webapp['is_deleted'] . '", "' . addslashes($webapp['comment']) . '", "' . $webapp['plugin_webapplications_webapplicationtypes_id'] . '",
+                           "' . $webapp['is_deleted'] . '", "' . $webapp['plugin_webapplications_webapplicationtypes_id'] . '", "' . addslashes($webapp['comment']) . '",
                                  "' . $webapp['locations_id'] . '", "' . $webapp['manufacturers_id'] . '",
                                     "' . $webapp['users_id_tech'] . '","' . $webapp['groups_id_tech'] . '","' . $webapp['id'] . '")';
 
@@ -103,6 +103,24 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                             SET `appliances_id`='" . $new_appliance['id'] . "'
                             WHERE `appliances_id`= " . $new_appliance['old_id'] . ";";
       $DB->query($query);
+
+      if ($plugin->isActivated('accounts')) {
+         $queryUpdateAccountsAssociatedItems = "UPDATE `glpi_plugin_accounts_accounts_items` 
+                                                   SET `glpi_plugin_accounts_accounts_items`.`items_id` =  '" . $new_appliance['id'] . "', 
+                                                            `glpi_plugin_accounts_accounts_items`.`itemtype` = 'Appliance'
+                                                            WHERE `glpi_plugin_accounts_accounts_items`.`items_id`= '" . $new_appliance['old_id'] . "'
+                                                               AND  `glpi_plugin_accounts_accounts_items`.`itemtype` = 'PluginWebapplicationsWebapplication';";
+         $DB->query($queryUpdateAccountsAssociatedItems);
+      }
+      if ($plugin->isActivated('databases')) {
+         $querUpdateDatabasesAssociatedItems ="UPDATE `glpi_plugin_databases_databases_items` 
+                                                   SET `glpi_plugin_databases_databases_items`.`items_id` =  '" . $new_appliance['id'] . "', 
+                                                            `glpi_plugin_databases_databases_items`.`itemtype` = 'Appliance'
+                                                            WHERE `glpi_plugin_databases_databases_items`.`items_id`= '" . $new_appliance['old_id'] . "'
+                                                               AND  `glpi_plugin_databases_databases_items`.`itemtype` = 'PluginWebapplicationsWebapplication';";
+
+         $DB->query($querUpdateDatabasesAssociatedItems);
+      }
    }
 
    $remove_temporary_column_query = "ALTER TABLE `glpi_appliances` DROP `old_id`;";
@@ -121,7 +139,6 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
    $DB->queryOrDie($remove_temporary_column_query);
 
    $plugin = new Plugin();
-   
 
    echo "<br>";
    echo __('Tables purge', 'webapplications');
@@ -159,7 +176,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
       "glpi_contracts_items",
       "glpi_savedsearches",
       "glpi_logs",
-      "glpi_notepads"
+      "glpi_notepads",
    );
 
    foreach ($tables as $table) {
