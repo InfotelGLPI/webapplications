@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-02 18:03+0100\n"
+"POT-Creation-Date: 2020-11-12 15:37+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2020\n"
 "Language-Team: Turkish (Turkey) (https://www.transifex.com/infotelGLPI/teams/12376/tr_TR/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: hook.php:281 inc/appliance.class.php:57
+#: hook.php:279 inc/appliance.class.php:57
 msgid "Backoffice URL"
 msgstr "Arka Ofis İnternet Adresi"
 
@@ -37,22 +37,22 @@ msgid "Core migration"
 msgstr "Çekirdek aktarımı"
 
 #: front/webapplication.php:47
-msgid "Are you sure you want to do core migration ??"
+msgid "Are you sure you want to do core migration ?"
 msgstr "Çekirdek aktarımı yapmak istediğinize emin misiniz?"
 
 #: front/webapplication.php:58
 msgid "Data migration"
 msgstr "Veri aktarımı"
 
-#: front/webapplication.php:100
+#: front/webapplication.php:144
 msgid "Tables purge"
 msgstr "Tablo temizliği"
 
-#: front/webapplication.php:122
+#: front/webapplication.php:166
 msgid "Link with core purge"
 msgstr "Çekirdek temizliği ile bağlantı"
 
-#: front/webapplication.php:143
+#: front/webapplication.php:187
 msgid "Migration was successful"
 msgstr "Aktarım tamamlandı"
 
