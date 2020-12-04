@@ -32,8 +32,14 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+/**
+ * Class PluginWebapplicationsAppliance
+ */
 class PluginWebapplicationsAppliance extends CommonDBTM {
 
+   /**
+    * @param $params
+    */
    static function addFields($params) {
 
       $item             = $params['item'];
@@ -43,6 +49,22 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
          if ($item->getID()) {
             $webapp_appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
          }
+         
+         echo "<tr class='tab_bg_1'>";
+         //server type of webapplications
+         echo "<td>" . PluginWebapplicationsWebapplicationServerType::getTypeName(1) . "</td>";
+         echo "<td>";
+         Dropdown::show('PluginWebapplicationsWebapplicationServerType',
+                        ['value' => $webapp_appliance->fields["webapplicationservertypes_id"]]);
+         echo "</td>";
+         echo "</td>";
+         //language of webapplications
+         echo "<td>" . PluginWebapplicationsWebapplicationTechnic::getTypeName(1) . "</td>";
+         echo "<td>";
+         Dropdown::show('PluginWebapplicationsWebapplicationTechnic',
+                        ['value' => $webapp_appliance->fields["webapplicationtechnics_id"]]);
+         echo "</td>";
+         echo "</tr>";
 
          echo "<tr class='tab_bg_1'>";
          //url of webapplications
@@ -60,43 +82,34 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
          echo "</td>";
          echo "</tr>";
 
-         echo "<tr class='tab_bg_1'>";
+         //echo "<tr class='tab_bg_1'>";
          //type of webapplications
-         echo "<td>" . PluginWebapplicationsWebapplicationType::getTypeName(1) . "</td>";
-         echo "<td>";
-         Dropdown::show('PluginWebapplicationsWebapplicationType',
-                        ['value'  => $webapp_appliance->fields["webapplicationtypes_id"],
-                         'entity' => $item->fields["entities_id"]]);
-         echo "</td>";
-         //server type of webapplications
-         echo "<td>" . PluginWebapplicationsWebapplicationServerType::getTypeName(1) . "</td>";
-         echo "<td>";
-         Dropdown::show('PluginWebapplicationsWebapplicationServerType',
-                        ['value' => $webapp_appliance->fields["webapplicationservertypes_id"]]);
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
+         //echo "<td>" . PluginWebapplicationsWebapplicationType::getTypeName(1) . "</td>";
+         //echo "<td>";
+         //Dropdown::show('PluginWebapplicationsWebapplicationType',
+         //               ['value'  => $webapp_appliance->fields["webapplicationtypes_id"],
+         //                'entity' => $item->fields["entities_id"]]);
+         //echo "</td>";
          //manufacturer of webapplications
-         echo "<td>" . __('Editor', 'webapplications') . "</td>";
-         echo "<td>";
-         Dropdown::show('Manufacturer',
-                        ['value'  => $item->fields["manufacturers_id"],
-                         'entity' => $item->fields["entities_id"]]);
-         echo "</td>";
-         echo "</td>";
-         //language of webapplications
-         echo "<td>" . PluginWebapplicationsWebapplicationTechnic::getTypeName(1) . "</td>";
-         echo "<td>";
-         Dropdown::show('PluginWebapplicationsWebapplicationTechnic',
-                        ['value' => $webapp_appliance->fields["webapplicationtechnics_id"]]);
-         echo "</td>";
-         echo "</tr>";
+         //echo "<td>" . __('Editor', 'webapplications') . "</td>";
+         //echo "<td>";
+         //Dropdown::show('Manufacturer',
+         //               ['value'  => $item->fields["manufacturers_id"],
+         //                'entity' => $item->fields["entities_id"]]);
+         //echo "</td>";
+         //echo "</tr>";
+
+         
 
       }
 
    }
 
+   /**
+    * @param \Appliance $item
+    *
+    * @return false
+    */
    static function applianceAdd(Appliance $item) {
       if (!is_array($item->input) || !count($item->input)) {
          // Already cancel by another plugin
@@ -106,6 +119,11 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
    }
 
 
+   /**
+    * @param \Appliance $item
+    *
+    * @return false
+    */
    static function applianceUpdate(Appliance $item) {
       if (!is_array($item->input) || !count($item->input)) {
          // Already cancel by another plugin
@@ -114,6 +132,9 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
       self::setAppliance($item);
    }
 
+   /**
+    * @param \Appliance $item
+    */
    static function setAppliance(Appliance $item) {
       $appliance = new PluginWebApplicationsAppliance();
       if (!empty($item->fields)) {
@@ -124,13 +145,14 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
             $appliance->update(['id'                           => $appliance->fields['id'],
                                 'address'                      => $address,
                                 'backoffice'                   => $backoffice,
-                                'webapplicationtypes_id'       => $item->input['plugin_webapplications_webapplicationtypes_id'],
-                                'webapplicationservertypes_id' => $item->input['plugin_webapplications_webapplicationservertypes_id'],
-                                'webapplicationtechnics_id'    => $item->input['plugin_webapplications_webapplicationtechnics_id']]);
+                                'webapplicationtypes_id'       => isset($item->input['plugin_webapplications_webapplicationtypes_id'])?$item->input['plugin_webapplications_webapplicationtypes_id']:0,
+                                'webapplicationservertypes_id' => isset($item->input['plugin_webapplications_webapplicationservertypes_id'])?$item->input['plugin_webapplications_webapplicationservertypes_id']:0,
+                                'webapplicationtechnics_id'    => isset($item->input['plugin_webapplications_webapplicationtechnics_id'])?$item->input['plugin_webapplications_webapplicationtechnics_id']:0
+            ]);
          } else {
-            $appliance->add(['webapplicationtypes_id'       => $item->input['plugin_webapplications_webapplicationtypes_id'],
-                             'webapplicationservertypes_id' => $item->input['plugin_webapplications_webapplicationservertypes_id'],
-                             'webapplicationtechnics_id'    => $item->input['plugin_webapplications_webapplicationtechnics_id'],
+            $appliance->add(['webapplicationtypes_id'       => isset($item->input['plugin_webapplications_webapplicationtypes_id'])?$item->input['plugin_webapplications_webapplicationtypes_id']:0,
+                                'webapplicationservertypes_id' => isset($item->input['plugin_webapplications_webapplicationservertypes_id'])?$item->input['plugin_webapplications_webapplicationservertypes_id']:0,
+                                'webapplicationtechnics_id'    => isset($item->input['plugin_webapplications_webapplicationtechnics_id'])?$item->input['plugin_webapplications_webapplicationtechnics_id']:0,
                              'address'                      => $address,
                              'appliances_id'                => $item->getID(),
                              'backoffice'                   => $backoffice]);
@@ -140,7 +162,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
 
 
    /**
-    * @param $ID
+    * @param $item
     */
    static function cleanRelationToAppliance($item) {
 
