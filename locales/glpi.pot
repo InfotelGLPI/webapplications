@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-04 11:14+0000\n"
+"POT-Creation-Date: 2020-12-04 14:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: hook.php:279 inc/appliance.class.php:57
+#: hook.php:279 inc/appliance.class.php:79
 msgid "Backoffice URL"
 msgstr ""
 
@@ -50,10 +50,6 @@ msgstr ""
 
 #: front/webapplication.php:187
 msgid "Migration was successful"
-msgstr ""
-
-#: inc/appliance.class.php:81
-msgid "Editor"
 msgstr ""
 
 #: inc/webapplicationservertype.class.php:49
