@@ -37,6 +37,10 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginWebapplicationsAppliance extends CommonDBTM {
 
+   static function getTypeName($nb = 0) {
+
+      return _n('Web application', 'Web applications', $nb, 'webapplications');
+   }
    /**
     * @param $params
     */
@@ -48,6 +52,8 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
 
          if ($item->getID()) {
             $webapp_appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
+         } else {
+            $webapp_appliance-> getEmpty();
          }
          
          echo "<tr class='tab_bg_1'>";
@@ -139,15 +145,15 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
       $appliance = new PluginWebApplicationsAppliance();
       if (!empty($item->fields)) {
          $appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
-         $address    = isset($item->input['address']) ? $item->input['address'] : "";
-         $backoffice = isset($item->input['backoffice']) ? $item->input['backoffice'] : "";
+         $address    = isset($item->input['address']) ? $item->input['address'] : $appliance->fields['address'];
+         $backoffice = isset($item->input['backoffice']) ? $item->input['backoffice'] : $appliance->fields['backoffice'];
          if (is_array($appliance->fields) && count($appliance->fields) > 0) {
             $appliance->update(['id'                           => $appliance->fields['id'],
                                 'address'                      => $address,
                                 'backoffice'                   => $backoffice,
-                                'webapplicationtypes_id'       => isset($item->input['plugin_webapplications_webapplicationtypes_id'])?$item->input['plugin_webapplications_webapplicationtypes_id']:0,
-                                'webapplicationservertypes_id' => isset($item->input['plugin_webapplications_webapplicationservertypes_id'])?$item->input['plugin_webapplications_webapplicationservertypes_id']:0,
-                                'webapplicationtechnics_id'    => isset($item->input['plugin_webapplications_webapplicationtechnics_id'])?$item->input['plugin_webapplications_webapplicationtechnics_id']:0
+                                'webapplicationtypes_id'       => isset($item->input['plugin_webapplications_webapplicationtypes_id'])?$item->input['plugin_webapplications_webapplicationtypes_id']:$appliance->fields['plugin_webapplications_webapplicationtypes_id'],
+                                'webapplicationservertypes_id' => isset($item->input['plugin_webapplications_webapplicationservertypes_id'])?$item->input['plugin_webapplications_webapplicationservertypes_id']:$appliance->fields['plugin_webapplications_webapplicationservertypes_id'],
+                                'webapplicationtechnics_id'    => isset($item->input['plugin_webapplications_webapplicationtechnics_id'])?$item->input['plugin_webapplications_webapplicationtechnics_id']:$appliance->fields['plugin_webapplications_webapplicationtechnics_id']
             ]);
          } else {
             $appliance->add(['webapplicationtypes_id'       => isset($item->input['plugin_webapplications_webapplicationtypes_id'])?$item->input['plugin_webapplications_webapplicationtypes_id']:0,
