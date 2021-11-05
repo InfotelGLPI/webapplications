@@ -32,6 +32,8 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access directly to this file");
 }
 
+use Glpi\Application\View\TemplateRenderer;
+
 /**
  * Class PluginWebapplicationsAppliance
  */
@@ -41,6 +43,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
 
       return _n('Web application', 'Web applications', $nb, 'webapplications');
    }
+
    /**
     * @param $params
     */
@@ -53,62 +56,16 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
          if ($item->getID()) {
             $webapp_appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
          } else {
-            $webapp_appliance-> getEmpty();
+            $webapp_appliance->getEmpty();
          }
-         
-         echo "<tr class='tab_bg_1'>";
-         //server type of webapplications
-         echo "<td>" . PluginWebapplicationsWebapplicationServerType::getTypeName(1) . "</td>";
-         echo "<td>";
-         Dropdown::show('PluginWebapplicationsWebapplicationServerType',
-                        ['value' => $webapp_appliance->fields["webapplicationservertypes_id"]]);
-         echo "</td>";
-         echo "</td>";
-         //language of webapplications
-         echo "<td>" . PluginWebapplicationsWebapplicationTechnic::getTypeName(1) . "</td>";
-         echo "<td>";
-         Dropdown::show('PluginWebapplicationsWebapplicationTechnic',
-                        ['value' => $webapp_appliance->fields["webapplicationtechnics_id"]]);
-         echo "</td>";
-         echo "</tr>";
+         $options = [];
 
-         echo "<tr class='tab_bg_1'>";
-         //url of webapplications
-         echo "<td>" . __('URL') . "</td>";
-         echo "<td  colspan='3'>";
-         Html::autocompletionTextField($webapp_appliance, "address", ['option' => "size='65'"]);
-         echo "</td>";
-         echo "</tr>";
-
-         echo "<tr class='tab_bg_1'>";
-         //backoffice of webapplications
-         echo "<td>" . __('Backoffice URL', 'webapplications') . "</td>";
-         echo "<td colspan='3'>";
-         Html::autocompletionTextField($webapp_appliance, "backoffice", ['option' => "size='65'"]);
-         echo "</td>";
-         echo "</tr>";
-
-         //echo "<tr class='tab_bg_1'>";
-         //type of webapplications
-         //echo "<td>" . PluginWebapplicationsWebapplicationType::getTypeName(1) . "</td>";
-         //echo "<td>";
-         //Dropdown::show('PluginWebapplicationsWebapplicationType',
-         //               ['value'  => $webapp_appliance->fields["webapplicationtypes_id"],
-         //                'entity' => $item->fields["entities_id"]]);
-         //echo "</td>";
-         //manufacturer of webapplications
-         //echo "<td>" . __('Editor', 'webapplications') . "</td>";
-         //echo "<td>";
-         //Dropdown::show('Manufacturer',
-         //               ['value'  => $item->fields["manufacturers_id"],
-         //                'entity' => $item->fields["entities_id"]]);
-         //echo "</td>";
-         //echo "</tr>";
-
-         
-
+         TemplateRenderer::getInstance()->display('@webapplications/webapplication_form.html.twig', [
+            'item'   => $webapp_appliance,
+            'params' => $options,
+         ]);
       }
-
+      return true;
    }
 
    /**
@@ -151,14 +108,12 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
             $appliance->update(['id'                           => $appliance->fields['id'],
                                 'address'                      => $address,
                                 'backoffice'                   => $backoffice,
-                                'webapplicationtypes_id'       => isset($item->input['plugin_webapplications_webapplicationtypes_id'])?$item->input['plugin_webapplications_webapplicationtypes_id']:$appliance->fields['plugin_webapplications_webapplicationtypes_id'],
-                                'webapplicationservertypes_id' => isset($item->input['plugin_webapplications_webapplicationservertypes_id'])?$item->input['plugin_webapplications_webapplicationservertypes_id']:$appliance->fields['plugin_webapplications_webapplicationservertypes_id'],
-                                'webapplicationtechnics_id'    => isset($item->input['plugin_webapplications_webapplicationtechnics_id'])?$item->input['plugin_webapplications_webapplicationtechnics_id']:$appliance->fields['plugin_webapplications_webapplicationtechnics_id']
-            ]);
+                                'webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : $appliance->fields['plugin_webapplications_webapplicationservertypes_id'],
+                                'webapplicationtechnics_id'    => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : $appliance->fields['plugin_webapplications_webapplicationtechnics_id']
+                               ]);
          } else {
-            $appliance->add(['webapplicationtypes_id'       => isset($item->input['plugin_webapplications_webapplicationtypes_id'])?$item->input['plugin_webapplications_webapplicationtypes_id']:0,
-                                'webapplicationservertypes_id' => isset($item->input['plugin_webapplications_webapplicationservertypes_id'])?$item->input['plugin_webapplications_webapplicationservertypes_id']:0,
-                                'webapplicationtechnics_id'    => isset($item->input['plugin_webapplications_webapplicationtechnics_id'])?$item->input['plugin_webapplications_webapplicationtechnics_id']:0,
+            $appliance->add(['webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : 0,
+                             'webapplicationtechnics_id'    => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : 0,
                              'address'                      => $address,
                              'appliances_id'                => $item->getID(),
                              'backoffice'                   => $backoffice]);

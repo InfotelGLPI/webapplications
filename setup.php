@@ -27,7 +27,7 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_WEBAPPLICATIONS_VERSION', '3.0.2');
+define('PLUGIN_WEBAPPLICATIONS_VERSION', '4.0.0');
 
 // Init the hooks of the plugins -Needed
 function plugin_init_webapplications() {
@@ -41,13 +41,13 @@ function plugin_init_webapplications() {
    Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
 
    //if glpi is loaded
-   if (Session::getLoginUserID()) {
-
-      if (Session::haveRight("plugin_webapplications", READ)
-          || Session::haveRight("config", UPDATE)) {
-         $PLUGIN_HOOKS['config_page']['webapplications']        = 'front/webapplication.php';
-      }
-   }
+//   if (Session::getLoginUserID()) {
+//
+//      if (Session::haveRight("plugin_webapplications", READ)
+//          || Session::haveRight("config", UPDATE)) {
+//         $PLUGIN_HOOKS['config_page']['webapplications']        = 'front/webapplication.php';
+//      }
+//   }
 
    $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsAppliance', 'addFields'];
 
@@ -77,7 +77,7 @@ function plugin_version_webapplications() {
                 'homepage'       => 'https://github.com/InfotelGLPI/webapplications',
                 'requirements'   => [
                   'glpi' => [
-                     'min' => '9.5',
+                     'min' => '10.0',
                      'dev' => false
                   ]
                ]
@@ -91,10 +91,10 @@ function plugin_version_webapplications() {
  * @return bool
  */
 function plugin_webapplications_check_prerequisites() {
-   if (version_compare(GLPI_VERSION, '9.5', 'lt')
-      || version_compare(GLPI_VERSION, '9.6', 'ge')) {
+   if (version_compare(GLPI_VERSION, '10.0', 'lt')
+      || version_compare(GLPI_VERSION, '11.0', 'ge')) {
       if (method_exists('Plugin', 'messageIncompatible')) {
-         echo Plugin::messageIncompatible('core', '9.5');
+         echo Plugin::messageIncompatible('core', '10.0');
       }
       return false;
    }

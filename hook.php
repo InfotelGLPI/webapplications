@@ -252,7 +252,7 @@ function plugin_webapplications_getDropdown() {
 
    if ($plugin->isActivated("webapplications")) {
       return ['PluginWebapplicationsWebapplicationServerType' => PluginWebapplicationsWebapplicationServerType::getTypeName(2),
-              'PluginWebapplicationsWebapplicationType'       => PluginWebapplicationsWebapplicationType::getTypeName(2),
+//              'PluginWebapplicationsWebapplicationType'       => PluginWebapplicationsWebapplicationType::getTypeName(2),
               'PluginWebapplicationsWebapplicationTechnic'    => PluginWebapplicationsWebapplicationTechnic::getTypeName(2)];
    }
    return [];
@@ -269,7 +269,7 @@ function plugin_webapplications_getAddSearchOptions($itemtype) {
          $sopt[8102]['field']         = 'address';
          $sopt[8102]['name']          = __('URL');
          $sopt[8102]['massiveaction'] = false;
-         $sopt[8102]['datatype']      = 'text';
+         $sopt[8102]['datatype']      = 'weblink';
          $sopt[8102]['linkfield']     = 'appliances_id';
          $sopt[8102]['joinparams']    = array('jointype' => 'child');
          $sopt[8102]['forcegroupby']  = false;
@@ -278,7 +278,7 @@ function plugin_webapplications_getAddSearchOptions($itemtype) {
          $sopt[8103]['field']         = 'backoffice';
          $sopt[8103]['name']          = __('Backoffice URL', 'webapplications');
          $sopt[8103]['massiveaction'] = false;
-         $sopt[8103]['datatype']      = 'text';
+         $sopt[8103]['datatype']      = 'weblink';
          $sopt[8103]['linkfield']     = 'appliances_id';
          $sopt[8103]['joinparams']    = array('jointype' => 'child');
          $sopt[8103]['forcegroupby']  = false;
