@@ -5,9 +5,6 @@
     {% set bg = "asset-deleted" %}
 {% endif %}
 
-{# <div class="asset {{ bg }}"> #}
-{# {% include("components/form/header.html.twig") %} #}
-
     {% set rand = random() %}
     {% set params  = params ?? [] %}
     {% set target       = params['target'] ?? item.getFormURL() %}
