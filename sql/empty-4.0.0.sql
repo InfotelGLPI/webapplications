@@ -2,8 +2,8 @@ DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationservertypes`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationservertypes` (
   `id`      INT(11) NOT NULL        AUTO_INCREMENT,
   `name`    VARCHAR(255)
-            COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment` TEXT COLLATE utf8_unicode_ci,
+            COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment` TEXT COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -20,8 +20,8 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationtypes` (
   `id`           INT(11) NOT NULL        AUTO_INCREMENT,
   `entities_id`  INT(11) NOT NULL        DEFAULT '0',
   `name`         VARCHAR(255)
-                 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment`      TEXT COLLATE utf8_unicode_ci,
+                 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment`      TEXT COLLATE utf8mb4_unicode_ci,
   `is_recursive` TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
@@ -32,8 +32,8 @@ DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationtechnics`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationtechnics` (
   `id`      INT(11) NOT NULL        AUTO_INCREMENT,
   `name`    VARCHAR(255)
-            COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment` TEXT COLLATE utf8_unicode_ci,
+            COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment` TEXT COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -55,8 +55,8 @@ CREATE TABLE `glpi_plugin_webapplications_appliances` (
         COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationservertypes (id)',
    `webapplicationtechnics_id`    INT(11)    NOT NULL     DEFAULT '0'
         COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtechnics (id)',
-   `address` VARCHAR(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `backoffice`  VARCHAR(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+   `address` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+   `backoffice`  VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    PRIMARY KEY  (`id`),
    KEY `appliances_id` (`appliances_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
