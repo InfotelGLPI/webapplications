@@ -99,7 +99,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
     * @param \Appliance $item
     */
    static function setAppliance(Appliance $item) {
-      $appliance = new PluginWebApplicationsAppliance();
+      $appliance = new self();
       if (!empty($item->fields)) {
          $appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
          $address    = isset($item->input['address']) ? $item->input['address'] : $appliance->fields['address'];
