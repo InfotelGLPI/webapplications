@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 10:32+0000\n"
+"POT-Creation-Date: 2021-12-13 11:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Backoffice URL"
 msgstr ""
 
-#: setup.php:72 inc/appliance.class.php:44 inc/profile.class.php:175
+#: setup.php:79 inc/appliance.class.php:44 inc/profile.class.php:175
 #: inc/webapplication.class.php:48
 msgid "Web application"
 msgid_plural "Web applications"
