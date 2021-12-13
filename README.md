@@ -3,7 +3,7 @@ Plugin webapplications pour GLPI
 
 Information :
 
-En version 9.5 de GLPI, les applications webs seront migrées dans le cœur de GLPI (au niveau des applicatifs). Il faut lancer le script de migration depuis la page de configuration du plugin : /glpi/plugins/webapplications/front/webapplication.php
+En version 9.5 de GLPI, les applications webs seront migrées dans le cœur de GLPI (au niveau des applicatifs). Il faut lancer le script de migration depuis la page de configuration du plugin : webapplications/front/webapplication.php
 
 Le plugin sera conservé pour stocker plusieurs champs : URL, URL d'administration, Catégorie, Type de serveur de traitement, Éditeur, Langue de traitement
 
@@ -17,7 +17,7 @@ Ce plugin vous permet de lister les applications web de votre réseau et de les 
 
 ***********************
 
-In version 9.5 of GLPI, web applications will be migrated into the core of GLPI (As appliances). You have to run the migration script from the plugin configuration page: /glpi/plugins/webapplications/front/webapplication.php
+In version 9.5 of GLPI, web applications will be migrated into the core of GLPI (As appliances). You have to run the migration script from the plugin configuration page: webapplications/front/webapplication.php
 
 The plugin will be kept to store several fields: URL, administration URL, Category, Type of treatment server, Editor, 	Language of treatment
 

@@ -33,50 +33,50 @@
 function plugin_webapplications_install() {
    global $DB;
 
-   include_once(GLPI_ROOT . "/plugins/webapplications/inc/profile.class.php");
+   include_once(PLUGIN_WEBAPPLICATIONS_DIR. "/inc/profile.class.php");
 
    $update = false;
    //from 3.0 version (glpi 9.5)
    if (!$DB->tableExists("glpi_plugin_webapplications_webapplicationtypes")
        && !$DB->tableExists("glpi_plugin_webapplications_appliances")) {
 
-      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/empty-4.0.0.sql");
+      $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/empty-4.0.0.sql");
 
    } else {
 
       if ($DB->tableExists("glpi_application") && !$DB->tableExists("glpi_plugin_appweb")) {
          $update = true;
-         $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.1.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.1.sql");
       }
 
       //from 1.1 version
       if ($DB->tableExists("glpi_plugin_appweb") && !$DB->fieldExists("glpi_plugin_appweb", "location")) {
          $update = true;
-         $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.3.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.3.sql");
       }
 
       //from 1.3 version
       if ($DB->tableExists("glpi_plugin_appweb") && !$DB->fieldExists("glpi_plugin_appweb", "recursive")) {
          $update = true;
-         $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.4.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.4.sql");
       }
 
       if ($DB->tableExists("glpi_plugin_appweb_profiles")
           && $DB->fieldExists("glpi_plugin_appweb_profiles", "interface")) {
          $update = true;
-         $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.5.0.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.5.0.sql");
       }
 
       if ($DB->tableExists("glpi_plugin_appweb")
           && !$DB->fieldExists("glpi_plugin_appweb", "helpdesk_visible")) {
          $update = true;
-         $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.5.1.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.5.1.sql");
       }
 
       if ($DB->tableExists("glpi_plugin_appweb")
           && !$DB->tableExists("glpi_plugin_webapplications_webapplications")) {
          $update = true;
-         $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.6.0.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.6.0.sql");
 
          //not same index name depending on installation version for (`FK_appweb`, `FK_device`, `device_type`)
          $query = "ALTER TABLE `glpi_plugin_webapplications_webapplications_items` DROP INDEX `FK_compte`;";
@@ -90,7 +90,7 @@ function plugin_webapplications_install() {
       //from 1.6 version
       if ($DB->tableExists("glpi_plugin_webapplications_webapplications")
           && !$DB->fieldExists("glpi_plugin_webapplications_webapplications", "users_id_tech")) {
-         $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.8.0.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.8.0.sql");
       }
    }
 
@@ -120,13 +120,13 @@ function plugin_webapplications_install() {
    }
 
    if (!$DB->fieldExists("glpi_plugin_webapplications_webapplicationtypes", "is_recursive")) {
-      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.9.0.sql");
+      $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.9.0.sql");
    }
 
    //from 3.0 version (glpi 9.5)
    if ($DB->tableExists("glpi_plugin_webapplications_webapplications")
        && !$DB->tableExists("glpi_plugin_webapplications_appliances")) {
-      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-3.0.0.sql");
+      $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-3.0.0.sql");
    }
 
 
@@ -175,7 +175,7 @@ function plugin_webapplications_install() {
 function plugin_webapplications_uninstall() {
    global $DB;
 
-   include_once(GLPI_ROOT . "/plugins/webapplications/inc/profile.class.php");
+   include_once(PLUGIN_WEBAPPLICATIONS_DIR. "/inc/profile.class.php");
 
    $tables = ["glpi_plugin_webapplications_appliances",
               "glpi_plugin_webapplications_webapplicationtypes",

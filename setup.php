@@ -29,6 +29,13 @@
 
 define('PLUGIN_WEBAPPLICATIONS_VERSION', '4.0.0');
 
+if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
+   define("PLUGIN_WEBAPPLICATIONS_DIR", Plugin::getPhpDir("webapplications"));
+   define("PLUGIN_WEBAPPLICATIONS_NOTFULL_DIR", Plugin::getPhpDir("webapplications",false));
+   define("PLUGIN_WEBAPPLICATIONS_WEBDIR", Plugin::getWebDir("webapplications"));
+}
+
+
 // Init the hooks of the plugins -Needed
 function plugin_init_webapplications() {
    global $PLUGIN_HOOKS;
