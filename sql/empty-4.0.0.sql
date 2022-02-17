@@ -47,8 +47,8 @@ INSERT INTO `glpi_plugin_webapplications_webapplicationtechnics` VALUES ('6', '.
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_appliances`;
 CREATE TABLE `glpi_plugin_webapplications_appliances` (
-   `id` int(11) NOT NULL auto_increment,
-   `appliances_id` int(11) NOT NULL,
+   `id` int unsigned NOT NULL auto_increment,
+   `appliances_id` int unsigned NOT NULL,
    `webapplicationtypes_id`       int unsigned    NOT NULL     DEFAULT '0'
         COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtypes (id)',
    `webapplicationservertypes_id` int unsigned    NOT NULL     DEFAULT '0'
