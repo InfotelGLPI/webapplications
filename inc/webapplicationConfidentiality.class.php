@@ -45,16 +45,7 @@ class PluginWebapplicationsWebapplicationConfidentiality extends CommonDropdown 
     * @return translated
     */
    static function getTypeName($nb = 0) {
-      echo "<script>console.log('test');</script>";
       return __('Confidentiality');
    }
 
-    function changeBackgroundColor(){
-        $field = $this->getField(webapplicationconfidentialities_id);
-        echo "<script>console.log($field);</script>";
-        Ajax::updateItemOnEvent(
-
-        );
-
-    }
 }
