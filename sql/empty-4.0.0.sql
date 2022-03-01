@@ -45,16 +45,6 @@ INSERT INTO `glpi_plugin_webapplications_webapplicationtechnics` VALUES ('4', 'P
 INSERT INTO `glpi_plugin_webapplications_webapplicationtechnics` VALUES ('5', 'Php', '');
 INSERT INTO `glpi_plugin_webapplications_webapplicationtechnics` VALUES ('6', '.Net', '');
 
-DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationtechnictypes`;
-CREATE TABLE `glpi_plugin_webapplications_webapplicationtechnictypes` (
-    `id`      int unsigned NOT NULL        AUTO_INCREMENT,
-    `name`    VARCHAR(255)
-              COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `comment` TEXT COLLATE utf8mb4_unicode_ci,
-    PRIMARY KEY (`id`),
-    KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationexternalexpositions`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationexternalexpositions` (
   `id`      int unsigned NOT NULL        AUTO_INCREMENT,
@@ -134,8 +124,6 @@ CREATE TABLE `glpi_plugin_webapplications_appliances` (
         COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationservertypes (id)',
    `webapplicationtechnics_id`    int unsigned    NOT NULL     DEFAULT '0'
         COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtechnics (id)',
-   `webapplicationtechnictypes_id`    int unsigned  NOT NULL     DEFAULT '0'
-       COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtechnictypes (id)',
    `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0'
        COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
    `webapplicationreferringdepartmentvalidation_id` int unsigned   NOT NULL     DEFAULT '0'

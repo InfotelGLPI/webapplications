@@ -52,14 +52,6 @@
                         ) }}
                     {% endif %}
 
-                    {% if item.isField('webapplicationtechnictypes_id') %}
-                        {{ fields.dropdownField(
-                            "PluginWebapplicationsWebapplicationTechnicType",
-                            "webapplicationtechnictypes_id",
-                            item.fields['webapplicationtechnictypes_id'],
-                            "PluginWebapplicationsWebapplicationTechnicType"|itemtype_name,
-                        ) }}
-                    {% endif %}
 
                     {% if item.isField('webapplicationexternalexpositions_id') %}
                         {{ fields.dropdownField(

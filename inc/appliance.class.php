@@ -110,7 +110,6 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
                                 'backoffice'                   => $backoffice,
                                 'webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : $appliance->fields['plugin_webapplications_webapplicationservertypes_id'],
                                 'webapplicationtechnics_id'    => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : $appliance->fields['plugin_webapplications_webapplicationtechnics_id'],
-                                'webapplicationtechnictypes_id'    => isset($item->input['webapplicationtechnictypes_id']) ? $item->input['webapplicationtechnictypes_id'] : $appliance->fields['plugin_webapplications_webapplicationtechnicstypes_id'],
                                 'webapplicationexternalexpositions_id'    => isset($item->input['webapplicationexternalexpositions_id']) ? $item->input['webapplicationexternalexpositions_id'] : $appliance->fields['plugin_webapplications_webapplicationexternalexpositions_id'],
                                 'webapplicationreferringdepartmentvalidation_id'    => isset($item->input['webapplicationreferringdepartmentvalidation_id']) ? $item->input['webapplicationreferringdepartmentvalidation_id'] : $appliance->fields['plugin_webapplications_webapplicationreferringdepartmentvalidation_id'],
                                 'webapplicationciovalidation_id'    => isset($item->input['webapplicationciovalidation_id']) ? $item->input['webapplicationciovalidation_id'] : $appliance->fields['plugin_webapplications_webapplicationciovalidation_id'],
@@ -122,7 +121,6 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
          } else {
             $appliance->add(['webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : 0,
                              'webapplicationtechnics_id'    => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : 0,
-                             'webapplicationtechnictypes_id' => isset($item->input['webapplicationtechnictypes_id']) ? $item->input['webapplicationtechnictypes_id'] : 0,
                              'webapplicationexternalexpositions_id' => isset($item->input['webapplicationexternalexpositions_id']) ? $item->input['webapplicationexternalexpositions_id'] : 0,
                              'webapplicationreferringdepartmentvalidation_id' => isset($item->input['webapplicationreferringdepartmentvalidation_id']) ? $item->input['webapplicationreferringdepartmentvalidation_id'] : 0,
                              'webapplicationciovalidation_id' => isset($item->input['webapplicationciovalidation_id']) ? $item->input['webapplicationciovalidation_id'] : 0,

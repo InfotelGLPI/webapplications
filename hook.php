@@ -123,10 +123,10 @@ function plugin_webapplications_install() {
       $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-1.9.0.sql");
    }
 
-   //from 3.0 version (glpi 9.5)
+   //from 4.0 version (glpi 10.0)
    if ($DB->tableExists("glpi_plugin_webapplications_webapplications")
        && !$DB->tableExists("glpi_plugin_webapplications_appliances")) {
-      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-3.0.0.sql");
+      $DB->runFile(GLPI_ROOT . "/plugins/webapplications/sql/update-4.0.0.sql");
    }
 
 
@@ -180,7 +180,14 @@ function plugin_webapplications_uninstall() {
    $tables = ["glpi_plugin_webapplications_appliances",
               "glpi_plugin_webapplications_webapplicationtypes",
               "glpi_plugin_webapplications_webapplicationservertypes",
-              "glpi_plugin_webapplications_webapplicationtechnics"];
+              "glpi_plugin_webapplications_webapplicationtechnics",
+              "glpi_plugin_webapplications_webapplicationexternalexpositions",
+              "glpi_plugin_webapplications_webapplicationrefdepvalidation",
+              "glpi_plugin_webapplications_webapplicationciovalidation",
+              "glpi_plugin_webapplications_webapplicationavailabilities",
+              "glpi_plugin_webapplications_webapplicationintegrities",
+              "glpi_plugin_webapplications_webapplicationconfidentialities",
+              "glpi_plugin_webapplications_webapplicationtraceabilities"];
 
    foreach ($tables as $table) {
       $DB->query("DROP TABLE IF EXISTS `$table`;");
@@ -254,7 +261,6 @@ function plugin_webapplications_getDropdown() {
       return ['PluginWebapplicationsWebapplicationServerType' => PluginWebapplicationsWebapplicationServerType::getTypeName(2),
 //              'PluginWebapplicationsWebapplicationType'       => PluginWebapplicationsWebapplicationType::getTypeName(2),
               'PluginWebapplicationsWebapplicationTechnic'    => PluginWebapplicationsWebapplicationTechnic::getTypeName(2),
-              'PluginWebapplicationsWebapplicationTechnicType' => PluginWebapplicationsWebapplicationTechnicType::getTypeName(2),
               'PluginWebapplicationsWebapplicationExternalExposition' => PluginWebapplicationsWebapplicationExternalExposition::getTypeName(2),
               'PluginWebapplicationsWebapplicationReferringDepartmentValidation' => PluginWebapplicationsWebapplicationReferringDepartmentValidation::getTypeName(2),
               'PluginWebapplicationsWebapplicationCIOValidation' => PluginWebapplicationsWebapplicationCIOValidation::getTypeName(2),
@@ -341,6 +347,23 @@ function plugin_webapplications_getAddSearchOptions($itemtype) {
                ]
             ]
          ];
+
+          $sopt[8107]['table']         = 'glpi_plugin_webapplications_webapplicationexternalexpositions';
+          $sopt[8107]['field']         = 'name';
+          $sopt[8107]['datatype']      = 'dropdown';
+          $sopt[8107]['name']          = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
+          $sopt[8107]['forcegroupby']  = true;
+          $sopt[8107]['massiveaction'] = false;
+          $sopt[8107]['linkfield']     = 'webapplicationexternalexpositions_id';
+          $sopt[8107]['joinparams']    = [
+              'beforejoin' => [
+                  'table'      => 'glpi_plugin_webapplications_appliances',
+                  'joinparams' => [
+                      'jointype'  => 'child',
+                      'condition' => ''
+                  ]
+              ]
+          ];
 
 
       }

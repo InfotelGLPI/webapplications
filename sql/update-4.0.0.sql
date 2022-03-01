@@ -8,8 +8,6 @@ CREATE TABLE `glpi_plugin_webapplications_appliances` (
       COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationservertypes (id)',
   `webapplicationtechnics_id`    int unsigned    NOT NULL     DEFAULT '0'
       COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtechnics (id)',
-  `webapplicationtechnictypes_id`    int unsigned  NOT NULL     DEFAULT '0'
-      COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtechnictypes (id)',
   `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0'
       COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
   `webapplicationreferringdepartmentvalidation_id` int unsigned   NOT NULL     DEFAULT '0'
