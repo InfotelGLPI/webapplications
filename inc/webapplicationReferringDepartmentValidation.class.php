@@ -46,6 +46,6 @@ class PluginWebapplicationsWebapplicationReferringDepartmentValidation extends C
     */
    static function getTypeName($nb = 0) {
 
-      return __('Validation of the request by the referring Department ');
+      return __('Validation of the request by the referring Department ', 'webapplications');
    }
 }

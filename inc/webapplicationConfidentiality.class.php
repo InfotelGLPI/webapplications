@@ -45,7 +45,7 @@ class PluginWebapplicationsWebapplicationConfidentiality extends CommonDropdown 
     * @return translated
     */
    static function getTypeName($nb = 0) {
-      return __('Confidentiality');
+      return __('Confidentiality', 'webapplications');
    }
 
 }

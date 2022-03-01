@@ -46,6 +46,6 @@ class PluginWebapplicationsWebapplicationCIOValidation extends CommonDropdown {
     */
    static function getTypeName($nb = 0) {
 
-      return __('Validation by CIO ');
+      return __('Validation by CIO ', 'webapplications');
    }
 }

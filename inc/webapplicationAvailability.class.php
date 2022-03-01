@@ -46,6 +46,6 @@ class PluginWebapplicationsWebapplicationAvailability extends CommonDropdown {
     */
    static function getTypeName($nb = 0) {
 
-      return __('Availability');
+      return __('Availability', 'webapplications');
    }
 }

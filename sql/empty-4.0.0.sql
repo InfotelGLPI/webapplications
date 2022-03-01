@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationservertypes`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationservertypes` (
-  `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+  `id`      int unsigned NOT NULL        AUTO_INCREMENT,
   `name`    VARCHAR(255)
             COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `comment` TEXT COLLATE utf8mb4_unicode_ci,
@@ -17,8 +17,8 @@ INSERT INTO `glpi_plugin_webapplications_webapplicationservertypes` VALUES ('5',
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationtypes`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationtypes` (
-  `id`           INT(11) NOT NULL        AUTO_INCREMENT,
-  `entities_id`  INT(11) NOT NULL        DEFAULT '0',
+  `id`           int unsigned NOT NULL        AUTO_INCREMENT,
+  `entities_id`  int unsigned NOT NULL        DEFAULT '0',
   `name`         VARCHAR(255)
                  COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `comment`      TEXT COLLATE utf8mb4_unicode_ci,
@@ -30,7 +30,7 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationtypes` (
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationtechnics`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationtechnics` (
-  `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+  `id`      int unsigned NOT NULL        AUTO_INCREMENT,
   `name`    VARCHAR(255)
             COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `comment` TEXT COLLATE utf8mb4_unicode_ci,
@@ -47,7 +47,7 @@ INSERT INTO `glpi_plugin_webapplications_webapplicationtechnics` VALUES ('6', '.
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationtechnictypes`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationtechnictypes` (
-    `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+    `id`      int unsigned NOT NULL        AUTO_INCREMENT,
     `name`    VARCHAR(255)
               COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `comment` TEXT COLLATE utf8mb4_unicode_ci,
@@ -57,7 +57,7 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationtechnictypes` (
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationexternalexpositions`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationexternalexpositions` (
-  `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+  `id`      int unsigned NOT NULL        AUTO_INCREMENT,
   `name`    VARCHAR(255)
             COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `comment` TEXT COLLATE utf8mb4_unicode_ci,
@@ -67,7 +67,7 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationexternalexpositions` (
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationrefdepvalidation`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationrefdepvalidation` (
-   `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+   `id`      int unsigned NOT NULL        AUTO_INCREMENT,
    `validation`    tinyint(1) NOT NULL default '0',
    `comment` TEXT COLLATE utf8mb4_unicode_ci,
    PRIMARY KEY (`id`)
@@ -75,7 +75,7 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationrefdepvalidation` (
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationciovalidation`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationciovalidation` (
-  `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+  `id`      int unsigned NOT NULL        AUTO_INCREMENT,
   `validation`    tinyint(1) NOT NULL default '0',
   `comment` TEXT COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
@@ -85,7 +85,7 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationciovalidation` (
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationavailabilities`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationavailabilities` (
-   `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+   `id`      int unsigned NOT NULL        AUTO_INCREMENT,
    `name`    VARCHAR(255)
        COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 1,
    `color`   VARCHAR(6) DEFAULT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationavailabilities` (
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationintegrities`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationintegrities` (
-   `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+   `id`      int unsigned NOT NULL        AUTO_INCREMENT,
    `name`    VARCHAR(255)
        COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 1,
    `color`   VARCHAR(6) DEFAULT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationintegrities` (
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationconfidentialities`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationconfidentialities` (
-   `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+   `id`      int unsigned NOT NULL        AUTO_INCREMENT,
    `name`    VARCHAR(255)
        COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 1,
    `color`   VARCHAR(6) DEFAULT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationconfidentialities` (
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_webapplicationtraceabilities`;
 CREATE TABLE `glpi_plugin_webapplications_webapplicationtraceabilities` (
-   `id`      INT(11) NOT NULL        AUTO_INCREMENT,
+   `id`      int unsigned NOT NULL        AUTO_INCREMENT,
    `name`    VARCHAR(255)
        COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 1,
    `color`   VARCHAR(6) DEFAULT NULL,
@@ -126,29 +126,29 @@ CREATE TABLE `glpi_plugin_webapplications_webapplicationtraceabilities` (
 
 DROP TABLE IF EXISTS `glpi_plugin_webapplications_appliances`;
 CREATE TABLE `glpi_plugin_webapplications_appliances` (
-   `id` int(11) NOT NULL auto_increment,
-   `appliances_id` int(11) NOT NULL,
-   `webapplicationtypes_id`       INT(11)    NOT NULL     DEFAULT '0'
+   `id` int unsigned NOT NULL auto_increment,
+   `appliances_id` int unsigned NOT NULL,
+   `webapplicationtypes_id`       int unsigned    NOT NULL     DEFAULT '0'
         COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtypes (id)',
-   `webapplicationservertypes_id` INT(11)    NOT NULL     DEFAULT '0'
+   `webapplicationservertypes_id` int unsigned    NOT NULL     DEFAULT '0'
         COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationservertypes (id)',
-   `webapplicationtechnics_id`    INT(11)    NOT NULL     DEFAULT '0'
+   `webapplicationtechnics_id`    int unsigned    NOT NULL     DEFAULT '0'
         COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtechnics (id)',
-   `webapplicationtechnictypes_id`    INT(11)  NOT NULL     DEFAULT '0'
+   `webapplicationtechnictypes_id`    int unsigned  NOT NULL     DEFAULT '0'
        COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtechnictypes (id)',
-   `webapplicationexternalexpositions_id` INT(11)  NOT NULL     DEFAULT '0'
+   `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0'
        COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
-   `webapplicationreferringdepartmentvalidation_id` INT(11)   NOT NULL     DEFAULT '0'
+   `webapplicationreferringdepartmentvalidation_id` int unsigned   NOT NULL     DEFAULT '0'
        COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationrefdepvalidation (id)',
-   `webapplicationciovalidation_id` INT(11)   NOT NULL     DEFAULT '0'
+   `webapplicationciovalidation_id` int unsigned   NOT NULL     DEFAULT '0'
        COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationciovalidation (id)',
-   `webapplicationavailabilities_id` INT(11)   NOT NULL     DEFAULT '0'
+   `webapplicationavailabilities_id` int unsigned   NOT NULL     DEFAULT '0'
        COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationavailabilities (id)',
-   `webapplicationintegrities_id` INT(11)   NOT NULL     DEFAULT '0'
+   `webapplicationintegrities_id` int unsigned   NOT NULL     DEFAULT '0'
        COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationintegrities (id)',
-   `webapplicationconfidentialities_id` INT(11)   NOT NULL     DEFAULT '0'
+   `webapplicationconfidentialities_id` int unsigned   NOT NULL     DEFAULT '0'
        COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationconfidentialities (id)',
-   `webapplicationtraceabilities_id` INT(11)   NOT NULL     DEFAULT '0'
+   `webapplicationtraceabilities_id` int unsigned   NOT NULL     DEFAULT '0'
        COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationtraceabilities (id)',
    `address` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    `backoffice`  VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

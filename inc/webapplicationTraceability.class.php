@@ -46,6 +46,6 @@ class PluginWebapplicationsWebapplicationTraceability extends CommonDropdown {
     */
    static function getTypeName($nb = 0) {
 
-      return __('Traceability');
+      return __('Traceability', 'webapplications');
    }
 }

@@ -253,7 +253,15 @@ function plugin_webapplications_getDropdown() {
    if ($plugin->isActivated("webapplications")) {
       return ['PluginWebapplicationsWebapplicationServerType' => PluginWebapplicationsWebapplicationServerType::getTypeName(2),
 //              'PluginWebapplicationsWebapplicationType'       => PluginWebapplicationsWebapplicationType::getTypeName(2),
-              'PluginWebapplicationsWebapplicationTechnic'    => PluginWebapplicationsWebapplicationTechnic::getTypeName(2)];
+              'PluginWebapplicationsWebapplicationTechnic'    => PluginWebapplicationsWebapplicationTechnic::getTypeName(2),
+              'PluginWebapplicationsWebapplicationTechnicType' => PluginWebapplicationsWebapplicationTechnicType::getTypeName(2),
+              'PluginWebapplicationsWebapplicationExternalExposition' => PluginWebapplicationsWebapplicationExternalExposition::getTypeName(2),
+              'PluginWebapplicationsWebapplicationReferringDepartmentValidation' => PluginWebapplicationsWebapplicationReferringDepartmentValidation::getTypeName(2),
+              'PluginWebapplicationsWebapplicationCIOValidation' => PluginWebapplicationsWebapplicationCIOValidation::getTypeName(2),
+              'PluginWebapplicationsWebapplicationAvailability' => PluginWebapplicationsWebapplicationAvailability::getTypeName(2),
+              'PluginWebapplicationsWebapplicationIntegrity' => PluginWebapplicationsWebapplicationIntegrity::getTypeName(2),
+              'PluginWebapplicationsWebapplicationConfidentiality' => PluginWebapplicationsWebapplicationConfidentiality::getTypeName(2),
+              'PluginWebapplicationsWebapplicationTraceability' => PluginWebapplicationsWebapplicationTraceability::getTypeName(2)];
    }
    return [];
 }
