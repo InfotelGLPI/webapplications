@@ -59,6 +59,10 @@ function plugin_init_webapplications() {
 
    $PLUGIN_HOOKS['pre_item_update']['webapplications'] = ['Appliance' => ['PluginWebapplicationsAppliance',
                                                                           'applianceUpdate']];
+
+   if (strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") ==true) {
+        $PLUGIN_HOOKS["add_javascript"]['webapplications'][] = 'scripts/securityneedscolor.js.php';
+   }
 }
 
 
