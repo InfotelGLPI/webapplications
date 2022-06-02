@@ -27,7 +27,7 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_WEBAPPLICATIONS_VERSION', '4.0.0');
+define('PLUGIN_WEBAPPLICATIONS_VERSION', '4.0.1');
 
 if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
    define("PLUGIN_WEBAPPLICATIONS_DIR", Plugin::getPhpDir("webapplications"));
