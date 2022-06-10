@@ -1,76 +1,80 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Webapplications Development Team
 # This file is distributed under the same license as the GLPI - Webapplications plugin package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2012-2013
-# Xavier CAILLAUD <thetsmr@gmail.com>, 2012
+# Xavier CAILLAUD <thetsmr@gmail.com>, 2022
+# Maykon Henrique Facincani <facincani.maykon@gmail.com>, 2022
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GLPI Project - webapplications plugin\n"
+"Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-23 08:39+0200\n"
-"PO-Revision-Date: 2020-07-23 06:48+0000\n"
-"Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/infotelGLPI/GLPI_webapplications/language/pt_BR/)\n"
+"POT-Creation-Date: 2022-06-02 07:46+0000\n"
+"PO-Revision-Date: 2020-11-02 16:31+0000\n"
+"Last-Translator: Maykon Henrique Facincani <facincani.maykon@gmail.com>, 2022\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/infotelGLPI/teams/12376/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: hook.php:281 inc/appliance.class.php:57
+#: hook.php:279
 msgid "Backoffice URL"
 msgstr "URL de retaguarda"
 
-#: setup.php:72 inc/profile.class.php:175 inc/webapplication.class.php:48
+#: setup.php:79 inc/appliance.class.php:44 inc/profile.class.php:175
+#: inc/webapplication.class.php:48
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "Aplicação web"
 msgstr[1] "Aplicações web"
+msgstr[2] "Aplicações web"
 
 #: front/webapplication.php:42 front/webapplication.php:45
 msgid "Core migration"
-msgstr ""
+msgstr "Migração do núcleo"
 
 #: front/webapplication.php:47
-msgid "Are you sure you want to do core migration ??"
-msgstr ""
+msgid "Are you sure you want to do core migration ?"
+msgstr "Você tem certeza de que quer fazer a migração do núcleo?"
 
 #: front/webapplication.php:58
 msgid "Data migration"
-msgstr ""
+msgstr "Migração de dados"
 
-#: front/webapplication.php:100
+#: front/webapplication.php:144
 msgid "Tables purge"
-msgstr ""
+msgstr "Limpeza de tabelas"
 
-#: front/webapplication.php:122
+#: front/webapplication.php:166
 msgid "Link with core purge"
-msgstr ""
+msgstr "Ligar com a limpeza do núcleo"
 
-#: front/webapplication.php:143
+#: front/webapplication.php:187
 msgid "Migration was successful"
-msgstr ""
-
-#: inc/appliance.class.php:81
-msgid "Editor"
-msgstr "Editor"
+msgstr "Migração realizada com sucesso"
 
 #: inc/webapplicationservertype.class.php:49
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] "Tipo de servidor de tratamento"
 msgstr[1] "Tipos de servidores de tratamento"
+msgstr[2] "Tipos de servidores de tratamento"
 
 #: inc/webapplicationtechnic.class.php:49
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
 msgstr[0] "Idioma de tratamento"
 msgstr[1] "Idiomas de tratamento"
+msgstr[2] "Idiomas de tratamento"
 
 #: inc/webapplicationtype.class.php:50
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Categoria"
 msgstr[1] "Categorias"
+msgstr[2] "Categorias"
