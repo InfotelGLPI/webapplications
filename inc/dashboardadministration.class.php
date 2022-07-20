@@ -102,6 +102,7 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
     static function showListLDAP($ApplianceId){
 
 
+
         echo "<h2>";
         echo "Domain Active Directory / LDAP";
 
