@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
-    static $rightname         = "plugin_webapplications_ecosystem_dashboards";
+    static $rightname = "plugin_webapplications_ecosystem_dashboards";
 
     static function getTypeName($nb = 0) {
 
@@ -46,7 +46,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
     }
 
 
-    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
         return __('Ecosystem', 'webapplications');
 
@@ -54,15 +54,15 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        self::showForm($item);
+        $eco = new PluginWebapplicationsDashboardEcosystem();
+        $eco->showForm($item);
         return true;
     }
 
-    function showForm($ID, $options = [])
-    {
+    public function showForm($ID, $options = []) {
         global $CFG_GLPI;
 
-        $options['candel'] = false;
+        $options['candel']  = false;
         $options['colspan'] = 1;
 
 
@@ -77,14 +77,14 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         echo "</table></div>";
         echo "<div id=lists-Ecosystem></div>";
 
-        $array['value']='__VALUE__';
-        $array['type']=self::getType();
+        $array['value'] = '__VALUE__';
+        $array['type']  = self::getType();
 
-        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-Ecosystem', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
+        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown' . $rand, 'lists-Ecosystem', $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . '/ajax/getLists.php', $array);
 
     }
 
-    static function showLists($ApplianceId){
+    static function showLists($ApplianceId) {
 
 
         echo "<h1>Ecosystem</h1>";
@@ -93,20 +93,20 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         echo "Entities";
 
         $entitiesDBTM = new PluginWebapplicationsEntity();
-        $linkAddEnt=$entitiesDBTM::getFormURL();
+        $linkAddEnt   = $entitiesDBTM::getFormURL();
 
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddEnt . "'"]);
+        echo Html::submit(_sx('button', 'Add'), ['name'    => 'edit',
+                                                 'class'   => 'btn btn-primary',
+                                                 'icon'    => 'fas fa-plus',
+                                                 'style'   => 'float: right',
+                                                 'onclick' => "window.location.href='" . $linkAddEnt . "'"]);
 
         echo "</h2>";
 
         echo "<div class='accordion' name=listEntitiesApp>";
 
         $entitiesAppDBTM = new Appliance_Item();
-        $entitiesApp = $entitiesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsEntity']);
+        $entitiesApp     = $entitiesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsEntity']);
 
 
         $listEntitiesId = array();
@@ -117,7 +117,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         }
 
 
-        if(!empty($listEntitiesId)){
+        if (!empty($listEntitiesId)) {
             $entities = $entitiesDBTM->find(['id' => $listEntitiesId]);
             foreach ($entities as $entity) {
 
@@ -163,8 +163,8 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
 
                 $processEntityDBTM = new PluginWebapplicationsProcess_Entity();
-                $processes = $processEntityDBTM->find(['plugin_webapplications_entities_id' => $entity['id']]);
-                $processDBTM = new PluginWebapplicationsProcess();
+                $processes         = $processEntityDBTM->find(['plugin_webapplications_entities_id' => $entity['id']]);
+                $processDBTM       = new PluginWebapplicationsProcess();
 
                 echo "<tr>";
                 echo "<th>";
@@ -215,17 +215,13 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 echo "</tbody>";
                 echo "</table></div>";
             }
-        }
-        else echo "No process";
+        } else echo "No process";
 
         echo "</div>";
         echo "<script>accordion();</script>";
 
 
     }
-
-
-
 
 
 }

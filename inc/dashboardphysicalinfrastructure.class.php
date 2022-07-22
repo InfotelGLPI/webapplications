@@ -54,7 +54,8 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        self::showForm($item);
+        $class = new self();
+        $class->showForm($item);
         return true;
     }
 
@@ -196,7 +197,6 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo 'Technical characteristics';
                 echo "</th>";
                 echo "<td>";
-                //echo $type." ".$model." ".$OSName." ".$OSVersionName;
                 echo "<table style='width:60%'>";
                 echo "<tr><td><b> Type </b></td>";
                 echo "<td>" . $type . "</td></tr>";
@@ -209,7 +209,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo "</tr>";
 
 
-             /*   $comment = $computer['comment'];
+                $comment = $computer['comment'];
 
                 echo "<tr>";
                 echo "<th style='padding-bottom: 20px'>";
@@ -222,7 +222,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                     echo "</table>";
                 }
                 echo "</td>";
-                echo "</tr>";*/
+                echo "</tr>";
 
 
 
@@ -315,6 +315,32 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
                 echo "</td>";
 
+                echo "</tr>";
+
+
+                $typeId = $peripheral['peripheraltypes_id'];
+                $pt = new PeripheralType();
+                $pt->getFromDB($typeId);
+                $type = $pt->getName();
+
+                $modelId = $peripheral['peripheralmodels_id'];
+                $pm = new PeripheralModel();
+                $pm->getFromDB($modelId);
+                $model = $pm->getName();
+
+
+                echo "<tr>";
+                echo "<th style='padding-bottom: 20px'>";
+                echo 'Technical characteristics';
+                echo "</th>";
+                echo "<td>";
+                echo "<table style='width:60%'>";
+                echo "<tr><td><b> Type </b></td>";
+                echo "<td>" . $type . "</td></tr>";
+                echo "<tr><td><b> Model </b> </td>";
+                echo "<td>" . $model . "</td></tr>";
+                echo "</table>";
+                echo "</td>";
                 echo "</tr>";
 
 
@@ -424,6 +450,31 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
                 echo "</td>";
 
+                echo "</tr>";
+
+                $typeId = $phone['phonetypes_id'];
+                $pt = new PhoneType();
+                $pt->getFromDB($typeId);
+                $type = $pt->getName();
+
+                $modelId = $phone['phonemodels_id'];
+                $pm = new PhoneModel();
+                $pm->getFromDB($modelId);
+                $model = $pm->getName();
+
+
+                echo "<tr>";
+                echo "<th style='padding-bottom: 20px'>";
+                echo 'Technical characteristics';
+                echo "</th>";
+                echo "<td>";
+                echo "<table style='width:60%'>";
+                echo "<tr><td><b> Type </b></td>";
+                echo "<td>" . $type . "</td></tr>";
+                echo "<tr><td><b> Model </b> </td>";
+                echo "<td>" . $model . "</td></tr>";
+                echo "</table>";
+                echo "</td>";
                 echo "</tr>";
 
 

@@ -59,7 +59,8 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        self::showForm($item);
+        $class = new self();
+        $class->showForm($item);
         return true;
     }
 

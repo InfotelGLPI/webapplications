@@ -38,7 +38,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginWebapplicationsDashboard extends CommonDBTM {
 
-    static $rightname         = "plugin_webapplications_dashboards";
+    static $rightname = "plugin_webapplications_dashboards";
 
     static function getTypeName($nb = 0) {
 
@@ -50,13 +50,10 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
     }
 
 
-
-    function showForm($ID, $options = [])
-    {
+    function showForm($ID, $options = []) {
 
 
-
-        $options['candel'] = false;
+        $options['candel']  = false;
         $options['colspan'] = 1;
 
 
@@ -72,7 +69,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
 
     }
 
-    function defineTabs($options=[]) {
+    function defineTabs($options = []) {
 
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
         echo Html::script(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.js");
@@ -107,8 +104,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
 
         return $ong;
     }
-
-
 
 
 }

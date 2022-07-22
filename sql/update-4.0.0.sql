@@ -16,7 +16,7 @@ ALTER TABLE `glpi_plugin_webapplications_appliances`
   ADD `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
   ADD `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1';
   ADD `webapplicationmailsupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  ADD `webapplicationphonesupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  ADD `webapplicationphonesupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL;
 
 CREATE TABLE `glpi_plugin_webapplications_databases` (
    `id` int unsigned NOT NULL auto_increment,
@@ -95,3 +95,5 @@ CREATE TABLE `glpi_plugin_webapplications_dashboards` (
     `users_id` int(11) NOT NULL DEFAULT '0',
     PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+INSERT INTO `glpi_plugin_webapplications_dashboards` VALUES ('1', 0);
