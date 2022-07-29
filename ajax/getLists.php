@@ -9,6 +9,9 @@ Session::checkLoginUser();
 if(isset($_POST['type'])&&isset($_POST['value'])) {
 
     switch ($_POST['type']) {
+        case PluginWebapplicationsDashboard::getType():
+            PluginWebapplicationsDashboard::showLists($_POST['value']);
+            break;
         case PluginWebapplicationsDashboardEcosystem::getType():
             PluginWebapplicationsDashboardEcosystem::showLists($_POST['value']);
             break;

@@ -50,8 +50,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
     }
 
 
-    function showForm($ID, $options = []) {
 
+    function showForm($ID, $options = []) {
+        global  $CFG_GLPI;
 
         $options['candel']  = false;
         $options['colspan'] = 1;
@@ -62,12 +63,95 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance', 'webapplications') . "</td>";
 
         echo "<td >";
-        Appliance::dropdown(['name' => 'applianceDropdown']);
+        $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
         echo "</td>";
         echo "</tr>";
         echo "</table></div>";
+        echo "<div id=lists-dashboard></div>";
+
+        $array['value']='__VALUE__';
+        $array['type']=self::getType();
+        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-dashboard', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
 
     }
+
+    static function getURLForPicture($ApplianceId) {
+        global $CFG_GLPI;
+
+
+
+        if (!empty($picture)) {
+            $tmp = explode(".", $picture);
+
+            if (count($tmp) == 2) {
+                return $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $tmp[0] .
+                    "." . $tmp[1];
+            }
+        }
+        return PLUGIN_SERVICECATALOG_WEBDIR . "/pics/picture_links.png";
+
+    }
+
+    static function showLists($ApplianceId){
+
+        global $CFG_GLPI;
+
+        $appliance = new Appliance();
+        $appliance->getFromDB($ApplianceId);
+
+        $urlPicture = importArrayFromDB($appliance->getField('pictures'))[0];
+
+        $rand = mt_rand();
+
+        echo "<div style='width:190px; text-align:center;' id='picture$rand'>";
+        echo "<img alt=\"" . __s('Picture') . "\" src='" .
+            $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $urlPicture . "'>";
+        echo "</div>";
+
+
+        echo "<div class=accueilDashboard>";
+        echo "<h1>Abstract</h1>";
+
+        echo "<hr>";
+        echo "<h3>Ecosystem</h3>";
+
+        $respSecurityid = $appliance->getField('users_id_tech');
+        $respSecurity = new User();
+        $respSecurity->getFromDB($respSecurityid);
+        echo "<b style='margin-right: 100px'>Security manager</b>";
+        echo $respSecurity->getName();
+
+        echo "<br>";
+
+        $applianceplugin = new PluginWebapplicationsAppliance();
+        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
+        $extexpoid = $applianceplugin->getField('webapplicationexternalexpositions_id');
+        echo "<b style='margin-right: 100px'> External Exposition</b>";
+
+
+       $extexpo = new PluginWebapplicationsWebapplicationExternalExposition();
+        $extexpo->getFromDB($extexpoid);
+
+        echo  $extexpo->getName();
+
+
+
+        echo "<hr>";
+        echo "<h3>Process</h3>";
+        echo "<hr>";
+        echo "<h3>Application</h3>";
+        echo "<hr>";
+        echo "<h3>Administration</h3>";
+        echo "<hr>";
+        echo "<h3>Logicial Infrastructure</h3>";
+        echo "<hr>";
+        echo "<h3>Physical Infrastruture</h3>";
+
+
+        echo "</div>";
+    }
+
+
 
     function defineTabs($options = []) {
 
