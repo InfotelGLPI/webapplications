@@ -99,14 +99,19 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-        $urlPicture = importArrayFromDB($appliance->getField('pictures'))[0];
+        $pictures = importArrayFromDB($appliance->getField('pictures'));
 
-        $rand = mt_rand();
+        if(!empty($pictures)){
+            $urlPicture = $pictures[0];
 
-        echo "<div style='width:190px; text-align:center;' id='picture$rand'>";
-        echo "<img alt=\"" . __s('Picture') . "\" src='" .
-            $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $urlPicture . "'>";
-        echo "</div>";
+            $rand = mt_rand();
+
+            echo "<div style='width:190px; text-align:center;' id='picture$rand'>";
+            echo "<img alt=\"" . __s('Picture') . "\" src='" .
+                $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $urlPicture . "'>";
+            echo "</div>";
+        }
+
 
 
         echo "<div class=accueilDashboard>";
@@ -115,29 +120,128 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "<hr>";
         echo "<h3>Ecosystem</h3>";
 
-        $respSecurityid = $appliance->getField('users_id_tech');
-        $respSecurity = new User();
-        $respSecurity->getFromDB($respSecurityid);
-        echo "<b style='margin-right: 100px'>Security manager</b>";
-        echo $respSecurity->getName();
-
-        echo "<br>";
-
         $applianceplugin = new PluginWebapplicationsAppliance();
         $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
         $extexpoid = $applianceplugin->getField('webapplicationexternalexpositions_id');
-        echo "<b style='margin-right: 100px'> External Exposition</b>";
 
-
-       $extexpo = new PluginWebapplicationsWebapplicationExternalExposition();
+        $extexpo = new PluginWebapplicationsWebapplicationExternalExposition();
         $extexpo->getFromDB($extexpoid);
+        $extexpoName = $extexpo->getName();
 
-        echo  $extexpo->getName();
+        $respSecurityid = $appliance->getField('users_id_tech');
+        $respSecurity = new User();
+        $respSecurity->getFromDB($respSecurityid);
 
+        $respSec = $respSecurity->getName();
+
+        echo "<table class='tab_cadre_fixe'>";
+        echo "<tr>";
+        echo "<td>External Exposition</td>";
+        echo "<td>$extexpoName</td>";
+        echo "</tr>";
+        echo "<tr>";
+        echo "<td>Security manager</td>";
+        echo "<td>$respSec</td>";
+        echo "</tr>";
+
+        echo "<tr>";
+        echo "<td>";
+        echo "DICT";
+        echo "</td>";
+        echo "<td>";
+
+
+        if($is_known){
+            $disp = $applianceplugin->fields['webapplicationavailabilities'];
+            $int = $applianceplugin->fields['webapplicationintegrities'];
+            $conf = $applianceplugin->fields['webapplicationconfidentialities'];
+            $tra = $applianceplugin->fields['webapplicationtraceabilities'];
+
+
+            echo "<table style='text-align : center; width: 60%'>";
+
+            echo "<td class='dict'>";
+            echo "Availability &nbsp";
+            echo "</td>";
+
+            echo "<td name='webapplicationavailabilities' id='5'>";
+            echo $disp;
+            echo "</td>";
+
+            echo "<td></td>";
+
+            echo "<td class='dict'>";
+            echo "Integrity &nbsp";
+            echo "</td>";
+            echo "<td name='webapplicationintegrities' id='6'>";
+            echo $int;
+            echo "</td>";
+
+            echo "<td></td>";
+
+            echo "<td class='dict'>";
+            echo "Confidentiality &nbsp";
+            echo "</td>";
+            echo "<td name='webapplicationconfidentialities' id='7'>";
+            echo $conf;
+            echo "</td>";
+
+            echo "<td></td>";
+
+            echo "<td class='dict'>";
+            echo "Tracabeality &nbsp";
+            echo "</td>";
+            echo "<td name='webapplicationtraceabilities' id='8'>";
+            echo $tra;
+            echo "</td>";
+
+            echo "</table>";
+        }
+        else echo NOT_AVAILABLE;
+        echo "</td>";
+        echo "</tr>";
+
+
+        echo "</table>";
 
 
         echo "<hr>";
         echo "<h3>Process</h3>";
+
+
+        $procsAppDBTM = new Appliance_Item();
+        $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsProcess']);
+        $processDBTM = new PluginWebapplicationsProcess();
+        $test = null;
+
+        echo "<table class='tab_cadre_fixe'>";
+        echo "<tr>";
+
+        echo "<td>";
+        echo "List Process";
+        echo "</td>";
+        echo "</tr>";
+
+        echo "<tr>";
+        echo "<td>";
+        if (!empty($procsApp)) {
+
+            echo "<select name='processes' id='list' Size='3' ondblclick='location = this.value;'>";
+            foreach ($procsApp as $procApp) {
+                $processDBTM->getFromDB($procApp['items_id']);
+                $name = $processDBTM->getName();
+                $link = PluginWebapplicationsProcess::getFormURLWithID($procApp['items_id']);
+                echo "<option value=$link>$name</option>";
+            }
+            echo "</select>";
+
+        } else echo "no associated process";
+        echo "</td>";
+        echo "</tr>";
+        echo "</table>";
+
+
+
         echo "<hr>";
         echo "<h3>Application</h3>";
         echo "<hr>";
