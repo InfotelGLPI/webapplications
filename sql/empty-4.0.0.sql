@@ -86,8 +86,7 @@ DROP TABLE IF EXISTS `glpi_plugin_webapplications_databases`;
 CREATE TABLE `glpi_plugin_webapplications_databases` (
    `id` int unsigned NOT NULL auto_increment,
    `databases_id`  int unsigned NOT NULL        DEFAULT '0',
-   `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0'
-       COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
+   `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0' COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
    `webapplicationavailabilities` int unsigned   NOT NULL     DEFAULT '1',
    `webapplicationintegrities` int unsigned   NOT NULL     DEFAULT '1',
    `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',

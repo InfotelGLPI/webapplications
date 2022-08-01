@@ -59,8 +59,7 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        $class = new self();
-        $class->showForm($item);
+        self::showLists($item);
         return true;
     }
 
@@ -88,12 +87,14 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
         Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-Administration', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
     }
 
-    static function showLists($ApplianceId){
+    static function showLists($item) {
+
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         echo "<h1>Administration</h1>";
         echo "<hr>";
 
-        //self::showListLDAP($ApplianceId);
+        self::showListLDAP($ApplianceId);
 
         echo "<script>accordion();</script>";
 

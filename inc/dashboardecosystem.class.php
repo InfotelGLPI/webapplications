@@ -54,13 +54,13 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        $eco = new PluginWebapplicationsDashboardEcosystem();
-        $eco->showForm($item);
+        self::showLists($item);
         return true;
     }
 
     public function showForm($ID, $options = []) {
         global $CFG_GLPI;
+
 
         $options['candel']  = false;
         $options['colspan'] = 1;
@@ -84,9 +84,28 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
     }
 
-    static function showLists($ApplianceId) {
+    static function showLists($item) {
 
 
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+
+        $appliance = new Appliance();
+        $appliance->getFromDB($ApplianceId);
+
+
+
+        echo '<div class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
+                        <h3 class="card-title d-flex align-items-center ps-4">
+                                                <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
+                     <i class="ti ti-versions fa-2x"></i>
+                  </div>
+                              <span>';
+        echo $appliance->getName();
+
+        echo ' </span>
+                           </h3>
+ </div>';
+        
         echo "<h1>Ecosystem</h1>";
         echo "<hr>";
         echo "<h2>";

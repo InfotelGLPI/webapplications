@@ -14,21 +14,20 @@ ALTER TABLE `glpi_plugin_webapplications_appliances`
   ADD `webapplicationavailabilities` int unsigned   NOT NULL     DEFAULT '1',
   ADD `webapplicationintegrities` int unsigned   NOT NULL     DEFAULT '1',
   ADD `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
-  ADD `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1';
+  ADD `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
   ADD `webapplicationmailsupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   ADD `webapplicationphonesupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL;
 
 CREATE TABLE `glpi_plugin_webapplications_databases` (
    `id` int unsigned NOT NULL auto_increment,
    `databases_id`  int unsigned NOT NULL        DEFAULT '0',
-   `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0'
-       COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
+   `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0' COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
    `webapplicationavailabilities` int unsigned   NOT NULL     DEFAULT '1',
    `webapplicationintegrities` int unsigned   NOT NULL     DEFAULT '1',
    `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
    `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
    PRIMARY KEY  (`id`),
-   KEY `entities_id` (`entities_id`)
+   KEY `databases_id` (`databases_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE `glpi_plugin_webapplications_streams` (

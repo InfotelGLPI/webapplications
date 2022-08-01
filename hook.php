@@ -37,12 +37,7 @@ function plugin_webapplications_install() {
 
    $update = false;
    //from 3.0 version (glpi 9.5)
-   if (!$DB->tableExists("glpi_plugin_webapplications_webapplicationtypes")
-       && !$DB->tableExists("glpi_plugin_webapplications_appliances")
-       || !$DB->tableExists("glpi_plugin_webapplications_databases")
-       || !$DB->tableExists("glpi_plugin_webapplications_streams")
-       || !$DB->tableExists("glpi_plugin_webapplications_processes")
-       || !$DB->tableExists("glpi_plugin_webapplications_entities")) {
+   if (!$DB->tableExists("glpi_plugin_webapplications_webapplicationtypes")) {
 
        $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/empty-4.0.0.sql");
 
@@ -128,14 +123,7 @@ function plugin_webapplications_install() {
    }
 
    //from 4.0 version (glpi 10.0)
-   if ($DB->tableExists("glpi_plugin_webapplications_webapplications")
-       && !$DB->tableExists("glpi_plugin_webapplications_appliances")
-       || !$DB->tableExists("glpi_plugin_webapplications_databases")
-       || !$DB->tableExists("glpi_plugin_webapplications_streams")
-       || !$DB->tableExists("glpi_plugin_webapplications_entities")
-       || !$DB->tableExists("glpi_plugin_webapplications_dashboards")
-       || !$DB->tableExists("glpi_plugin_webapplications_ecosystem_dashboards")
-       || !$DB->tableExists("glpi_plugin_webapplications_processes")) {
+   if (!$DB->tableExists("glpi_plugin_webapplications_processes")) {
        $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-4.0.0.sql");
    }
 
@@ -252,9 +240,7 @@ function plugin_webapplications_uninstall() {
  */
 function plugin_webapplications_getDatabaseRelations() {
 
-   $plugin = new Plugin();
-
-   if ($plugin->isActivated("webapplications")) {
+   if (Plugin::isPluginActive("webapplications")) {
       return ["glpi_appliances" => ["glpi_plugin_webapplications_appliances" => "appliances_id"],
               "glpi_databaseinstances" => ["glpi_plugin_webapplications_databases" => "databases_id"],
               "glpi_streams" => ["glpi_plugin_webapplications_streams" => "entities_id"],
@@ -272,9 +258,7 @@ function plugin_webapplications_getDatabaseRelations() {
  */
 function plugin_webapplications_getDropdown() {
 
-   $plugin = new Plugin();
-
-   if ($plugin->isActivated("webapplications")) {
+   if (Plugin::isPluginActive("webapplications")) {
       return ['PluginWebapplicationsWebapplicationServerType' => PluginWebapplicationsWebapplicationServerType::getTypeName(2),
 //              'PluginWebapplicationsWebapplicationType'       => PluginWebapplicationsWebapplicationType::getTypeName(2),
               'PluginWebapplicationsWebapplicationTechnic'    => PluginWebapplicationsWebapplicationTechnic::getTypeName(2),

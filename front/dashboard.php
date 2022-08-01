@@ -53,8 +53,9 @@ $dashboard = new PluginWebapplicationsDashboard;
 
 if (Session::getCurrentInterface() == "central") {
 
-    Html::header(PluginWebapplicationsDashboard::getTypeName(2), $_SERVER['PHP_SELF'], "plugins", "pluginwebapplicationsdashboard", "config");
-    $dashboard->display(['id' => $_GET["id"]]);
+    Html::header(PluginWebapplicationsDashboard::getTypeName(2), $_SERVER['PHP_SELF'], "management", "pluginwebapplicationsdashboard");
+    PluginWebapplicationsDashboard::selectAppliance();
+//    $dashboard->display(['id' => $_GET["id"]]);
 }
 
 

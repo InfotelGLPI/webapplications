@@ -42,13 +42,56 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
 
     static function getTypeName($nb = 0) {
 
-        return __('Dashboard', 'webapplications');
+        return __('Appliance dashboard', 'webapplications');
     }
 
+  static function getMenuContent() {
+
+      $menu                    = [];
+      $menu['title']           = self::getMenuName();
+      $menu['page']            = self::getSearchURL(false);
+      
+      $menu['icon'] = self::getIcon();
+
+      return $menu;
+   }
+   
     static function getIcon() {
         return "fas fa-fw fa-border-all";
     }
 
+
+static function selectAppliance() {
+    global  $CFG_GLPI;
+            echo "<div align='center'>
+            <table class='tab_cadre_fixe'>";
+            echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance', 'webapplications') . "</td>";
+
+            echo "<td >";
+
+            $value = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+            //print_r($value);
+            $rand = Appliance::dropdown(['name' => 'applianceDropdown'
+                                        ]);
+            echo "</td>";
+            echo "</tr>";
+            echo "</table></div>";
+            echo "<div id=lists-dashboard></div>";
+//            if ($value > 0) {
+//                echo $_SESSION['plugin_webapplications_loaded_appliances_id'];
+//                $_SESSION['plugin_webapplications_loaded_appliances_id'] = $value;
+//                $dashboard = new PluginWebapplicationsDashboard();
+//                $dashboard->display(['id' => 1, 'appliances_id' => $value]);
+//            } else {
+//
+
+                $array['value']='__VALUE__';
+                $array['type']=self::getType();
+                Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-dashboard',
+                                              $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
+//            }
+
+}
 
 
     function showForm($ID, $options = []) {
@@ -57,47 +100,26 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $options['candel']  = false;
         $options['colspan'] = 1;
 
-
-        echo "<div align='center'>
-        <table class='tab_cadre_fixe'>";
-        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance', 'webapplications') . "</td>";
-
-        echo "<td >";
-        $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
-        echo "</td>";
-        echo "</tr>";
-        echo "</table></div>";
-        echo "<div id=lists-dashboard></div>";
-
-        $array['value']='__VALUE__';
-        $array['type']=self::getType();
-        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-dashboard', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
-
-    }
-
-    static function getURLForPicture($ApplianceId) {
-        global $CFG_GLPI;
-
-
-
-        if (!empty($picture)) {
-            $tmp = explode(".", $picture);
-
-            if (count($tmp) == 2) {
-                return $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $tmp[0] .
-                    "." . $tmp[1];
-            }
-        }
-        return PLUGIN_SERVICECATALOG_WEBDIR . "/pics/picture_links.png";
-
-    }
-
-    static function showLists($ApplianceId){
+        $ApplianceId = $options['appliances_id'];
 
         global $CFG_GLPI;
 
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
+
+
+
+        echo '<div class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
+              <h3 class="card-title d-flex align-items-center ps-4">
+              <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
+              <i class="ti ti-versions fa-2x"></i>
+              </div>
+              <span>';
+        echo $appliance->getName();
+
+        echo ' </span>
+               </h3>
+               </div>';
 
         $pictures = importArrayFromDB($appliance->getField('pictures'));
 
@@ -239,26 +261,102 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</td>";
         echo "</tr>";
         echo "</table>";
-
-
-
         echo "<hr>";
         echo "<h3>Application</h3>";
         echo "<hr>";
         echo "<h3>Administration</h3>";
         echo "<hr>";
-        echo "<h3>Logicial Infrastructure</h3>";
+        echo "<h3>Logical Infrastructure</h3>";
         echo "<hr>";
         echo "<h3>Physical Infrastruture</h3>";
 
 
         echo "</div>";
+
     }
+
+    static function getURLForPicture($ApplianceId) {
+        global $CFG_GLPI;
+
+
+
+        if (!empty($picture)) {
+            $tmp = explode(".", $picture);
+
+            if (count($tmp) == 2) {
+                return $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $tmp[0] .
+                    "." . $tmp[1];
+            }
+        }
+        return PLUGIN_SERVICECATALOG_WEBDIR . "/pics/picture_links.png";
+
+    }
+
+//    static function showLists($item) {
+//
+//        $ApplianceId = $item->fields['appliances_id'];
+//
+//        global $CFG_GLPI;
+//
+//        $appliance = new Appliance();
+//        $appliance->getFromDB($ApplianceId);
+//
+//        $urlPicture = importArrayFromDB($appliance->getField('pictures'))[0];
+//
+//        $rand = mt_rand();
+//
+//        echo "<div style='width:190px; text-align:center;' id='picture$rand'>";
+//        echo "<img alt=\"" . __s('Picture') . "\" src='" .
+//            $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $urlPicture . "'>";
+//        echo "</div>";
+//
+//
+//        echo "<div class=accueilDashboard>";
+//        echo "<h1>Abstract</h1>";
+//
+//        echo "<hr>";
+//        echo "<h3>Ecosystem</h3>";
+//
+//        $respSecurityid = $appliance->getField('users_id_tech');
+//        $respSecurity = new User();
+//        $respSecurity->getFromDB($respSecurityid);
+//        echo "<b style='margin-right: 100px'>Security manager</b>";
+//        echo $respSecurity->getName();
+//
+//        echo "<br>";
+//
+//        $applianceplugin = new PluginWebapplicationsAppliance();
+//        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
+//        $extexpoid = $applianceplugin->getField('webapplicationexternalexpositions_id');
+//        echo "<b style='margin-right: 100px'> External Exposition</b>";
+//
+//
+//       $extexpo = new PluginWebapplicationsWebapplicationExternalExposition();
+//        $extexpo->getFromDB($extexpoid);
+//
+//        echo  $extexpo->getName();
+//
+//
+//
+//        echo "<hr>";
+//        echo "<h3>Process</h3>";
+//        echo "<hr>";
+//        echo "<h3>Application</h3>";
+//        echo "<hr>";
+//        echo "<h3>Administration</h3>";
+//        echo "<hr>";
+//        echo "<h3>Logical Infrastructure</h3>";
+//        echo "<hr>";
+//        echo "<h3>Physical Infrastruture</h3>";
+//
+//
+//        echo "</div>";
+//    }
 
 
 
     function defineTabs($options = []) {
-
+//        print_r($options);
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
         echo Html::script(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.js");
         echo "<link rel='stylesheet' href='../css/style.css'>";
@@ -289,9 +387,12 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $this->addStandardTab('PluginWebapplicationsDashboardLogicialInfrastructure', $ong, $options);//Vue Infra logiques
         $this->addStandardTab('PluginWebapplicationsDashboardPhysicalInfrastructure', $ong, $options);//Vue Infra physiques
 
-
         return $ong;
     }
 
+    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
+        self::showLists($item);
+        return true;
+    }
 }

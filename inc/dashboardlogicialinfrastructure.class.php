@@ -42,20 +42,19 @@ class PluginWebapplicationsDashboardLogicialInfrastructure extends CommonDBTM {
 
     static function getTypeName($nb = 0) {
 
-        return __('DashboardLogicialInfrastructure', 'webapplications');
+        return __('DashboardLogicalInfrastructure', 'webapplications');
     }
 
 
     function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-        return __('Logicial Infrastructure', 'webapplications');
+        return __('Logical Infrastructure', 'webapplications');
 
     }
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        $class = new self();
-        $class->showForm($item);
+        self::showLists($item);
         return true;
     }
 
@@ -84,9 +83,11 @@ class PluginWebapplicationsDashboardLogicialInfrastructure extends CommonDBTM {
 
     }
 
-    static function showLists($ApplianceId){
+    static function showLists($item) {
 
-        echo "<h1>Logicial Infrastructure</h1>";
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+
+        echo "<h1>Logical Infrastructure</h1>";
         echo "<hr>";
 
         echo "<link rel='stylesheet' href='../css/style.css'>";
