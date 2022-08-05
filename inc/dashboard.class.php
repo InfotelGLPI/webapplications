@@ -73,6 +73,7 @@ static function selectAppliance() {
             //print_r($value);
             $rand = Appliance::dropdown(['name' => 'applianceDropdown'
                                         ]);
+
             echo "</td>";
             echo "</tr>";
             echo "</table></div>";
@@ -122,6 +123,7 @@ static function selectAppliance() {
                </div>';
 
         $pictures = importArrayFromDB($appliance->getField('pictures'));
+        echo "<table class='tab_cadre_fixe'><tr><td>";
 
         if(!empty($pictures)){
             $urlPicture = $pictures[0];
@@ -133,7 +135,58 @@ static function selectAppliance() {
                 $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $urlPicture . "'>";
             echo "</div>";
         }
+        echo "</td>";
 
+
+        $groupId = $appliance->getField('groups_id');
+        $groupUserDBTM = new Group_User();
+        $groupUser = $groupUserDBTM->find(['groups_id' => $groupId]);
+        $numberUser = count($groupUser);
+
+        echo "<td>";
+        echo "<div style='text-align:center'>";
+        echo "<i class='fa fa-users fa-3x'>";
+        echo "<br>$numberUser</i>";
+        echo "<br>Users";
+        echo "</div>";
+        echo "</td>";
+
+
+        $groupAdminId = $appliance->getField('groups_id_tech');
+        $groupUserAdminDBTM = new Group_User();
+        $groupUserAdmin = $groupUserAdminDBTM->find(['groups_id' => $groupAdminId]);
+        $numberAdmin = count($groupUserAdmin);
+
+        echo "<td>";
+        echo "<div style='text-align:center'>";
+        echo "<i class='fa fa-circle-user fa-3x'>";
+        echo "<br>$numberAdmin</i>";
+        echo "<br>Administrators";
+        echo "</div>";
+        echo "</td>";
+
+
+        $documentItemDBTM = new Document_Item();
+        $docuItems = $documentItemDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
+        $docuDBTM = new Document();
+
+        echo "<td>";
+        if (!empty($docuItems)) {
+            echo "<div>";
+            echo "<select name='documents' id='list' Size='3' ondblclick='location = this.value;'>";
+            foreach ($docuItems as $docuItem) {
+                $docuDBTM->getFromDB($docuItem['documents_id']);
+                $name = $docuDBTM->getName();
+                $link = Document::getFormURLWithID($docuItem['documents_id']);
+                echo "<option value=$link>$name</option>";
+            }
+            echo "</select>";
+            echo "<br>Associated documents";
+            echo "</div>";
+        } else echo "no associated documents";
+
+
+        echo "</td></tr></table>";
 
 
         echo "<div class=accueilDashboard>";
@@ -144,6 +197,7 @@ static function selectAppliance() {
 
         $applianceplugin = new PluginWebapplicationsAppliance();
         $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
+
         $extexpoid = $applianceplugin->getField('webapplicationexternalexpositions_id');
 
         $extexpo = new PluginWebapplicationsWebapplicationExternalExposition();
@@ -154,6 +208,7 @@ static function selectAppliance() {
         $respSecurity = new User();
         $respSecurity->getFromDB($respSecurityid);
 
+        $link = User::getFormURLWithID($respSecurityid);
         $respSec = $respSecurity->getName();
 
         echo "<table class='tab_cadre_fixe'>";
@@ -163,8 +218,41 @@ static function selectAppliance() {
         echo "</tr>";
         echo "<tr>";
         echo "<td>Security manager</td>";
-        echo "<td>$respSec</td>";
+        echo "<td><a href=$link>$respSec</a></td>";
         echo "</tr>";
+
+
+        $stateId = $appliance->getField('states_id');
+        $state = new State();
+        $state->getFromDB($stateId);
+        $stateName = $state->getName();
+
+        echo "<tr>";
+        echo "<td>Status</td>";
+        echo "<td>$stateName</td>";
+        echo "</tr>";
+
+        $serverTypeId = $applianceplugin->getField('webapplicationservertypes_id');
+        $serverType = new PluginWebapplicationsWebapplicationServerType();
+        $serverType->getFromDB($serverTypeId);
+        $serverTypeName = $serverType->getName();
+
+        echo "<tr>";
+        echo "<td>Type of treatment server</td>";
+        echo "<td>$serverTypeName</td>";
+        echo "</tr>";
+
+
+        $technicId = $applianceplugin->getField('webapplicationtechnics_id');
+        $technic = new PluginWebapplicationsWebapplicationTechnic();
+        $technic->getFromDB($technicId);
+        $technicName = $technic->getName();
+
+        echo "<tr>";
+        echo "<td>Language of treatment</td>";
+        echo "<td>$technicName</td>";
+        echo "</tr>";
+
 
         echo "<tr>";
         echo "<td>";
@@ -230,11 +318,9 @@ static function selectAppliance() {
         echo "<hr>";
         echo "<h3>Process</h3>";
 
-
         $procsAppDBTM = new Appliance_Item();
         $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsProcess']);
         $processDBTM = new PluginWebapplicationsProcess();
-        $test = null;
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
@@ -261,8 +347,41 @@ static function selectAppliance() {
         echo "</td>";
         echo "</tr>";
         echo "</table>";
+
         echo "<hr>";
         echo "<h3>Application</h3>";
+
+        $databasesAppDBTM = new Appliance_Item();
+        $databasesApp = $databasesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'DatabaseInstance']);
+        $databaseDBTM = new DatabaseInstance();
+
+        echo "<table class='tab_cadre_fixe'>";
+        echo "<tr>";
+
+        echo "<td>";
+        echo "List Database";
+        echo "</td>";
+        echo "</tr>";
+
+        echo "<tr>";
+        echo "<td>";
+        if (!empty($databasesApp)) {
+
+            echo "<select name='databases' id='list' Size='3' ondblclick='location = this.value;'>";
+            foreach ($databasesApp as $dbApp) {
+                $databaseDBTM->getFromDB($dbApp['items_id']);
+                $name = $databaseDBTM->getName();
+                $link = DatabaseInstance::getFormURLWithID($dbApp['items_id']);
+                echo "<option value=$link>$name</option>";
+            }
+            echo "</select>";
+
+        } else echo "no associated database";
+        echo "</td>";
+        echo "</tr>";
+        echo "</table>";
+
+
         echo "<hr>";
         echo "<h3>Administration</h3>";
         echo "<hr>";

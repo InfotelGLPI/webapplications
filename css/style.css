@@ -1,5 +1,5 @@
 .accordionhead {
-    border: 2px white solid;
+    border: 2px grey solid;
     text-align: left;
     margin-top: 15px !important;
 }
@@ -21,7 +21,7 @@
 }
 
 #list {
-    border:1px solid white;
+    border:1px solid grey;
     width:60%;
     color: inherit;
     font: inherit !important;
@@ -45,6 +45,6 @@ option {
 }
 
 hr {
-    color: white;
+    color: grey;
     height: 3px !important;
 }
