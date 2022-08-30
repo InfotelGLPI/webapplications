@@ -69,7 +69,7 @@ static function selectAppliance() {
 
             echo "<td >";
 
-            $value = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+            //$value = $_SESSION['plugin_webapplications_loaded_appliances_id'];
             //print_r($value);
             $rand = Appliance::dropdown(['name' => 'applianceDropdown'
                                         ]);
@@ -115,28 +115,32 @@ static function selectAppliance() {
               <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
               <i class="ti ti-versions fa-2x"></i>
               </div>
-              <span>';
-        echo $appliance->getName();
-
-        echo ' </span>
-               </h3>
-               </div>';
+               </h3>';
 
         $pictures = importArrayFromDB($appliance->getField('pictures'));
-        echo "<table class='tab_cadre_fixe'><tr><td>";
+
 
         if(!empty($pictures)){
             $urlPicture = $pictures[0];
 
             $rand = mt_rand();
 
-            echo "<div style='width:190px; text-align:center;' id='picture$rand'>";
+            echo "<div style='width:150px; text-align:center;' id='picture$rand'>";
             echo "<img alt=\"" . __s('Picture') . "\" src='" .
                 $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $urlPicture . "'>";
             echo "</div>";
         }
-        echo "</td>";
 
+        echo '<h1 style="margin: auto">';
+        echo $appliance->getName();
+
+        echo ' </h1>';
+
+        echo '</div>';
+
+
+
+        echo "<table class='tab_cadre_fixe'><tr><td>";
 
         $groupId = $appliance->getField('groups_id');
         $groupUserDBTM = new Group_User();
@@ -193,7 +197,49 @@ static function selectAppliance() {
         echo "<h1>Abstract</h1>";
 
         echo "<hr>";
+
+        self::showEcosystem($appliance);
+
+        echo "<hr>";
+
+        self::showProcess($appliance);
+
+        echo "<hr>";
+      self::showApplication($appliance);
+
+        echo "<hr>";
+        echo "<hr>";
+        echo "<h3>Logical Infrastructure</h3>";
+        echo "<hr>";
+        echo "<h3>Physical Infrastruture</h3>";
+
+
+        echo "</div>";
+
+    }
+
+    static function getURLForPicture($ApplianceId) {
+        global $CFG_GLPI;
+
+
+        if (!empty($picture)) {
+            $tmp = explode(".", $picture);
+
+            if (count($tmp) == 2) {
+                return $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $tmp[0] .
+                    "." . $tmp[1];
+            }
+        }
+        return PLUGIN_SERVICECATALOG_WEBDIR . "/pics/picture_links.png";
+
+    }
+
+
+    static function showEcosystem($appliance){
+
         echo "<h3>Ecosystem</h3>";
+
+        $ApplianceId = $appliance->getField('id');
 
         $applianceplugin = new PluginWebapplicationsAppliance();
         $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
@@ -258,7 +304,7 @@ static function selectAppliance() {
         echo "<td>";
         echo "DICT";
         echo "</td>";
-        echo "<td>";
+        echo "<td style='padding: inherit'>";
 
 
         if($is_known){
@@ -313,10 +359,13 @@ static function selectAppliance() {
 
 
         echo "</table>";
+    }
 
+    static function showProcess($appliance){
 
-        echo "<hr>";
         echo "<h3>Process</h3>";
+
+        $ApplianceId = $appliance->getField('id');
 
         $procsAppDBTM = new Appliance_Item();
         $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsProcess']);
@@ -347,9 +396,13 @@ static function selectAppliance() {
         echo "</td>";
         echo "</tr>";
         echo "</table>";
+    }
 
-        echo "<hr>";
+    static function showApplication($appliance){
+
         echo "<h3>Application</h3>";
+
+        $ApplianceId = $appliance->getField('id');
 
         $databasesAppDBTM = new Appliance_Item();
         $databasesApp = $databasesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'DatabaseInstance']);
@@ -379,36 +432,8 @@ static function selectAppliance() {
         } else echo "no associated database";
         echo "</td>";
         echo "</tr>";
+
         echo "</table>";
-
-
-        echo "<hr>";
-        echo "<h3>Administration</h3>";
-        echo "<hr>";
-        echo "<h3>Logical Infrastructure</h3>";
-        echo "<hr>";
-        echo "<h3>Physical Infrastruture</h3>";
-
-
-        echo "</div>";
-
-    }
-
-    static function getURLForPicture($ApplianceId) {
-        global $CFG_GLPI;
-
-
-
-        if (!empty($picture)) {
-            $tmp = explode(".", $picture);
-
-            if (count($tmp) == 2) {
-                return $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $tmp[0] .
-                    "." . $tmp[1];
-            }
-        }
-        return PLUGIN_SERVICECATALOG_WEBDIR . "/pics/picture_links.png";
-
     }
 
 //    static function showLists($item) {
@@ -473,7 +498,6 @@ static function selectAppliance() {
 //    }
 
 
-
     function defineTabs($options = []) {
 //        print_r($options);
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
@@ -508,6 +532,7 @@ static function selectAppliance() {
 
         return $ong;
     }
+
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 

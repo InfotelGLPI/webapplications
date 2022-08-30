@@ -94,7 +94,7 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
         echo "<h1>Administration</h1>";
         echo "<hr>";
 
-        self::showListLDAP($ApplianceId);
+        //self::showListLDAP($ApplianceId);
 
         echo "<script>accordion();</script>";
 
