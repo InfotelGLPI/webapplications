@@ -87,9 +87,28 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
+        $appliance = new Appliance();
+        $appliance->getFromDB($ApplianceId);
+
+
+
+        echo '<div class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
+                        <h3 class="card-title d-flex align-items-center ps-4">
+                                                <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
+                     <i class="ti ti-versions fa-2x"></i>
+                  </div>
+                              <h3 style="margin: auto">';
+        echo $appliance->getName();
+
+        echo ' </h3>
+                           </h3>
+ </div>';
+
         echo "<h1>Physical Infrastructure</h1>";
         echo "<hr>";
 
+        //self::showListRack($ApplianceId);
+        //echo "<hr>";
         self::showListComputer($ApplianceId);
         echo "<hr>";
         self::showListPeripheral($ApplianceId);
@@ -100,6 +119,100 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
 
     }
+
+/*
+    static function showListRack($ApplianceId){
+
+        echo "<h2>";
+        echo "Rack";
+
+        $rackDBTM = new Rack();
+        $linkAddRack=$rackDBTM::getFormURL();
+
+        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
+            'class' => 'btn btn-primary',
+            'icon' => 'fas fa-plus',
+            'style' => 'float: right',
+            'onclick' => "window.location.href='" . $linkAddRack . "'"]);
+
+        echo "</h2>";
+        echo "<div class='accordion' name=listRack>";
+
+        $rackAppDBTM = new Appliance_Item();
+        $rackApp = $rackAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'Rack']);
+
+
+        $listRackId = array();
+        foreach ($rackApp as $st) {
+            $rackAppDBTM->getFromDB($st['id']);
+
+            array_push($listRackId, $st['items_id']);
+        }
+
+
+        if(!empty($listRackId)){
+            $racks = $rackDBTM->find(['id' => $listRackId]);
+            foreach ($racks as $rack) {
+
+                $rackDBTM->getFromDB($rack['id']);
+
+                $name = $rack['name'];
+
+                echo "<h3 class='accordionhead'>$name</h3>";
+
+                echo "<div class='panel' id='tabsbody'>";
+
+
+                echo "<table class='tab_cadre_fixe'>";
+
+
+                echo "<tbody>";
+
+                echo "<tr>";
+                echo "<th>";
+                echo "Name";
+                echo "</th>";
+                echo "<td>";
+                echo $name;
+                echo "</td>";
+
+                echo "<td></td>";
+
+                $linkApp = Rack::getFormURLWithID($rack['id']);
+
+                echo "<td style='width: 10%'>";
+                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
+                echo "</td>";
+
+                echo "</tr>";
+
+
+                $comment = $rack['comment'];
+
+                echo "<tr>";
+                echo "<th style='padding-bottom: 20px'>";
+                echo "Comment";
+                echo "</th>";
+                echo "<td>";
+                if (!empty($comment)) {
+                    echo "<table style='border:1px solid white; width:60%'>";
+                    echo "<td>" . $comment . "</td>";
+                    echo "</table>";
+                }
+                echo "</td>";
+                echo "</tr>";
+
+
+                echo "</tbody>";
+                echo "</table></div>";
+
+            }
+        }
+        else echo "No Rack";
+        echo "</div>";
+
+    }
+*/
 
     static function showListComputer($ApplianceId){
 
@@ -129,7 +242,6 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
             array_push($listComputerId, $st['items_id']);
         }
-
 
         if(!empty($listComputerId)){
             $computers = $computerDBTM->find(['id' => $listComputerId]);
@@ -197,7 +309,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo "<th style='padding-bottom: 20px'>";
                 echo 'Technical characteristics';
                 echo "</th>";
-                echo "<td>";
+                echo "<td class='inTable'>";
                 echo "<table style='width:60%'>";
                 echo "<tr><td><b> Type </b></td>";
                 echo "<td>" . $type . "</td></tr>";
@@ -334,7 +446,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo "<th style='padding-bottom: 20px'>";
                 echo 'Technical characteristics';
                 echo "</th>";
-                echo "<td>";
+                echo "<td class='inTable'>";
                 echo "<table style='width:60%'>";
                 echo "<tr><td><b> Type </b></td>";
                 echo "<td>" . $type . "</td></tr>";
@@ -468,7 +580,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo "<th style='padding-bottom: 20px'>";
                 echo 'Technical characteristics';
                 echo "</th>";
-                echo "<td>";
+                echo "<td class='inTable'>";
                 echo "<table style='width:60%'>";
                 echo "<tr><td><b> Type </b></td>";
                 echo "<td>" . $type . "</td></tr>";

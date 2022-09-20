@@ -91,106 +91,32 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
+        $appliance = new Appliance();
+        $appliance->getFromDB($ApplianceId);
+
+
+
+        echo '<div class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
+                        <h3 class="card-title d-flex align-items-center ps-4">
+                                                <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
+                     <i class="ti ti-versions fa-2x"></i>
+                  </div>
+                              <h3 style="margin: auto">';
+        echo $appliance->getName();
+
+        echo ' </h3>
+                           </h3>
+        </div>';
+
         echo "<h1>Administration</h1>";
         echo "<hr>";
 
-        //self::showListLDAP($ApplianceId);
 
         echo "<script>accordion();</script>";
 
 
     }
 
-    static function showListLDAP($ApplianceId){
-
-
-
-        echo "<h2>";
-        echo "Domain Active Directory / LDAP";
-
-        $domainDBTM = new Domain();
-        $linkAddDomain=$domainDBTM::getFormURL();
-
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddDomain . "'"]);
-
-        echo "</h2>";
-        echo "<div class='accordion' name=listLDAP>";
-
-        $domainAppDBTM = new Domain_Item();
-        $domainApp = $domainAppDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
-
-
-        $listDomainId = array();
-        foreach ($domainApp as $domApp) {
-            $domainAppDBTM->getFromDB($domApp['id']);
-
-            array_push($listDomainId, $domApp['domains_id']);
-        }
-
-
-        if(!empty($listDomainId)){
-            $domains = $domainDBTM->find(['id' => $listDomainId]);
-            foreach ($domains as $domain) {
-
-                $domainDBTM->getFromDB($domain['id']);
-
-                $name = $domain['name'];
-
-                echo "<h3 class='accordionhead'>$name</h3>";
-
-                echo "<div class='panel' id='tabsbody'>";
-
-
-                echo "<table class='tab_cadre_fixe'>";
-
-
-                echo "<tbody>";
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Name";
-                echo "</th>";
-                echo "<td>";
-                echo $name;
-                echo "</td>";
-
-                $linkApp = Domain::getFormURLWithID($domain['id']);
-
-                echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
-                echo "</td>";
-
-                echo "</tr>";
-
-
-                $comment = $domain['comment'];
-
-                echo "<tr>";
-                echo "<th style='padding-bottom: 20px'>";
-                echo "Comment";
-                echo "</th>";
-                echo "<td>";
-                if (!empty($comment)) {
-                    echo "<table style='border:1px solid white; width:60%'>";
-                    echo "<td>" . $comment . "</td>";
-                    echo "</table>";
-                }
-                echo "</td>";
-                echo "</tr>";
-
-                echo "</tbody>";
-                echo "</table></div>";
-
-            }
-        }
-        else echo "No Domain";
-        echo "</div>";
-
-    }
 
 
 

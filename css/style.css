@@ -4,6 +4,10 @@
     margin-top: 15px !important;
 }
 
+.inTable {
+    padding-left: 0px !important;
+}
+
 .ui-accordion-header{
 
     background-color: #005091;

@@ -58,7 +58,12 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
          } else {
             $webapp_appliance->getEmpty();
          }
+
+         $hasPicture = $item->hasItemtypeOrModelPictures();
          $options = [];
+         $options['hasPicture'] = $hasPicture;
+
+
 
          TemplateRenderer::getInstance()->display('@webapplications/webapplication_appliance_form.html.twig', [
             'item'   => $webapp_appliance,

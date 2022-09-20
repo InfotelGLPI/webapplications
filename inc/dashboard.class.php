@@ -136,6 +136,12 @@ static function selectAppliance() {
 
         echo ' </h1>';
 
+        $linkApp = Appliance::getFormURLWithID($ApplianceId);
+
+        echo "<div style='align-self: center'>";
+        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
+        echo "</div>";
+
         echo '</div>';
 
 
@@ -205,13 +211,14 @@ static function selectAppliance() {
         self::showProcess($appliance);
 
         echo "<hr>";
-      self::showApplication($appliance);
+        self::showApplication($appliance);
 
-        echo "<hr>";
+       /* echo "<hr>";
+        echo "<h3>Administration</h3>";
         echo "<hr>";
         echo "<h3>Logical Infrastructure</h3>";
         echo "<hr>";
-        echo "<h3>Physical Infrastruture</h3>";
+        echo "<h3>Physical Infrastruture</h3>";*/
 
 
         echo "</div>";
@@ -259,11 +266,11 @@ static function selectAppliance() {
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
-        echo "<td>External Exposition</td>";
+        echo "<td><h4>External Exposition</h4></td>";
         echo "<td>$extexpoName</td>";
         echo "</tr>";
         echo "<tr>";
-        echo "<td>Security manager</td>";
+        echo "<td><h4>Security manager</h4></td>";
         echo "<td><a href=$link>$respSec</a></td>";
         echo "</tr>";
 
@@ -274,7 +281,7 @@ static function selectAppliance() {
         $stateName = $state->getName();
 
         echo "<tr>";
-        echo "<td>Status</td>";
+        echo "<td><h4>Status</h4></td>";
         echo "<td>$stateName</td>";
         echo "</tr>";
 
@@ -284,7 +291,7 @@ static function selectAppliance() {
         $serverTypeName = $serverType->getName();
 
         echo "<tr>";
-        echo "<td>Type of treatment server</td>";
+        echo "<td><h4>Type of treatment server</h4></td>";
         echo "<td>$serverTypeName</td>";
         echo "</tr>";
 
@@ -295,16 +302,16 @@ static function selectAppliance() {
         $technicName = $technic->getName();
 
         echo "<tr>";
-        echo "<td>Language of treatment</td>";
+        echo "<td><h4>Language of treatment</h4></td>";
         echo "<td>$technicName</td>";
         echo "</tr>";
 
 
         echo "<tr>";
         echo "<td>";
-        echo "DICT";
+        echo "<h4>DICT</h4>";
         echo "</td>";
-        echo "<td style='padding: inherit'>";
+        echo "<td class='inTable'>";
 
 
         if($is_known){
@@ -315,7 +322,6 @@ static function selectAppliance() {
 
 
             echo "<table style='text-align : center; width: 60%'>";
-
             echo "<td class='dict'>";
             echo "Availability &nbsp";
             echo "</td>";
@@ -357,6 +363,28 @@ static function selectAppliance() {
         echo "</td>";
         echo "</tr>";
 
+        $backoffice = $applianceplugin->getField('backoffice');
+
+        echo "<tr>";
+        echo "<td><h4>Backoffice URL</h4></td>";
+        echo "<td><a href=$backoffice>$backoffice</a></td>";
+        echo "</tr>";
+
+        $comment = $appliance->getField('comment');
+
+        echo "<tr>";
+        echo "<td>";
+        echo "<h4>Comment</h4>";
+        echo "</td>";
+        echo "<td>";
+        if (!empty($comment)) {
+            echo "<table style='border:1px solid white; width:60%'>";
+            echo "<td>" . $comment . "</td>";
+            echo "</table>";
+        }
+        echo "</td>";
+        echo "</tr>";
+
 
         echo "</table>";
     }
@@ -375,7 +403,7 @@ static function selectAppliance() {
         echo "<tr>";
 
         echo "<td>";
-        echo "List Process";
+        echo "<h4>List Process</h4>";
         echo "</td>";
         echo "</tr>";
 
@@ -412,7 +440,7 @@ static function selectAppliance() {
         echo "<tr>";
 
         echo "<td>";
-        echo "List Database";
+        echo "<h4>List Database</h4>";
         echo "</td>";
         echo "</tr>";
 

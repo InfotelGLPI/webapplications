@@ -99,12 +99,13 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                                                 <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
                      <i class="ti ti-versions fa-2x"></i>
                   </div>
-                              <span>';
+                              <h3 style="margin: auto">';
         echo $appliance->getName();
 
-        echo ' </span>
+        echo ' </h3>
                            </h3>
  </div>';
+
         
         echo "<h1>Ecosystem</h1>";
         echo "<hr>";
