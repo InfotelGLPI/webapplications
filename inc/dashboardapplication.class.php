@@ -105,11 +105,9 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
                            </h3>
  </div>';
 
-        echo "<h1>Applications</h1>";
+        echo "<h1>".__('Applications','webapplications')."</h1>";
         echo "<hr>";
 
-        self::showListAppliance($ApplianceId);
-        echo "<hr>";
         self::showListDatabase($ApplianceId);
         echo "<hr>";
         self::showListStream($ApplianceId);
@@ -120,350 +118,12 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
     }
 
-    static function showListAppliance($ApplianceId){
-
-        echo "<h2>";
-        echo "Appliance";
-
-        $applianceDBTM = new Appliance();
-        $linkAddAppliance=$applianceDBTM::getFormURL();
-
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddAppliance . "'"]);
-
-        echo "</h2>";
-        echo "<div class='accordion' name=listAppliancesApp>";
-
-        $appliancesAppDBTM = new Appliance_Item();
-        $applianceApp = $appliancesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'Appliance']);
-
-
-        $listApplianceId = array();
-        foreach ($applianceApp as $app) {
-            $appliancesAppDBTM->getFromDB($app['id']);
-
-            array_push($listApplianceId, $app['items_id']);
-        }
-
-
-        if(!empty($listApplianceId)){
-            $appliances = $applianceDBTM->find(['id' => $listApplianceId]);
-            foreach ($appliances as $appliance) {
-
-                $applianceDBTM->getFromDB($appliance['id']);
-
-                $name = $appliance['name'];
-
-                echo "<h3 class='accordionhead'>$name</h3>";
-
-                echo "<div class='panel' id='tabsbody'>";
-
-
-                echo "<table class='tab_cadre_fixe'>";
-
-
-                echo "<tbody>";
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Name";
-                echo "</th>";
-                echo "<td>";
-                echo $name;
-                echo "</td>";
-
-                $linkApp = Appliance::getFormURLWithID($appliance['id']);
-
-                echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
-                echo "</td>";
-
-                echo "</tr>";
-
-
-                $comment = $appliance['comment'];
-
-                echo "<tr>";
-                echo "<th style='padding-bottom: 20px'>";
-                echo "Comment";
-                echo "</th>";
-                echo "<td>";
-                if (!empty($comment)) {
-                    echo "<table style='border:1px solid white; width:60%'>";
-                    echo "<td>" . $comment . "</td>";
-                    echo "</table>";
-                }
-                echo "</td>";
-                echo "</tr>";
-
-
-                $applianceItemDBTM = new Appliance_Item();
-                $entities = $applianceItemDBTM->find(['appliances_id' => $appliance['id'], 'itemtype' => 'PluginWebapplicationsEntity']);
-                $entityDBTM = new PluginWebapplicationsEntity();
-
-                echo "<tr>";
-                echo "<th>";
-                echo "List Entities";
-                echo "</th>";
-                echo "</tr>";
-
-                echo "<tr>";
-                echo "<td></td>";
-                echo "<td>";
-                if (!empty($entities)) {
-
-                    echo "<select name='entities' id='list' Size='3' ondblclick='location = this.value;'>";
-                    foreach ($entities as $entity) {
-                        $entityDBTM->getFromDB($entity['items_id']);
-                        $name = $entityDBTM->getName();
-                        $link = PluginWebapplicationsEntity::getFormURLWithID($entity['items_id']);
-                        echo "<option value=$link>$name</option>";
-                    }
-                    echo "</select>";
-
-                } else echo "no associated entity";
-                echo "</td>";
-                echo "</tr>";
-
-
-                $respSecurityid = $appliance['users_id_tech'];
-                $respSecurity = new User();
-                $respSecurity->getFromDB($respSecurityid);
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Security manager";
-                echo "</th>";
-                echo "<td>";
-                echo $respSecurity->getName();
-                echo "</td>";
-                echo "</tr>";
-
-                $applianceplugin = new PluginWebapplicationsAppliance();
-                $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$appliance['id']]);
-
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Technology type";
-                echo "</th>";
-                echo "<td>";
-
-                if($is_known) $typetechid = $applianceplugin->fields['webapplicationtechnics_id'];
-                else $typetechid = 0;
-
-                $typetech = new PluginWebapplicationsWebapplicationTechnic();
-                $typetech->getFromDB($typetechid);
-
-                echo $typetech->getName();
-                echo "</td>";
-                echo "</tr>";
-
-
-
-                $apptypeid = $appliance['appliancetypes_id'];
-                $apptype= new ApplianceType();
-                $apptype->getFromDB($apptypeid);
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Application type";
-                echo "</th>";
-                echo "<td>";
-                echo $apptype->getName();
-                echo "</td>";
-                echo "</tr>";
-
-
-                $applianceItemDBTM = new Appliance_Item();
-                $streams = $applianceItemDBTM->find(['appliances_id' => $appliance['id'], 'itemtype' => 'PluginWebapplicationsStream']);
-                $streamDBTM = new PluginWebapplicationsStream();
-
-                echo "<tr>";
-                echo "<th>";
-                echo "List Streams";
-                echo "</th>";
-                echo "</tr>";
-
-                echo "<tr>";
-                echo "<td></td>";
-                echo "<td>";
-                if (!empty($streams)) {
-
-                    echo "<select name='streams' id='list' Size='3' ondblclick='location = this.value;'>";
-                    foreach ($streams as $stream) {
-                        $streamDBTM->getFromDB($stream['items_id']);
-                        $name = $streamDBTM->getName();
-                        $link = PluginWebapplicationsStream::getFormURLWithID($stream['items_id']);
-                        echo "<option value=$link>$name</option>";
-                    }
-                    echo "</select>";
-
-                } else echo "no associated stream";
-                echo "</td>";
-                echo "</tr>";
-
-
-                echo "<tr>";
-                echo "<th style='padding-top: 20px; padding-bottom: 20px'>";
-                echo "DICT";
-                echo "</th>";
-                echo "<td class='inTable'>";
-
-                if($is_known) {
-                    $disp = $applianceplugin->fields['webapplicationavailabilities'];
-                    $int = $applianceplugin->fields['webapplicationintegrities'];
-                    $conf = $applianceplugin->fields['webapplicationconfidentialities'];
-                    $tra = $applianceplugin->fields['webapplicationtraceabilities'];
-
-
-                    echo "<table style='text-align : center; width: 60%'>";
-
-                    echo "<td class='dict'>";
-                    echo "Availability &nbsp";
-                    echo "</td>";
-
-                    echo "<td name='webapplicationavailabilities' id='5'>";
-                    echo $disp;
-                    echo "</td>";
-
-                    echo "<td></td>";
-
-                    echo "<td class='dict'>";
-                    echo "Integrity &nbsp";
-                    echo "</td>";
-                    echo "<td name='webapplicationintegrities' id='6'>";
-                    echo $int;
-                    echo "</td>";
-
-                    echo "<td></td>";
-
-                    echo "<td class='dict'>";
-                    echo "Confidentiality &nbsp";
-                    echo "</td>";
-                    echo "<td name='webapplicationconfidentialities' id='7'>";
-                    echo $conf;
-                    echo "</td>";
-
-                    echo "<td></td>";
-
-                    echo "<td class='dict'>";
-                    echo "Tracabeality &nbsp";
-                    echo "</td>";
-                    echo "<td name='webapplicationtraceabilities' id='8'>";
-                    echo $tra;
-                    echo "</td>";
-
-                    echo "</table>";
-
-                }
-                else echo NOT_AVAILABLE;
-                echo "</td>";
-                echo "</tr>";
-
-
-                echo "<tr>";
-                echo "<th>";
-                echo "External Exposition";
-                echo "</th>";
-
-                if($is_known) $extexpoid = $applianceplugin->fields['webapplicationexternalexpositions_id'];
-                else $extexpoid = 0;
-                $extexpo = new PluginWebapplicationsWebapplicationExternalExposition();
-                $extexpo->getFromDB($extexpoid);
-
-
-                echo "<td>";
-                echo  $extexpo->getName();
-                echo "</td>";
-                echo "</tr>";
-
-
-                $applianceItemDBTM = new Appliance_Item();
-                $databases = $applianceItemDBTM->find(['appliances_id' => $appliance['id'], 'itemtype' => 'DatabaseInstance']);
-                $databaseDBTM = new DatabaseInstance();
-
-                echo "<tr>";
-                echo "<th>";
-                echo "List Database";
-                echo "</th>";
-                echo "</tr>";
-
-                echo "<tr>";
-                echo "<td></td>";
-                echo "<td>";
-                if (!empty($databases)) {
-
-                    echo "<select name='databases' id='list' Size='3' ondblclick='location = this.value;'>";
-                    foreach ($databases as $database) {
-                        $databaseDBTM->getFromDB($database['items_id']);
-                        $name = $databaseDBTM->getName();
-                        $link = DatabaseInstance::getFormURLWithID($database['items_id']);
-                        echo "<option value=$link>$name</option>";
-                    }
-                    echo "</select>";
-
-                } else echo "no associated database";
-                echo "</td>";
-                echo "</tr>";
-
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Validation by Department";
-                echo "</th>";
-
-                if($is_known) $refDepVal = $applianceplugin->fields['webapplicationreferringdepartmentvalidation'];
-                else $refDepVal = 0;
-
-                echo "<td>";
-                echo  Dropdown::getYesNo($refDepVal);
-                echo "</td>";
-                echo "</tr>";
-
-
-                if($is_known) $cioVal = $applianceplugin->fields['webapplicationciovalidation'];
-                else $cioVal = 0;
-
-                echo "<th>";
-                echo "Validation by CIO";
-                echo "</th>";
-                echo "<td>";
-                echo  Dropdown::getYesNo($cioVal);
-                echo "</td>";
-                echo "</tr>";
-
-
-                echo "</tbody>";
-                echo "</table></div>";
-
-            }
-        }
-        else echo "No Appliance";
-        echo "</div>";
-
-
-    }
 
     static function showListDatabase($ApplianceId){
 
-        echo "<h2>";
-        echo "Database";
 
         $databaseDBTM = new DatabaseInstance();
         $linkAddDatabase=$databaseDBTM::getFormURL();
-
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddDatabase . "'"]);
-
-        echo "</h2>";
-        echo "<div class='accordion' name=listDatabaseApp>";
 
         $databasesAppDBTM = new Appliance_Item();
         $databaseApp = $databasesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'DatabaseInstance']);
@@ -476,6 +136,17 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
             array_push($listDatabaseId, $db['items_id']);
         }
 
+        echo "<h2>";
+        echo _n("Database", 'Databases', count($listDatabaseId));
+
+        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
+            'class' => 'btn btn-primary',
+            'icon' => 'fas fa-plus',
+            'style' => 'float: right',
+            'onclick' => "window.location.href='" . $linkAddDatabase . "'"]);
+
+        echo "</h2>";
+        echo "<div class='accordion' name=listDatabaseApp>";
 
         if(!empty($listDatabaseId)){
             $databases = $databaseDBTM->find(['id' => $listDatabaseId]);
@@ -497,7 +168,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Name";
+                echo __("Name");
                 echo "</th>";
                 echo "<td>";
                 echo $name;
@@ -516,7 +187,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th style='padding-bottom: 20px'>";
-                echo "Comment";
+                echo __("Comment");
                 echo "</th>";
                 echo "<td>";
                 if (!empty($comment)) {
@@ -535,7 +206,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Security manager";
+                echo __('Technician in charge of the hardware');
                 echo "</th>";
                 echo "<td>";
                 echo $respSecurity->getName();
@@ -549,7 +220,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Technology type";
+                echo __("Technology type",'webapplication');
                 echo "</th>";
                 echo "<td>";
                 echo $techtype->getName();
@@ -563,7 +234,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "List Streams";
+                echo __("List Streams", 'webapplications');
                 echo "</th>";
                 echo "</tr>";
 
@@ -581,14 +252,14 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
                     }
                     echo "</select>";
 
-                } else echo "no associated stream";
+                } else echo __("no associated stream",'webapplications');
                 echo "</td>";
                 echo "</tr>";
 
 
                 echo "<tr>";
                 echo "<th style='padding-top: 20px; padding-bottom: 20px'>";
-                echo "DICT";
+                echo __('DICT','webapplications');
                 echo "</th>";
                 echo "<td class='inTable'>";
 
@@ -605,8 +276,9 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                     echo "<table style='text-align : center; width: 60%'>";
 
+                    echo "<table style='text-align : center; width: 60%'>";
                     echo "<td class='dict'>";
-                    echo "Availability &nbsp";
+                    echo __('Availability')."&nbsp";
                     echo "</td>";
 
                     echo "<td name='webapplicationavailabilities' id='5'>";
@@ -616,7 +288,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
                     echo "<td></td>";
 
                     echo "<td class='dict'>";
-                    echo "Integrity &nbsp";
+                    echo __('Integrity','webapplications')."&nbsp";
                     echo "</td>";
                     echo "<td name='webapplicationintegrities' id='6'>";
                     echo $int;
@@ -625,7 +297,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
                     echo "<td></td>";
 
                     echo "<td class='dict'>";
-                    echo "Confidentiality &nbsp";
+                    echo __('Confidentiality','webapplications')."&nbsp";
                     echo "</td>";
                     echo "<td name='webapplicationconfidentialities' id='7'>";
                     echo $conf;
@@ -634,7 +306,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
                     echo "<td></td>";
 
                     echo "<td class='dict'>";
-                    echo "Tracabeality &nbsp";
+                    echo __('Tracabeality','webapplications')."&nbsp";
                     echo "</td>";
                     echo "<td name='webapplicationtraceabilities' id='8'>";
                     echo $tra;
@@ -650,7 +322,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "External Exposition";
+                echo __("External Exposition", 'webapplications');
                 echo "</th>";
 
 
@@ -670,27 +342,18 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
             }
         }
-        else echo "No Database";
+        else echo __("No database");
         echo "</div>";
 
     }
 
     static function showListStream($ApplianceId){
 
-        echo "<h2>";
-        echo "Stream";
+
 
         $streamDBTM = new PluginWebapplicationsStream();
         $linkAddStream=$streamDBTM::getFormURL();
 
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddStream . "'"]);
-
-        echo "</h2>";
-        echo "<div class='accordion' name=listStreamApp>";
 
         $streamAppDBTM = new Appliance_Item();
         $streamApp = $streamAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsStream']);
@@ -702,6 +365,18 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
             array_push($listStreamId, $st['items_id']);
         }
+
+        echo "<h2>";
+        echo _n("Stream",'Streams', count($listStreamId),'wbapplications');
+
+        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
+            'class' => 'btn btn-primary',
+            'icon' => 'fas fa-plus',
+            'style' => 'float: right',
+            'onclick' => "window.location.href='" . $linkAddStream . "'"]);
+
+        echo "</h2>";
+        echo "<div class='accordion' name=listStreamApp>";
 
 
         if(!empty($listStreamId)){
@@ -724,7 +399,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Name";
+                echo __("Name");
                 echo "</th>";
                 echo "<td>";
                 echo $name;
@@ -745,7 +420,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Transmitter";
+                echo __("Transmitter",'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $transmitter;
@@ -755,7 +430,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
                 $receiver = $stream['receiver'];
 
                 echo "<th>";
-                echo "Receiver";
+                echo __("Receiver", 'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $receiver;
@@ -767,7 +442,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Encryption";
+                echo __("Encryption");
                 echo "</th>";
                 echo "<td>";
                 echo $encryption;
@@ -777,7 +452,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
                 $encryption_type = $stream['encryption_type'];
 
                 echo "<th>";
-                echo "Encryption type";
+                echo __("Encryption type");
                 echo "</th>";
                 echo "<td>";
                 echo $encryption_type;
@@ -789,7 +464,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Ports";
+                echo __("Port");
                 echo "</th>";
                 echo "<td>";
                 echo $ports;
@@ -799,7 +474,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
                 $protocole = $stream['protocole'];
 
                 echo "<th>";
-                echo "Protocole";
+                echo __("Protocole",'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $protocole;
@@ -812,7 +487,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
             }
         }
-        else echo "No Stream";
+        else echo __("No stream",'webapplications');
         echo "</div>";
 
     }
@@ -820,9 +495,10 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
     static function showSupportPart($ApplianceId){
 
         echo "<h2 style='margin-bottom: 15px'>";
-        echo "Support";
+        echo __("Support");
 
         $linkApp = Appliance::getFormURLWithID($ApplianceId);
+        $linkApp .= "&forcetab=main";
 
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
@@ -843,7 +519,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
         echo "<tr>";
         echo "<th>";
-        echo "Referent editor";
+        echo __("Referent editor",'webapplications');
         echo "</th>";
         echo "<td>";
         echo $refEdit->getName();
@@ -856,7 +532,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
         echo "<tr>";
         echo "<th>";
-        echo "Mail support";
+        echo __("Mail support",'webapplications');
         echo "</th>";
         echo "<td>";
 
@@ -870,7 +546,7 @@ class PluginWebapplicationsDashboardApplication extends CommonDBTM {
 
 
         echo "<th>";
-        echo "Phone support";
+        echo __("Phone support",'webapplications');
         echo "</th>";
         echo "<td>";
 

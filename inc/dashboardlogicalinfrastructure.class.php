@@ -36,9 +36,9 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsDashboardAdministration
  */
-class PluginWebapplicationsDashboardLogicialInfrastructure extends CommonDBTM {
+class PluginWebapplicationsDashboardLogicalInfrastructure extends CommonDBTM {
 
-    static $rightname         = "plugin_webapplications_logicial_infra_dashboards";
+    static $rightname         = "plugin_webapplications_logical_infra_dashboards";
 
     static function getTypeName($nb = 0) {
 
@@ -75,11 +75,11 @@ class PluginWebapplicationsDashboardLogicialInfrastructure extends CommonDBTM {
         echo "</td>";
         echo "</tr>";
         echo "</table></div>";
-        echo "<div id=lists-LogicialInfra></div>";
+        echo "<div id=lists-LogicalInfra></div>";
 
         $array['value']='__VALUE__';
         $array['type']=self::getType();
-        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-LogicialInfra', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
+        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-LogicalInfra', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
 
     }
 

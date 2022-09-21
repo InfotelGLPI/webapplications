@@ -65,32 +65,23 @@ static function selectAppliance() {
     global  $CFG_GLPI;
             echo "<div align='center'>
             <table class='tab_cadre_fixe'>";
-            echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance', 'webapplications') . "</td>";
+            echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
 
             echo "<td >";
 
-            //$value = $_SESSION['plugin_webapplications_loaded_appliances_id'];
-            //print_r($value);
-            $rand = Appliance::dropdown(['name' => 'applianceDropdown'
-                                        ]);
+            $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
 
             echo "</td>";
             echo "</tr>";
             echo "</table></div>";
             echo "<div id=lists-dashboard></div>";
-//            if ($value > 0) {
-//                echo $_SESSION['plugin_webapplications_loaded_appliances_id'];
-//                $_SESSION['plugin_webapplications_loaded_appliances_id'] = $value;
-//                $dashboard = new PluginWebapplicationsDashboard();
-//                $dashboard->display(['id' => 1, 'appliances_id' => $value]);
-//            } else {
-//
 
-                $array['value']='__VALUE__';
-                $array['type']=self::getType();
-                Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-dashboard',
-                                              $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
-//            }
+
+            $array['value']='__VALUE__';
+            $array['type']=self::getType();
+            Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-dashboard',
+                                          $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
+
 
 }
 
@@ -157,7 +148,7 @@ static function selectAppliance() {
         echo "<div style='text-align:center'>";
         echo "<i class='fa fa-users fa-3x'>";
         echo "<br>$numberUser</i>";
-        echo "<br>Users";
+        echo "<br>".User::getTypeName($numberUser);
         echo "</div>";
         echo "</td>";
 
@@ -171,7 +162,7 @@ static function selectAppliance() {
         echo "<div style='text-align:center'>";
         echo "<i class='fa fa-circle-user fa-3x'>";
         echo "<br>$numberAdmin</i>";
-        echo "<br>Administrators";
+        echo "<br>"._n('Administrator','Administrators',$numberAdmin, 'webapplications');
         echo "</div>";
         echo "</td>";
 
@@ -191,16 +182,16 @@ static function selectAppliance() {
                 echo "<option value=$link>$name</option>";
             }
             echo "</select>";
-            echo "<br>Associated documents";
+            echo "<br>"._n('Associated document','Associated documents',count($docuItems), 'webapplications');
             echo "</div>";
-        } else echo "no associated documents";
+        } else echo __("No associated documents");
 
 
         echo "</td></tr></table>";
 
 
         echo "<div class=accueilDashboard>";
-        echo "<h1>Abstract</h1>";
+        echo "<h1>".__('Abstract', 'webapplications')."</h1>";
 
         echo "<hr>";
 
@@ -213,19 +204,13 @@ static function selectAppliance() {
         echo "<hr>";
         self::showApplication($appliance);
 
-       /* echo "<hr>";
-        echo "<h3>Administration</h3>";
-        echo "<hr>";
-        echo "<h3>Logical Infrastructure</h3>";
-        echo "<hr>";
-        echo "<h3>Physical Infrastruture</h3>";*/
 
 
         echo "</div>";
 
     }
 
-    static function getURLForPicture($ApplianceId) {
+    static function getURLForPicture() {
         global $CFG_GLPI;
 
 
@@ -244,7 +229,7 @@ static function selectAppliance() {
 
     static function showEcosystem($appliance){
 
-        echo "<h3>Ecosystem</h3>";
+        echo "<h3>".__('Ecosystem','webapplications')."</h3>";
 
         $ApplianceId = $appliance->getField('id');
 
@@ -266,11 +251,11 @@ static function selectAppliance() {
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
-        echo "<td><h4>External Exposition</h4></td>";
+        echo "<td><h4>".__('External Exposition','webapplications')."</h4></td>";
         echo "<td>$extexpoName</td>";
         echo "</tr>";
         echo "<tr>";
-        echo "<td><h4>Security manager</h4></td>";
+        echo "<td><h4>".__('Technician in charge of the hardware')."</h4></td>";
         echo "<td><a href=$link>$respSec</a></td>";
         echo "</tr>";
 
@@ -281,7 +266,7 @@ static function selectAppliance() {
         $stateName = $state->getName();
 
         echo "<tr>";
-        echo "<td><h4>Status</h4></td>";
+        echo "<td><h4>".__('Status')."</h4></td>";
         echo "<td>$stateName</td>";
         echo "</tr>";
 
@@ -291,7 +276,7 @@ static function selectAppliance() {
         $serverTypeName = $serverType->getName();
 
         echo "<tr>";
-        echo "<td><h4>Type of treatment server</h4></td>";
+        echo "<td><h4>".__('Type of treatment server','webapplications')."</h4></td>";
         echo "<td>$serverTypeName</td>";
         echo "</tr>";
 
@@ -302,14 +287,14 @@ static function selectAppliance() {
         $technicName = $technic->getName();
 
         echo "<tr>";
-        echo "<td><h4>Language of treatment</h4></td>";
+        echo "<td><h4>".__('Language of treatment', 'webapplications')."</h4></td>";
         echo "<td>$technicName</td>";
         echo "</tr>";
 
 
         echo "<tr>";
         echo "<td>";
-        echo "<h4>DICT</h4>";
+        echo "<h4>".__('DICT','webapplications')."</h4>";
         echo "</td>";
         echo "<td class='inTable'>";
 
@@ -323,7 +308,7 @@ static function selectAppliance() {
 
             echo "<table style='text-align : center; width: 60%'>";
             echo "<td class='dict'>";
-            echo "Availability &nbsp";
+            echo __('Availability')."&nbsp";
             echo "</td>";
 
             echo "<td name='webapplicationavailabilities' id='5'>";
@@ -333,7 +318,7 @@ static function selectAppliance() {
             echo "<td></td>";
 
             echo "<td class='dict'>";
-            echo "Integrity &nbsp";
+            echo __('Integrity','webapplications')."&nbsp";
             echo "</td>";
             echo "<td name='webapplicationintegrities' id='6'>";
             echo $int;
@@ -342,7 +327,7 @@ static function selectAppliance() {
             echo "<td></td>";
 
             echo "<td class='dict'>";
-            echo "Confidentiality &nbsp";
+            echo __('Confidentiality','webapplications')."&nbsp";
             echo "</td>";
             echo "<td name='webapplicationconfidentialities' id='7'>";
             echo $conf;
@@ -351,7 +336,7 @@ static function selectAppliance() {
             echo "<td></td>";
 
             echo "<td class='dict'>";
-            echo "Tracabeality &nbsp";
+            echo __('Tracabeality','webapplications')."&nbsp";
             echo "</td>";
             echo "<td name='webapplicationtraceabilities' id='8'>";
             echo $tra;
@@ -366,7 +351,7 @@ static function selectAppliance() {
         $backoffice = $applianceplugin->getField('backoffice');
 
         echo "<tr>";
-        echo "<td><h4>Backoffice URL</h4></td>";
+        echo "<td><h4>".__('Backoffice URL', 'webapplications')."</h4></td>";
         echo "<td><a href=$backoffice>$backoffice</a></td>";
         echo "</tr>";
 
@@ -374,7 +359,7 @@ static function selectAppliance() {
 
         echo "<tr>";
         echo "<td>";
-        echo "<h4>Comment</h4>";
+        echo "<h4>".__('Comment')."</h4>";
         echo "</td>";
         echo "<td>";
         if (!empty($comment)) {
@@ -391,7 +376,7 @@ static function selectAppliance() {
 
     static function showProcess($appliance){
 
-        echo "<h3>Process</h3>";
+        echo "<h3>".__('Process','webapplications')."</h3>";
 
         $ApplianceId = $appliance->getField('id');
 
@@ -403,7 +388,7 @@ static function selectAppliance() {
         echo "<tr>";
 
         echo "<td>";
-        echo "<h4>List Process</h4>";
+        echo "<h4>".__('List Processes','webapplications')."</h4>";
         echo "</td>";
         echo "</tr>";
 
@@ -420,7 +405,7 @@ static function selectAppliance() {
             }
             echo "</select>";
 
-        } else echo "no associated process";
+        } else echo __("No associated process",'webapplications');
         echo "</td>";
         echo "</tr>";
         echo "</table>";
@@ -428,7 +413,7 @@ static function selectAppliance() {
 
     static function showApplication($appliance){
 
-        echo "<h3>Application</h3>";
+        echo "<h3>".__('Application','webapplications')."</h3>";
 
         $ApplianceId = $appliance->getField('id');
 
@@ -440,7 +425,7 @@ static function selectAppliance() {
         echo "<tr>";
 
         echo "<td>";
-        echo "<h4>List Database</h4>";
+        echo "<h4>".__('List Databases','webapplications')."</h4>";
         echo "</td>";
         echo "</tr>";
 
@@ -457,77 +442,16 @@ static function selectAppliance() {
             }
             echo "</select>";
 
-        } else echo "no associated database";
+        } else echo __("No associated database",'webapplications');
         echo "</td>";
         echo "</tr>";
 
         echo "</table>";
     }
 
-//    static function showLists($item) {
-//
-//        $ApplianceId = $item->fields['appliances_id'];
-//
-//        global $CFG_GLPI;
-//
-//        $appliance = new Appliance();
-//        $appliance->getFromDB($ApplianceId);
-//
-//        $urlPicture = importArrayFromDB($appliance->getField('pictures'))[0];
-//
-//        $rand = mt_rand();
-//
-//        echo "<div style='width:190px; text-align:center;' id='picture$rand'>";
-//        echo "<img alt=\"" . __s('Picture') . "\" src='" .
-//            $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $urlPicture . "'>";
-//        echo "</div>";
-//
-//
-//        echo "<div class=accueilDashboard>";
-//        echo "<h1>Abstract</h1>";
-//
-//        echo "<hr>";
-//        echo "<h3>Ecosystem</h3>";
-//
-//        $respSecurityid = $appliance->getField('users_id_tech');
-//        $respSecurity = new User();
-//        $respSecurity->getFromDB($respSecurityid);
-//        echo "<b style='margin-right: 100px'>Security manager</b>";
-//        echo $respSecurity->getName();
-//
-//        echo "<br>";
-//
-//        $applianceplugin = new PluginWebapplicationsAppliance();
-//        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
-//        $extexpoid = $applianceplugin->getField('webapplicationexternalexpositions_id');
-//        echo "<b style='margin-right: 100px'> External Exposition</b>";
-//
-//
-//       $extexpo = new PluginWebapplicationsWebapplicationExternalExposition();
-//        $extexpo->getFromDB($extexpoid);
-//
-//        echo  $extexpo->getName();
-//
-//
-//
-//        echo "<hr>";
-//        echo "<h3>Process</h3>";
-//        echo "<hr>";
-//        echo "<h3>Application</h3>";
-//        echo "<hr>";
-//        echo "<h3>Administration</h3>";
-//        echo "<hr>";
-//        echo "<h3>Logical Infrastructure</h3>";
-//        echo "<hr>";
-//        echo "<h3>Physical Infrastruture</h3>";
-//
-//
-//        echo "</div>";
-//    }
 
 
     function defineTabs($options = []) {
-//        print_r($options);
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
         echo Html::script(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.js");
         echo "<link rel='stylesheet' href='../css/style.css'>";
@@ -554,8 +478,6 @@ static function selectAppliance() {
         $this->addStandardTab('PluginWebapplicationsDashboardEcosystem', $ong, $options);// Vue Ecosystème
         $this->addStandardTab('PluginWebapplicationsDashboardProcess', $ong, $options);//Vue Metier
         $this->addStandardTab('PluginWebapplicationsDashboardApplication', $ong, $options);//Vue Applications
-        $this->addStandardTab('PluginWebapplicationsDashboardAdministration', $ong, $options);//Vue Administration
-        $this->addStandardTab('PluginWebapplicationsDashboardLogicialInfrastructure', $ong, $options);//Vue Infra logiques
         $this->addStandardTab('PluginWebapplicationsDashboardPhysicalInfrastructure', $ong, $options);//Vue Infra physiques
 
         return $ong;

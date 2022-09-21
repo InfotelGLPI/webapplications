@@ -99,31 +99,18 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                                                 <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
                      <i class="ti ti-versions fa-2x"></i>
                   </div>
-                              <h3 style="margin: auto">';
+                    <h3 style="margin: auto">';
         echo $appliance->getName();
 
-        echo ' </h3>
-                           </h3>
- </div>';
+        echo '</h3></h3>
+              </div>';
 
         
-        echo "<h1>Ecosystem</h1>";
-        echo "<hr>";
-        echo "<h2>";
-        echo "Entities";
+
 
         $entitiesDBTM = new PluginWebapplicationsEntity();
         $linkAddEnt   = $entitiesDBTM::getFormURL();
 
-        echo Html::submit(_sx('button', 'Add'), ['name'    => 'edit',
-                                                 'class'   => 'btn btn-primary',
-                                                 'icon'    => 'fas fa-plus',
-                                                 'style'   => 'float: right',
-                                                 'onclick' => "window.location.href='" . $linkAddEnt . "'"]);
-
-        echo "</h2>";
-
-        echo "<div class='accordion' name=listEntitiesApp>";
 
         $entitiesAppDBTM = new Appliance_Item();
         $entitiesApp     = $entitiesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsEntity']);
@@ -135,6 +122,21 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
             array_push($listEntitiesId, $entityApp['items_id']);
         }
+
+        echo "<h1>Ecosystem</h1>";
+        echo "<hr>";
+        echo "<h2>";
+        echo _n('Entity','Entities', count($listEntitiesId), 'webapplications');
+
+        echo Html::submit(_sx('button', 'Add'), ['name'    => 'edit',
+            'class'   => 'btn btn-primary',
+            'icon'    => 'fas fa-plus',
+            'style'   => 'float: right',
+            'onclick' => "window.location.href='" . $linkAddEnt . "'"]);
+
+        echo "</h2>";
+
+        echo "<div class='accordion' name=listEntitiesApp>";
 
 
         if (!empty($listEntitiesId)) {
@@ -157,7 +159,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Name";
+                echo __("Name");
                 echo "</th>";
                 echo "<td>";
                 echo $name;
@@ -174,7 +176,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 $owner = $entity['owner'];
                 echo "<tr>";
                 echo "<th>";
-                echo "Owner";
+                echo __("Owner", 'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $owner;
@@ -188,7 +190,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "List Processes";
+                echo __('List Processes','webapplications');
                 echo "</th>";
                 echo "</tr>";
 
@@ -206,7 +208,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                     }
                     echo "</select>";
 
-                } else echo "no associated process";
+                } else echo __("no associated process",'webapplications');
                 echo "</td>";
                 echo "</tr>";
 
@@ -214,7 +216,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 $securityContact = $entity['security_contact'];
                 echo "<tr>";
                 echo "<th>";
-                echo "Security Contact";
+                echo __("Security Contact",'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $securityContact;
@@ -224,7 +226,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 $relation = $entity['relation_nature'];
                 echo "<tr>";
                 echo "<th>";
-                echo "Relation nature";
+                echo __("Relation nature",'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $relation;
@@ -235,7 +237,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 echo "</tbody>";
                 echo "</table></div>";
             }
-        } else echo "No process";
+        } else echo __("no entity",'webapplications');
 
         echo "</div>";
         echo "<script>accordion();</script>";

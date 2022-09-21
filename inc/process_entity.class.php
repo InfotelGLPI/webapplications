@@ -189,7 +189,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM {
         echo "<thead>";
         echo "<tr class='tab_bg_2'>";
 
-        echo "<th colspan='3'>" . _n('Entity', 'Entities', 2) . "</th>";
+        echo "<th colspan='3'>" . _n('Entity', 'Entities', 2, 'webapplications') . "</th>";
 
         echo "</tr>";
         echo "</thead>";

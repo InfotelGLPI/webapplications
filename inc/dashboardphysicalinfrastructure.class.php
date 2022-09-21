@@ -104,133 +104,23 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                            </h3>
  </div>';
 
-        echo "<h1>Physical Infrastructure</h1>";
+        echo "<h1>".__('Physical Infrastructure', 'webapplications')."</h1>";
         echo "<hr>";
 
-        //self::showListRack($ApplianceId);
-        //echo "<hr>";
         self::showListComputer($ApplianceId);
-        echo "<hr>";
-        self::showListPeripheral($ApplianceId);
-        echo "<hr>";
-        self::showListPhone($ApplianceId);
 
         echo "<script>accordion();</script>";
 
 
     }
 
-/*
-    static function showListRack($ApplianceId){
-
-        echo "<h2>";
-        echo "Rack";
-
-        $rackDBTM = new Rack();
-        $linkAddRack=$rackDBTM::getFormURL();
-
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddRack . "'"]);
-
-        echo "</h2>";
-        echo "<div class='accordion' name=listRack>";
-
-        $rackAppDBTM = new Appliance_Item();
-        $rackApp = $rackAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'Rack']);
-
-
-        $listRackId = array();
-        foreach ($rackApp as $st) {
-            $rackAppDBTM->getFromDB($st['id']);
-
-            array_push($listRackId, $st['items_id']);
-        }
-
-
-        if(!empty($listRackId)){
-            $racks = $rackDBTM->find(['id' => $listRackId]);
-            foreach ($racks as $rack) {
-
-                $rackDBTM->getFromDB($rack['id']);
-
-                $name = $rack['name'];
-
-                echo "<h3 class='accordionhead'>$name</h3>";
-
-                echo "<div class='panel' id='tabsbody'>";
-
-
-                echo "<table class='tab_cadre_fixe'>";
-
-
-                echo "<tbody>";
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Name";
-                echo "</th>";
-                echo "<td>";
-                echo $name;
-                echo "</td>";
-
-                echo "<td></td>";
-
-                $linkApp = Rack::getFormURLWithID($rack['id']);
-
-                echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
-                echo "</td>";
-
-                echo "</tr>";
-
-
-                $comment = $rack['comment'];
-
-                echo "<tr>";
-                echo "<th style='padding-bottom: 20px'>";
-                echo "Comment";
-                echo "</th>";
-                echo "<td>";
-                if (!empty($comment)) {
-                    echo "<table style='border:1px solid white; width:60%'>";
-                    echo "<td>" . $comment . "</td>";
-                    echo "</table>";
-                }
-                echo "</td>";
-                echo "</tr>";
-
-
-                echo "</tbody>";
-                echo "</table></div>";
-
-            }
-        }
-        else echo "No Rack";
-        echo "</div>";
-
-    }
-*/
-
     static function showListComputer($ApplianceId){
 
 
-        echo "<h2>";
-        echo "Computer";
+
 
         $computerDBTM = new Computer();
         $linkAddComptuer=$computerDBTM::getFormURL();
-
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddComptuer . "'"]);
-
-        echo "</h2>";
-        echo "<div class='accordion' name=listComputer>";
 
         $computerAppDBTM = new Appliance_Item();
         $computerApp = $computerAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'Computer']);
@@ -242,6 +132,18 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
             array_push($listComputerId, $st['items_id']);
         }
+
+        echo "<h2>";
+        echo _n("Computer","Computers", count($listComputerId));
+
+        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
+            'class' => 'btn btn-primary',
+            'icon' => 'fas fa-plus',
+            'style' => 'float: right',
+            'onclick' => "window.location.href='" . $linkAddComptuer . "'"]);
+
+        echo "</h2>";
+        echo "<div class='accordion' name=listComputer>";
 
         if(!empty($listComputerId)){
             $computers = $computerDBTM->find(['id' => $listComputerId]);
@@ -263,7 +165,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Name";
+                echo __("Name");
                 echo "</th>";
                 echo "<td>";
                 echo $name;
@@ -307,15 +209,15 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th style='padding-bottom: 20px'>";
-                echo 'Technical characteristics';
+                echo __('Technical characteristics','webapplications');
                 echo "</th>";
                 echo "<td class='inTable'>";
                 echo "<table style='width:60%'>";
-                echo "<tr><td><b> Type </b></td>";
+                echo "<tr><td><b>".__('Type')."</b></td>";
                 echo "<td>" . $type . "</td></tr>";
-                echo "<tr><td><b> Model </b> </td>";
+                echo "<tr><td><b>".__('Model')."</b> </td>";
                 echo "<td>" . $model . "</td></tr>";
-                echo "<tr><td><b> OS </b></td>";
+                echo "<tr><td><b>".__('Operating System')."</b></td>";
                 echo "<td>" . $OSName." ".$OSVersionName. "</td></tr>";
                 echo "</table>";
                 echo "</td>";
@@ -326,7 +228,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th style='padding-bottom: 20px'>";
-                echo 'Comment';
+                echo __('Comment');
                 echo "</th>";
                 echo "<td>";
                 if (!empty($comment)) {
@@ -346,7 +248,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Location";
+                echo __("Location");
                 echo "</th>";
                 echo "<td>";
                 echo "<a href='" . $link . "'> ";
@@ -360,279 +262,9 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
             }
         }
-        else echo "No Computer";
+        else echo __("No computer", 'webapplications');
         echo "</div>";
     }
-
-    static function showListPeripheral($ApplianceId){
-
-
-        echo "<h2>";
-        echo "Peripheral";
-
-        $peripheralDBTM = new Peripheral();
-        $linkAddPeripheral=$peripheralDBTM::getFormURL();
-
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddPeripheral . "'"]);
-
-        echo "</h2>";
-        echo "<div class='accordion' name=listPeripheral>";
-
-        $peripheralAppDBTM = new Appliance_Item();
-        $peripheralApp = $peripheralAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'Peripheral']);
-
-
-        $listPeripheralId = array();
-        foreach ($peripheralApp as $st) {
-            $peripheralAppDBTM->getFromDB($st['id']);
-
-            array_push($listPeripheralId, $st['items_id']);
-        }
-
-
-        if(!empty($listPeripheralId)){
-            $peripherals = $peripheralDBTM->find(['id' => $listPeripheralId]);
-            foreach ($peripherals as $peripheral) {
-
-                $peripheralDBTM->getFromDB($peripheral['id']);
-
-                $name = $peripheral['name'];
-
-                echo "<h3 class='accordionhead'>$name</h3>";
-
-                echo "<div class='panel' id='tabsbody'>";
-
-
-                echo "<table class='tab_cadre_fixe'>";
-
-
-                echo "<tbody>";
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Name";
-                echo "</th>";
-                echo "<td>";
-                echo $name;
-                echo "</td>";
-
-                echo "<td></td>";
-
-                $linkApp = Peripheral::getFormURLWithID($peripheral['id']);
-
-                echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
-                echo "</td>";
-
-                echo "</tr>";
-
-
-                $typeId = $peripheral['peripheraltypes_id'];
-                $pt = new PeripheralType();
-                $pt->getFromDB($typeId);
-                $type = $pt->getName();
-
-                $modelId = $peripheral['peripheralmodels_id'];
-                $pm = new PeripheralModel();
-                $pm->getFromDB($modelId);
-                $model = $pm->getName();
-
-
-                echo "<tr>";
-                echo "<th style='padding-bottom: 20px'>";
-                echo 'Technical characteristics';
-                echo "</th>";
-                echo "<td class='inTable'>";
-                echo "<table style='width:60%'>";
-                echo "<tr><td><b> Type </b></td>";
-                echo "<td>" . $type . "</td></tr>";
-                echo "<tr><td><b> Model </b> </td>";
-                echo "<td>" . $model . "</td></tr>";
-                echo "</table>";
-                echo "</td>";
-                echo "</tr>";
-
-
-                $comment = $peripheral['comment'];
-
-                echo "<tr>";
-                echo "<th style='padding-bottom: 20px'>";
-                echo "Comment";
-                echo "</th>";
-                echo "<td>";
-                if (!empty($comment)) {
-                    echo "<table style='border:1px solid white; width:60%'>";
-                    echo "<td>" . $comment . "</td>";
-                    echo "</table>";
-                }
-                echo "</td>";
-                echo "</tr>";
-
-
-
-                $tech = new User();
-                $tech->getFromDB($peripheral['users_id_tech']);
-                $techName = $tech->getName();
-                $link = User::getFormURLWithID($peripheral['users_id_tech']);
-
-                echo "<tr>";
-                echo "<th>";
-                echo "operations manager";
-                echo "</th>";
-                echo "<td>";
-                echo "<a href='" . $link . "'> ";
-                echo $techName;
-                echo "</a>";
-                echo "</td>";
-                echo "</tr>";
-
-                echo "</tbody>";
-                echo "</table></div>";
-
-            }
-        }
-        else echo "No Peripheral";
-        echo "</div>";
-    }
-
-    static function showListPhone($ApplianceId){
-
-
-        echo "<h2>";
-        echo "Phone";
-
-        $phoneDBTM = new Phone();
-        $linkAddPhone=$phoneDBTM::getFormURL();
-
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddPhone . "'"]);
-
-        echo "</h2>";
-        echo "<div class='accordion' name=listPhone>";
-
-        $phoneAppDBTM = new Appliance_Item();
-        $phoneApp = $phoneAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'Phone']);
-
-
-        $listPhoneId = array();
-        foreach ($phoneApp as $st) {
-            $phoneAppDBTM->getFromDB($st['id']);
-
-            array_push($listPhoneId, $st['items_id']);
-        }
-
-
-        if(!empty($listPhoneId)){
-            $phones = $phoneDBTM->find(['id' => $listPhoneId]);
-            foreach ($phones as $phone) {
-
-                $phoneDBTM->getFromDB($phone['id']);
-
-                $name = $phone['name'];
-
-                echo "<h3 class='accordionhead'>$name</h3>";
-
-                echo "<div class='panel' id='tabsbody'>";
-
-
-                echo "<table class='tab_cadre_fixe'>";
-
-
-                echo "<tbody>";
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Name";
-                echo "</th>";
-                echo "<td>";
-                echo $name;
-                echo "</td>";
-
-                echo "<td></td>";
-
-                $linkApp = Phone::getFormURLWithID($phone['id']);
-
-                echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
-                echo "</td>";
-
-                echo "</tr>";
-
-                $typeId = $phone['phonetypes_id'];
-                $pt = new PhoneType();
-                $pt->getFromDB($typeId);
-                $type = $pt->getName();
-
-                $modelId = $phone['phonemodels_id'];
-                $pm = new PhoneModel();
-                $pm->getFromDB($modelId);
-                $model = $pm->getName();
-
-
-                echo "<tr>";
-                echo "<th style='padding-bottom: 20px'>";
-                echo 'Technical characteristics';
-                echo "</th>";
-                echo "<td class='inTable'>";
-                echo "<table style='width:60%'>";
-                echo "<tr><td><b> Type </b></td>";
-                echo "<td>" . $type . "</td></tr>";
-                echo "<tr><td><b> Model </b> </td>";
-                echo "<td>" . $model . "</td></tr>";
-                echo "</table>";
-                echo "</td>";
-                echo "</tr>";
-
-
-                $comment = $phone['comment'];
-
-                echo "<tr>";
-                echo "<th style='padding-bottom: 20px'>";
-                echo "Comment";
-                echo "</th>";
-                echo "<td>";
-                if (!empty($comment)) {
-                    echo "<table style='border:1px solid white; width:60%'>";
-                    echo "<td>" . $comment . "</td>";
-                    echo "</table>";
-                }
-                echo "</td>";
-                echo "</tr>";
-
-
-
-                $location = new Location();
-                $location->getFromDB($phone['locations_id']);
-                $locationName = $location->getName();
-                $link = Location::getFormURLWithID($phone['locations_id']);
-
-                echo "<tr>";
-                echo "<th>";
-                echo "Location";
-                echo "</th>";
-                echo "<td>";
-                echo "<a href='" . $link . "'> ";
-                echo $locationName;
-                echo "</a>";
-                echo "</td>";
-                echo "</tr>";
-
-                echo "</tbody>";
-                echo "</table></div>";
-
-            }
-        }
-        else echo "No Phone";
-        echo "</div>";
-    }
-
 
 
 

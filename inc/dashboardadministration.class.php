@@ -53,7 +53,7 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
 
     function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-        return __('Administration', 'webapplications');
+        return __('Administration');
 
     }
 
@@ -108,7 +108,7 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
                            </h3>
         </div>';
 
-        echo "<h1>Administration</h1>";
+        echo "<h1>".__('Administration')."</h1>";
         echo "<hr>";
 
 

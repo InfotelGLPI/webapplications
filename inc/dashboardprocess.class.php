@@ -104,22 +104,9 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                            </h3>
  </div>';
 
-        echo "<h1>Business process</h1>";
-        echo "<hr>";
-        echo "<h2>";
-        echo "Processes";
 
         $processDBTM = new PluginWebapplicationsProcess();
         $linkAddProc=$processDBTM::getFormURL();
-
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddProc . "'"]);
-
-        echo "</h2>";
-        echo "<div class='accordion' name=listProcessesApp>";
 
         $procsAppDBTM = new Appliance_Item();
         $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsProcess']);
@@ -132,6 +119,20 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
             array_push($listProcId, $proc['items_id']);
         }
 
+
+        echo "<h1>".__('Business process','webapplications')."</h1>";
+        echo "<hr>";
+        echo "<h2>";
+        echo _n('Process', 'Processes', count($listProcId),'webapplications');
+
+        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
+            'class' => 'btn btn-primary',
+            'icon' => 'fas fa-plus',
+            'style' => 'float: right',
+            'onclick' => "window.location.href='" . $linkAddProc . "'"]);
+
+        echo "</h2>";
+        echo "<div class='accordion' name=listProcessesApp>";
 
         if(!empty($listProcId)){
             $processes = $processDBTM->find(['id' => $listProcId]);
@@ -153,7 +154,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Name";
+                echo __("Name");
                 echo "</th>";
                 echo "<td>";
                 echo $name;
@@ -171,7 +172,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "Owner";
+                echo __("Owner", 'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $owner;
@@ -185,7 +186,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "List Entities";
+                echo __('List Entities','webapplications');
                 echo "</th>";
                 echo "</tr>";
 
@@ -203,7 +204,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                     }
                     echo "</select>";
 
-                } else echo "no associated entity";
+                } else echo __("no associated entity",'webapplications');
                 echo "</td>";
                 echo "</tr>";
 
@@ -214,7 +215,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo "List Appliances";
+                echo __('List Appliances','webapplications');
                 echo "</th>";
                 echo "</tr>";
 
@@ -232,7 +233,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                     }
                     echo "</select>";
 
-                } else echo "no associated appliance";
+                } else echo __("no associated entity",'webapplications');
                 echo "</td>";
                 echo "</tr>";
 
@@ -245,14 +246,14 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th style='padding-top: 20px; padding-bottom: 20px'>";
-                echo "DICT";
+                echo __('DICT','webapplications');
                 echo "</th>";
                 echo "<td class='inTable'>";
 
                 echo "<table style='text-align : center; width: 60%'>";
 
                 echo "<td class='dict'>";
-                echo "Availability &nbsp";
+                echo __('Availability')."&nbsp";
                 echo "</td>";
 
                 echo "<td name='webapplicationavailabilities' id='5'>";
@@ -262,7 +263,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "<td></td>";
 
                 echo "<td class='dict'>";
-                echo "Integrity &nbsp";
+                echo __('Integrity','webapplications')."&nbsp";
                 echo "</td>";
                 echo "<td name='webapplicationintegrities' id='6'>";
                 echo $int;
@@ -271,7 +272,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "<td></td>";
 
                 echo "<td class='dict'>";
-                echo "Confidentiality &nbsp";
+                echo __('Confidentiality','webapplications')."&nbsp";
                 echo "</td>";
                 echo "<td name='webapplicationconfidentialities' id='7'>";
                 echo $conf;
@@ -280,7 +281,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "<td></td>";
 
                 echo "<td class='dict'>";
-                echo "Tracabeality &nbsp";
+                echo __('Tracabeality','webapplications')."&nbsp";
                 echo "</td>";
                 echo "<td name='webapplicationtraceabilities' id='8'>";
                 echo $tra;
@@ -295,7 +296,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th style='padding-bottom: 20px'>";
-                echo "Comment";
+                echo __('Comment');
                 echo "</th>";
                 echo "<td>";
                 if (!empty($comment)) {
@@ -310,7 +311,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "</table></div>";
             }
         }
-        else echo "No process";
+        else echo __("No process",'webapplications');
 
         echo "</div>";
 

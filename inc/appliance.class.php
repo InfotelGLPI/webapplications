@@ -156,7 +156,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
    }
 
     function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-        return __('Appliance', 'webapplications');
+        return __('Appliance');
 
     }
 }
