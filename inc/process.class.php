@@ -82,6 +82,17 @@ class PluginWebapplicationsProcess extends CommonDBTM {
         return true;
     }
 
+    function post_addItem()
+    {
+        $appliance_id = $this->input['appliances_id'];
+        if(!is_null($appliance_id)&&$appliance_id!=0){
+
+            $test = new Appliance_Item();
+            $test->add(['appliances_id' => $appliance_id, 'items_id' => $this->getID(), 'itemtype' => 'PluginWebapplicationsProcess']);
+
+        }
+    }
+
     function defineTabs($options=[]) {
         $ong = [];
         //add main tab for current object

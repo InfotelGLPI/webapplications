@@ -68,7 +68,7 @@ class PluginWebapplicationsDashboardLogicalInfrastructure extends CommonDBTM {
 
         echo "<div align='center'>
         <table class='tab_cadre_fixe'>";
-        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance', 'webapplications') . "</td>";
+        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
 
         echo "<td >";
         $rand = Appliance::dropdown(['name' => 'applianceDropdown']);

@@ -29,11 +29,18 @@
 
 include('../../../inc/includes.php');
 
-Session::checkRight("plugin_webapplications_processes", READ);
 
-Html::header(PluginWebapplicationsProcess::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", 'pluginwebapplicationsprocess');
+Session::checkLoginUser();
 
-Search::show('PluginWebapplicationsProcess');
+use Glpi\Event;
 
-Html::footer();
+if (!isset($_GET["id"])) {
+    $_GET["id"] = "1";
+}
+if (!isset($_GET["withtemplate"])) {
+    $_GET["withtemplate"] = "";
+}
 
+
+
+new PluginWebapplicationsDashboardStream();

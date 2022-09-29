@@ -43,4 +43,4 @@ if (!isset($_GET["withtemplate"])) {
 
 
 
-new PluginWebapplicationsDashboardApplication();
+new PluginWebapplicationsDashboardDatabase();

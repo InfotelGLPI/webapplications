@@ -32,7 +32,7 @@ include('../../../inc/includes.php');
 
 Session::checkRight("plugin_webapplications_streams", READ);
 
-Html::header(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF'], "management", 'pluginwebapplicationsstream');
+Html::header(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", 'pluginwebapplicationsstream');
 
 Search::show('PluginWebapplicationsStream');
 

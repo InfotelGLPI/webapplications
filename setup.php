@@ -48,8 +48,8 @@ function plugin_init_webapplications() {
    Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
     if (Session::getLoginUserID()) {
         if (Session::haveRight("plugin_webapplications", READ)) {
-            //$PLUGIN_HOOKS['menu_toadd']['webapplications']['management'] = array('PluginWebapplicationsStream','PluginWebapplicationsProcess','PluginWebapplicationsEntity', 'PluginWebapplicationsDashboard');
-            $PLUGIN_HOOKS['menu_toadd']['webapplications'] = ['management' => 'PluginWebapplicationsDashboard'];
+            $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = array('PluginWebapplicationsDashboard','PluginWebapplicationsEntity', 'PluginWebapplicationsProcess', 'PluginWebapplicationsStream');
+
         }
     }
 

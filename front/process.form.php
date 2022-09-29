@@ -82,8 +82,11 @@ else {
 
     if (Session::getCurrentInterface() == "central") {
 
-        Html::header(PluginWebapplicationsProcess::getTypeName(2), $_SERVER['PHP_SELF'], "management", "pluginwebapplicationsprocess", "config");
-        $process->display(['id' => $_GET["id"]]);
+        Html::header(PluginWebapplicationsProcess::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsprocess", "config");
+        if(isset($_GET['appliance_id'])){
+            $process->display(['id' => $_GET["id"], 'appliances_id' => $_GET['appliance_id']]);
+        }
+        else $process->display(['id' => $_GET["id"]]);
     }
 
 }

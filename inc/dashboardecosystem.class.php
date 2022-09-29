@@ -42,13 +42,17 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
     static function getTypeName($nb = 0) {
 
-        return __('DashboardEcosystem', 'webapplications');
+        return __('Ecosystem', 'webapplications');
     }
 
 
     function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 
-        return __('Ecosystem', 'webapplications');
+        if ($_SESSION['glpishow_count_on_tabs']) {
+            $nbEntities = count(self::getEntities());
+            return self::createTabEntry(self::getTypeName(), $nbEntities);
+        }
+        return self::getTypeName();
 
     }
 
@@ -56,6 +60,24 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
         self::showLists($item);
         return true;
+    }
+
+    static function getEntities(){
+
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+
+        $entitiesAppDBTM = new Appliance_Item();
+        $entitiesApp     = $entitiesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsEntity']);
+
+
+        $listEntitiesId = array();
+        foreach ($entitiesApp as $entityApp) {
+            $entitiesAppDBTM->getFromDB($entityApp['id']);
+
+            array_push($listEntitiesId, $entityApp['items_id']);
+        }
+
+        return $listEntitiesId;
     }
 
     public function showForm($ID, $options = []) {
@@ -68,7 +90,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
         echo "<div align='center'>
         <table class='tab_cadre_fixe'>";
-        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance', 'webapplications') . "</td>";
+        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
 
         echo "<td >";
         $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
@@ -112,27 +134,25 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         $linkAddEnt   = $entitiesDBTM::getFormURL();
 
 
-        $entitiesAppDBTM = new Appliance_Item();
-        $entitiesApp     = $entitiesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsEntity']);
-
-
-        $listEntitiesId = array();
-        foreach ($entitiesApp as $entityApp) {
-            $entitiesAppDBTM->getFromDB($entityApp['id']);
-
-            array_push($listEntitiesId, $entityApp['items_id']);
-        }
+        $listEntitiesId = self::getEntities();
 
         echo "<h1>Ecosystem</h1>";
         echo "<hr>";
         echo "<h2>";
         echo _n('Entity','Entities', count($listEntitiesId), 'webapplications');
 
-        echo Html::submit(_sx('button', 'Add'), ['name'    => 'edit',
-            'class'   => 'btn btn-primary',
-            'icon'    => 'fas fa-plus',
-            'style'   => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddEnt . "'"]);
+        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
+                'class' => 'btn btn-primary',
+                'icon' => 'fas fa-plus',
+                'data-bs-toggle' => 'modal',
+                'data-bs-target' =>'#addEntity',
+                'style' => 'float: right']
+        );
+        echo Ajax::createIframeModalWindow('addEntity',
+            $linkAddEnt."?appliance_id=".$ApplianceId,
+            ['display' => false]
+        );
+
 
         echo "</h2>";
 

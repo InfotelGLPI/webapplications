@@ -42,12 +42,16 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
     static function getTypeName($nb = 0) {
 
-        return __('DashboardProcess', 'webapplications');
+        return _n('Process', 'Processes', $nb, 'webapplications');
     }
 
     function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-        return __('Process', 'webapplications');
+        if ($_SESSION['glpishow_count_on_tabs']) {
+            $nbProcess = count(self::getProcesses());
+            return self::createTabEntry(self::getTypeName($nbProcess), $nbProcess);
+        }
+        return __('Processes', 'webapplications');
 
     }
 
@@ -55,6 +59,24 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
         self::showLists($item);
         return true;
+    }
+
+    static function getProcesses(){
+
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+
+        $procsAppDBTM = new Appliance_Item();
+        $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsProcess']);
+
+
+        $listProcId = array();
+        foreach ($procsApp as $proc) {
+            $procsAppDBTM->getFromDB($proc['id']);
+
+            array_push($listProcId, $proc['items_id']);
+        }
+
+        return $listProcId;
     }
 
 
@@ -68,7 +90,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
         echo "<div align='center'>
         <table class='tab_cadre_fixe'>";
-        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance', 'webapplications') . "</td>";
+        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
 
         echo "<td >";
         $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
@@ -108,28 +130,24 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
         $processDBTM = new PluginWebapplicationsProcess();
         $linkAddProc=$processDBTM::getFormURL();
 
-        $procsAppDBTM = new Appliance_Item();
-        $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsProcess']);
+        $listProcId = self::getProcesses();
 
-
-        $listProcId = array();
-        foreach ($procsApp as $proc) {
-            $procsAppDBTM->getFromDB($proc['id']);
-
-            array_push($listProcId, $proc['items_id']);
-        }
-
-
-        echo "<h1>".__('Business process','webapplications')."</h1>";
+        echo "<h1>"._n('Process', 'Processes', count($listProcId), 'webapplications')."</h1>";
         echo "<hr>";
         echo "<h2>";
-        echo _n('Process', 'Processes', count($listProcId),'webapplications');
 
         echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
             'class' => 'btn btn-primary',
             'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddProc . "'"]);
+            'data-bs-toggle' => 'modal',
+            'data-bs-target' =>'#addProc',
+            'style' => 'float: right']
+        );
+        $test = Ajax::createIframeModalWindow('addProc',
+            $linkAddProc."?appliance_id=".$ApplianceId,
+            ['display' => false]
+        );
+        echo $test;
 
         echo "</h2>";
         echo "<div class='accordion' name=listProcessesApp>";

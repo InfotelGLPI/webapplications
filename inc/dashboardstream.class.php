@@ -1,0 +1,270 @@
+<?php
+
+/*
+ * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
+ -------------------------------------------------------------------------
+ webapplications plugin for GLPI
+ Copyright (C) 2009-2016 by the webapplications Development Team.
+
+ https://github.com/InfotelGLPI/webapplications
+ -------------------------------------------------------------------------
+
+ LICENSE
+
+ This file is part of webapplications.
+
+ webapplications is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ webapplications is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ --------------------------------------------------------------------------
+ */
+
+if (!defined('GLPI_ROOT')) {
+    die("Sorry. You can't access directly to this file");
+}
+
+
+/**
+ * Class PluginWebapplicationsDashboardStream
+ */
+class PluginWebapplicationsDashboardStream extends CommonDBTM {
+
+    static $rightname         = "plugin_webapplications_stream_dashboards";
+
+    static function getTypeName($nb = 0) {
+
+        return _n('Stream', 'Streams', $nb, 'webapplications');
+    }
+
+    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+
+        if ($_SESSION['glpishow_count_on_tabs']) {
+            $nbStreams = count(self::getStreams());
+            return self::createTabEntry(self::getTypeName($nbStreams), $nbStreams);
+        }
+        return __('Streams', 'webapplications');
+
+    }
+
+    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
+
+        self::showLists($item);
+        return true;
+    }
+
+
+    static function getStreams(){
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+
+        $streamAppDBTM = new Appliance_Item();
+        $streamApp = $streamAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsStream']);
+
+
+        $listStreamId = array();
+        foreach ($streamApp as $st) {
+            $streamAppDBTM->getFromDB($st['id']);
+
+            array_push($listStreamId, $st['items_id']);
+        }
+
+        return $listStreamId;
+    }
+
+    function showForm($ID, $options = [])
+    {
+
+        global $CFG_GLPI;
+
+        $options['candel'] = false;
+        $options['colspan'] = 1;
+
+
+        echo "<div align='center'>
+        <table class='tab_cadre_fixe'>";
+        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
+
+        echo "<td >";
+        $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
+        echo "</td>";
+        echo "</tr>";
+        echo "</table></div>";
+        echo "<div id=lists-Stream></div>";
+
+        $array['value']='__VALUE__';
+        $array['type']=self::getType();
+        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-Stream', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
+
+    }
+
+    static function showLists(){
+
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+
+        $appliance = new Appliance();
+        $appliance->getFromDB($ApplianceId);
+
+        echo '<div class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
+                        <h3 class="card-title d-flex align-items-center ps-4">
+                                                <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
+                     <i class="ti ti-versions fa-2x"></i>
+                  </div>
+                              <h3 style="margin: auto">';
+        echo $appliance->getName();
+
+        echo ' </h3>
+                           </h3>
+ </div>';
+
+        $streamDBTM = new PluginWebapplicationsStream();
+        $linkAddStream=$streamDBTM::getFormURL();
+
+        $listStreamId = self::getStreams();
+
+        echo "<h1>";
+        echo _n("Stream",'Streams', count($listStreamId),'wbapplications');
+        echo "</h1>";
+        echo "<hr>";
+        echo "<h2>";
+
+        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
+                'class' => 'btn btn-primary',
+                'icon' => 'fas fa-plus',
+                'data-bs-toggle' => 'modal',
+                'data-bs-target' =>'#addStream',
+                'style' => 'float: right']
+        );
+        echo Ajax::createIframeModalWindow('addStream',
+            $linkAddStream."?appliance_id=".$ApplianceId,
+            ['display' => false]
+        );
+
+        echo "</h2>";
+        echo "<div class='accordion' name=listStreamApp>";
+
+
+        if(!empty($listStreamId)){
+            $streams = $streamDBTM->find(['id' => $listStreamId]);
+            foreach ($streams as $stream) {
+
+                $streamDBTM->getFromDB($stream['id']);
+
+                $name = $stream['name'];
+
+                echo "<h3 class='accordionhead'>$name</h3>";
+
+                echo "<div class='panel' id='tabsbody'>";
+
+
+                echo "<table class='tab_cadre_fixe'>";
+
+
+                echo "<tbody>";
+
+                echo "<tr>";
+                echo "<th>";
+                echo __("Name");
+                echo "</th>";
+                echo "<td>";
+                echo $name;
+                echo "</td>";
+
+                echo "<td></td>";
+
+                $linkApp = PluginWebapplicationsStream::getFormURLWithID($stream['id']);
+
+                echo "<td style='width: 10%'>";
+                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
+                echo "</td>";
+
+                echo "</tr>";
+
+
+                $transmitter = $stream['transmitter'];
+
+                echo "<tr>";
+                echo "<th>";
+                echo __("Transmitter",'webapplications');
+                echo "</th>";
+                echo "<td>";
+                echo $transmitter;
+                echo "</td>";
+
+
+                $receiver = $stream['receiver'];
+
+                echo "<th>";
+                echo __("Receiver", 'webapplications');
+                echo "</th>";
+                echo "<td>";
+                echo $receiver;
+                echo "</td>";
+                echo "</tr>";
+
+
+                $encryption = $stream['encryption'];
+
+                echo "<tr>";
+                echo "<th>";
+                echo __("Encryption");
+                echo "</th>";
+                echo "<td>";
+                echo $encryption;
+                echo "</td>";
+
+
+                $encryption_type = $stream['encryption_type'];
+
+                echo "<th>";
+                echo __("Encryption type");
+                echo "</th>";
+                echo "<td>";
+                echo $encryption_type;
+                echo "</td>";
+                echo "</tr>";
+
+
+                $ports = $stream['ports'];
+
+                echo "<tr>";
+                echo "<th>";
+                echo __("Port");
+                echo "</th>";
+                echo "<td>";
+                echo $ports;
+                echo "</td>";
+
+
+                $protocole = $stream['protocole'];
+
+                echo "<th>";
+                echo __("Protocole",'webapplications');
+                echo "</th>";
+                echo "<td>";
+                echo $protocole;
+                echo "</td>";
+                echo "</tr>";
+
+
+                echo "</tbody>";
+                echo "</table></div>";
+
+            }
+        }
+        else echo __("No stream",'webapplications');
+        echo "</div>";
+
+        echo "<script>accordion();</script>";
+
+    }
+
+
+}

@@ -42,13 +42,17 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
     static function getTypeName($nb = 0) {
 
-        return __('DashboardPhysicalInfrastructure', 'webapplications');
+        return __('Physical Infrastructure', 'webapplications');
     }
 
 
     function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
-        return __('Physical Infrastructure', 'webapplications');
+        if ($_SESSION['glpishow_count_on_tabs']) {
+            $nbComputer = count(self::getComputers());
+            return self::createTabEntry(self::getTypeName(), $nbComputer);
+        }
+        return self::getTypeName();
 
     }
 
@@ -68,7 +72,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
         echo "<div align='center'>
         <table class='tab_cadre_fixe'>";
-        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance', 'webapplications') . "</td>";
+        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
 
         echo "<td >";
         $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
@@ -81,6 +85,23 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
         $array['type']=self::getType();
         Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-physicalInfra', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
 
+    }
+
+    static function getComputers(){
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+
+        $computerAppDBTM = new Appliance_Item();
+        $computerApp = $computerAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'Computer']);
+
+
+        $listComputerId = array();
+        foreach ($computerApp as $st) {
+            $computerAppDBTM->getFromDB($st['id']);
+
+            array_push($listComputerId, $st['items_id']);
+        }
+
+        return $listComputerId;
     }
 
     static function showLists($item) {
@@ -107,31 +128,20 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
         echo "<h1>".__('Physical Infrastructure', 'webapplications')."</h1>";
         echo "<hr>";
 
-        self::showListComputer($ApplianceId);
+        self::showListComputer();
 
         echo "<script>accordion();</script>";
 
 
     }
 
-    static function showListComputer($ApplianceId){
-
-
+    static function showListComputer(){
 
 
         $computerDBTM = new Computer();
-        $linkAddComptuer=$computerDBTM::getFormURL();
+        $linkAddComputer=$computerDBTM::getFormURL();
 
-        $computerAppDBTM = new Appliance_Item();
-        $computerApp = $computerAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'Computer']);
-
-
-        $listComputerId = array();
-        foreach ($computerApp as $st) {
-            $computerAppDBTM->getFromDB($st['id']);
-
-            array_push($listComputerId, $st['items_id']);
-        }
+        $listComputerId = self::getComputers();
 
         echo "<h2>";
         echo _n("Computer","Computers", count($listComputerId));
@@ -140,7 +150,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
             'class' => 'btn btn-primary',
             'icon' => 'fas fa-plus',
             'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddComptuer . "'"]);
+            'onclick' => "window.location.href='" . $linkAddComputer . "'"]);
 
         echo "</h2>";
         echo "<div class='accordion' name=listComputer>";

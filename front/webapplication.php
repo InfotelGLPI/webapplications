@@ -29,7 +29,7 @@
 
 include('../../../inc/includes.php');
 
-Html::header(PluginWebapplicationsWebapplication::getTypeName(2), "", "plugins", "");
+Html::header(PluginWebapplicationsWebapplication::getTypeName(2), "", "appliancedashboard", "");
 
 Session::checkRight("plugin_webapplications", READ);
 

@@ -174,7 +174,8 @@ static function selectAppliance() {
         echo "<td>";
         if (!empty($docuItems)) {
             echo "<div>";
-            echo "<select name='documents' id='list' Size='3' ondblclick='location = this.value;'>";
+            echo _n('Associated document','Associated documents',count($docuItems), 'webapplications');
+            echo "<br><select name='documents' id='list' Size='3' ondblclick='location = this.value;' style='max-width: 400px'>";
             foreach ($docuItems as $docuItem) {
                 $docuDBTM->getFromDB($docuItem['documents_id']);
                 $name = $docuDBTM->getName();
@@ -182,7 +183,6 @@ static function selectAppliance() {
                 echo "<option value=$link>$name</option>";
             }
             echo "</select>";
-            echo "<br>"._n('Associated document','Associated documents',count($docuItems), 'webapplications');
             echo "</div>";
         } else echo __("No associated documents");
 
@@ -203,6 +203,9 @@ static function selectAppliance() {
 
         echo "<hr>";
         self::showApplication($appliance);
+
+        echo "<hr>";
+        self::showSupportPart($appliance);
 
 
 
@@ -449,6 +452,81 @@ static function selectAppliance() {
         echo "</table>";
     }
 
+    static function showSupportPart($appliance){
+
+        echo "<h2 style='margin-bottom: 15px'>";
+        echo __("Support");
+
+        $ApplianceId = $appliance->getField('id');
+
+        $linkApp = Appliance::getFormURLWithID($ApplianceId);
+        $linkApp .= "&forcetab=main";
+
+        $appliance = new Appliance();
+        $appliance->getFromDB($ApplianceId);
+
+        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'onclick' => "window.location.href='" . $linkApp . "'"]);
+        echo "</h2>";
+
+        echo "<div id=supportApp>";
+        echo "<table class='tab_cadre_fixe'>";
+        echo "<tbody>";
+
+
+
+        $refEditid = $appliance->getField('manufacturers_id');
+        $refEdit = new Manufacturer();
+        $refEdit->getFromDB($refEditid);
+
+
+        echo "<tr>";
+        echo "<th>";
+        echo __("Referent editor",'webapplications');
+        echo "</th>";
+        echo "<td>";
+        echo $refEdit->getName();
+        echo "</td>";
+        echo "</tr>";
+
+
+        $applianceplugin = new PluginWebapplicationsAppliance();
+        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
+
+        echo "<tr>";
+        echo "<th>";
+        echo __("Mail support",'webapplications');
+        echo "</th>";
+        echo "<td>";
+
+        $mail = null;
+        if($is_known) $mail = $applianceplugin->fields['webapplicationmailsupport'];
+
+        if(!$is_known || $mail == null) $mail = NOT_AVAILABLE;
+
+        echo $mail;
+        echo "</td>";
+
+
+        echo "<th>";
+        echo __("Phone support",'webapplications');
+        echo "</th>";
+        echo "<td>";
+
+        $phone = null;
+        if($is_known) $phone = $applianceplugin->fields['webapplicationphonesupport'];
+
+        if(!$is_known || $phone == null) $phone = NOT_AVAILABLE;
+
+        echo $phone;
+        echo "</td>";
+        echo "</tr>";
+
+        echo "</tbody>";
+        echo "</table>";
+        echo "</div>";
+
+    }
+
 
 
     function defineTabs($options = []) {
@@ -477,7 +555,8 @@ static function selectAppliance() {
         $this->addDefaultFormTab($ong);
         $this->addStandardTab('PluginWebapplicationsDashboardEcosystem', $ong, $options);// Vue Ecosystème
         $this->addStandardTab('PluginWebapplicationsDashboardProcess', $ong, $options);//Vue Metier
-        $this->addStandardTab('PluginWebapplicationsDashboardApplication', $ong, $options);//Vue Applications
+        $this->addStandardTab('PluginWebapplicationsDashboardDatabase', $ong, $options);//Vue Base de données
+        $this->addStandardTab('PluginWebapplicationsDashboardStream', $ong, $options);//Vue Flux
         $this->addStandardTab('PluginWebapplicationsDashboardPhysicalInfrastructure', $ong, $options);//Vue Infra physiques
 
         return $ong;

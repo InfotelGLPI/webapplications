@@ -47,7 +47,7 @@ $dashboard = new PluginWebapplicationsDashboard;
 
 if (Session::getCurrentInterface() == "central") {
 
-    Html::header(PluginWebapplicationsDashboard::getTypeName(2), $_SERVER['PHP_SELF'], "management", "pluginwebapplicationsdashboard");
+    Html::header(PluginWebapplicationsDashboard::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsdashboard");
     PluginWebapplicationsDashboard::selectAppliance();
 }
 

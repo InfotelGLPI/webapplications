@@ -32,7 +32,7 @@ include('../../../inc/includes.php');
 
 Session::checkRight("plugin_webapplications_entities", READ);
 
-Html::header(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF'], "management", 'pluginwebapplicationsentity');
+Html::header(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", 'pluginwebapplicationsentity');
 
 Search::show('PluginWebapplicationsEntity');
 
