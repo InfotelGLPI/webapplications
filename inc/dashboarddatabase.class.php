@@ -125,7 +125,8 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
  </div>';
 
         $databaseDBTM = new DatabaseInstance();
-        $linkAddDatabase=$databaseDBTM::getFormURL();
+        $databasePluginDBTM = new PluginWebapplicationsDatabaseInstance();
+        $linkAddDatabase=$databasePluginDBTM::getFormURL();
 
         $listDatabaseId = self::getDatabases();
 
@@ -267,7 +268,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
                 echo "<td class='inTable'>";
 
 
-                $databaseplugin = new PluginWebapplicationsDatabase();
+                $databaseplugin = new PluginWebapplicationsDatabaseInstance();
                 $is_known = $databaseplugin->getFromDBByCrit(['databases_id'=>$database['id']]);
 
                 if($is_known) {

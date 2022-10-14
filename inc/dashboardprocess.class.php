@@ -143,11 +143,11 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
             'data-bs-target' =>'#addProc',
             'style' => 'float: right']
         );
-        $test = Ajax::createIframeModalWindow('addProc',
-            $linkAddProc."?appliance_id=".$ApplianceId,
+        echo Ajax::createIframeModalWindow('addProc',
+            $linkAddProc . "?appliance_id=" . $ApplianceId,
             ['display' => false]
+
         );
-        echo $test;
 
         echo "</h2>";
         echo "<div class='accordion' name=listProcessesApp>";

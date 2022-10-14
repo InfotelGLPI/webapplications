@@ -77,17 +77,22 @@ if (isset($_POST["add"])) {
     Html::back();
 
 }
+else if (isset($_GET['_in_modal'])) {
+    Html::popHeader(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF']);
+    if(isset($_GET['appliance_id'])) {
+        $stream->showForm($_GET["id"], ['appliances_id' => $_GET['appliance_id']]);
+    }
+    else $stream->showForm($_GET["id"]);
+    Html::popFooter();
+
+}
 else {
 
     if (Session::getCurrentInterface() == "central") {
 
         Html::header(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsstream", "config");
-        if(isset($_GET['appliance_id'])){
-            $stream->display(['id' => $_GET["id"], 'appliances_id' => $_GET['appliance_id']]);
-        }
-        else $stream->display(['id' => $_GET["id"]]);
+        $stream->display(['id' => $_GET["id"]]);
     }
-
+    Html::footer();
 }
 
-Html::footer();

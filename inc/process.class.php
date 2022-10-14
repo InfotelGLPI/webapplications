@@ -74,6 +74,7 @@ class PluginWebapplicationsProcess extends CommonDBTM {
 
         $this->initForm($ID, $options);
 
+
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_process_form.html.twig', [
             'item'   => $this,
             'params' => $options,
@@ -87,8 +88,8 @@ class PluginWebapplicationsProcess extends CommonDBTM {
         $appliance_id = $this->input['appliances_id'];
         if(!is_null($appliance_id)&&$appliance_id!=0){
 
-            $test = new Appliance_Item();
-            $test->add(['appliances_id' => $appliance_id, 'items_id' => $this->getID(), 'itemtype' => 'PluginWebapplicationsProcess']);
+            $itemDBTM = new Appliance_Item();
+            $itemDBTM->add(['appliances_id' => $appliance_id, 'items_id' => $this->getID(), 'itemtype' => 'PluginWebapplicationsProcess']);
 
         }
     }

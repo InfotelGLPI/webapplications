@@ -137,9 +137,11 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
     static function showListComputer(){
 
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $computerDBTM = new Computer();
-        $linkAddComputer=$computerDBTM::getFormURL();
+        $computerPluginDBTM = new PluginWebapplicationsComputer();
+        $linkAddComputer=$computerPluginDBTM::getFormURL();
 
         $listComputerId = self::getComputers();
 
@@ -147,10 +149,16 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
         echo _n("Computer","Computers", count($listComputerId));
 
         echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-            'class' => 'btn btn-primary',
-            'icon' => 'fas fa-plus',
-            'style' => 'float: right',
-            'onclick' => "window.location.href='" . $linkAddComputer . "'"]);
+                'class' => 'btn btn-primary',
+                'icon' => 'fas fa-plus',
+                'data-bs-toggle' => 'modal',
+                'data-bs-target' =>'#addComputer',
+                'style' => 'float: right']
+        );
+        echo Ajax::createIframeModalWindow('addComputer',
+            $linkAddComputer."?appliance_id=".$ApplianceId,
+            ['display' => false]
+        );
 
         echo "</h2>";
         echo "<div class='accordion' name=listComputer>";

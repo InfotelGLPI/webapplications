@@ -142,7 +142,19 @@ static function selectAppliance() {
         $groupId = $appliance->getField('groups_id');
         $groupUserDBTM = new Group_User();
         $groupUser = $groupUserDBTM->find(['groups_id' => $groupId]);
-        $numberUser = count($groupUser);
+
+        $groupAdminId = $appliance->getField('groups_id_tech');
+        $groupUserAdminDBTM = new Group_User();
+        $groupUserAdmin = $groupUserAdminDBTM->find(['groups_id' => $groupAdminId]);
+        $numberAdmin = count($groupUserAdmin);
+
+        $listUser = array_merge($groupUser, $groupUserAdmin);
+        $listUniqueUser = array();
+        foreach ($listUser as $user) {
+
+            array_push($listUniqueUser, $user['users_id']);
+        }
+        $numberUser = count(array_unique($listUniqueUser));
 
         echo "<td>";
         echo "<div style='text-align:center'>";
@@ -151,12 +163,6 @@ static function selectAppliance() {
         echo "<br>".User::getTypeName($numberUser);
         echo "</div>";
         echo "</td>";
-
-
-        $groupAdminId = $appliance->getField('groups_id_tech');
-        $groupUserAdminDBTM = new Group_User();
-        $groupUserAdmin = $groupUserAdminDBTM->find(['groups_id' => $groupAdminId]);
-        $numberAdmin = count($groupUserAdmin);
 
         echo "<td>";
         echo "<div style='text-align:center'>";

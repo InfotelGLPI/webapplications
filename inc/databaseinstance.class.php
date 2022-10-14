@@ -35,9 +35,9 @@ if (!defined('GLPI_ROOT')) {
 use Glpi\Application\View\TemplateRenderer;
 
 /**
- * Class PluginWebapplicationsDatabase
+ * Class PluginWebapplicationsDatabaseInstance
  */
-class PluginWebapplicationsDatabase extends CommonDBTM {
+class PluginWebapplicationsDatabaseInstance extends CommonDBTM {
 
    static function getTypeName($nb = 0) {
 
@@ -58,7 +58,12 @@ class PluginWebapplicationsDatabase extends CommonDBTM {
          } else {
             $webapp_database->getEmpty();
          }
+
          $options = [];
+
+          if(isset($params["options"]["appliances_id"])){
+              $options = ['appliances_id' => $params["options"]["appliances_id"]];
+          }
 
          TemplateRenderer::getInstance()->display('@webapplications/webapplication_database_form.html.twig', [
             'item'   => $webapp_database,
@@ -67,6 +72,26 @@ class PluginWebapplicationsDatabase extends CommonDBTM {
       }
       return true;
    }
+
+    function showForm($ID, $options = []) {
+
+        $instance = new DatabaseInstance();
+        $instance->showForm($ID, $options);
+
+        return true;
+    }
+
+    function post_addItem()
+    {
+        $appliance_id = $this->input['appliances_id'];
+        $items_id = $this->input['databases_id'];
+        if(!is_null($appliance_id)&&$appliance_id!=0){
+
+            $itemDBTM = new Appliance_Item();
+            $itemDBTM->add(['appliances_id' => $appliance_id, 'items_id' => $items_id, 'itemtype' => 'DatabaseInstance']);
+
+        }
+    }
 
    /**
     * @param \Database $item
@@ -99,7 +124,7 @@ class PluginWebapplicationsDatabase extends CommonDBTM {
     * @param \Database $item
     */
    static function setDatabase(DatabaseInstance $item) {
-      $database = new PluginWebApplicationsDatabase();
+      $database = new PluginWebapplicationsDatabaseInstance();
       if (!empty($item->fields)) {
          $database->getFromDBByCrit(['databases_id' => $item->getID()]);
          if (is_array($database->fields) && count($database->fields) > 0) {
@@ -116,6 +141,7 @@ class PluginWebapplicationsDatabase extends CommonDBTM {
                              'webapplicationintegrities' => isset($item->input['webapplicationintegrities']) ? $item->input['webapplicationintegrities'] : 0,
                              'webapplicationconfidentialities' => isset($item->input['webapplicationconfidentialities']) ? $item->input['webapplicationconfidentialities'] : 0,
                              'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : 0,
+                             'appliances_id' => isset($item->input['appliances_id']) ? $item->input['appliances_id'] : 0,
                              'databases_id'                => $item->getID()]);
          }
       }

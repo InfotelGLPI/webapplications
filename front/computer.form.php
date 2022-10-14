@@ -41,57 +41,14 @@ if (!isset($_GET["withtemplate"])) {
     $_GET["withtemplate"] = "";
 }
 
+$computer = new PluginWebapplicationsComputer();
 
-$entity = new PluginWebapplicationsEntity();
-
-if (isset($_POST["add"])) {
-
-    $entity->check(-1, CREATE, $_POST);
-    $newID = $entity->add($_POST);
-    if ($_SESSION['glpibackcreated']) {
-        Html::redirect($entity->getFormURL() . "?id=" . $newID);
-    }
-    Html::back();
-
-} else if (isset($_POST["delete"])) {
-
-    $entity->check($_POST['id'], DELETE);
-    $entity->delete($_POST);
-    $entity->redirectToList();
-
-} else if (isset($_POST["restore"])) {
-
-    $entity->check($_POST['id'], PURGE);
-    $entity->restore($_POST);
-    $entity->redirectToList();
-
-} else if (isset($_POST["purge"])) {
-    $entity->check($_POST['id'], PURGE);
-    $entity->delete($_POST, 1);
-    $entity->redirectToList();
-
-} else if (isset($_POST["update"])) {
-
-    $entity->check($_POST['id'], UPDATE);
-    $entity->update($_POST);
-    Html::back();
-
-}
-else if (isset($_GET['_in_modal'])) {
-    Html::popHeader(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF']);
+if (isset($_GET['_in_modal'])) {
+    Html::popHeader(Computer::getTypeName(2), $_SERVER['PHP_SELF']);
     if(isset($_GET['appliance_id'])) {
-        $entity->showForm($_GET["id"], ['appliances_id' => $_GET['appliance_id']]);
+        $computer->showForm($_GET["id"], ['withtemplate' => $_GET['withtemplate'], 'appliances_id' => $_GET['appliance_id']]);
     }
-    else $entity->showForm($_GET["id"]);
+    else $computer->showForm($_GET["id"], ['withtemplate' => $_GET['withtemplate']]);
     Html::popFooter();
 
-}
-else {
-
-    if (Session::getCurrentInterface() == "central") {
-
-        Html::header(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsentity", "config");
-        $entity->display(['id' => $_GET["id"]]);
-    }
-    Html::footer();
 }

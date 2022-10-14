@@ -179,7 +179,7 @@ function plugin_webapplications_uninstall() {
    include_once(PLUGIN_WEBAPPLICATIONS_DIR . "/inc/profile.class.php");
 
    $tables = ["glpi_plugin_webapplications_appliances",
-              "glpi_plugin_webapplications_databases",
+              "glpi_plugin_webapplications_databaseinstances",
               "glpi_plugin_webapplications_streams",
               "glpi_plugin_webapplications_processes",
               "glpi_plugin_webapplications_entities",
@@ -242,7 +242,7 @@ function plugin_webapplications_getDatabaseRelations() {
 
    if (Plugin::isPluginActive("webapplications")) {
       return ["glpi_appliances" => ["glpi_plugin_webapplications_appliances" => "appliances_id"],
-              "glpi_databaseinstances" => ["glpi_plugin_webapplications_databases" => "databases_id"],
+              "glpi_databaseinstances" => ["glpi_plugin_webapplications_databaseinstances" => "databases_id"],
               "glpi_streams" => ["glpi_plugin_webapplications_streams" => "entities_id"],
               "glpi_processes" => ["glpi_plugin_webapplications_processes" => "entities_id"],
               "glpi_entities" => ["glpi_plugin_webapplications_entities" => "entities_id"]];
@@ -375,7 +375,7 @@ function plugin_webapplications_getAddSearchOptions($itemtype) {
             $sopt[8108]['linkfield']     = 'webapplicationexternalexpositions_id';
             $sopt[8108]['joinparams']    = [
                 'beforejoin' => [
-                    'table'      => 'glpi_plugin_webapplications_databases',
+                    'table'      => 'glpi_plugin_webapplications_databaseinstances',
                     'joinparams' => [
                         'jointype'  => 'child',
                         'condition' => ''

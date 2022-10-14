@@ -82,8 +82,8 @@ CREATE TABLE `glpi_plugin_webapplications_appliances` (
    KEY `appliances_id` (`appliances_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
-DROP TABLE IF EXISTS `glpi_plugin_webapplications_databases`;
-CREATE TABLE `glpi_plugin_webapplications_databases` (
+DROP TABLE IF EXISTS `glpi_plugin_webapplications_databaseinstances`;
+CREATE TABLE `glpi_plugin_webapplications_databaseinstances` (
    `id` int unsigned NOT NULL auto_increment,
    `databases_id`  int unsigned NOT NULL        DEFAULT '0',
    `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0' COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
@@ -149,8 +149,8 @@ CREATE TABLE `glpi_plugin_webapplications_processes_entities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
-DROP TABLE IF EXISTS `glpi_plugin_webapplications_streams_databases`;
-CREATE TABLE `glpi_plugin_webapplications_streams_databases` (
+DROP TABLE IF EXISTS `glpi_plugin_webapplications_streams_databaseinstances`;
+CREATE TABLE `glpi_plugin_webapplications_streams_databaseinstances` (
     `id` int(11) NOT NULL auto_increment,
     `plugin_webapplications_streams_id` int unsigned NOT NULL default '0',
     `databaseinstances_id` int unsigned NOT NULL default '0',

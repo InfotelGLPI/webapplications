@@ -12,7 +12,6 @@
     {% set item_type = item.getType() %}
 
 
-{% if item.isField('webapplicationexternalexpositions_id') %}
     {{ fields.dropdownField(
         "PluginWebapplicationsWebapplicationExternalExposition",
         "webapplicationexternalexpositions_id",
@@ -20,7 +19,6 @@
         "PluginWebapplicationsWebapplicationExternalExposition"|itemtype_name,
         {'align_label_right' : false,}
     ) }}
-{% endif %}
 
 
 {{ fields.smallTitle(__('Security Needs')) }}
@@ -28,7 +26,6 @@
     <tbody>
     <tr>
         <td>
-            {% if item.isField('webapplicationavailabilities') %}
                 {{ fields.dropdownNumberField(
                     'webapplicationavailabilities',
                     item.fields['webapplicationavailabilities'],
@@ -41,12 +38,11 @@
                         'label_class': 'col-xxl-8',
                         'input_class': 'col-xxl-4',}
                 ) }}
-            {% endif %}
 
         </td>
         <td>
-            {% if item.isField('webapplicationintegrities') %}
                 {{ fields.dropdownNumberField(
+
                     'webapplicationintegrities',
                     item.fields['webapplicationintegrities'],
                     __('Integrity', 'webapplications'),
@@ -58,10 +54,8 @@
                         'label_class'    : 'col-xxl-8',
                         'input_class'    : 'col-xxl-4',}
                 ) }}
-            {% endif %}
         </td>
         <td>
-            {% if item.isField('webapplicationconfidentialities') %}
                 {{ fields.dropdownNumberField(
                     'webapplicationconfidentialities',
                     item.fields['webapplicationconfidentialities'],
@@ -75,11 +69,9 @@
                         'label_class': 'col-xxl-8',
                         'input_class': 'col-xxl-4',}
                 ) }}
-            {% endif %}
 
         </td>
         <td>
-            {% if item.isField('webapplicationtraceabilities') %}
                 {{ fields.dropdownNumberField(
                     'webapplicationtraceabilities',
                     item.fields['webapplicationtraceabilities'],
@@ -92,9 +84,9 @@
                         'label_class': 'col-xxl-8',
                         'input_class': 'col-xxl-4',}
                 ) }}
-            {% endif %}
         </td>
 
     </tr>
+    <input type="hidden" name="appliances_id" value="{{ params['appliances_id'] }}">
     </tbody>
 </table>

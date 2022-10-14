@@ -67,22 +67,28 @@ function plugin_init_webapplications() {
         $PLUGIN_HOOKS['post_item_form']['webapplications']= ['PluginWebapplicationsAppliance', 'addFields'];
     }
     elseif (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") ==true) {
-        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsDatabase', 'addFields'];
+        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsDatabaseInstance', 'addFields'];
+    }
+    elseif (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/computer.form.php") ==true) {
+        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsComputer', 'addFields'];
     }
 
    $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = ['PluginWebapplicationsAppliance', 'cleanRelationToAppliance'];
-   $PLUGIN_HOOKS['item_purge']['webapplications']['DatabaseInstance'] = ['PluginWebapplicationsDatabase', 'cleanRelationToDatabase'];
+   $PLUGIN_HOOKS['item_purge']['webapplications']['DatabaseInstance'] = ['PluginWebapplicationsDatabaseInstance', 'cleanRelationToDatabase'];
 
    // Other fields inherited from webapplications
    $PLUGIN_HOOKS['item_add']['webapplications']       = ['Appliance' => ['PluginWebapplicationsAppliance',
                                                                          'applianceAdd'],
-                                                         'DatabaseInstance' => ['PluginWebapplicationsDatabase',
-                                                                         'databaseAdd']];
+                                                         'DatabaseInstance' => ['PluginWebapplicationsDatabaseInstance',
+                                                                         'databaseAdd'],
+                                                        'Computer' => ['PluginWebapplicationsComputer',
+                                                                         'addApplianceComputer']];
 
    $PLUGIN_HOOKS['pre_item_update']['webapplications'] = ['Appliance' => ['PluginWebapplicationsAppliance',
                                                                           'applianceUpdate'],
-                                                          'DatabaseInstance' => ['PluginWebapplicationsDatabase',
+                                                          'DatabaseInstance' => ['PluginWebapplicationsDatabaseInstance',
                                                                           'databaseUpdate']];
+
 
    array_push($CFG_GLPI['appliance_types'],'PluginWebapplicationsProcess', 'PluginWebapplicationsEntity', 'PluginWebapplicationsStream', 'Appliance');
 
