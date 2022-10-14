@@ -42,7 +42,7 @@ if (!isset($_GET["withtemplate"])) {
 }
 
 $stream = new PluginWebapplicationsStream();
-$streamDatabase = new PluginWebapplicationsStream_Database();
+$streamDatabase = new PluginWebapplicationsStream_DatabaseInstance();
 
 if (isset($_POST["add"])) {
 

@@ -36,9 +36,9 @@ use Glpi\Application\View\TemplateRenderer;
 
 
 /**
- * Class PluginWebapplicationsStream_Database
+ * Class PluginWebapplicationsStream_DatabaseInstance
  */
-class PluginWebapplicationsStream_Database extends CommonDBTM {
+class PluginWebapplicationsStream_DatabaseInstance extends CommonDBTM {
 
     use Glpi\Features\Inventoriable;
     static $rightname         = "plugin_webapplications_streams";
@@ -89,7 +89,7 @@ class PluginWebapplicationsStream_Database extends CommonDBTM {
         $canedit = $stream->can($item->fields['id'], UPDATE);
         if ($canedit) {
             echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL('PluginWebapplicationsStream_Database') . "'>";
+                Toolbox::getItemTypeFormURL('PluginWebapplicationsStream_DatabaseInstance') . "'>";
 
             echo "<div align='center'><table class='tab_cadre_fixe'>";
             echo "<tr><th colspan='6'>" . __('Add a database', 'webapplications') . "</th></tr>";
