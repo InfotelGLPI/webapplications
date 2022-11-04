@@ -42,14 +42,14 @@ if (!isset($_GET["withtemplate"])) {
 }
 
 $stream = new PluginWebapplicationsStream();
-$streamDatabase = new PluginWebapplicationsStream_DatabaseInstance();
+$streamItem = new PluginWebapplicationsStream_Item();
 
 if (isset($_POST["add"])) {
 
     $stream->check(-1, CREATE, $_POST);
-    $newID = $streamDatabase->add($_POST);
+    $newID = $streamItem->add($_POST);
     if ($_SESSION['glpibackcreated']) {
-        Html::redirect($streamDatabase->getFormURL() . "?id=" . $newID);
+        Html::redirect($streamItem->getFormURL() . "?id=" . $newID);
     }
     Html::back();
 
@@ -57,7 +57,7 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
 
     $stream->check($_POST['id'], UPDATE);
-    $streamDatabase->update($_POST);
+    $streamItem->update($_POST);
     Html::back();
 
 }

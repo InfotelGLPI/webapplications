@@ -232,8 +232,8 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
                 echo "</tr>";
 
 
-                $streamDatabaseDBTM = new PluginWebapplicationsStream_DatabaseInstance();
-                $streams = $streamDatabaseDBTM->find(['databaseinstances_id' => $database['id']]);
+                $streamItemDBTM = new PluginWebapplicationsStream_Item();
+                $streams = $streamItemDBTM->find(['databaseinstances_id' => $database['id']]);
                 $streamDBTM = new PluginWebapplicationsStream();
 
                 echo "<tr>";

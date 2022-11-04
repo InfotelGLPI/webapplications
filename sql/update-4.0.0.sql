@@ -80,12 +80,14 @@ CREATE TABLE `glpi_plugin_webapplications_processes_entities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
-CREATE TABLE `glpi_plugin_webapplications_streams_databaseinstances` (
+CREATE TABLE `glpi_plugin_webapplications_streams_items` (
     `id` int(11) NOT NULL auto_increment,
     `plugin_webapplications_streams_id` int unsigned NOT NULL default '0',
-    `databaseinstances_id` int unsigned NOT NULL default '0',
+    `items_id` int unsigned NOT NULL default '0',
+    `itemtype` varchar(100) NOT NULL DEFAULT '',
     PRIMARY KEY  (`id`),
-    UNIQUE KEY `unicity` (`plugin_webapplications_streams_id`,`databaseinstances_id`)
+    UNIQUE KEY `unicity` (`plugin_webapplications_streams_id`,`items_id`,`itemtype`),
+    KEY `item` (`itemtype`, `item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 

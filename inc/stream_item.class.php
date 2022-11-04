@@ -36,15 +36,15 @@ use Glpi\Application\View\TemplateRenderer;
 
 
 /**
- * Class PluginWebapplicationsStream_DatabaseInstance
+ * Class PluginWebapplicationsStream_Item
  */
-class PluginWebapplicationsStream_DatabaseInstance extends CommonDBTM {
+class PluginWebapplicationsStream_Item extends CommonDBTM {
 
     use Glpi\Features\Inventoriable;
     static $rightname         = "plugin_webapplications_streams";
 
     static function getTypeName($nb = 0) {
-        return _n('Stream Database', 'Streams Database', $nb, 'webapplications');
+        return _n('Item', 'Items', $nb);
     }
 
 
@@ -58,7 +58,8 @@ class PluginWebapplicationsStream_DatabaseInstance extends CommonDBTM {
             case 'PluginWebapplicationsStream':
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
-                    return self::createTabEntry(DatabaseInstance::getTypeName(), $dbu->countElementsInTable($this->getTable(), ["plugin_webapplications_streams_id" => $item->getID()]));
+                    $nbItems = $dbu->countElementsInTable($this->getTable(), ["plugin_webapplications_streams_id" => $item->getID()]);
+                    return self::createTabEntry(self::getTypeName($nbItems), $nbItems);
                 }
                 return __('Databases', 'webapplications');
                 break;
@@ -78,6 +79,10 @@ class PluginWebapplicationsStream_DatabaseInstance extends CommonDBTM {
 
     function showForStream($item) {
 
+        global $DB;
+        $ID = $item->fields['id'];
+        $rand = mt_rand();
+
         if (!$this->canView()) {
             return false;
         }
@@ -85,19 +90,32 @@ class PluginWebapplicationsStream_DatabaseInstance extends CommonDBTM {
             return false;
         }
 
+        $items = $DB->request([
+            'FROM'   => self::getTable(),
+            'WHERE'  => [
+                'plugin_webapplications_streams_id' => $ID
+            ]
+        ]);
+
         $stream    = new PluginWebapplicationsStream();
         $canedit = $stream->can($item->fields['id'], UPDATE);
         if ($canedit) {
             echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL('PluginWebapplicationsStream_DatabaseInstance') . "'>";
+                Toolbox::getItemTypeFormURL('PluginWebapplicationsStream_Item') . "'>";
 
             echo "<div align='center'><table class='tab_cadre_fixe'>";
-            echo "<tr><th colspan='6'>" . __('Add a database', 'webapplications') . "</th></tr>";
+            echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
 
             echo "<tr class='tab_bg_1'>";
             // Dropdown group
             echo "<td class='center'>";
-            DatabaseInstance::dropdown();
+            //DatabaseInstance::dropdown();
+            Dropdown::showSelectItemFromItemtypes(
+                ['items_id_name'   => 'items_id',
+                    'itemtypes'       => PluginWebapplicationsStream::getTypes(true),
+                    'checkright'      => true,
+                ]
+            );
             echo "</td>";
             echo "<td class='tab_bg_2 center' colspan='6'>";
             echo Html::hidden('plugin_webapplications_streams_id', ['value' => $item->getID()]);
@@ -108,35 +126,59 @@ class PluginWebapplicationsStream_DatabaseInstance extends CommonDBTM {
             Html::closeForm();
         }
 
-        echo "<div class='spaced' id='tabsbody'>";
-        echo "<table class='tab_cadre_fixe'>";
 
+        $items = iterator_to_array($items);
 
-        echo "<thead>";
-        echo "<tr class='tab_bg_2'>";
+        if (!count($items)) {
+            echo "<table class='tab_cadre_fixe'><tr><th>" . __('No item found') . "</th></tr>";
+            echo "</table>";
+        } else {
+            if ($canedit) {
+                Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
+                $massiveactionparams = [
+                    'num_displayed'   => min($_SESSION['glpilist_limit'], count($items)),
+                    'container'       => 'mass' . __CLASS__ . $rand
+                ];
+                Html::showMassiveActions($massiveactionparams);
+            }
 
-        echo "<th colspan='3'>" . _n('Database', 'Databases', 2) . "</th>";
+            echo "<table class='tab_cadre_fixehov'>";
+            $header = "<tr>";
+            if ($canedit) {
+                $header .= "<th width='10'>";
+                $header .= Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand);
+                $header .= "</th>";
+            }
+            $header .= "<th>" . __('Itemtype') . "</th>";
+            $header .= "<th>" . _n('Item', 'Items', 1) . "</th>";
+            $header .= "</tr>";
+            echo $header;
 
-        echo "</tr>";
-        echo "</thead>";
+            foreach ($items as $row) {
+                $it = new $row['itemtype']();
+                $it->getFromDB($row['items_id']);
+                echo "<tr lass='tab_bg_1'>";
+                if ($canedit) {
+                    echo "<td>";
+                    Html::showMassiveActionCheckBox(__CLASS__, $row["id"]);
+                    echo "</td>";
+                }
+                echo "<td>" . $it->getTypeName(1) . "</td>";
+                echo "<td>" . $it->getLink() . "</td>";
+                echo "</tr>";
+            }
+            echo $header;
+            echo "</table>";
 
-        echo "<tbody>";
-
-        $databases = $this->find(['plugin_webapplications_streams_id' => $item->getID()]);
-        $databaseDBTM = new DatabaseInstance();
-
-        foreach ($databases as $database) {
-            $databaseDBTM->getFromDB($database['databaseinstances_id']);
-            echo "<tr class='tab_bg_2'>";
-            echo "<td colspan='3'>";
-            echo Html::link($databaseDBTM->getName(), DatabaseInstance::getFormURLWithID($database['databaseinstances_id']));
-            echo "</td>";
-            echo "</tr>";
+            if ($canedit && count($items)) {
+                 $massiveactionparams['ontop'] = false;
+                 Html::showMassiveActions($massiveactionparams);
+             }
+            if ($canedit) {
+                Html::closeForm();
+            }
         }
-        echo "</tbody>";
-        echo "</table></div>";
 
-        Html::closeForm();
 
     }
 
