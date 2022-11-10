@@ -180,21 +180,26 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
 
                 echo "<tbody>";
+                $linkComputer = Computer::getFormURLWithID($computer['id']);
+                $linkComputer .= "&forcetab=main";
 
                 echo "<tr>";
                 echo "<th>";
                 echo __("Name");
                 echo "</th>";
                 echo "<td>";
-                echo $name;
+                echo "<a href=$linkComputer>$name</a>";
                 echo "</td>";
 
                 echo "<td></td>";
 
-                $linkApp = Computer::getFormURLWithID($computer['id']);
-
                 echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
+                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editComputer'.$computer['id']]);
+
+                echo Ajax::createIframeModalWindow('editComputer'.$computer['id'],
+                    $linkComputer,
+                    ['display' => false]
+                );
                 echo "</td>";
 
                 echo "</tr>";

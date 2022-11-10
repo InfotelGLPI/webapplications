@@ -127,7 +127,6 @@ Traçabilité (T) : Identifier l’impact sur les traitements de l’actif infor
                                             'min'            : 0,
                                             'max'            : 4,
                                             'step'           : 1,
-                                            'value'          : 0,
                                             'field_class': 'col-12',
                                             'label_class': 'col-xxl-8',
                                             'input_class': 'col-xxl-4',}
@@ -175,27 +174,28 @@ Traçabilité (T) : Identifier l’impact sur les traitements de l’actif infor
                     {% endif %}
 
 
-                    {{ fields.smallTitle(__('Support')) }}
+                    <div id="support">
+                        {{ fields.smallTitle(__('Support')) }}
 
-                    {% if item.isField('webapplicationmailsupport') %}
-                        {{ fields.autoNameField(
-                            "webapplicationmailsupport",
-                            item,
-                            __('Mail Support', 'webapplications'),
-                            withtemplate
-                        ) }}
-                    {% endif %}
+                        {% if item.isField('webapplicationmailsupport') %}
+                            {{ fields.autoNameField(
+                                "webapplicationmailsupport",
+                                item,
+                                __('Mail Support', 'webapplications'),
+                                withtemplate
+                            ) }}
+                        {% endif %}
 
 
-                    {% if item.isField('webapplicationphonesupport') %}
-                        {{ fields.autoNameField(
-                            "webapplicationphonesupport",
-                            item,
-                            __('Phone number Support', 'webapplications'),
-                            withtemplate
-                        ) }}
-                    {% endif %}
-
+                        {% if item.isField('webapplicationphonesupport') %}
+                            {{ fields.autoNameField(
+                                "webapplicationphonesupport",
+                                item,
+                                __('Phone number Support', 'webapplications'),
+                                withtemplate
+                            ) }}
+                        {% endif %}
+                    </div>
 
 
                 </div> {# .row #}

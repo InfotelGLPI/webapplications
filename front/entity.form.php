@@ -79,10 +79,12 @@ if (isset($_POST["add"])) {
 }
 else if (isset($_GET['_in_modal'])) {
     Html::popHeader(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF']);
+    $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
     if(isset($_GET['appliance_id'])) {
-        $entity->showForm($_GET["id"], ['appliances_id' => $_GET['appliance_id']]);
+        $options['appliances_id'] = $_GET['appliance_id'];
     }
-    else $entity->showForm($_GET["id"]);
+    $menus = ["appliancedashboard", "entity"];
+    PluginWebapplicationsEntity::displayFullPageForItem($_GET['id'], $menus, $options );
     Html::popFooter();
 
 }

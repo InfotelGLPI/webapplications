@@ -79,10 +79,13 @@ if (isset($_POST["add"])) {
 }
 else if (isset($_GET['_in_modal'])) {
     Html::popHeader(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF']);
+    $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
     if(isset($_GET['appliance_id'])) {
-        $stream->showForm($_GET["id"], ['appliances_id' => $_GET['appliance_id']]);
+        $options['appliances_id'] = $_GET['appliance_id'];
     }
-    else $stream->showForm($_GET["id"]);
+    $menus = ["appliancedashboard", "stream"];
+    PluginWebapplicationsStream::displayFullPageForItem($_GET['id'], $menus, $options );
+
     Html::popFooter();
 
 }

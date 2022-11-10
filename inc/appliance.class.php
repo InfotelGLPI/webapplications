@@ -144,6 +144,10 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
       }
    }
 
+    function post_getEmpty()
+    {
+        $this->fields["webapplicationconfidentialities"] = 0;
+    }
 
    /**
     * @param $item

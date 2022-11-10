@@ -170,18 +170,25 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
 
                 echo "<tbody>";
 
+                $linkDB = DatabaseInstance::getFormURLWithID($database['id']);
+                $linkDB .= "&forcetab=main";
+
                 echo "<tr>";
                 echo "<th>";
                 echo __("Name");
                 echo "</th>";
                 echo "<td>";
-                echo $name;
+                echo "<a href=$linkDB>$name</a>";
                 echo "</td>";
 
-                $linkApp = DatabaseInstance::getFormURLWithID($database['id']);
-
                 echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
+                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editDB'.$database['id']]);
+
+                echo Ajax::createIframeModalWindow('editDB'.$database['id'],
+                    $linkDB,
+                    ['display' => false]
+                );
+
                 echo "</td>";
 
                 echo "</tr>";

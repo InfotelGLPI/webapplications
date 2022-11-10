@@ -83,6 +83,11 @@ class PluginWebapplicationsProcess extends CommonDBTM {
         return true;
     }
 
+    function post_getEmpty()
+    {
+        $this->fields["webapplicationconfidentialities"] = 0;
+    }
+
     function post_addItem()
     {
         $appliance_id = $this->input['appliances_id'];

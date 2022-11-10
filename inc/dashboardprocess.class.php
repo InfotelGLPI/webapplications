@@ -170,18 +170,24 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tbody>";
 
+                $linkProc = PluginWebapplicationsProcess::getFormURLWithID($process['id']);
+                $linkProc .= "&forcetab=main";
+
                 echo "<tr>";
                 echo "<th>";
                 echo __("Name");
                 echo "</th>";
                 echo "<td>";
-                echo $name;
+                echo "<a href=$linkProc>$name</a>";
                 echo "</td>";
 
-                $linkProc = PluginWebapplicationsProcess::getFormURLWithID($process['id']);
-
                 echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkProc . "'"]);
+                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editProcess'.$process['id']]);
+
+                echo Ajax::createIframeModalWindow('editProcess'.$process['id'],
+                    $linkProc,
+                    ['display' => false]
+                );
                 echo "</td>";
 
                 echo "</tr>";

@@ -168,21 +168,26 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
 
 
                 echo "<tbody>";
+                $linkStream= PluginWebapplicationsStream::getFormURLWithID($stream['id']);
+                $linkStream .= "&forcetab=main";
 
                 echo "<tr>";
                 echo "<th>";
                 echo __("Name");
                 echo "</th>";
                 echo "<td>";
-                echo $name;
+                echo "<a href=$linkStream>$name</a>";
                 echo "</td>";
 
                 echo "<td></td>";
 
-                $linkApp = PluginWebapplicationsStream::getFormURLWithID($stream['id']);
-
                 echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
+                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editStream'.$stream['id']]);
+
+                echo Ajax::createIframeModalWindow('editStream'.$stream['id'],
+                    $linkStream,
+                    ['display' => false]
+                );
                 echo "</td>";
 
                 echo "</tr>";
@@ -217,7 +222,10 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
                 echo __("Encryption");
                 echo "</th>";
                 echo "<td>";
-                echo $encryption;
+                if($encryption==0){
+                    echo __('No');
+                }
+                else echo __('Yes');
                 echo "</td>";
 
 

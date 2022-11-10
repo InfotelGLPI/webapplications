@@ -177,19 +177,27 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
                 echo "<tbody>";
 
+                $linkEntity = PluginWebapplicationsEntity::getFormURLWithID($entity['id']);
+                $linkEntity .= "&forcetab=main";
+
                 echo "<tr>";
                 echo "<th>";
                 echo __("Name");
                 echo "</th>";
                 echo "<td>";
-                echo $name;
+                echo "<a href=$linkEntity>$name</a>";
                 echo "</td>";
-
-                $linkEntity = PluginWebapplicationsEntity::getFormURLWithID($entity['id']);
 
                 echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkEntity . "'"]);
+                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editEntity'.$entity['id']]);
+
+                echo Ajax::createIframeModalWindow('editEntity'.$entity['id'],
+                    $linkEntity,
+                    ['display' => false]
+                );
+
                 echo "</td>";
+
 
                 echo "</tr>";
 

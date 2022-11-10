@@ -130,7 +130,7 @@ static function selectAppliance() {
         $linkApp = Appliance::getFormURLWithID($ApplianceId);
 
         echo "<div style='align-self: center'>";
-        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "'"]);
+        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "#support'"]);
         echo "</div>";
 
         echo '</div>';
@@ -471,7 +471,12 @@ static function selectAppliance() {
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'onclick' => "window.location.href='" . $linkApp . "'"]);
+        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editProcess'.$ApplianceId]);
+
+        echo Ajax::createIframeModalWindow('editProcess'.$ApplianceId,
+            $linkApp,
+            ['display' => false]
+        );
         echo "</h2>";
 
         echo "<div id=supportApp>";
