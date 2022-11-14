@@ -201,16 +201,17 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
                 echo "</tr>";
 
-                $owner = $entity['owner'];
+                $ownerid = $entity['owner'];
+                $owner = new User();
+                $owner->getFromDB($ownerid);
                 echo "<tr>";
                 echo "<th>";
                 echo __("Owner", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo $owner;
+                echo $owner->getName();
                 echo "</td>";
                 echo "</tr>";
-
 
                 $processEntityDBTM = new PluginWebapplicationsProcess_Entity();
                 $processes         = $processEntityDBTM->find(['plugin_webapplications_entities_id' => $entity['id']]);

@@ -8,18 +8,20 @@
         html_side
     ) }}
 
-    {{ fields.autoNameField(
+    {{ fields.dropdownItemsFromItemtypes(
         'transmitter',
-        item,
         __('Transmitter', 'webapplications'),
-        withtemplate
+        {'items_id_name': 'transmitter',
+            'itemtype_name': 'transmitter_type',
+            'itemtypes': 'Assets'}
     ) }}
 
-    {{ fields.autoNameField(
+    {{ fields.dropdownItemsFromItemtypes(
         'receiver',
-        item,
         __('Receiver', 'webapplications'),
-        withtemplate
+        {'items_id_name': 'receiver',
+            'itemtype_name': 'receiver_type',
+            'itemtypes': 'Assets'}
     ) }}
 
     {{ fields.dropdownYesNo(

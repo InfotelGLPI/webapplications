@@ -107,12 +107,10 @@ class PluginWebapplicationsStream_Item extends CommonDBTM {
             echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
 
             echo "<tr class='tab_bg_1'>";
-            // Dropdown group
             echo "<td class='center'>";
-            //DatabaseInstance::dropdown();
             Dropdown::showSelectItemFromItemtypes(
                 ['items_id_name'   => 'items_id',
-                    'itemtypes'       => PluginWebapplicationsStream::getTypes(true),
+                    'itemtypes'       => 'Assets',
                     'checkright'      => true,
                 ]
             );

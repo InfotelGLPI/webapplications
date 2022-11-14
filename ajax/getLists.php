@@ -33,7 +33,6 @@ Html::header_nocache();
 
 Session::checkLoginUser();
 
-Toolbox::logInfo($_POST);
 if(isset($_POST['type'])
    && isset($_POST['value'])
 && $_POST['value'] > 0) {

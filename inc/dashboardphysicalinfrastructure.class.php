@@ -145,21 +145,31 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
         $listComputerId = self::getComputers();
 
+        echo "<form name='form' method='post' action='" .
+            Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
+        echo "<div align='center'><table class='tab_cadre_fixe'>";
+        echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
+
+        echo "<tr class='tab_bg_1'>";
+        echo "<td class='center'>";
+        Dropdown::showSelectItemFromItemtypes(
+            ['items_id_name'   => 'items_id',
+                'itemtypes'       => 'Assets',
+                'checkright'      => true,
+            ]
+        );
+        echo "</td>";
+        echo "<td class='tab_bg_2 center' colspan='6'>";
+        echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
+        echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
+        echo "</td>";
+        echo "</tr>";
+        echo "</table></div>";
+
+        Html::closeForm();
+
         echo "<h2>";
         echo _n("Computer","Computers", count($listComputerId));
-
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-                'class' => 'btn btn-primary',
-                'icon' => 'fas fa-plus',
-                'data-bs-toggle' => 'modal',
-                'data-bs-target' =>'#addComputer',
-                'style' => 'float: right']
-        );
-        echo Ajax::createIframeModalWindow('addComputer',
-            $linkAddComputer."?appliance_id=".$ApplianceId,
-            ['display' => false]
-        );
-
         echo "</h2>";
         echo "<div class='accordion' name=listComputer>";
 

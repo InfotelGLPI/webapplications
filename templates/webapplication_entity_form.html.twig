@@ -5,12 +5,17 @@
 
 {% block more_fields %}
 
-    {{ fields.autoNameField(
-        'owner',
-        item,
-        __('Owner', 'webapplications'),
-        withtemplate
-    ) }}
+    {% if item.isField('owner') %}
+        {{ fields.dropdownField(
+            'User',
+            'owner',
+            item.fields['owner'],
+            __('Owner', 'webapplications'),
+            field_options|merge({
+                'right': 'all',
+            })
+        )}}
+    {% endif %}
 
     {{ fields.autoNameField(
         'security_contact',

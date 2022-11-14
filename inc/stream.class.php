@@ -68,23 +68,6 @@ class PluginWebapplicationsStream extends CommonDBTM {
         return "fas fa-rss";
     }
 
-    public static function getTypes($all = false): array
-    {
-        global $CFG_GLPI;
-
-        $types = $CFG_GLPI['stream_types'];
-
-        foreach ($types as $key => $type) {
-            if (!class_exists($type)) {
-                continue;
-            }
-
-            if ($all === false && !$type::canView()) {
-                unset($types[$key]);
-            }
-        }
-        return $types;
-    }
 
     function showForm($ID, $options = []) {
 

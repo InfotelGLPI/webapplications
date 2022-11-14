@@ -192,14 +192,16 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "</tr>";
 
-                $owner = $process['owner'];
+                $ownerid = $process['owner'];
+                $owner = new User();
+                $owner->getFromDB($ownerid);
 
                 echo "<tr>";
                 echo "<th>";
                 echo __("Owner", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo $owner;
+                echo $owner->getName();
                 echo "</td>";
                 echo "</tr>";
 

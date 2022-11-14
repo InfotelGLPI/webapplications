@@ -566,9 +566,9 @@ static function selectAppliance() {
         $this->addDefaultFormTab($ong);
         $this->addStandardTab('PluginWebapplicationsDashboardEcosystem', $ong, $options);// Vue Ecosystème
         $this->addStandardTab('PluginWebapplicationsDashboardProcess', $ong, $options);//Vue Metier
+        $this->addStandardTab('PluginWebapplicationsDashboardPhysicalInfrastructure', $ong, $options);//Vue Infra physiques
         $this->addStandardTab('PluginWebapplicationsDashboardDatabase', $ong, $options);//Vue Base de données
         $this->addStandardTab('PluginWebapplicationsDashboardStream', $ong, $options);//Vue Flux
-        $this->addStandardTab('PluginWebapplicationsDashboardPhysicalInfrastructure', $ong, $options);//Vue Infra physiques
 
         return $ong;
     }

@@ -49,6 +49,5 @@ if (isset($_GET['_in_modal'])) {
         $computer->showForm($_GET["id"], ['withtemplate' => $_GET['withtemplate'], 'appliances_id' => $_GET['appliance_id']]);
     }
     else $computer->showForm($_GET["id"], ['withtemplate' => $_GET['withtemplate']]);
-    Html::popFooter();
 
 }

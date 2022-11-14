@@ -193,24 +193,34 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
                 echo "</tr>";
 
 
-                $transmitter = $stream['transmitter'];
+                $transmitterType = $stream['transmitter_type'];
+                $transmitterid = $stream['transmitter'];
+                $transmitter = new $transmitterType;
+                $transmitter->getFromDB($transmitterid);
+                $linkTransmitter= $transmitterType::getFormURLWithID($transmitterid);
+                $transmitterName = $transmitter->getName();
 
                 echo "<tr>";
                 echo "<th>";
                 echo __("Transmitter",'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo $transmitter;
+                echo "<a href=$linkTransmitter>$transmitterName</a>";
                 echo "</td>";
 
 
-                $receiver = $stream['receiver'];
+                $receiverType = $stream['receiver_type'];
+                $receiverid = $stream['receiver'];
+                $receiver = new $receiverType;
+                $receiver->getFromDB($receiverid);
+                $linkReceiver= $receiverType::getFormURLWithID($receiverid);
+                $receiverName = $receiver->getName();
 
                 echo "<th>";
                 echo __("Receiver", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo $receiver;
+                echo "<a href= $linkReceiver>$receiverName</a>";
                 echo "</td>";
                 echo "</tr>";
 
@@ -231,13 +241,19 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
 
                 $encryption_type = $stream['encryption_type'];
 
-                echo "<th>";
-                echo __("Encryption type");
-                echo "</th>";
-                echo "<td>";
-                echo $encryption_type;
-                echo "</td>";
+                if($encryption==0){
+                    echo "<td></td>";
+                }
+                else{
+                    echo "<th>";
+                    echo __("Encryption type");
+                    echo "</th>";
+                    echo "<td>";
+                    echo $encryption_type;
+                    echo "</td>";
+                }
                 echo "</tr>";
+
 
 
                 $ports = $stream['ports'];

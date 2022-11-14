@@ -125,8 +125,6 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
  </div>';
 
         $databaseDBTM = new DatabaseInstance();
-        $databasePluginDBTM = new PluginWebapplicationsDatabaseInstance();
-        $linkAddDatabase=$databasePluginDBTM::getFormURL();
 
         $listDatabaseId = self::getDatabases();
 
@@ -135,21 +133,26 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
         echo "</h1>";
         echo "<hr>";
 
-        echo "<h2>";
-        
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
-                'class' => 'btn btn-primary',
-                'icon' => 'fas fa-plus',
-                'data-bs-toggle' => 'modal',
-                'data-bs-target' =>'#addDB',
-                'style' => 'float: right']
-        );
-        echo Ajax::createIframeModalWindow('addDB',
-            $linkAddDatabase."?appliance_id=".$ApplianceId,
-            ['display' => false]
-        );
+        echo "<form name='form' method='post' action='" .
+            Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
+        echo "<div align='center'><table class='tab_cadre_fixe'>";
+        echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
 
-        echo "</h2>";
+        echo "<tr class='tab_bg_1'>";
+        echo "<td class='center'>";
+        DatabaseInstance::dropdown(['name' => 'items_id']);
+        echo "</td>";
+        echo "<td class='tab_bg_2 center' colspan='6'>";
+        echo Html::hidden('itemtype', ['value' => 'DatabaseInstance']);
+        echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
+        echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
+        echo "</td>";
+        echo "</tr>";
+        echo "</table></div>";
+
+        Html::closeForm();
+
+
         echo "<div class='accordion' name=listDatabaseApp>";
 
         if(!empty($listDatabaseId)){

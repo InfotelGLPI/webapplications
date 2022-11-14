@@ -5,12 +5,15 @@
 {% block more_fields %}
 
 
-    {{ fields.autoNameField(
+    {{ fields.dropdownField(
+        'User',
         'owner',
-        item,
+        item.fields['owner'],
         __('Owner', 'webapplications'),
-        withtemplate
-    ) }}
+        field_options|merge({
+            'right': 'all',
+        })
+    )}}
 
     {{ fields.smallTitle(__('Security Needs')) }}
     <table>

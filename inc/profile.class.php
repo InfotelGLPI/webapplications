@@ -290,7 +290,11 @@ class PluginWebapplicationsProfile extends Profile {
                            FROM `glpi_profilerights` 
                            WHERE `profiles_id`='" . $_SESSION['glpiactiveprofile']['id'] . "' 
                               AND `name` LIKE '%plugin_webapplications%'") as $prof) {
-         $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights'];
+
+          if (isset($_SESSION['glpiactiveprofile'])){
+              $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights'];
+          }
+
       }
    }
 
