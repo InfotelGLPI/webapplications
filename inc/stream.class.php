@@ -73,12 +73,55 @@ class PluginWebapplicationsStream extends CommonDBTM {
 
         $this->initForm($ID, $options);
 
+        $this->getFromDB($ID);
+
+        $transmitter_type = $this->getField('transmitter_type');
+        $transmitterId = $this->getField('transmitter');
+        if(!empty($transmitter_type) && !empty($transmitterId)){
+
+            $transmitter = new $transmitter_type;
+            $transmitter->getFromDB($transmitterId);
+            $linkTransmitter= $transmitter_type::getFormURLWithID($transmitterId);
+            $transmitterName = $transmitter->getName();
+
+            $options['linkTransmitter'] = "<a href= $linkTransmitter>$transmitterName</a>";
+        }
+
+        $receiver_type = $this->getField('receiver_type');
+        $receiverId = $this->getField('receiver');
+        if(!empty($receiver_type) && !empty($receiverId)) {
+
+            $receiver = new $receiver_type;
+            $receiver->getFromDB($receiverId);
+            $linkReceiver = $receiver_type::getFormURLWithID($receiverId);
+            $receiverName = $receiver->getName();
+
+            $options['linkReceiver'] = "<a href= $linkReceiver>$receiverName</a>";
+        }
+
+
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_stream_form.html.twig', [
             'item'   => $this,
             'params' => $options,
         ]);
 
         return true;
+    }
+
+    function pre_update()
+    {
+        if(isset($_POST["update"])){
+            if(isset($_POST["transmitter_type"])){
+                if((strcmp($_POST["transmitter_type"], "0")==0) || (strcmp($_POST["transmitter"], "0")==0)){
+                    unset($_POST['transmitter_type'], $_POST['transmitter']);
+                }
+            }
+            if(isset($_POST["receiver_type"])){
+                if((strcmp($_POST["receiver_type"], "0")==0) || (strcmp($_POST["receiver"], "0")==0)){
+                    unset($_POST['receiver_type'], $_POST['receiver']);
+                }
+            }
+        }
     }
 
     function post_addItem()

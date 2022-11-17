@@ -91,6 +91,7 @@ function plugin_init_webapplications() {
 
 
    array_push($CFG_GLPI['appliance_types'],'PluginWebapplicationsProcess', 'PluginWebapplicationsEntity', 'PluginWebapplicationsStream', 'Appliance');
+   $CFG_GLPI['stream_types'] = ['DatabaseInstance', 'Computer', 'NetworkEquipment'];
 
 
    if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") ==true || strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") ==true || strpos($_SERVER['REQUEST_URI'], "front/process.form.php") ==true || strpos($_SERVER['REQUEST_URI'], "front/dashboard.php") ==true) {

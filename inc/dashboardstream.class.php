@@ -155,8 +155,6 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
             $streams = $streamDBTM->find(['id' => $listStreamId]);
             foreach ($streams as $stream) {
 
-                $streamDBTM->getFromDB($stream['id']);
-
                 $name = $stream['name'];
 
                 echo "<h3 class='accordionhead'>$name</h3>";
@@ -193,34 +191,38 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
                 echo "</tr>";
 
 
-                $transmitterType = $stream['transmitter_type'];
-                $transmitterid = $stream['transmitter'];
-                $transmitter = new $transmitterType;
-                $transmitter->getFromDB($transmitterid);
-                $linkTransmitter= $transmitterType::getFormURLWithID($transmitterid);
-                $transmitterName = $transmitter->getName();
-
                 echo "<tr>";
                 echo "<th>";
                 echo __("Transmitter",'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo "<a href=$linkTransmitter>$transmitterName</a>";
+
+                $transmitterType = $stream['transmitter_type'];
+                $transmitterid = $stream['transmitter'];
+                if(!empty($transmitterType) && !empty($transmitterid)){
+                    $transmitter = new $transmitterType;
+                    $transmitter->getFromDB($transmitterid);
+                    $linkTransmitter= $transmitterType::getFormURLWithID($transmitterid);
+                    $transmitterName = $transmitter->getName();
+                    echo "<a href=$linkTransmitter>$transmitterName</a>";
+                }
                 echo "</td>";
 
-
-                $receiverType = $stream['receiver_type'];
-                $receiverid = $stream['receiver'];
-                $receiver = new $receiverType;
-                $receiver->getFromDB($receiverid);
-                $linkReceiver= $receiverType::getFormURLWithID($receiverid);
-                $receiverName = $receiver->getName();
 
                 echo "<th>";
                 echo __("Receiver", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo "<a href= $linkReceiver>$receiverName</a>";
+
+                $receiverType = $stream['receiver_type'];
+                $receiverid = $stream['receiver'];
+                if(!empty($receiverType) && !empty($receiverid)) {
+                    $receiver = new $receiverType;
+                    $receiver->getFromDB($receiverid);
+                    $linkReceiver = $receiverType::getFormURLWithID($receiverid);
+                    $receiverName = $receiver->getName();
+                    echo "<a href= $linkReceiver>$receiverName</a>";
+                }
                 echo "</td>";
                 echo "</tr>";
 

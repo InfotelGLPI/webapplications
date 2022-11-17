@@ -49,8 +49,8 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
     function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
 
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $nbComputer = count(self::getComputers());
-            return self::createTabEntry(self::getTypeName(), $nbComputer);
+            $nbItem = count(self::getItems());
+            return self::createTabEntry(self::getTypeName(), $nbItem);
         }
         return self::getTypeName();
 
@@ -87,21 +87,24 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
     }
 
-    static function getComputers(){
+    static function getItems(){
+        global $CFG_GLPI;
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
-        $computerAppDBTM = new Appliance_Item();
-        $computerApp = $computerAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'Computer']);
+        $itemsAppDBTM = new Appliance_Item();
+
+        $itemApp = $itemsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => $CFG_GLPI['inventory_types']],'itemtype');
 
 
-        $listComputerId = array();
-        foreach ($computerApp as $st) {
-            $computerAppDBTM->getFromDB($st['id']);
+        $listItem = array();
+        foreach ($itemApp as $st) {
+            $itemsAppDBTM->getFromDB($st['id']);
+            $item = ['id' => $st['items_id'], 'itemtype' => $st['itemtype']];
 
-            array_push($listComputerId, $st['items_id']);
+            array_push($listItem, $item);
         }
 
-        return $listComputerId;
+        return $listItem;
     }
 
     static function showLists($item) {
@@ -128,22 +131,19 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
         echo "<h1>".__('Physical Infrastructure', 'webapplications')."</h1>";
         echo "<hr>";
 
-        self::showListComputer();
+        self::showListItem();
 
         echo "<script>accordion();</script>";
 
 
     }
 
-    static function showListComputer(){
+    static function showListItem(){
+        global $CFG_GLPI;
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
-        $computerDBTM = new Computer();
-        $computerPluginDBTM = new PluginWebapplicationsComputer();
-        $linkAddComputer=$computerPluginDBTM::getFormURL();
-
-        $listComputerId = self::getComputers();
+        $listItem = self::getItems();
 
         echo "<form name='form' method='post' action='" .
             Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
@@ -154,7 +154,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
         echo "<td class='center'>";
         Dropdown::showSelectItemFromItemtypes(
             ['items_id_name'   => 'items_id',
-                'itemtypes'       => 'Assets',
+                'itemtypes'       => $CFG_GLPI['inventory_types'],
                 'checkright'      => true,
             ]
         );
@@ -168,18 +168,25 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
         Html::closeForm();
 
+
+
         echo "<h2>";
-        echo _n("Computer","Computers", count($listComputerId));
+        echo _n("Item","Items", count($listItem));
         echo "</h2>";
-        echo "<div class='accordion' name=listComputer>";
+        echo "<div class='accordion' name=listItem>";
 
-        if(!empty($listComputerId)){
-            $computers = $computerDBTM->find(['id' => $listComputerId]);
-            foreach ($computers as $computer) {
+        if(!empty($listItem)){
 
-                $computerDBTM->getFromDB($computer['id']);
+            foreach ($listItem as $item) {
 
-                $name = $computer['name'];
+                $itemtype = $item['itemtype'];
+
+                $itemDBTM = new $itemtype;
+
+                $itemDBTM->getFromDB($item['id']);
+
+
+                $name = $itemDBTM->fields['name'];
 
                 echo "<h3 class='accordionhead'>$name</h3>";
 
@@ -190,54 +197,68 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
 
                 echo "<tbody>";
-                $linkComputer = Computer::getFormURLWithID($computer['id']);
-                $linkComputer .= "&forcetab=main";
+                $linkItem = $itemtype::getFormURLWithID($item['id']);
+                $linkItem .= "&forcetab=main";
 
                 echo "<tr>";
                 echo "<th>";
                 echo __("Name");
                 echo "</th>";
                 echo "<td>";
-                echo "<a href=$linkComputer>$name</a>";
+                echo "<a href=$linkItem>$name</a>";
                 echo "</td>";
 
-                echo "<td></td>";
 
                 echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editComputer'.$computer['id']]);
+                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editItem'.$item['id']]);
 
-                echo Ajax::createIframeModalWindow('editComputer'.$computer['id'],
-                    $linkComputer,
+                echo Ajax::createIframeModalWindow('editItem'.$item['id'],
+                    $linkItem,
                     ['display' => false]
                 );
                 echo "</td>";
 
                 echo "</tr>";
 
+                echo "<tr>";
+                echo "<th>";
+                echo __("Item type");
+                echo "</th>";
+                echo "<td>";
+                echo $itemDBTM->getTypeName();
+                echo "</td>";
+                echo "</tr>";
 
-                $typeId = $computer['computertypes_id'];
-                $ct = new ComputerType();
+                $typeField = $itemtype.'Type';
+                $typeId = $itemDBTM->getField(strtolower($typeField).'s_id');
+                $ct = new $typeField;
                 $ct->getFromDB($typeId);
                 $type = $ct->getName();
 
-                $modelId = $computer['computermodels_id'];
-                $cm = new ComputerModel();
+                $modelField = $itemtype.'Model';
+                $modelId = $itemDBTM->getField(strtolower($modelField).'s_id');
+                $cm = new $modelField;
                 $cm->getFromDB($modelId);
                 $model = $cm->getName();
 
-                $computerId = $computer['id'];
-                $computerOSDBTM = new Item_OperatingSystem();
-                $computerOSDBTM->getFromDBByCrit(['items_id' => $computerId, 'itemtype' => 'Computer']);
+                $itemId = $item['id'];
+                $itemOSDBTM = new Item_OperatingSystem();
 
-                $OSId = $computerOSDBTM->fields['operatingsystems_id'];
-                $OS = new OperatingSystem();
-                $OS->getFromDB($OSId);
-                $OSName = $OS->getName();
+                $OSName = "N/A";
+                $OSVersionName = null;
 
-                $OSVersionId = $computerOSDBTM->fields['operatingsystemversions_id'];
-                $OSVersion = new OperatingSystemVersion();
-                $OSVersion->getFromDB($OSVersionId);
-                $OSVersionName = $OSVersion->getName();
+                if($itemOSDBTM->getFromDBByCrit(['items_id' => $itemId, 'itemtype' => $itemtype])) {
+
+                    $OSId = $itemOSDBTM->fields['operatingsystems_id'];
+                    $OS = new OperatingSystem();
+                    $OS->getFromDB($OSId);
+                    $OSName = $OS->getName();
+
+                    $OSVersionId = $itemOSDBTM->fields['operatingsystemversions_id'];
+                    $OSVersion = new OperatingSystemVersion();
+                    $OSVersion->getFromDB($OSVersionId);
+                    $OSVersionName = $OSVersion->getName();
+                }
 
 
                 echo "<tr>";
@@ -257,7 +278,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo "</tr>";
 
 
-                $comment = $computer['comment'];
+                $comment = $itemDBTM->getField('comment');
 
                 echo "<tr>";
                 echo "<th style='padding-bottom: 20px'>";
@@ -275,9 +296,10 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
 
                 $location = new Location();
-                $location->getFromDB($computer['locations_id']);
+                $locationId = $itemDBTM->getField('locations_id');
+                $location->getFromDB($locationId);
                 $locationName = $location->getName();
-                $link = Location::getFormURLWithID($computer['locations_id']);
+                $link = Location::getFormURLWithID($locationId);
 
                 echo "<tr>";
                 echo "<th>";
@@ -295,7 +317,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
             }
         }
-        else echo __("No computer", 'webapplications');
+        else echo __("No item", 'webapplications');
         echo "</div>";
     }
 

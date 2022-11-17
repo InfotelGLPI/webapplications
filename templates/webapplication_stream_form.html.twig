@@ -13,7 +13,13 @@
         __('Transmitter', 'webapplications'),
         {'items_id_name': 'transmitter',
             'itemtype_name': 'transmitter_type',
-            'itemtypes': 'Assets'}
+            'itemtypes': params['stream_types']}
+    ) }}
+
+    {{ fields.htmlField(
+        'transmitter',
+        params['linkTransmitter'],
+        __('')
     ) }}
 
     {{ fields.dropdownItemsFromItemtypes(
@@ -21,7 +27,13 @@
         __('Receiver', 'webapplications'),
         {'items_id_name': 'receiver',
             'itemtype_name': 'receiver_type',
-            'itemtypes': 'Assets'}
+            'itemtypes': params['stream_types']}
+    ) }}
+
+    {{ fields.htmlField(
+        'receiver',
+        params['linkReceiver'],
+        __('')
     ) }}
 
     {{ fields.dropdownYesNo(

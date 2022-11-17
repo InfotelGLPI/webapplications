@@ -40,6 +40,7 @@ if (!isset($_GET["id"])) {
 if (!isset($_GET["withtemplate"])) {
     $_GET["withtemplate"] = "";
 }
+global $CFG_GLPI;
 
 
 $stream = new PluginWebapplicationsStream();
@@ -73,13 +74,14 @@ if (isset($_POST["add"])) {
 } else if (isset($_POST["update"])) {
 
     $stream->check($_POST['id'], UPDATE);
+    $stream->pre_update();
     $stream->update($_POST);
     Html::back();
 
 }
 else if (isset($_GET['_in_modal'])) {
     Html::popHeader(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF']);
-    $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
+    $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true", 'stream_types' => $CFG_GLPI['stream_types']];
     if(isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
@@ -94,7 +96,7 @@ else {
     if (Session::getCurrentInterface() == "central") {
 
         Html::header(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsstream", "config");
-        $stream->display(['id' => $_GET["id"]]);
+        $stream->display(['id' => $_GET["id"], 'stream_types' => $CFG_GLPI['stream_types']]);
     }
     Html::footer();
 }
