@@ -76,7 +76,8 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
             array_push($listStreamId, $st['items_id']);
         }
 
-        return $listStreamId;
+        $streamDBTM = new PluginWebapplicationsStream();
+        return $streamDBTM->find(['id' => $listStreamId]);;
     }
 
     function showForm($ID, $options = [])
@@ -127,10 +128,10 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
         $streamDBTM = new PluginWebapplicationsStream();
         $linkAddStream=$streamDBTM::getFormURL();
 
-        $listStreamId = self::getStreams();
+        $listStream = self::getStreams();
 
         echo "<h1>";
-        echo _n("Stream",'Streams', count($listStreamId),'wbapplications');
+        echo _n("Stream",'Streams', count($listStream),'wbapplications');
         echo "</h1>";
         echo "<hr>";
         echo "<h2>";
@@ -144,16 +145,16 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
         );
         echo Ajax::createIframeModalWindow('addStream',
             $linkAddStream."?appliance_id=".$ApplianceId,
-            ['display' => false]
+            ['display' => false,
+             'reloadonclose' => true]
         );
 
         echo "</h2>";
         echo "<div class='accordion' name=listStreamApp>";
 
 
-        if(!empty($listStreamId)){
-            $streams = $streamDBTM->find(['id' => $listStreamId]);
-            foreach ($streams as $stream) {
+        if(!empty($listStream)){
+            foreach ($listStream as $stream) {
 
                 $name = $stream['name'];
 
@@ -184,7 +185,8 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
 
                 echo Ajax::createIframeModalWindow('editStream'.$stream['id'],
                     $linkStream,
-                    ['display' => false]
+                    ['display' => false,
+                     'reloadonclose' => true]
                 );
                 echo "</td>";
 

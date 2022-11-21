@@ -77,15 +77,12 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
             array_push($listEntitiesId, $entityApp['items_id']);
         }
 
-        return $listEntitiesId;
+        $entitiesDBTM = new PluginWebapplicationsEntity();
+        return $entitiesDBTM->find(['id' => $listEntitiesId]);
     }
 
     public function showForm($ID, $options = []) {
         global $CFG_GLPI;
-
-
-        $options['candel']  = false;
-        $options['colspan'] = 1;
 
 
         echo "<div align='center'>
@@ -134,12 +131,12 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         $linkAddEnt   = $entitiesDBTM::getFormURL();
 
 
-        $listEntitiesId = self::getEntities();
+        $listEntities = self::getEntities();
 
         echo "<h1>Ecosystem</h1>";
         echo "<hr>";
         echo "<h2>";
-        echo _n('Entity','Entities', count($listEntitiesId), 'webapplications');
+        echo _n('Entity','Entities', count($listEntities), 'webapplications');
 
         echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
                 'class' => 'btn btn-primary',
@@ -150,7 +147,8 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         );
         echo Ajax::createIframeModalWindow('addEntity',
             $linkAddEnt."?appliance_id=".$ApplianceId,
-            ['display' => false]
+            ['display' => false,
+                'reloadonclose' => true]
         );
 
 
@@ -159,11 +157,8 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         echo "<div class='accordion' name=listEntitiesApp>";
 
 
-        if (!empty($listEntitiesId)) {
-            $entities = $entitiesDBTM->find(['id' => $listEntitiesId]);
-            foreach ($entities as $entity) {
-
-                $entitiesDBTM->getFromDB($entity['id']);
+        if (!empty($listEntities)) {
+            foreach ($listEntities as $entity) {
 
                 $name = $entity['name'];
 
@@ -193,7 +188,8 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
                 echo Ajax::createIframeModalWindow('editEntity'.$entity['id'],
                     $linkEntity,
-                    ['display' => false]
+                    ['display' => false,
+                        'reloadonclose' => true]
                 );
 
                 echo "</td>";

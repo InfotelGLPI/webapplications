@@ -79,6 +79,7 @@ if (isset($_POST["add"])) {
 
 }
 else if (isset($_GET['_in_modal'])) {
+    $_SESSION['reload']=true;
     Html::popHeader(PluginWebapplicationsProcess::getTypeName(2), $_SERVER['PHP_SELF']);
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
     if(isset($_GET['appliance_id'])) {
@@ -87,7 +88,6 @@ else if (isset($_GET['_in_modal'])) {
     $menus = ["appliancedashboard", "process"];
     PluginWebapplicationsProcess::displayFullPageForItem($_GET['id'], $menus, $options );
     Html::popFooter();
-
 }
 else {
 

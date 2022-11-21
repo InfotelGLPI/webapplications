@@ -66,10 +66,6 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
     {
         global $CFG_GLPI;
 
-        $options['candel'] = false;
-        $options['colspan'] = 1;
-
-
         echo "<div align='center'>
         <table class='tab_cadre_fixe'>";
         echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
@@ -101,7 +97,10 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
             $itemsAppDBTM->getFromDB($st['id']);
             $item = ['id' => $st['items_id'], 'itemtype' => $st['itemtype']];
 
-            array_push($listItem, $item);
+            $itemDBTM = new $st['itemtype'];
+            if($itemDBTM->getFromDB($st['items_id'])){
+                array_push($listItem, $item);
+            }
         }
 
         return $listItem;
@@ -176,7 +175,6 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
         echo "<div class='accordion' name=listItem>";
 
         if(!empty($listItem)){
-
             foreach ($listItem as $item) {
 
                 $itemtype = $item['itemtype'];
@@ -197,8 +195,10 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
 
                 echo "<tbody>";
-                $linkItem = $itemtype::getFormURLWithID($item['id']);
+
+                $linkItem = PluginWebapplicationsItem::getFormURLWithID($item['id']);
                 $linkItem .= "&forcetab=main";
+                $linkItem .= "&type=".$itemtype;
 
                 echo "<tr>";
                 echo "<th>";
@@ -210,11 +210,12 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
 
                 echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editItem'.$item['id']]);
+                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#edit'.$itemtype.$item['id']]);
 
-                echo Ajax::createIframeModalWindow('editItem'.$item['id'],
+                echo Ajax::createIframeModalWindow('edit'.$itemtype.$item['id'],
                     $linkItem,
-                    ['display' => false]
+                    ['display' => false,
+                        'reloadonclose' => true]
                 );
                 echo "</td>";
 

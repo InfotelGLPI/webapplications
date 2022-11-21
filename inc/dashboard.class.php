@@ -61,30 +61,39 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
     }
 
 
-static function selectAppliance() {
-    global  $CFG_GLPI;
-            echo "<div align='center'>
-            <table class='tab_cadre_fixe'>";
-            echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
+    static function selectAppliance() {
+        global  $CFG_GLPI;
+        echo "<div align='center'>
+        <table class='tab_cadre_fixe'>";
+        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
 
-            echo "<td >";
+        echo "<td >";
 
-            $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
+        $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
 
-            echo "</td>";
-            echo "</tr>";
-            echo "</table></div>";
-            echo "<div id=lists-dashboard></div>";
+        echo "</td>";
+        echo "</tr>";
+        echo "</table></div>";
+        echo "<div id=lists-dashboard></div>";
+
+        $array['value']='__VALUE__';
+        $array['type']=self::getType();
+        $array['reload'] = false;
+        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-dashboard',
+                                      $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
 
 
-            $array['value']='__VALUE__';
-            $array['type']=self::getType();
-            Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-dashboard',
-                                          $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
+        if(isset($_SESSION['reload']) && $_SESSION['reload']){
+            unset($_SESSION['reload']);
+            $array['reload'] = true;
+            $array['value'] = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+            Ajax::updateItem('lists-dashboard', $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . '/ajax/getLists.php', $array, 'dropdown_applianceDropdown' . $rand);
+
+        }
 
 
-}
 
+    }
 
     function showForm($ID, $options = []) {
         global  $CFG_GLPI;
@@ -93,8 +102,6 @@ static function selectAppliance() {
         $options['colspan'] = 1;
 
         $ApplianceId = $options['appliances_id'];
-
-        global $CFG_GLPI;
 
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
@@ -475,7 +482,8 @@ static function selectAppliance() {
 
         echo Ajax::createIframeModalWindow('editProcess'.$ApplianceId,
             $linkApp,
-            ['display' => false]
+            ['display' => false,
+                'reloadonclose' => true]
         );
         echo "</h2>";
 

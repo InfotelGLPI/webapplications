@@ -76,7 +76,8 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
             array_push($listDatabaseId, $db['items_id']);
         }
 
-        return $listDatabaseId;
+        $databaseDBTM = new DatabaseInstance();
+        return $databaseDBTM->find(['id' => $listDatabaseId]);;
     }
 
     function showForm($ID, $options = [])
@@ -124,12 +125,10 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
                            </h3>
  </div>';
 
-        $databaseDBTM = new DatabaseInstance();
-
-        $listDatabaseId = self::getDatabases();
+        $listDatabase = self::getDatabases();
 
         echo "<h1>";
-        echo _n("Database", 'Databases', count($listDatabaseId));
+        echo _n("Database", 'Databases', count($listDatabase));
         echo "</h1>";
         echo "<hr>";
 
@@ -155,11 +154,8 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
 
         echo "<div class='accordion' name=listDatabaseApp>";
 
-        if(!empty($listDatabaseId)){
-            $databases = $databaseDBTM->find(['id' => $listDatabaseId]);
-            foreach ($databases as $database) {
-
-                $databaseDBTM->getFromDB($database['id']);
+        if(!empty($listDatabase)){
+            foreach ($listDatabase as $database) {
 
                 $name = $database['name'];
 
@@ -173,7 +169,8 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
 
                 echo "<tbody>";
 
-                $linkDB = DatabaseInstance::getFormURLWithID($database['id']);
+                $databasePluginDBTM = new PluginWebapplicationsDatabaseInstance();
+                $linkDB = $databasePluginDBTM::getFormURLWithID($database['id']);
                 $linkDB .= "&forcetab=main";
 
                 echo "<tr>";
@@ -189,7 +186,8 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
 
                 echo Ajax::createIframeModalWindow('editDB'.$database['id'],
                     $linkDB,
-                    ['display' => false]
+                    ['display' => false,
+                        'reloadonclose' => true]
                 );
 
                 echo "</td>";

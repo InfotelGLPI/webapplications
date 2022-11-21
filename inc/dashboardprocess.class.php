@@ -76,7 +76,8 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
             array_push($listProcId, $proc['items_id']);
         }
 
-        return $listProcId;
+        $processDBTM = new PluginWebapplicationsProcess();
+        return $processDBTM->find(['id' => $listProcId]);
     }
 
 
@@ -130,9 +131,9 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
         $processDBTM = new PluginWebapplicationsProcess();
         $linkAddProc=$processDBTM::getFormURL();
 
-        $listProcId = self::getProcesses();
+        $listProc = self::getProcesses();
 
-        echo "<h1>"._n('Process', 'Processes', count($listProcId), 'webapplications')."</h1>";
+        echo "<h1>"._n('Process', 'Processes', count($listProc), 'webapplications')."</h1>";
         echo "<hr>";
         echo "<h2>";
 
@@ -145,18 +146,16 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
         );
         echo Ajax::createIframeModalWindow('addProc',
             $linkAddProc . "?appliance_id=" . $ApplianceId,
-            ['display' => false]
+            ['display' => false,
+                'reloadonclose' => true]
 
         );
 
         echo "</h2>";
         echo "<div class='accordion' name=listProcessesApp>";
 
-        if(!empty($listProcId)){
-            $processes = $processDBTM->find(['id' => $listProcId]);
-            foreach ($processes as $process) {
-
-                $processDBTM->getFromDB($process['id']);
+        if(!empty($listProc)){
+            foreach ($listProc as $process) {
 
                 $name = $process['name'];
 
@@ -186,7 +185,8 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo Ajax::createIframeModalWindow('editProcess'.$process['id'],
                     $linkProc,
-                    ['display' => false]
+                    ['display' => false,
+                        'reloadonclose' => true]
                 );
                 echo "</td>";
 

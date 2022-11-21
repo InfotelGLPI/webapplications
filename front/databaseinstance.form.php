@@ -45,10 +45,15 @@ $instance = new PluginWebapplicationsDatabaseInstance();
 
 if (isset($_GET['_in_modal'])) {
     Html::popHeader(DatabaseInstance::getTypeName(2), $_SERVER['PHP_SELF']);
+    $_SESSION['reload']=true;
+
+    $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
     if(isset($_GET['appliance_id'])) {
-        $instance->showForm($_GET["id"], ['withtemplate' => $_GET['withtemplate'], 'appliances_id' => $_GET['appliance_id']]);
+        $options['appliances_id'] = $_GET['appliance_id'];
     }
-    else $instance->showForm($_GET["id"], ['withtemplate' => $_GET['withtemplate']]);
+    DatabaseInstance::displayFullPageForItem($_GET['id'], $options );
+
+
     Html::popFooter();
 
 }
