@@ -35,49 +35,24 @@ if (!defined('GLPI_ROOT')) {
 use Glpi\Application\View\TemplateRenderer;
 
 /**
- * Class PluginWebapplicationsComputer
+ * Class PluginWebapplicationsItem
  */
-class PluginWebapplicationsComputer extends CommonDBTM {
+class PluginWebapplicationsItem extends CommonDBTM {
 
     static function getTypeName($nb = 0) {
 
-        return _n('Computer', 'Computers', $nb, 'webapplications');
+        return _n('Item', 'Items', $nb, 'webapplications');
     }
+    
 
-
-    /**
-     * @param $params
-     */
-    static function addFields($params) {
-
-        $item             = $params['item'];
-        if ($item->getType() == 'Computer') {
-
-            if(isset($params["options"]["appliances_id"])){
-                $appID = $params["options"]["appliances_id"];
-                echo "<input type='hidden' name='appliances_id' value=".$appID.">";
-            }
-        }
-        return true;
-    }
-
-
-    function showForm($ID, $options = []) {
-
-        $computer = new Computer();
-        $computer->showForm($ID, $options);
-
-        return true;
-    }
-
-    function addApplianceComputer(Computer $item)
+    function addApplianceItem(Item $item)
     {
         $items_id = $item->getID();
         $appliance_id = $item->input['appliances_id'];
         if(!is_null($appliance_id)&&$appliance_id!=0){
 
             $itemDBTM = new Appliance_Item();
-            $itemDBTM->add(['appliances_id' => $appliance_id, 'items_id' => $items_id, 'itemtype' => 'Computer']);
+            $itemDBTM->add(['appliances_id' => $appliance_id, 'items_id' => $items_id, 'itemtype' => 'Item']);
 
         }
     }

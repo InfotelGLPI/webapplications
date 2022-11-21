@@ -41,13 +41,20 @@ if (!isset($_GET["withtemplate"])) {
     $_GET["withtemplate"] = "";
 }
 
-$computer = new PluginWebapplicationsComputer();
+if (isset($_GET['_in_modal']) && isset($_GET['type'])) {
 
-if (isset($_GET['_in_modal'])) {
-    Html::popHeader(Computer::getTypeName(2), $_SERVER['PHP_SELF']);
+    $_SESSION['reload']=true;
+    Html::popHeader($_GET['type']::getTypeName(2), $_SERVER['PHP_SELF']);
+
+    $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
     if(isset($_GET['appliance_id'])) {
-        $computer->showForm($_GET["id"], ['withtemplate' => $_GET['withtemplate'], 'appliances_id' => $_GET['appliance_id']]);
+        $options['appliances_id'] = $_GET['appliance_id'];
     }
-    else $computer->showForm($_GET["id"], ['withtemplate' => $_GET['withtemplate']]);
+    $_GET['type']::displayFullPageForItem($_GET['id'], $options );
+
+
+    Html::popFooter();
+
+
 
 }
