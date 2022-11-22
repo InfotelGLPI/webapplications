@@ -57,7 +57,7 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        self::showLists($item);
+        self::showLists();
         return true;
     }
 
@@ -76,8 +76,13 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
             array_push($listStreamId, $st['items_id']);
         }
 
-        $streamDBTM = new PluginWebapplicationsStream();
-        return $streamDBTM->find(['id' => $listStreamId]);;
+
+        $listStreams = array();
+        if(!empty($listStreamId)){
+            $streamDBTM = new PluginWebapplicationsStream();
+            $listStreams = $streamDBTM->find(['id' => $listStreamId]);
+        }
+        return $listStreams;
     }
 
     function showForm($ID, $options = [])

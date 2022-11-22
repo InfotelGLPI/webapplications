@@ -584,7 +584,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        self::showLists($item);
+        self::showLists();
         return true;
     }
 }

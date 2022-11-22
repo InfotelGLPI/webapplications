@@ -57,7 +57,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        self::showLists($item);
+        self::showLists();
         return true;
     }
 
@@ -76,8 +76,12 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
             array_push($listDatabaseId, $db['items_id']);
         }
 
-        $databaseDBTM = new DatabaseInstance();
-        return $databaseDBTM->find(['id' => $listDatabaseId]);;
+        $listDatabases = array();
+        if(!empty($listDatabaseId)){
+            $databaseDBTM = new DatabaseInstance();
+            $listDatabases = $databaseDBTM->find(['id' => $listDatabaseId]);
+        }
+        return $listDatabases;
     }
 
     function showForm($ID, $options = [])

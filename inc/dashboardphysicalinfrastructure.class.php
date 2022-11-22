@@ -58,7 +58,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        self::showLists($item);
+        self::showLists();
         return true;
     }
 
@@ -106,7 +106,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
         return $listItem;
     }
 
-    static function showLists($item) {
+    static function showLists() {
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 

@@ -58,7 +58,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        self::showLists($item);
+        self::showLists();
         return true;
     }
 
@@ -77,8 +77,12 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
             array_push($listEntitiesId, $entityApp['items_id']);
         }
 
-        $entitiesDBTM = new PluginWebapplicationsEntity();
-        return $entitiesDBTM->find(['id' => $listEntitiesId]);
+        $listEntities = array();
+        if(!empty($listEntitiesId)){
+            $entitiesDBTM = new PluginWebapplicationsEntity();
+            $listEntities = $entitiesDBTM->find(['id' => $listEntitiesId]);
+        }
+        return $listEntities;
     }
 
     public function showForm($ID, $options = []) {
@@ -103,7 +107,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
     }
 
-    static function showLists($item) {
+    static function showLists() {
 
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
@@ -251,7 +255,8 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 $relation = $entity['relation_nature'];
                 echo "<tr>";
                 echo "<th>";
-                echo __("Relation nature",'webapplications');
+                echo __("Relation nature",'webapplicatiodakapoasoe
+                ns');
                 echo "</th>";
                 echo "<td>";
                 echo $relation;

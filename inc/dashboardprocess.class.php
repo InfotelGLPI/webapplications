@@ -57,7 +57,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
     static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
-        self::showLists($item);
+        self::showLists();
         return true;
     }
 
@@ -76,8 +76,12 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
             array_push($listProcId, $proc['items_id']);
         }
 
-        $processDBTM = new PluginWebapplicationsProcess();
-        return $processDBTM->find(['id' => $listProcId]);
+        $listProcesses = array();
+        if(!empty($listProcId)){
+            $processDBTM = new PluginWebapplicationsProcess();
+            $listProcesses = $processDBTM->find(['id' => $listProcId]);
+        }
+        return $listProcesses;
     }
 
 
@@ -106,7 +110,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
     }
 
-    static function showLists($item) {
+    static function showLists() {
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
