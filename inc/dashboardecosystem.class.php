@@ -115,15 +115,16 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-
-
         echo '<div class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
                         <h3 class="card-title d-flex align-items-center ps-4">
                                                 <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
                      <i class="ti ti-versions fa-2x"></i>
                   </div>
                     <h3 style="margin: auto">';
-        echo $appliance->getName();
+
+        $linkApp = Appliance::getFormURLWithID($ApplianceId);
+        $name = $appliance->getName();
+        echo "<a href=$linkApp>$name</a>";
 
         echo '</h3></h3>
               </div>';

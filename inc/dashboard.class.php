@@ -130,14 +130,26 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         }
 
         echo '<h1 style="margin: auto">';
-        echo $appliance->getName();
+        $linkApp = Appliance::getFormURLWithID($ApplianceId);
+        $name = $appliance->getName();
+        echo "<a href=$linkApp>$name</a>";
 
         echo ' </h1>';
 
-        $linkApp = Appliance::getFormURLWithID($ApplianceId);
+        $linkApp = PluginWebapplicationsAppliance::getFormURLWithID($ApplianceId);
+        $linkApp .= "&forcetab=main";
 
         echo "<div style='align-self: center'>";
-        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'onclick' => "window.location.href='" . $linkApp . "#support'"]);
+
+        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editApp'.$ApplianceId]);
+
+        echo Ajax::createIframeModalWindow('editApp'.$ApplianceId,
+            $linkApp,
+            ['display' => false,
+                'reloadonclose' => true]
+        );
+
+
         echo "</div>";
 
         echo '</div>';
@@ -478,9 +490,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editProcess'.$ApplianceId]);
+        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editAppSupport'.$ApplianceId]);
 
-        echo Ajax::createIframeModalWindow('editProcess'.$ApplianceId,
+        echo Ajax::createIframeModalWindow('editAppSupport'.$ApplianceId,
             $linkApp,
             ['display' => false,
                 'reloadonclose' => true]
@@ -491,13 +503,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "<table class='tab_cadre_fixe'>";
         echo "<tbody>";
 
-
-
         $refEditid = $appliance->getField('manufacturers_id');
         $refEdit = new Manufacturer();
         $refEdit->getFromDB($refEditid);
-
-
         echo "<tr>";
         echo "<th>";
         echo __("Referent editor",'webapplications');
@@ -506,7 +514,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo $refEdit->getName();
         echo "</td>";
         echo "</tr>";
-
 
         $applianceplugin = new PluginWebapplicationsAppliance();
         $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
@@ -525,7 +532,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo $mail;
         echo "</td>";
 
-
         echo "<th>";
         echo __("Phone support",'webapplications');
         echo "</th>";
@@ -543,10 +549,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</tbody>";
         echo "</table>";
         echo "</div>";
-
     }
-
-
 
     function defineTabs($options = []) {
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");

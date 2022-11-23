@@ -123,7 +123,9 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
                      <i class="ti ti-versions fa-2x"></i>
                   </div>
                               <h3 style="margin: auto">';
-        echo $appliance->getName();
+        $linkApp = Appliance::getFormURLWithID($ApplianceId);
+        $name = $appliance->getName();
+        echo "<a href=$linkApp>$name</a>";
 
         echo ' </h3>
                            </h3>
