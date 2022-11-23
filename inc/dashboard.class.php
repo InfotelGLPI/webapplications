@@ -472,7 +472,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
 
         $ApplianceId = $appliance->getField('id');
 
-        $linkApp = Appliance::getFormURLWithID($ApplianceId);
+        $linkApp = PluginWebapplicationsAppliance::getFormURLWithID($ApplianceId);
         $linkApp .= "&forcetab=main";
 
         $appliance = new Appliance();
