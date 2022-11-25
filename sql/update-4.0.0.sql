@@ -74,7 +74,7 @@ CREATE TABLE `glpi_plugin_webapplications_processes` (
 
 
 CREATE TABLE `glpi_plugin_webapplications_processes_entities` (
-    `id` int(11) NOT NULL auto_increment,
+    `id` int unsigned NOT NULL auto_increment,
     `plugin_webapplications_entities_id` int unsigned NOT NULL default '0',
     `plugin_webapplications_processes_id` int unsigned NOT NULL default '0',
     PRIMARY KEY  (`id`),
@@ -83,7 +83,7 @@ CREATE TABLE `glpi_plugin_webapplications_processes_entities` (
 
 
 CREATE TABLE `glpi_plugin_webapplications_streams_items` (
-    `id` int(11) NOT NULL auto_increment,
+    `id` int unsigned NOT NULL auto_increment,
     `plugin_webapplications_streams_id` int unsigned NOT NULL default '0',
     `items_id` int unsigned NOT NULL default '0',
     `itemtype` varchar(100) NOT NULL DEFAULT '',
@@ -94,8 +94,8 @@ CREATE TABLE `glpi_plugin_webapplications_streams_items` (
 
 
 CREATE TABLE `glpi_plugin_webapplications_dashboards` (
-    `id` int(11) NOT NULL auto_increment,
-    `users_id` int(11) NOT NULL DEFAULT '0',
+    `id` int unsigned NOT NULL auto_increment,
+    `users_id` int unsigned NOT NULL DEFAULT '0',
     PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 

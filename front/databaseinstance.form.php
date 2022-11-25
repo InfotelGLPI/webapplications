@@ -57,3 +57,7 @@ if (isset($_GET['_in_modal'])) {
     Html::popFooter();
 
 }
+else {
+
+    DatabaseInstance::displayFullPageForItem($_GET['id']);
+}

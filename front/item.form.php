@@ -55,6 +55,8 @@ if (isset($_GET['_in_modal']) && isset($_GET['type'])) {
 
     Html::popFooter();
 
+}
+else {
 
-
+    $_GET['type']::displayFullPageForItem($_GET['id']);
 }
