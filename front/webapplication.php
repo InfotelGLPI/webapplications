@@ -29,6 +29,20 @@
 
 include('../../../inc/includes.php');
 
+use Certificate_Item;
+use Change_Item;
+use Computer_Item;
+use Contract_Item;
+use Document_Item;
+use Domain_Item;
+use Infocom;
+use Item_Problem;
+use Item_Project;
+use Item_Rack;
+use Item_Ticket;
+use KnowbaseItem_Item;
+use Log;
+
 Html::header(PluginWebapplicationsWebapplication::getTypeName(2), "", "plugins", "");
 
 Session::checkRight("plugin_webapplications", READ);
@@ -51,6 +65,23 @@ echo "</td></tr></table>";
 if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['do_migration'] == 1) {
    $dbu      = new DbUtils();
    $idUnknow = 0;
+
+   // All tables containing items that may have a relation with a plugin's webapplication
+   $itemtypes_tables = [
+      Certificate_Item::getTable(),
+      Change_Item::getTable(),
+      Computer_Item::getTable(),
+      Contract_Item::getTable(),
+      Document_Item::getTable(),
+      Domain_Item::getTable(),
+      Infocom::getTable(),
+      Item_Problem::getTable(),
+      Item_Project::getTable(),
+      Item_Rack::getTable(),
+      Item_Ticket::getTable(),
+      KnowbaseItem_Item::getTable(),
+      Log::getTable(),
+   ];
 
    echo "<br>";
    echo "<br>";
@@ -103,6 +134,31 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                             SET `appliances_id`='" . $new_appliance['id'] . "'
                             WHERE `appliances_id`= " . $new_appliance['old_id'] . ";";
       $DB->query($query);
+
+      // Update relations with items
+      foreach ($itemtypes_tables as $itemtype_table) {
+         // Both type and ID are changed, there should be no collision (setting
+         // the row to a new Appliance ID already used by a old plugin's
+         // webapplication ID) value because the WHERE clause targets both the
+         // old type AND the old ID.
+         $DB->query(sprintf(
+            '
+            UPDATE
+               `%s`
+            SET
+               `itemtype` = \'%s\',
+               `items_id` =  %d
+            WHERE
+               `itemtype` = \'%s\'
+               AND `items_id` = %d
+            ',
+            $itemtype_table,
+            'Appliance',
+            (int) $new_appliance['id'],
+            'PluginWebapplicationsWebapplication',
+            (int) $new_appliance['old_id']
+         ));
+      }
 
       if ($plugin->isActivated('accounts')) {
          $queryUpdateAccountsAssociatedItems = "UPDATE `glpi_plugin_accounts_accounts_items` 
