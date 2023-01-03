@@ -203,14 +203,17 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 echo "</tr>";
 
                 $ownerid = $entity['owner'];
+                $linkOwner = User::getFormURLWithID($ownerid);
+                $linkOwner .= "&forcetab=main";
                 $owner = new User();
                 $owner->getFromDB($ownerid);
+                $ownerName = $owner->getName();
                 echo "<tr>";
                 echo "<th>";
                 echo __("Owner", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo $owner->getName();
+                echo "<a href=$linkOwner>$ownerName</a>";
                 echo "</td>";
                 echo "</tr>";
 

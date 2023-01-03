@@ -287,7 +287,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo "</th>";
                 echo "<td>";
                 if (!empty($comment)) {
-                    echo "<table style='border:1px solid white; width:60%'>";
+                    echo "<table style='border:1px solid; width:60%'>";
                     echo "<td>" . $comment . "</td>";
                     echo "</table>";
                 }

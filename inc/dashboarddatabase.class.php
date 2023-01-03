@@ -209,7 +209,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
                 echo "</th>";
                 echo "<td>";
                 if (!empty($comment)) {
-                    echo "<table style='border:1px solid white; width:60%'>";
+                    echo "<table style='border:1px solid; width:60%'>";
                     echo "<td>" . $comment . "</td>";
                     echo "</table>";
                 }
@@ -221,13 +221,16 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
                 $respSecurityid = $database['users_id_tech'];
                 $respSecurity = new User();
                 $respSecurity->getFromDB($respSecurityid);
+                $respSecurityName = $respSecurity->getName();
+
+                $linkDB = User::getFormURLWithID($respSecurityid);
 
                 echo "<tr>";
                 echo "<th>";
                 echo __('Technician in charge of the hardware');
                 echo "</th>";
                 echo "<td>";
-                echo $respSecurity->getName();
+                echo "<a href=$linkDB>$respSecurityName</a>";
                 echo "</td>";
                 echo "</tr>";
 
@@ -285,6 +288,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
                 $databaseplugin = new PluginWebapplicationsDatabaseInstance();
                 $is_known = $databaseplugin->getFromDBByCrit(['databases_id'=>$database['id']]);
 
+
                 if($is_known) {
                     $disp = $databaseplugin->fields['webapplicationavailabilities'];
                     $int = $databaseplugin->fields['webapplicationintegrities'];
@@ -320,6 +324,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM {
                     echo "<td name='webapplicationconfidentialities' id='7'>";
                     echo $conf;
                     echo "</td>";
+
 
                     echo "<td></td>";
 

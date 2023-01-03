@@ -45,6 +45,15 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         return __('Appliance dashboard', 'webapplications');
     }
 
+    function getHeaderName($options = []) : string
+    {
+        $appId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $appliance = new Appliance();
+        $appliance->getFromDB($appId);
+        return $appliance->getName();
+    }
+
+
   static function getMenuContent() {
 
       $menu                    = [];
@@ -391,7 +400,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</td>";
         echo "<td>";
         if (!empty($comment)) {
-            echo "<table style='border:1px solid white; width:60%'>";
+            echo "<table style='border:1px solid; width:60%'>";
             echo "<td>" . $comment . "</td>";
             echo "</table>";
         }

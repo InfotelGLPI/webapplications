@@ -197,15 +197,17 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "</tr>";
 
                 $ownerid = $process['owner'];
+                $linkOwner = User::getFormURLWithID($ownerid);
+                $linkOwner .= "&forcetab=main";
                 $owner = new User();
                 $owner->getFromDB($ownerid);
-
+                $ownerName = $owner->getName();
                 echo "<tr>";
                 echo "<th>";
                 echo __("Owner", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo $owner->getName();
+                echo "<a href=$linkOwner>$ownerName</a>";
                 echo "</td>";
                 echo "</tr>";
 
@@ -330,7 +332,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "</th>";
                 echo "<td>";
                 if (!empty($comment)) {
-                    echo "<table style='border:1px solid white; width:60%'>";
+                    echo "<table style='border:1px solid; width:60%'>";
                     echo "<td>" . $comment . "</td>";
                     echo "</table>";
                 }
