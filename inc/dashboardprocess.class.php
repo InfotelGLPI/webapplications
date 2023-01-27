@@ -207,7 +207,8 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo __("Owner", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo "<a href=$linkOwner>$ownerName</a>";
+                if($ownerid>0) echo "<a href=$linkOwner>$ownerName</a>";
+                else echo $ownerName;
                 echo "</td>";
                 echo "</tr>";
 

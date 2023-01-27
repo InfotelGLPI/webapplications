@@ -245,7 +245,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 $itemId = $item['id'];
                 $itemOSDBTM = new Item_OperatingSystem();
 
-                $OSName = "N/A";
+                $OSName = NOT_AVAILABLE;
                 $OSVersionName = null;
 
                 if($itemOSDBTM->getFromDBByCrit(['items_id' => $itemId, 'itemtype' => $itemtype])) {
@@ -307,9 +307,8 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM {
                 echo __("Location");
                 echo "</th>";
                 echo "<td>";
-                echo "<a href='" . $link . "'> ";
-                echo $locationName;
-                echo "</a>";
+                if($locationId>0) echo "<a href=$link>$locationName</a>";
+                else echo $locationName;
                 echo "</td>";
                 echo "</tr>";
 

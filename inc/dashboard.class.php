@@ -293,7 +293,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</tr>";
         echo "<tr>";
         echo "<td><h4>".__('Technician in charge of the hardware')."</h4></td>";
-        echo "<td><a href=$link>$respSec</a></td>";
+        if($respSecurityid>0) echo "<td><a href=$link>$respSec</a></td>";
+        else echo "<td>$respSec</td>";
         echo "</tr>";
 
 
