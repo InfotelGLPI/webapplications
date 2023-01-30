@@ -75,6 +75,7 @@ CREATE TABLE `glpi_plugin_webapplications_appliances` (
    `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
    `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
    `address` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+   `version` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    `backoffice`  VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    `webapplicationmailsupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    `webapplicationphonesupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

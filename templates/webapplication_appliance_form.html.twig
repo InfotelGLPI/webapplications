@@ -34,6 +34,15 @@
                         ) }}
                     {% endif %}
 
+                    {% if item.isField('version') %}
+                        {{ fields.autoNameField(
+                            'version',
+                            item,
+                            __('Installed version', 'webapplications'),
+                            withtemplate
+                        ) }}
+                    {% endif %}
+
                     {% if item.isField('webapplicationservertypes_id') %}
                         {{ fields.dropdownField(
                             "PluginWebapplicationsWebapplicationServerType",

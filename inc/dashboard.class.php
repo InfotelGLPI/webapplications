@@ -386,6 +386,14 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</td>";
         echo "</tr>";
 
+        $version = $applianceplugin->getField('version');
+
+        echo "<tr>";
+        echo "<td><h4>".__('Installed version', 'webapplications')."</h4></td>";
+        echo "<td>$version</td>";
+        echo "</tr>";
+
+
         $backoffice = $applianceplugin->getField('backoffice');
 
         echo "<tr>";

@@ -109,9 +109,11 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
          $appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
          $address    = isset($item->input['address']) ? $item->input['address'] : $appliance->fields['address'];
          $backoffice = isset($item->input['backoffice']) ? $item->input['backoffice'] : $appliance->fields['backoffice'];
+         $version = isset($item->input['version']) ? $item->input['version'] : $appliance->fields['version'];
          if (is_array($appliance->fields) && count($appliance->fields) > 0) {
             $appliance->update(['id'                           => $appliance->fields['id'],
                                 'address'                      => $address,
+                                'version'                      => $version,
                                 'backoffice'                   => $backoffice,
                                 'webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : $appliance->fields['plugin_webapplications_webapplicationservertypes_id'],
                                 'webapplicationtechnics_id'    => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : $appliance->fields['plugin_webapplications_webapplicationtechnics_id'],
@@ -138,6 +140,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM {
                              'webapplicationconfidentialities' => isset($item->input['webapplicationconfidentialities']) ? $item->input['webapplicationconfidentialities'] : 0,
                              'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : 0,
                              'address'                      => $address,
+                             'version'                      => $version,
                              'appliances_id'                => $item->getID(),
                              'backoffice'                   => $backoffice]);
          }
