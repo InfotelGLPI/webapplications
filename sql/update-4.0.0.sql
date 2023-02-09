@@ -15,9 +15,7 @@ ALTER TABLE `glpi_plugin_webapplications_appliances`
   ADD `webapplicationintegrities` int unsigned   NOT NULL     DEFAULT '1',
   ADD `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
   ADD `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
-  ADD `address` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   ADD `version` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  ADD `backoffice` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   ADD `webapplicationmailsupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   ADD `webapplicationphonesupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL;
 
@@ -92,7 +90,7 @@ CREATE TABLE `glpi_plugin_webapplications_streams_items` (
     `itemtype` varchar(100) NOT NULL DEFAULT '',
     PRIMARY KEY  (`id`),
     UNIQUE KEY `unicity` (`plugin_webapplications_streams_id`,`items_id`,`itemtype`),
-    KEY `item` (`itemtype`, `item_id`)
+    KEY `item` (`itemtype`, `items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
