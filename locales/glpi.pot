@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 15:03+0000\n"
+"POT-Creation-Date: 2023-02-10 15:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -175,11 +175,8 @@ msgstr ""
 msgid "Logical infrastructure"
 msgstr ""
 
-#: templates/webapplication_appliance_form.html.twig:193
-msgid "Mail Support"
-msgstr ""
-
 #: inc/dashboard.class.php:547
+#: templates/webapplication_appliance_form.html.twig:193
 msgid "Mail support"
 msgstr ""
 
@@ -219,7 +216,7 @@ msgid "Owner"
 msgstr ""
 
 #: templates/webapplication_appliance_form.html.twig:203
-msgid "Phone number Support"
+msgid "Phone number support"
 msgstr ""
 
 #: inc/dashboard.class.php:564
@@ -334,11 +331,11 @@ msgid "Validation"
 msgstr ""
 
 #: templates/webapplication_appliance_form.html.twig:181
-msgid "Validation by CIO"
+msgid "Validation by CISO"
 msgstr ""
 
 #: templates/webapplication_appliance_form.html.twig:173
-msgid "Validation of the request by the referring Department"
+msgid "Validation of the request by the referring department"
 msgstr ""
 
 #: setup.php:110 inc/appliance.class.php:43 inc/databaseinstance.class.php:43
