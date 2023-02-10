@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 14:05+0000\n"
+"POT-Creation-Date: 2023-02-10 14:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,7 +176,7 @@ msgid "List Streams"
 msgstr ""
 
 #: inc/dashboarddatabase.class.php:275
-msgid "no associated stream"
+msgid "No associated stream"
 msgstr ""
 
 #: inc/dashboardecosystem.class.php:213 inc/dashboardprocess.class.php:204
@@ -192,7 +192,7 @@ msgid "Relation nature"
 msgstr ""
 
 #: inc/dashboardecosystem.class.php:275
-msgid "no entity"
+msgid "No entity founded"
 msgstr ""
 
 #: inc/dashboardlogicalinfrastructure.class.php:44
@@ -215,7 +215,7 @@ msgid "List Entities"
 msgstr ""
 
 #: inc/dashboardprocess.class.php:239 inc/dashboardprocess.class.php:268
-msgid "no associated entity"
+msgid "No associated entity"
 msgstr ""
 
 #: inc/dashboardprocess.class.php:251
