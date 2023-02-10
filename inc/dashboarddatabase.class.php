@@ -241,7 +241,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
 
                 echo "<tr>";
                 echo "<th>";
-                echo __("Technology type", 'webapplication');
+                echo __("Technology type", 'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $techtype->getName();
