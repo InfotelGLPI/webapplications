@@ -45,19 +45,14 @@ $stream = new PluginWebapplicationsStream();
 $streamItem = new PluginWebapplicationsStream_Item();
 
 if (isset($_POST["add"])) {
-
     $stream->check(-1, CREATE, $_POST);
     $newID = $streamItem->add($_POST);
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($streamItem->getFormURL() . "?id=" . $newID);
     }
     Html::back();
-
-
-} else if (isset($_POST["update"])) {
-
+} elseif (isset($_POST["update"])) {
     $stream->check($_POST['id'], UPDATE);
     $streamItem->update($_POST);
     Html::back();
-
 }

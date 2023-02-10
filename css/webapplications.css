@@ -72,6 +72,7 @@ option {
     white-space: nowrap;
     width: 1%;
 }
+
 ::-webkit-scrollbar-thumb{
     background: darkgrey !important;
 }

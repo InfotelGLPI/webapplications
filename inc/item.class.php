@@ -36,26 +36,21 @@ use Glpi\Application\View\TemplateRenderer;
 /**
  * Class PluginWebapplicationsItem
  */
-class PluginWebapplicationsItem extends CommonDBTM {
-
-    static function getTypeName($nb = 0) {
-
+class PluginWebapplicationsItem extends CommonDBTM
+{
+    public static function getTypeName($nb = 0)
+    {
         return _n('Item', 'Items', $nb, 'webapplications');
     }
     
 
-    function addApplianceItem(Item $item)
+    public function addApplianceItem(Item $item)
     {
         $items_id = $item->getID();
         $appliance_id = $item->input['appliances_id'];
-        if(!is_null($appliance_id)&&$appliance_id!=0){
-
+        if (!is_null($appliance_id)&&$appliance_id!=0) {
             $itemDBTM = new Appliance_Item();
             $itemDBTM->add(['appliances_id' => $appliance_id, 'items_id' => $items_id, 'itemtype' => 'Item']);
-
         }
     }
-
-
-
 }

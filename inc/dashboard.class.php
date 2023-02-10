@@ -35,16 +35,16 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsDashboard
  */
-class PluginWebapplicationsDashboard extends CommonDBTM {
+class PluginWebapplicationsDashboard extends CommonDBTM
+{
+    public static $rightname = "plugin_webapplications_dashboards";
 
-    static $rightname = "plugin_webapplications_dashboards";
-
-    static function getTypeName($nb = 0) {
-
+    public static function getTypeName($nb = 0)
+    {
         return __('Appliance dashboard', 'webapplications');
     }
 
-    function getHeaderName($options = []) : string
+    public function getHeaderName($options = []): string
     {
         $appId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
         $appliance = new Appliance();
@@ -53,24 +53,26 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
     }
 
 
-  static function getMenuContent() {
+    public static function getMenuContent()
+    {
+        $menu = [];
+        $menu['title'] = self::getMenuName();
+        $menu['page'] = self::getSearchURL(false);
 
-      $menu                    = [];
-      $menu['title']           = self::getMenuName();
-      $menu['page']            = self::getSearchURL(false);
-      
-      $menu['icon'] = self::getIcon();
+        $menu['icon'] = self::getIcon();
 
-      return $menu;
-   }
-   
-    static function getIcon() {
+        return $menu;
+    }
+
+    public static function getIcon()
+    {
         return "fas fa-fw fa-border-all";
     }
 
 
-    static function selectAppliance() {
-        global  $CFG_GLPI;
+    public static function selectAppliance()
+    {
+        global $CFG_GLPI;
         echo "<div align='center'>
         <table class='tab_cadre_fixe'>";
         echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
@@ -84,36 +86,36 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</table></div>";
         echo "<div id=lists-dashboard></div>";
 
-        $array['value']='__VALUE__';
-        $array['type']=self::getType();
+        $array['value'] = '__VALUE__';
+        $array['type'] = self::getType();
         $array['reload'] = false;
-        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-dashboard',
-                                      $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
+        Ajax::updateItemOnSelectEvent(
+            'dropdown_applianceDropdown' . $rand,
+            'lists-dashboard',
+            $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . '/ajax/getLists.php',
+            $array
+        );
 
 
-        if(isset($_SESSION['reload']) && $_SESSION['reload']){
+        if (isset($_SESSION['reload']) && $_SESSION['reload']) {
             unset($_SESSION['reload']);
             $array['reload'] = true;
             $array['value'] = $_SESSION['plugin_webapplications_loaded_appliances_id'];
             Ajax::updateItem('lists-dashboard', $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . '/ajax/getLists.php', $array, 'dropdown_applianceDropdown' . $rand);
-
         }
-
-
-
     }
 
-    function showForm($ID, $options = []) {
-        global  $CFG_GLPI;
+    public function showForm($ID, $options = [])
+    {
+        global $CFG_GLPI;
 
-        $options['candel']  = false;
+        $options['candel'] = false;
         $options['colspan'] = 1;
 
         $ApplianceId = $options['appliances_id'];
 
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
-
 
 
         echo '<div class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
@@ -126,7 +128,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $pictures = importArrayFromDB($appliance->getField('pictures'));
 
 
-        if(!empty($pictures)){
+        if (!empty($pictures)) {
             $urlPicture = $pictures[0];
 
             $rand = mt_rand();
@@ -149,9 +151,10 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
 
         echo "<div style='align-self: center'>";
 
-        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editApp'.$ApplianceId]);
+        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'data-bs-toggle' => 'modal', 'data-bs-target' => '#editApp' . $ApplianceId]);
 
-        echo Ajax::createIframeModalWindow('editApp'.$ApplianceId,
+        echo Ajax::createIframeModalWindow(
+            'editApp' . $ApplianceId,
             $linkApp,
             ['display' => false,
                 'reloadonclose' => true]
@@ -161,7 +164,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</div>";
 
         echo '</div>';
-
 
 
         echo "<table class='tab_cadre_fixe'><tr><td>";
@@ -178,7 +180,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $listUser = array_merge($groupUser, $groupUserAdmin);
         $listUniqueUser = array();
         foreach ($listUser as $user) {
-
             array_push($listUniqueUser, $user['users_id']);
         }
         $numberUser = count(array_unique($listUniqueUser));
@@ -187,7 +188,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "<div style='text-align:center'>";
         echo "<i class='fa fa-users fa-3x'>";
         echo "<br>$numberUser</i>";
-        echo "<br>".User::getTypeName($numberUser);
+        echo "<br>" . User::getTypeName($numberUser);
         echo "</div>";
         echo "</td>";
 
@@ -195,7 +196,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "<div style='text-align:center'>";
         echo "<i class='fa fa-circle-user fa-3x'>";
         echo "<br>$numberAdmin</i>";
-        echo "<br>"._n('Administrator','Administrators',$numberAdmin, 'webapplications');
+        echo "<br>" . _n('Administrator', 'Administrators', $numberAdmin, 'webapplications');
         echo "</div>";
         echo "</td>";
 
@@ -207,7 +208,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "<td>";
         if (!empty($docuItems)) {
             echo "<div>";
-            echo _n('Associated document','Associated documents',count($docuItems), 'webapplications');
+            echo _n('Associated document', 'Associated documents', count($docuItems), 'webapplications');
             echo "<br><select name='documents' id='list' Size='3' ondblclick='location = this.value;' style='max-width: 400px'>";
             foreach ($docuItems as $docuItem) {
                 $docuDBTM->getFromDB($docuItem['documents_id']);
@@ -217,14 +218,16 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
             }
             echo "</select>";
             echo "</div>";
-        } else echo __("No associated documents");
+        } else {
+            echo __("No associated documents");
+        }
 
 
         echo "</td></tr></table>";
 
 
         echo "<div class=accueilDashboard>";
-        echo "<h1>".__('Abstract', 'webapplications')."</h1>";
+        echo "<h1>" . __('Summary', 'webapplications') . "</h1>";
 
         echo "<hr>";
 
@@ -241,12 +244,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         self::showSupportPart($appliance);
 
 
-
         echo "</div>";
-
     }
 
-    static function getURLForPicture() {
+    public static function getURLForPicture()
+    {
         global $CFG_GLPI;
 
 
@@ -259,18 +261,17 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
             }
         }
         return PLUGIN_SERVICECATALOG_WEBDIR . "/pics/picture_links.png";
-
     }
 
 
-    static function showEcosystem($appliance){
-
-        echo "<h3>".__('Ecosystem','webapplications')."</h3>";
+    public static function showEcosystem($appliance)
+    {
+        echo "<h3>" . __('Ecosystem', 'webapplications') . "</h3>";
 
         $ApplianceId = $appliance->getField('id');
 
         $applianceplugin = new PluginWebapplicationsAppliance();
-        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
+        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 
         $extexpoid = $applianceplugin->getField('webapplicationexternalexpositions_id');
 
@@ -287,13 +288,17 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
 
         echo "<table class='tab_cadre_fixe'>";
         echo "<tr>";
-        echo "<td><h4>".__('External Exposition','webapplications')."</h4></td>";
+        echo "<td><h4>" . _n('External exposition', 'External exposition', 1, 'webapplications').
+        "</h4></td>";
         echo "<td>$extexpoName</td>";
         echo "</tr>";
         echo "<tr>";
-        echo "<td><h4>".__('Technician in charge of the hardware')."</h4></td>";
-        if($respSecurityid>0) echo "<td><a href=$link>$respSec</a></td>";
-        else echo "<td>$respSec</td>";
+        echo "<td><h4>" . __('Technician in charge of the hardware') . "</h4></td>";
+        if ($respSecurityid > 0) {
+            echo "<td><a href=$link>$respSec</a></td>";
+        } else {
+            echo "<td>$respSec</td>";
+        }
         echo "</tr>";
 
 
@@ -303,7 +308,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $stateName = $state->getName();
 
         echo "<tr>";
-        echo "<td><h4>".__('Status')."</h4></td>";
+        echo "<td><h4>" . __('Status') . "</h4></td>";
         echo "<td>$stateName</td>";
         echo "</tr>";
 
@@ -313,7 +318,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $serverTypeName = $serverType->getName();
 
         echo "<tr>";
-        echo "<td><h4>".__('Type of treatment server','webapplications')."</h4></td>";
+        echo "<td><h4>" . __('Type of treatment server', 'webapplications') . "</h4></td>";
         echo "<td>$serverTypeName</td>";
         echo "</tr>";
 
@@ -324,19 +329,19 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $technicName = $technic->getName();
 
         echo "<tr>";
-        echo "<td><h4>".__('Language of treatment', 'webapplications')."</h4></td>";
+        echo "<td><h4>" . __('Language of treatment', 'webapplications') . "</h4></td>";
         echo "<td>$technicName</td>";
         echo "</tr>";
 
 
         echo "<tr>";
         echo "<td>";
-        echo "<h4>".__('DICT','webapplications')."</h4>";
+        echo "<h4>" . __('DICT', 'webapplications') . "</h4>";
         echo "</td>";
         echo "<td class='inTable'>";
 
 
-        if($is_known){
+        if ($is_known) {
             $disp = $applianceplugin->fields['webapplicationavailabilities'];
             $int = $applianceplugin->fields['webapplicationintegrities'];
             $conf = $applianceplugin->fields['webapplicationconfidentialities'];
@@ -345,7 +350,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
 
             echo "<table style='text-align : center; width: 60%'>";
             echo "<td class='dict'>";
-            echo __('Availability')."&nbsp";
+            echo __('Availability') . "&nbsp";
             echo "</td>";
 
             echo "<td name='webapplicationavailabilities' id='5'>";
@@ -355,7 +360,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
             echo "<td></td>";
 
             echo "<td class='dict'>";
-            echo __('Integrity','webapplications')."&nbsp";
+            echo __('Integrity', 'webapplications') . "&nbsp";
             echo "</td>";
             echo "<td name='webapplicationintegrities' id='6'>";
             echo $int;
@@ -364,7 +369,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
             echo "<td></td>";
 
             echo "<td class='dict'>";
-            echo __('Confidentiality','webapplications')."&nbsp";
+            echo __('Confidentiality', 'webapplications') . "&nbsp";
             echo "</td>";
             echo "<td name='webapplicationconfidentialities' id='7'>";
             echo $conf;
@@ -373,22 +378,23 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
             echo "<td></td>";
 
             echo "<td class='dict'>";
-            echo __('Tracabeality','webapplications')."&nbsp";
+            echo __('Tracabeality', 'webapplications') . "&nbsp";
             echo "</td>";
             echo "<td name='webapplicationtraceabilities' id='8'>";
             echo $tra;
             echo "</td>";
 
             echo "</table>";
+        } else {
+            echo NOT_AVAILABLE;
         }
-        else echo NOT_AVAILABLE;
         echo "</td>";
         echo "</tr>";
 
         $version = $applianceplugin->getField('version');
 
         echo "<tr>";
-        echo "<td><h4>".__('Installed version', 'webapplications')."</h4></td>";
+        echo "<td><h4>" . __('Installed version', 'webapplications') . "</h4></td>";
         echo "<td>$version</td>";
         echo "</tr>";
 
@@ -396,7 +402,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $backoffice = $applianceplugin->getField('backoffice');
 
         echo "<tr>";
-        echo "<td><h4>".__('Backoffice URL', 'webapplications')."</h4></td>";
+        echo "<td><h4>" . __('Backoffice URL', 'webapplications') . "</h4></td>";
         echo "<td><a href=$backoffice>$backoffice</a></td>";
         echo "</tr>";
 
@@ -404,7 +410,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
 
         echo "<tr>";
         echo "<td>";
-        echo "<h4>".__('Comment')."</h4>";
+        echo "<h4>" . __('Comment') . "</h4>";
         echo "</td>";
         echo "<td>";
         if (!empty($comment)) {
@@ -419,9 +425,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</table>";
     }
 
-    static function showProcess($appliance){
-
-        echo "<h3>".__('Process','webapplications')."</h3>";
+    public static function showProcess($appliance)
+    {
+        echo "<h3>" . __('Process', 'webapplications') . "</h3>";
 
         $ApplianceId = $appliance->getField('id');
 
@@ -433,14 +439,13 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "<tr>";
 
         echo "<td>";
-        echo "<h4>".__('List Processes','webapplications')."</h4>";
+        echo "<h4>" . __('List Processes', 'webapplications') . "</h4>";
         echo "</td>";
         echo "</tr>";
 
         echo "<tr>";
         echo "<td>";
         if (!empty($procsApp)) {
-
             echo "<select name='processes' id='list' Size='3' ondblclick='location = this.value;'>";
             foreach ($procsApp as $procApp) {
                 $processDBTM->getFromDB($procApp['items_id']);
@@ -449,16 +454,17 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
                 echo "<option value=$link>$name</option>";
             }
             echo "</select>";
-
-        } else echo __("No associated process",'webapplications');
+        } else {
+            echo __("No associated process", 'webapplications');
+        }
         echo "</td>";
         echo "</tr>";
         echo "</table>";
     }
 
-    static function showApplication($appliance){
-
-        echo "<h3>".__('Application','webapplications')."</h3>";
+    public static function showApplication($appliance)
+    {
+        echo "<h3>" . __('Application', 'webapplications') . "</h3>";
 
         $ApplianceId = $appliance->getField('id');
 
@@ -470,14 +476,13 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "<tr>";
 
         echo "<td>";
-        echo "<h4>".__('List Databases','webapplications')."</h4>";
+        echo "<h4>" . __('List Databases', 'webapplications') . "</h4>";
         echo "</td>";
         echo "</tr>";
 
         echo "<tr>";
         echo "<td>";
         if (!empty($databasesApp)) {
-
             echo "<select name='databases' id='list' Size='3' ondblclick='location = this.value;'>";
             foreach ($databasesApp as $dbApp) {
                 $databaseDBTM->getFromDB($dbApp['items_id']);
@@ -486,16 +491,17 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
                 echo "<option value=$link>$name</option>";
             }
             echo "</select>";
-
-        } else echo __("No associated database",'webapplications');
+        } else {
+            echo __("No associated database", 'webapplications');
+        }
         echo "</td>";
         echo "</tr>";
 
         echo "</table>";
     }
 
-    static function showSupportPart($appliance){
-
+    public static function showSupportPart($appliance)
+    {
         echo "<h2 style='margin-bottom: 15px'>";
         echo __("Support");
 
@@ -507,9 +513,10 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editAppSupport'.$ApplianceId]);
+        echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'style' => 'float: right', 'data-bs-toggle' => 'modal', 'data-bs-target' => '#editAppSupport' . $ApplianceId]);
 
-        echo Ajax::createIframeModalWindow('editAppSupport'.$ApplianceId,
+        echo Ajax::createIframeModalWindow(
+            'editAppSupport' . $ApplianceId,
             $linkApp,
             ['display' => false,
                 'reloadonclose' => true]
@@ -525,7 +532,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $refEdit->getFromDB($refEditid);
         echo "<tr>";
         echo "<th>";
-        echo __("Referent editor",'webapplications');
+        echo __("Referent editor", 'webapplications');
         echo "</th>";
         echo "<td>";
         echo $refEdit->getName();
@@ -533,31 +540,39 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</tr>";
 
         $applianceplugin = new PluginWebapplicationsAppliance();
-        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
+        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 
         echo "<tr>";
         echo "<th>";
-        echo __("Mail support",'webapplications');
+        echo __("Mail support", 'webapplications');
         echo "</th>";
         echo "<td>";
 
         $mail = null;
-        if($is_known) $mail = $applianceplugin->fields['webapplicationmailsupport'];
+        if ($is_known) {
+            $mail = $applianceplugin->fields['webapplicationmailsupport'];
+        }
 
-        if(!$is_known || $mail == null) $mail = NOT_AVAILABLE;
+        if (!$is_known || $mail == null) {
+            $mail = NOT_AVAILABLE;
+        }
 
         echo $mail;
         echo "</td>";
 
         echo "<th>";
-        echo __("Phone support",'webapplications');
+        echo __("Phone support", 'webapplications');
         echo "</th>";
         echo "<td>";
 
         $phone = null;
-        if($is_known) $phone = $applianceplugin->fields['webapplicationphonesupport'];
+        if ($is_known) {
+            $phone = $applianceplugin->fields['webapplicationphonesupport'];
+        }
 
-        if(!$is_known || $phone == null) $phone = NOT_AVAILABLE;
+        if (!$is_known || $phone == null) {
+            $phone = NOT_AVAILABLE;
+        }
 
         echo $phone;
         echo "</td>";
@@ -568,7 +583,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         echo "</div>";
     }
 
-    function defineTabs($options = []) {
+    public function defineTabs($options = [])
+    {
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
         echo Html::script(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.js");
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
@@ -603,8 +619,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
     }
 
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
         self::showLists();
         return true;
     }

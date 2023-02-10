@@ -28,27 +28,26 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 use Glpi\Application\View\TemplateRenderer;
 
-
 /**
  * Class PluginWebapplicationsProcess
  */
-class PluginWebapplicationsProcess extends CommonDBTM {
-
+class PluginWebapplicationsProcess extends CommonDBTM
+{
     use Glpi\Features\Inventoriable;
-    static $rightname         = "plugin_webapplications_processes";
+    public static $rightname         = "plugin_webapplications_processes";
 
-   static function getTypeName($nb = 0) {
+    public static function getTypeName($nb = 0)
+    {
+        return _n('Process', 'Processes', $nb, 'webapplications');
+    }
 
-      return _n('Process', 'Processes', $nb, 'webapplications');
-   }
-
-    static function getMenuContent() {
-
+    public static function getMenuContent()
+    {
         $menu = [];
 
         $menu['title']           = self::getMenuName();
@@ -60,17 +59,17 @@ class PluginWebapplicationsProcess extends CommonDBTM {
 
         $menu['icon'] = self::getIcon();
 
-
         return $menu;
     }
 
 
-    static function getIcon() {
+    public static function getIcon()
+    {
         return "fas fa-cogs";
     }
 
-    function showForm($ID, $options = []) {
-
+    public function showForm($ID, $options = [])
+    {
         $this->initForm($ID, $options);
 
 
@@ -82,23 +81,22 @@ class PluginWebapplicationsProcess extends CommonDBTM {
         return true;
     }
 
-    function post_getEmpty()
+    public function post_getEmpty()
     {
         $this->fields["webapplicationconfidentialities"] = 0;
     }
 
-    function post_addItem()
+    public function post_addItem()
     {
         $appliance_id = $this->input['appliances_id'];
-        if(!is_null($appliance_id)&&$appliance_id!=0){
-
+        if (!is_null($appliance_id)&&$appliance_id!=0) {
             $itemDBTM = new Appliance_Item();
             $itemDBTM->add(['appliances_id' => $appliance_id, 'items_id' => $this->getID(), 'itemtype' => 'PluginWebapplicationsProcess']);
-
         }
     }
 
-    function defineTabs($options=[]) {
+    public function defineTabs($options = [])
+    {
         $ong = [];
         //add main tab for current object
         $this->addDefaultFormTab($ong);
@@ -106,8 +104,4 @@ class PluginWebapplicationsProcess extends CommonDBTM {
         $this->addStandardTab('PluginWebapplicationsProcess_Entity', $ong, $options);
         return $ong;
     }
-
-
-
-
 }

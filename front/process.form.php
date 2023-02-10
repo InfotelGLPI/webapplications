@@ -45,54 +45,40 @@ if (!isset($_GET["withtemplate"])) {
 $process = new PluginWebapplicationsProcess();
 
 if (isset($_POST["add"])) {
-
     $process->check(-1, CREATE, $_POST);
     $newID = $process->add($_POST);
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($process->getFormURL() . "?id=" . $newID);
     }
     Html::back();
-
-
-} else if (isset($_POST["delete"])) {
-
+} elseif (isset($_POST["delete"])) {
     $process->check($_POST['id'], DELETE);
     $process->delete($_POST);
     $process->redirectToList();
-
-} else if (isset($_POST["restore"])) {
-
+} elseif (isset($_POST["restore"])) {
     $process->check($_POST['id'], PURGE);
     $process->restore($_POST);
     $process->redirectToList();
-
-} else if (isset($_POST["purge"])) {
+} elseif (isset($_POST["purge"])) {
     $process->check($_POST['id'], PURGE);
     $process->delete($_POST, 1);
     $process->redirectToList();
-
-} else if (isset($_POST["update"])) {
-
+} elseif (isset($_POST["update"])) {
     $process->check($_POST['id'], UPDATE);
     $process->update($_POST);
     Html::back();
-
-}
-else if (isset($_GET['_in_modal'])) {
+} elseif (isset($_GET['_in_modal'])) {
     $_SESSION['reload']=true;
     Html::popHeader(PluginWebapplicationsProcess::getTypeName(2), $_SERVER['PHP_SELF']);
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
-    if(isset($_GET['appliance_id'])) {
+    if (isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
     $menus = ["appliancedashboard", "process"];
-    PluginWebapplicationsProcess::displayFullPageForItem($_GET['id'], $menus, $options );
+    PluginWebapplicationsProcess::displayFullPageForItem($_GET['id'], $menus, $options);
     Html::popFooter();
-}
-else {
-
+} else {
     if (Session::getCurrentInterface() == "central") {
-
         Html::header(PluginWebapplicationsProcess::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsprocess", "config");
         $process->display(['id' => $_GET["id"]]);
     }

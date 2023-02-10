@@ -35,33 +35,33 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsDashboardStream
  */
-class PluginWebapplicationsDashboardStream extends CommonDBTM {
+class PluginWebapplicationsDashboardStream extends CommonDBTM
+{
+    public static $rightname         = "plugin_webapplications_stream_dashboards";
 
-    static $rightname         = "plugin_webapplications_stream_dashboards";
-
-    static function getTypeName($nb = 0) {
-
+    public static function getTypeName($nb = 0)
+    {
         return _n('Stream', 'Streams', $nb, 'webapplications');
     }
 
-    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
         if ($_SESSION['glpishow_count_on_tabs']) {
             $nbStreams = count(self::getStreams());
             return self::createTabEntry(self::getTypeName($nbStreams), $nbStreams);
         }
-        return __('Streams', 'webapplications');
-
+        return _n('Stream', 'Streams', 2, 'webapplications');
     }
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
         self::showLists();
         return true;
     }
 
 
-    static function getStreams(){
+    public static function getStreams()
+    {
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $streamAppDBTM = new Appliance_Item();
@@ -77,16 +77,15 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
 
 
         $listStreams = array();
-        if(!empty($listStreamId)){
+        if (!empty($listStreamId)) {
             $streamDBTM = new PluginWebapplicationsStream();
             $listStreams = $streamDBTM->find(['id' => $listStreamId]);
         }
         return $listStreams;
     }
 
-    function showForm($ID, $options = [])
+    public function showForm($ID, $options = [])
     {
-
         global $CFG_GLPI;
 
         $options['candel'] = false;
@@ -107,11 +106,10 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
         $array['value']='__VALUE__';
         $array['type']=self::getType();
         Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-Stream', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
-
     }
 
-    static function showLists(){
-
+    public static function showLists()
+    {
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $appliance = new Appliance();
@@ -137,19 +135,22 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
         $listStream = self::getStreams();
 
         echo "<h1>";
-        echo _n("Stream",'Streams', count($listStream),'wbapplications');
+        echo _n("Stream", 'Streams', count($listStream), 'wbapplications');
         echo "</h1>";
         echo "<hr>";
         echo "<h2>";
 
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
+        echo Html::submit(
+            _sx('button', 'Add'),
+            ['name' => 'edit',
                 'class' => 'btn btn-primary',
                 'icon' => 'fas fa-plus',
                 'data-bs-toggle' => 'modal',
                 'data-bs-target' =>'#addStream',
                 'style' => 'float: right']
         );
-        echo Ajax::createIframeModalWindow('addStream',
+        echo Ajax::createIframeModalWindow(
+            'addStream',
             $linkAddStream."?appliance_id=".$ApplianceId,
             ['display' => false,
              'reloadonclose' => true]
@@ -159,9 +160,8 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
         echo "<div class='accordion' name=listStreamApp>";
 
 
-        if(!empty($listStream)){
+        if (!empty($listStream)) {
             foreach ($listStream as $stream) {
-
                 $name = $stream['name'];
 
                 echo "<h3 class='accordionhead'>$name</h3>";
@@ -189,7 +189,8 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
                 echo "<td style='width: 10%'>";
                 echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editStream'.$stream['id']]);
 
-                echo Ajax::createIframeModalWindow('editStream'.$stream['id'],
+                echo Ajax::createIframeModalWindow(
+                    'editStream'.$stream['id'],
                     $linkStream,
                     ['display' => false,
                      'reloadonclose' => true]
@@ -201,13 +202,13 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo __("Transmitter",'webapplications');
+                echo __("Source", 'webapplications');
                 echo "</th>";
                 echo "<td>";
 
                 $transmitterType = $stream['transmitter_type'];
                 $transmitterid = $stream['transmitter'];
-                if(!empty($transmitterType) && !empty($transmitterid)){
+                if (!empty($transmitterType) && !empty($transmitterid)) {
                     $transmitter = new $transmitterType;
                     $transmitter->getFromDB($transmitterid);
                     $linkTransmitter= $transmitterType::getFormURLWithID($transmitterid);
@@ -218,13 +219,13 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
 
 
                 echo "<th>";
-                echo __("Receiver", 'webapplications');
+                echo __("Destination", 'webapplications');
                 echo "</th>";
                 echo "<td>";
 
                 $receiverType = $stream['receiver_type'];
                 $receiverid = $stream['receiver'];
-                if(!empty($receiverType) && !empty($receiverid)) {
+                if (!empty($receiverType) && !empty($receiverid)) {
                     $receiver = new $receiverType;
                     $receiver->getFromDB($receiverid);
                     $linkReceiver = $receiverType::getFormURLWithID($receiverid);
@@ -242,19 +243,19 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
                 echo __("Encryption");
                 echo "</th>";
                 echo "<td>";
-                if($encryption==0){
+                if ($encryption==0) {
                     echo __('No');
+                } else {
+                    echo __('Yes');
                 }
-                else echo __('Yes');
                 echo "</td>";
 
 
                 $encryption_type = $stream['encryption_type'];
 
-                if($encryption==0){
+                if ($encryption==0) {
                     echo "<td></td>";
-                }
-                else{
+                } else {
                     echo "<th>";
                     echo __("Encryption type");
                     echo "</th>";
@@ -280,7 +281,7 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
                 $protocole = $stream['protocole'];
 
                 echo "<th>";
-                echo __("Protocole",'webapplications');
+                echo __("Protocole", 'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $protocole;
@@ -290,15 +291,12 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM {
 
                 echo "</tbody>";
                 echo "</table></div>";
-
             }
+        } else {
+            echo __("No stream founded", 'webapplications');
         }
-        else echo __("No stream",'webapplications');
         echo "</div>";
 
         echo "<script>accordion();</script>";
-
     }
-
-
 }

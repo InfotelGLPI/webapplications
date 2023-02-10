@@ -28,24 +28,23 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Class PluginWebapplicationsWebapplication
  */
-class PluginWebapplicationsWebapplication extends CommonDBTM  {
-
-   public    $dohistory  = true;
-   static    $rightname  = "plugin_webapplications";
-   /**
-    * @param int $nb
-    *
-    * @return translated
-    */
-   static function getTypeName($nb = 0) {
-
-      return _n('Web application', 'Web applications', $nb, 'webapplications');
-   }
-
+class PluginWebapplicationsWebapplication extends CommonDBTM
+{
+    public $dohistory  = true;
+    public static $rightname  = "plugin_webapplications";
+    /**
+     * @param int $nb
+     *
+     * @return translated
+     */
+    public static function getTypeName($nb = 0)
+    {
+        return _n('Web application', 'Web applications', $nb, 'webapplications');
+    }
 }

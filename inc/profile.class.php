@@ -28,282 +28,298 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Class PluginWebapplicationsProfile
  */
-class PluginWebapplicationsProfile extends Profile {
+class PluginWebapplicationsProfile extends Profile
+{
+    public static $rightname = "profile";
 
-   static $rightname = "profile";
-
-   /**
-    * @param CommonGLPI $item
-    * @param int        $withtemplate
-    *
-    * @return string|translated
-    */
-   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-
-      if ($item->getType() == 'Profile') {
-         return PluginWebapplicationsWebapplication::getTypeName(2);
-      }
-      return '';
-   }
-
-
-   /**
-    * @param CommonGLPI $item
-    * @param int        $tabnum
-    * @param int        $withtemplate
-    *
-    * @return bool
-    */
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-
-      if ($item->getType() == 'Profile') {
-         $ID   = $item->getID();
-         $prof = new self();
-
-         self::addDefaultProfileInfos($ID,
-                                      ['plugin_webapplications'             => 0,
-                                          'plugin_webapplications_streams'     => 0,
-                                          'plugin_webapplications_processes'     => 0,
-                                          'plugin_webapplications_entities'     => 0,
-                                            'plugin_webapplications_open_ticket' => 0]);
-         $prof->showForm($ID);
-      }
-      return true;
-   }
-
-   /**
-    * @param $ID
-    */
-   static function createFirstAccess($ID) {
-
-      //85
-      self::addDefaultProfileInfos($ID,
-                                   ['plugin_webapplications'             => 127,
-                                         'plugin_webapplications_open_ticket' => 1,
-                                         'plugin_webapplications_streams' => READ + CREATE + UPDATE + PURGE,
-                                         'plugin_webapplications_entities' => READ + CREATE + UPDATE + PURGE,
-                                         'plugin_webapplications_dashboards' => READ + CREATE + UPDATE + PURGE,
-                                         'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE], true);
-   }
-
-   /**
-    * @param      $profiles_id
-    * @param      $rights
-    * @param bool $drop_existing
-    *
-    * @internal param $profile
-    */
-   static function addDefaultProfileInfos($profiles_id, $rights, $drop_existing = false) {
-      $dbu          = new DbUtils();
-      $profileRight = new ProfileRight();
-      foreach ($rights as $right => $value) {
-         if ($dbu->countElementsInTable('glpi_profilerights',
-                                  ["profiles_id" => $profiles_id, "name" => $right]) && $drop_existing) {
-            $profileRight->deleteByCriteria(['profiles_id' => $profiles_id, 'name' => $right]);
-         }
-         if (!$dbu->countElementsInTable('glpi_profilerights',
-                                   ["profiles_id" => $profiles_id, "name" => $right])) {
-            $myright['profiles_id'] = $profiles_id;
-            $myright['name']        = $right;
-            $myright['rights']      = $value;
-            $profileRight->add($myright);
-
-            //Add right to the current session
-            $_SESSION['glpiactiveprofile'][$right] = $value;
-         }
-      }
-   }
+    /**
+     * @param CommonGLPI $item
+     * @param int        $withtemplate
+     *
+     * @return string|translated
+     */
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
+        if ($item->getType() == 'Profile') {
+            return PluginWebapplicationsWebapplication::getTypeName(2);
+        }
+        return '';
+    }
 
 
-   /**
-    * Show profile form
-    *
-    * @param int  $profiles_id
-    * @param bool $openform
-    * @param bool $closeform
-    *
-    * @return nothing
-    * @internal param int $items_id id of the profile
-    * @internal param value $target url of target
-    */
-   function showForm($profiles_id = 0, $openform = true, $closeform = true) {
+    /**
+     * @param CommonGLPI $item
+     * @param int        $tabnum
+     * @param int        $withtemplate
+     *
+     * @return bool
+     */
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
+        if ($item->getType() == 'Profile') {
+            $ID   = $item->getID();
+            $prof = new self();
 
-      echo "<div class='firstbloc'>";
-      if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
-          && $openform) {
-         $profile = new Profile();
-         echo "<form method='post' action='" . $profile->getFormURL() . "'>";
-      }
+            self::addDefaultProfileInfos(
+                $ID,
+                ['plugin_webapplications'             => 0,
+                    'plugin_webapplications_streams'     => 0,
+                    'plugin_webapplications_processes'     => 0,
+                    'plugin_webapplications_entities'     => 0,
+                      'plugin_webapplications_open_ticket' => 0]
+            );
+            $prof->showForm($ID);
+        }
+        return true;
+    }
 
-      $profile = new Profile();
-      $profile->getFromDB($profiles_id);
-      if ($profile->getField('interface') == 'central') {
-         $rights = $this->getAllRights();
-         $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
-                                                            'default_class' => 'tab_bg_2',
-                                                            'title'         => __('General')]);
-      }
-      echo "<table class='tab_cadre_fixehov'>";
-      echo "<tr class='tab_bg_1'><th colspan='4'>" . __('Helpdesk') . "</th></tr>\n";
+    /**
+     * @param $ID
+     */
+    public static function createFirstAccess($ID)
+    {
+        //85
+        self::addDefaultProfileInfos(
+            $ID,
+            ['plugin_webapplications'             => 127,
+                  'plugin_webapplications_open_ticket' => 1,
+                  'plugin_webapplications_streams' => READ + CREATE + UPDATE + PURGE,
+                  'plugin_webapplications_entities' => READ + CREATE + UPDATE + PURGE,
+                  'plugin_webapplications_dashboards' => READ + CREATE + UPDATE + PURGE,
+                  'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE],
+            true
+        );
+    }
 
-      $effective_rights = ProfileRight::getProfileRights($profiles_id, ['plugin_webapplications_open_ticket']);
-      echo "<tr class='tab_bg_2'>";
-      echo "<td width='20%'>" . __('Associable items to a ticket') . "</td>";
-      echo "<td colspan='5'>";
-      Html::showCheckbox(['name'    => '_plugin_webapplications_open_ticket',
-                               'checked' => $effective_rights['plugin_webapplications_open_ticket']]);
-      echo "</td></tr>\n";
-      echo "</table>";
+    /**
+     * @param      $profiles_id
+     * @param      $rights
+     * @param bool $drop_existing
+     *
+     * @internal param $profile
+     */
+    public static function addDefaultProfileInfos($profiles_id, $rights, $drop_existing = false)
+    {
+        $dbu          = new DbUtils();
+        $profileRight = new ProfileRight();
+        foreach ($rights as $right => $value) {
+            if ($dbu->countElementsInTable(
+                'glpi_profilerights',
+                ["profiles_id" => $profiles_id, "name" => $right]
+            ) && $drop_existing) {
+                $profileRight->deleteByCriteria(['profiles_id' => $profiles_id, 'name' => $right]);
+            }
+            if (!$dbu->countElementsInTable(
+                'glpi_profilerights',
+                ["profiles_id" => $profiles_id, "name" => $right]
+            )) {
+                $myright['profiles_id'] = $profiles_id;
+                $myright['name']        = $right;
+                $myright['rights']      = $value;
+                $profileRight->add($myright);
 
-      if ($canedit
-          && $closeform) {
-         echo "<div class='center'>";
-         echo Html::hidden('id', ['value' => $profiles_id]);
-         echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
-         echo "</div>\n";
-         Html::closeForm();
-      }
-      echo "</div>";
-   }
+                //Add right to the current session
+                $_SESSION['glpiactiveprofile'][$right] = $value;
+            }
+        }
+    }
 
-   /**
-    * @param bool $all
-    *
-    * @return array
-    */
-   static function getAllRights($all = false) {
-      $rights = [
-         ['itemtype' => 'PluginWebapplicationsWebapplication',
-               'label'    => _n('Web application', 'Web applications', 2, 'webapplications'),
-               'field'    => 'plugin_webapplications'
-         ],
-          ['itemtype' => 'PluginWebapplicationsStream',
-              'label'    => _n('Stream', 'Streams', 2, 'webapplications'),
-              'field'    => 'plugin_webapplications_streams'
-          ],
-          ['itemtype' => 'PluginWebapplicationsProcess',
-              'label'    => _n('Process', 'Processes', 2, 'webapplications'),
-              'field'    => 'plugin_webapplications_processes'
-          ],
-          ['itemtype' => 'PluginWebapplicationsDashboard',
-              'label'    => _n('Dashboard', 'Dashboards', 2, 'webapplications'),
-              'field'    => 'plugin_webapplications_dashboards'
-          ],
-          ['itemtype' => 'PluginWebapplicationsEntity',
-              'label'    => _n('Entity', 'Entities', 2, 'webapplications'),
-              'field'    => 'plugin_webapplications_entities'
-          ]
-      ];
 
-      if ($all) {
-         $rights[] = ['itemtype' => 'PluginWebapplicationsWebapplication',
-                           'label'    => __('Associable items to a ticket'),
-                           'field'    => 'plugin_webapplications_open_ticket'];
-      }
+    /**
+     * Show profile form
+     *
+     * @param int  $profiles_id
+     * @param bool $openform
+     * @param bool $closeform
+     *
+     * @return nothing
+     * @internal param int $items_id id of the profile
+     * @internal param value $target url of target
+     */
+    public function showForm($profiles_id = 0, $openform = true, $closeform = true)
+    {
+        echo "<div class='firstbloc'>";
+        if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
+            && $openform) {
+            $profile = new Profile();
+            echo "<form method='post' action='" . $profile->getFormURL() . "'>";
+        }
 
-      return $rights;
-   }
+        $profile = new Profile();
+        $profile->getFromDB($profiles_id);
+        if ($profile->getField('interface') == 'central') {
+            $rights = $this->getAllRights();
+            $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
+                                                               'default_class' => 'tab_bg_2',
+                                                               'title'         => __('General')]);
+        }
+        echo "<table class='tab_cadre_fixehov'>";
+        echo "<tr class='tab_bg_1'><th colspan='4'>" . __('Helpdesk') . "</th></tr>\n";
 
-   /**
-    * Init profiles
-    *
-    * @param $old_right
-    *
-    * @return int
-    */
+        $effective_rights = ProfileRight::getProfileRights($profiles_id, ['plugin_webapplications_open_ticket']);
+        echo "<tr class='tab_bg_2'>";
+        echo "<td width='20%'>" . __('Associable items to a ticket') . "</td>";
+        echo "<td colspan='5'>";
+        Html::showCheckbox(['name'    => '_plugin_webapplications_open_ticket',
+                                 'checked' => $effective_rights['plugin_webapplications_open_ticket']]);
+        echo "</td></tr>\n";
+        echo "</table>";
 
-   static function translateARight($old_right) {
-      switch ($old_right) {
-         case '':
-            return 0;
-         case 'r' :
-            return READ;
-         case 'w':
-            return ALLSTANDARDRIGHT + READNOTE + UPDATENOTE;
-         case '0':
-         case '1':
-            return $old_right;
+        if ($canedit
+            && $closeform) {
+            echo "<div class='center'>";
+            echo Html::hidden('id', ['value' => $profiles_id]);
+            echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
+            echo "</div>\n";
+            Html::closeForm();
+        }
+        echo "</div>";
+    }
 
-         default :
-            return 0;
-      }
-   }
+    /**
+     * @param bool $all
+     *
+     * @return array
+     */
+    public static function getAllRights($all = false)
+    {
+        $rights = [
+           ['itemtype' => 'PluginWebapplicationsWebapplication',
+                 'label'    => _n('Web application', 'Web applications', 2, 'webapplications'),
+                 'field'    => 'plugin_webapplications'
+           ],
+            ['itemtype' => 'PluginWebapplicationsStream',
+                'label'    => _n('Stream', 'Streams', 2, 'webapplications'),
+                'field'    => 'plugin_webapplications_streams'
+            ],
+            ['itemtype' => 'PluginWebapplicationsProcess',
+                'label'    => _n('Process', 'Processes', 2, 'webapplications'),
+                'field'    => 'plugin_webapplications_processes'
+            ],
+            ['itemtype' => 'PluginWebapplicationsDashboard',
+                'label'    => _n('Dashboard', 'Dashboards', 2, 'webapplications'),
+                'field'    => 'plugin_webapplications_dashboards'
+            ],
+            ['itemtype' => 'PluginWebapplicationsEntity',
+                'label'    => _n('Entity', 'Entities', 2),
+                'field'    => 'plugin_webapplications_entities'
+            ]
+        ];
 
-   /**
-    * @since 0.85
-    * Migration rights from old system to the new one for one profile
-    *
-    * @param $profiles_id the profile ID
-    *
-    * @return bool
-    */
-   static function migrateOneProfile($profiles_id) {
-      global $DB;
-      //Cannot launch migration if there's nothing to migrate...
-      if (!$DB->tableExists('glpi_plugin_webapplications_profiles')) {
-         return true;
-      }
+        if ($all) {
+            $rights[] = ['itemtype' => 'PluginWebapplicationsWebapplication',
+                              'label'    => __('Associable items to a ticket'),
+                              'field'    => 'plugin_webapplications_open_ticket'];
+        }
 
-      foreach ($DB->request('glpi_plugin_webapplications_profiles',
-                            "`profiles_id`='$profiles_id'") as $profile_data) {
+        return $rights;
+    }
 
-         $matching       = ['webapplications' => 'plugin_webapplications',
-                                 'open_ticket'     => 'plugin_webapplications_open_ticket'];
-         $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
-         foreach ($matching as $old => $new) {
-            if (!isset($current_rights[$old])) {
-               $query = "UPDATE `glpi_profilerights` 
+    /**
+     * Init profiles
+     *
+     * @param $old_right
+     *
+     * @return int
+     */
+
+    public static function translateARight($old_right)
+    {
+        switch ($old_right) {
+            case '':
+                return 0;
+            case 'r':
+                return READ;
+            case 'w':
+                return ALLSTANDARDRIGHT + READNOTE + UPDATENOTE;
+            case '0':
+            case '1':
+                return $old_right;
+
+            default:
+                return 0;
+        }
+    }
+
+    /**
+     * @since 0.85
+     * Migration rights from old system to the new one for one profile
+     *
+     * @param $profiles_id the profile ID
+     *
+     * @return bool
+     */
+    public static function migrateOneProfile($profiles_id)
+    {
+        global $DB;
+        //Cannot launch migration if there's nothing to migrate...
+        if (!$DB->tableExists('glpi_plugin_webapplications_profiles')) {
+            return true;
+        }
+
+        foreach ($DB->request(
+            'glpi_plugin_webapplications_profiles',
+            "`profiles_id`='$profiles_id'"
+        ) as $profile_data) {
+            $matching       = ['webapplications' => 'plugin_webapplications',
+                                    'open_ticket'     => 'plugin_webapplications_open_ticket'];
+            $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
+            foreach ($matching as $old => $new) {
+                if (!isset($current_rights[$old])) {
+                    $query = "UPDATE `glpi_profilerights` 
                          SET `rights`='" . self::translateARight($profile_data[$old]) . "' 
                          WHERE `name`='$new' AND `profiles_id`='$profiles_id'";
-               $DB->query($query);
+                    $DB->query($query);
+                }
             }
-         }
-      }
-   }
+        }
+    }
 
-   /**
-    * Initialize profiles, and migrate it necessary
-    */
-   static function initProfile() {
-      global $DB;
-      $profile = new self();
-      $dbu     = new DbUtils();
-      //Add new rights in glpi_profilerights table
-      foreach ($profile->getAllRights(true) as $data) {
-         if ($dbu->countElementsInTable("glpi_profilerights",
-                                        ["name" => $data['field']]) == 0) {
-            ProfileRight::addProfileRights([$data['field']]);
-         }
-      }
+    /**
+     * Initialize profiles, and migrate it necessary
+     */
+    public static function initProfile()
+    {
+        global $DB;
+        $profile = new self();
+        $dbu     = new DbUtils();
+        //Add new rights in glpi_profilerights table
+        foreach ($profile->getAllRights(true) as $data) {
+            if ($dbu->countElementsInTable(
+                "glpi_profilerights",
+                ["name" => $data['field']]
+            ) == 0) {
+                ProfileRight::addProfileRights([$data['field']]);
+            }
+        }
 
-      //Migration old rights in new ones
-      foreach ($DB->request("SELECT `id` FROM `glpi_profiles`") as $prof) {
-         self::migrateOneProfile($prof['id']);
-      }
-      foreach ($DB->request("SELECT *
+        //Migration old rights in new ones
+        foreach ($DB->request("SELECT `id` FROM `glpi_profiles`") as $prof) {
+            self::migrateOneProfile($prof['id']);
+        }
+        foreach ($DB->request("SELECT *
                            FROM `glpi_profilerights` 
                            WHERE `profiles_id`='" . $_SESSION['glpiactiveprofile']['id'] . "' 
                               AND `name` LIKE '%plugin_webapplications%'") as $prof) {
-
-          if (isset($_SESSION['glpiactiveprofile'])){
-              $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights'];
-          }
-
-      }
-   }
+            if (isset($_SESSION['glpiactiveprofile'])) {
+                $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights'];
+            }
+        }
+    }
 
 
-   static function removeRightsFromSession() {
-      foreach (self::getAllRights(true) as $right) {
-         if (isset($_SESSION['glpiactiveprofile'][$right['field']])) {
-            unset($_SESSION['glpiactiveprofile'][$right['field']]);
-         }
-      }
-   }
+    public static function removeRightsFromSession()
+    {
+        foreach (self::getAllRights(true) as $right) {
+            if (isset($_SESSION['glpiactiveprofile'][$right['field']])) {
+                unset($_SESSION['glpiactiveprofile'][$right['field']]);
+            }
+        }
+    }
 }

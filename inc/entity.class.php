@@ -28,29 +28,28 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 use Glpi\Application\View\TemplateRenderer;
 
-
 /**
  * Class PluginWebapplicationsEntity
  */
-class PluginWebapplicationsEntity extends CommonDBTM {
-
+class PluginWebapplicationsEntity extends CommonDBTM
+{
     use Glpi\Features\Inventoriable;
-    static $rightname         = "plugin_webapplications_entities";
+    public static $rightname         = "plugin_webapplications_entities";
 
 
 
-   static function getTypeName($nb = 0) {
+    public static function getTypeName($nb = 0)
+    {
+        return _n('Entity', 'Entities', $nb);
+    }
 
-      return _n('Entity', 'Entities', $nb, 'webapplications');
-   }
-
-    static function getMenuContent() {
-
+    public static function getMenuContent()
+    {
         $menu = [];
 
         $menu['title']           = self::getMenuName();
@@ -67,12 +66,13 @@ class PluginWebapplicationsEntity extends CommonDBTM {
     }
 
 
-    static function getIcon() {
+    public static function getIcon()
+    {
         return "fas fa-users";
     }
 
-    function showForm($ID, $options = []) {
-
+    public function showForm($ID, $options = [])
+    {
         $this->initForm($ID, $options);
 
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_entity_form.html.twig', [
@@ -83,18 +83,17 @@ class PluginWebapplicationsEntity extends CommonDBTM {
         return true;
     }
 
-    function post_addItem()
+    public function post_addItem()
     {
         $appliance_id = $this->input['appliances_id'];
-        if(!is_null($appliance_id)&&$appliance_id!=0){
-
+        if (!is_null($appliance_id)&&$appliance_id!=0) {
             $itemDBTM = new Appliance_Item();
             $itemDBTM->add(['appliances_id' => $appliance_id, 'items_id' => $this->getID(), 'itemtype' => 'PluginWebapplicationsEntity']);
-
         }
     }
 
-    function defineTabs($options=[]) {
+    public function defineTabs($options = [])
+    {
         $ong = [];
         //add main tab for current object
         $this->addDefaultFormTab($ong);
@@ -102,7 +101,4 @@ class PluginWebapplicationsEntity extends CommonDBTM {
         $this->addStandardTab('Appliance_Item', $ong, $options);
         return $ong;
     }
-
-
-
 }

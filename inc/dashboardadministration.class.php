@@ -35,34 +35,33 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsDashboardAdministration
  */
-class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
+class PluginWebapplicationsDashboardAdministration extends CommonDBTM
+{
+    public static $rightname         = "plugin_webapplications_administration_dashboards";
 
-    static $rightname         = "plugin_webapplications_administration_dashboards";
-
-    static function getTypeName($nb = 0) {
-
-        return __('DashboardAdministration', 'webapplications');
+    public static function getTypeName($nb = 0)
+    {
+        return __('Dashboard Administration', 'webapplications');
     }
 
-    static function getIndexName()
+    public static function getIndexName()
     {
         return 'Administration';
     }
 
 
-    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
         return __('Administration');
-
     }
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
         self::showLists();
         return true;
     }
 
-    function showForm($ID, $options = [])
+    public function showForm($ID, $options = [])
     {
         global $CFG_GLPI;
 
@@ -86,8 +85,8 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
         Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-Administration', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
     }
 
-    static function showLists() {
-
+    public static function showLists()
+    {
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $appliance = new Appliance();
@@ -112,14 +111,5 @@ class PluginWebapplicationsDashboardAdministration extends CommonDBTM {
 
 
         echo "<script>accordion();</script>";
-
-
     }
-
-
-
-
-
-
-
 }

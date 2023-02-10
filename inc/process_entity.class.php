@@ -28,52 +28,54 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 use Glpi\Application\View\TemplateRenderer;
 
-
 /**
  * Class PluginWebapplicationsProcess_Entity
  */
-class PluginWebapplicationsProcess_Entity extends CommonDBTM {
-
+class PluginWebapplicationsProcess_Entity extends CommonDBTM
+{
     use Glpi\Features\Inventoriable;
-    static $rightname         = "plugin_webapplications_processes";
+    public static $rightname         = "plugin_webapplications_processes";
 
-    static function getTypeName($nb = 0) {
+    public static function getTypeName($nb = 0)
+    {
         return _n('Process Entity', 'Processes Entity', $nb, 'webapplications');
     }
 
 
-    static function getIcon() {
+    public static function getIcon()
+    {
         return PluginWebapplicationsProcess::getIcon();
     }
 
 
-    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
         switch ($item::getType()) {
             case 'PluginWebapplicationsEntity':
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
                     return self::createTabEntry(PluginWebapplicationsProcess::getTypeName(), $dbu->countElementsInTable($this->getTable(), ["plugin_webapplications_entities_id" => $item->getID()]));
                 }
-                return __('Processes', 'webapplications');
+                return _n('Process', 'Processes', 2, 'webapplications');
                 break;
             case 'PluginWebapplicationsProcess':
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
                     return self::createTabEntry(PluginWebapplicationsEntity::getTypeName(), $dbu->countElementsInTable($this->getTable(), ["plugin_webapplications_processes_id" => $item->getID()]));
                 }
-                return __('Entities', 'webapplications');
+                return _n('Entity', 'Entities', 2);
                 break;
         }
         return '';
     }
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
         $field = new self();
 
         if ($item->getType() == 'PluginWebapplicationsEntity') {
@@ -85,8 +87,8 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM {
         return true;
     }
 
-    function showForEntity($item) {
-
+    public function showForEntity($item)
+    {
         if (!$this->canView()) {
             return false;
         }
@@ -124,7 +126,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM {
         echo "<thead>";
         echo "<tr class='tab_bg_2'>";
 
-        echo "<th colspan='3'>" . _n('Process', 'Processes', 2) . "</th>";
+        echo "<th colspan='3'>" . _n('Process', 'Processes', 2, 'webapplications') . "</th>";
 
         echo "</tr>";
         echo "</thead>";
@@ -146,11 +148,10 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM {
         echo "</table></div>";
 
         Html::closeForm();
-
     }
 
-    function showForProcess($item) {
-
+    public function showForProcess($item)
+    {
         if (!$this->canView()) {
             return false;
         }
@@ -188,7 +189,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM {
         echo "<thead>";
         echo "<tr class='tab_bg_2'>";
 
-        echo "<th colspan='3'>" . _n('Entity', 'Entities', 2, 'webapplications') . "</th>";
+        echo "<th colspan='3'>" . _n('Entity', 'Entities', 2) . "</th>";
 
         echo "</tr>";
         echo "</thead>";
@@ -210,9 +211,5 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM {
         echo "</table></div>";
 
         Html::closeForm();
-
     }
-
-
-
 }

@@ -28,31 +28,33 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 use Glpi\Application\View\TemplateRenderer;
 
-
 /**
  * Class PluginWebapplicationsStream_Item
  */
-class PluginWebapplicationsStream_Item extends CommonDBTM {
-
+class PluginWebapplicationsStream_Item extends CommonDBTM
+{
     use Glpi\Features\Inventoriable;
-    static $rightname         = "plugin_webapplications_streams";
+    public static $rightname         = "plugin_webapplications_streams";
 
-    static function getTypeName($nb = 0) {
+    public static function getTypeName($nb = 0)
+    {
         return _n('Item', 'Items', $nb);
     }
 
 
-    static function getIcon() {
+    public static function getIcon()
+    {
         return PluginWebapplicationsStream::getIcon();
     }
 
 
-    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate=0)
+    {
         switch ($item::getType()) {
             case 'PluginWebapplicationsStream':
                 if ($_SESSION['glpishow_count_on_tabs']) {
@@ -60,14 +62,14 @@ class PluginWebapplicationsStream_Item extends CommonDBTM {
                     $nbItems = $dbu->countElementsInTable($this->getTable(), ["plugin_webapplications_streams_id" => $item->getID()]);
                     return self::createTabEntry(self::getTypeName($nbItems), $nbItems);
                 }
-                return __('Databases', 'webapplications');
+                return _n("Database", 'Databases', 2);
                 break;
         }
         return '';
     }
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
         $field = new self();
 
         if ($item->getType() == 'PluginWebapplicationsStream') {
@@ -76,8 +78,8 @@ class PluginWebapplicationsStream_Item extends CommonDBTM {
         return true;
     }
 
-    function showForStream($item) {
-
+    public function showForStream($item)
+    {
         global $DB;
         $ID = $item->fields['id'];
         $rand = mt_rand();
@@ -168,17 +170,12 @@ class PluginWebapplicationsStream_Item extends CommonDBTM {
             echo "</table>";
 
             if ($canedit && count($items)) {
-                 $massiveactionparams['ontop'] = false;
-                 Html::showMassiveActions($massiveactionparams);
-             }
+                $massiveactionparams['ontop'] = false;
+                Html::showMassiveActions($massiveactionparams);
+            }
             if ($canedit) {
                 Html::closeForm();
             }
         }
-
-
     }
-
-
-
 }

@@ -35,34 +35,33 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsDashboardEcosystem
  */
-class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
+class PluginWebapplicationsDashboardEcosystem extends CommonDBTM
+{
+    public static $rightname = "plugin_webapplications_ecosystem_dashboards";
 
-    static $rightname = "plugin_webapplications_ecosystem_dashboards";
-
-    static function getTypeName($nb = 0) {
-
+    public static function getTypeName($nb = 0)
+    {
         return __('Ecosystem', 'webapplications');
     }
 
 
-    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
         if ($_SESSION['glpishow_count_on_tabs']) {
             $nbEntities = count(self::getEntities());
             return self::createTabEntry(self::getTypeName(), $nbEntities);
         }
         return self::getTypeName();
-
     }
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
         self::showLists();
         return true;
     }
 
-    static function getEntities(){
-
+    public static function getEntities()
+    {
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $entitiesAppDBTM = new Appliance_Item();
@@ -77,14 +76,15 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         }
 
         $listEntities = array();
-        if(!empty($listEntitiesId)){
+        if (!empty($listEntitiesId)) {
             $entitiesDBTM = new PluginWebapplicationsEntity();
             $listEntities = $entitiesDBTM->find(['id' => $listEntitiesId]);
         }
         return $listEntities;
     }
 
-    public function showForm($ID, $options = []) {
+    public function showForm($ID, $options = [])
+    {
         global $CFG_GLPI;
 
 
@@ -103,12 +103,10 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         $array['type']  = self::getType();
 
         Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown' . $rand, 'lists-Ecosystem', $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . '/ajax/getLists.php', $array);
-
     }
 
-    static function showLists() {
-
-
+    public static function showLists()
+    {
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $appliance = new Appliance();
@@ -140,16 +138,19 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
         echo "<h1>".__('Ecosystem', 'webapplications')."</h1>";
         echo "<hr>";
         echo "<h2>";
-        echo _n('Entity','Entities', count($listEntities), 'webapplications');
+        echo _n('Entity', 'Entities', count($listEntities));
 
-        echo Html::submit(_sx('button', 'Add'), ['name' => 'edit',
+        echo Html::submit(
+            _sx('button', 'Add'),
+            ['name' => 'edit',
                 'class' => 'btn btn-primary',
                 'icon' => 'fas fa-plus',
                 'data-bs-toggle' => 'modal',
                 'data-bs-target' =>'#addEntity',
                 'style' => 'float: right']
         );
-        echo Ajax::createIframeModalWindow('addEntity',
+        echo Ajax::createIframeModalWindow(
+            'addEntity',
             $linkAddEnt."?appliance_id=".$ApplianceId,
             ['display' => false,
                 'reloadonclose' => true]
@@ -163,7 +164,6 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
         if (!empty($listEntities)) {
             foreach ($listEntities as $entity) {
-
                 $name = $entity['name'];
 
                 echo "<h3 class='accordionhead'>$name</h3>";
@@ -190,7 +190,8 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 echo "<td style='width: 10%'>";
                 echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editEntity'.$entity['id']]);
 
-                echo Ajax::createIframeModalWindow('editEntity'.$entity['id'],
+                echo Ajax::createIframeModalWindow(
+                    'editEntity'.$entity['id'],
                     $linkEntity,
                     ['display' => false,
                         'reloadonclose' => true]
@@ -222,7 +223,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo __('List Processes','webapplications');
+                echo __('List Processes', 'webapplications');
                 echo "</th>";
                 echo "</tr>";
 
@@ -230,7 +231,6 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 echo "<td></td>";
                 echo "<td>";
                 if (!empty($processes)) {
-
                     echo "<select name='processes' id='list' Size='3' ondblclick='location = this.value;'>";
                     foreach ($processes as $process) {
                         $processDBTM->getFromDB($process['plugin_webapplications_processes_id']);
@@ -239,8 +239,9 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                         echo "<option value=$link>$name</option>";
                     }
                     echo "</select>";
-
-                } else echo __("no associated process",'webapplications');
+                } else {
+                    echo __("No associated process", 'webapplications');
+                }
                 echo "</td>";
                 echo "</tr>";
 
@@ -248,7 +249,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 $securityContact = $entity['security_contact'];
                 echo "<tr>";
                 echo "<th>";
-                echo __("Security Contact",'webapplications');
+                echo __("Security Contact", 'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $securityContact;
@@ -258,7 +259,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 $relation = $entity['relation_nature'];
                 echo "<tr>";
                 echo "<th>";
-                echo __("Relation nature",'webapplicatiodakapoasoe
+                echo __("Relation nature", 'webapplicatiodakapoasoe
                 ns');
                 echo "</th>";
                 echo "<td>";
@@ -270,13 +271,11 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM {
                 echo "</tbody>";
                 echo "</table></div>";
             }
-        } else echo __("no entity",'webapplications');
+        } else {
+            echo __("no entity", 'webapplications');
+        }
 
         echo "</div>";
         echo "<script>accordion();</script>";
-
-
     }
-
-
 }

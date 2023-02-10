@@ -42,21 +42,16 @@ if (!isset($_GET["withtemplate"])) {
 }
 
 if (isset($_GET['_in_modal']) && isset($_GET['type'])) {
-
     $_SESSION['reload']=true;
     Html::popHeader($_GET['type']::getTypeName(2), $_SERVER['PHP_SELF']);
 
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
-    if(isset($_GET['appliance_id'])) {
+    if (isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
-    $_GET['type']::displayFullPageForItem($_GET['id'], $options );
-
+    $_GET['type']::displayFullPageForItem($_GET['id'], $options);
 
     Html::popFooter();
-
-}
-else {
-
+} else {
     $_GET['type']::displayFullPageForItem($_GET['id']);
 }

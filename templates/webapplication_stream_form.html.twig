@@ -10,7 +10,7 @@
 
     {{ fields.dropdownItemsFromItemtypes(
         'transmitter',
-        __('Transmitter', 'webapplications'),
+        __('Source', 'webapplications'),
         {'items_id_name': 'transmitter',
             'itemtype_name': 'transmitter_type',
             'itemtypes': params['stream_types']}
@@ -24,7 +24,7 @@
 
     {{ fields.dropdownItemsFromItemtypes(
         'receiver',
-        __('Receiver', 'webapplications'),
+        __('Destination', 'webapplications'),
         {'items_id_name': 'receiver',
             'itemtype_name': 'receiver_type',
             'itemtypes': params['stream_types']}

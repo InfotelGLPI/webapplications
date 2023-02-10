@@ -34,18 +34,18 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsWebapplicationExternalExposition
  */
-class PluginWebapplicationsWebapplicationExternalExposition extends CommonDropdown {
-
-    static $rightname         = "dropdown";
-    var    $can_be_translated = true;
+class PluginWebapplicationsWebapplicationExternalExposition extends CommonDropdown
+{
+    public static $rightname         = "dropdown";
+    public $can_be_translated = true;
 
     /**
      * @param int $nb
      *
      * @return translated
      */
-    static function getTypeName($nb = 0) {
-
+    public static function getTypeName($nb = 0)
+    {
         return _n('External exposition', 'External exposition', $nb, 'webapplications');
     }
 }

@@ -28,24 +28,24 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 /**
  * Class PluginWebapplicationsWebapplicationServerType
  */
-class PluginWebapplicationsWebapplicationServerType extends CommonDropdown {
+class PluginWebapplicationsWebapplicationServerType extends CommonDropdown
+{
+    public static $rightname         = "dropdown";
+    public $can_be_translated = true;
 
-   static $rightname         = "dropdown";
-   var    $can_be_translated = true;
-
-   /**
-    * @param int $nb
-    *
-    * @return translated
-    */
-   static function getTypeName($nb = 0) {
-
-      return _n('Type of treatment server', 'Types of treatment server', $nb, 'webapplications');
-   }
+    /**
+     * @param int $nb
+     *
+     * @return translated
+     */
+    public static function getTypeName($nb = 0)
+    {
+        return _n('Type of treatment server', 'Types of treatment server', $nb, 'webapplications');
+    }
 }

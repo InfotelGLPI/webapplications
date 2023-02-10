@@ -33,10 +33,9 @@ Html::header_nocache();
 
 Session::checkLoginUser();
 
-if(isset($_POST['type'])
+if (isset($_POST['type'])
    && isset($_POST['value'])
 && $_POST['value'] > 0) {
-
     switch ($_POST['type']) {
         case PluginWebapplicationsDashboard::getType():
             $_SESSION['plugin_webapplications_loaded_appliances_id'] = $_POST['value'];

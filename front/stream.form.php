@@ -46,59 +46,44 @@ global $CFG_GLPI;
 $stream = new PluginWebapplicationsStream();
 
 if (isset($_POST["add"])) {
-
     $stream->check(-1, CREATE, $_POST);
     $newID = $stream->add($_POST);
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($stream->getFormURL() . "?id=" . $newID);
     }
     Html::back();
-
-} else if (isset($_POST["delete"])) {
-
+} elseif (isset($_POST["delete"])) {
     $stream->check($_POST['id'], DELETE);
     $stream->delete($_POST);
     $stream->redirectToList();
-
-} else if (isset($_POST["restore"])) {
-
+} elseif (isset($_POST["restore"])) {
     $stream->check($_POST['id'], PURGE);
     $stream->restore($_POST);
     $stream->redirectToList();
-
-} else if (isset($_POST["purge"])) {
+} elseif (isset($_POST["purge"])) {
     $stream->check($_POST['id'], PURGE);
     $stream->delete($_POST, 1);
     $stream->redirectToList();
-
-} else if (isset($_POST["update"])) {
-
+} elseif (isset($_POST["update"])) {
     $stream->check($_POST['id'], UPDATE);
     $stream->pre_update();
     $stream->update($_POST);
     Html::back();
-
-}
-else if (isset($_GET['_in_modal'])) {
+} elseif (isset($_GET['_in_modal'])) {
     Html::popHeader(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF']);
     $_SESSION['reload']=true;
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true", 'stream_types' => $CFG_GLPI['stream_types']];
-    if(isset($_GET['appliance_id'])) {
+    if (isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
     $menus = ["appliancedashboard", "stream"];
-    PluginWebapplicationsStream::displayFullPageForItem($_GET['id'], $menus, $options );
+    PluginWebapplicationsStream::displayFullPageForItem($_GET['id'], $menus, $options);
 
     Html::popFooter();
-
-}
-else {
-
+} else {
     if (Session::getCurrentInterface() == "central") {
-
         Html::header(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsstream", "config");
         $stream->display(['id' => $_GET["id"], 'stream_types' => $CFG_GLPI['stream_types']]);
     }
     Html::footer();
 }
-

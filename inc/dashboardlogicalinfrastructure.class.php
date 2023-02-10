@@ -35,29 +35,28 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsDashboardAdministration
  */
-class PluginWebapplicationsDashboardLogicalInfrastructure extends CommonDBTM {
+class PluginWebapplicationsDashboardLogicalInfrastructure extends CommonDBTM
+{
+    public static $rightname         = "plugin_webapplications_logical_infra_dashboards";
 
-    static $rightname         = "plugin_webapplications_logical_infra_dashboards";
-
-    static function getTypeName($nb = 0) {
-
-        return __('DashboardLogicalInfrastructure', 'webapplications');
-    }
-
-
-    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
+    public static function getTypeName($nb = 0)
+    {
         return __('Logical Infrastructure', 'webapplications');
-
     }
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate=0)
+    {
+        return __('Logical Infrastructure', 'webapplications');
+    }
+
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
         self::showLists();
         return true;
     }
 
-    function showForm($ID, $options = [])
+    public function showForm($ID, $options = [])
     {
         global $CFG_GLPI;
 
@@ -79,11 +78,10 @@ class PluginWebapplicationsDashboardLogicalInfrastructure extends CommonDBTM {
         $array['value']='__VALUE__';
         $array['type']=self::getType();
         Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-LogicalInfra', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
-
     }
 
-    static function showLists() {
-
+    public static function showLists()
+    {
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $appliance = new Appliance();
@@ -107,12 +105,5 @@ class PluginWebapplicationsDashboardLogicalInfrastructure extends CommonDBTM {
         echo "<hr>";
 
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
-
-
     }
-
-
-
-
-
 }

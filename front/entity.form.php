@@ -44,54 +44,40 @@ if (!isset($_GET["withtemplate"])) {
 $entity = new PluginWebapplicationsEntity();
 
 if (isset($_POST["add"])) {
-
     $entity->check(-1, CREATE, $_POST);
     $newID = $entity->add($_POST);
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($entity->getFormURL() . "?id=" . $newID);
     }
     Html::back();
-
-} else if (isset($_POST["delete"])) {
-
+} elseif (isset($_POST["delete"])) {
     $entity->check($_POST['id'], DELETE);
     $entity->delete($_POST);
     $entity->redirectToList();
-
-} else if (isset($_POST["restore"])) {
-
+} elseif (isset($_POST["restore"])) {
     $entity->check($_POST['id'], PURGE);
     $entity->restore($_POST);
     $entity->redirectToList();
-
-} else if (isset($_POST["purge"])) {
+} elseif (isset($_POST["purge"])) {
     $entity->check($_POST['id'], PURGE);
     $entity->delete($_POST, 1);
     $entity->redirectToList();
-
-} else if (isset($_POST["update"])) {
-
+} elseif (isset($_POST["update"])) {
     $entity->check($_POST['id'], UPDATE);
     $entity->update($_POST);
     Html::back();
-
-}
-else if (isset($_GET['_in_modal'])) {
+} elseif (isset($_GET['_in_modal'])) {
     $_SESSION['reload']=true;
     Html::popHeader(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF']);
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
-    if(isset($_GET['appliance_id'])) {
+    if (isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
     $menus = ["appliancedashboard", "entity"];
-    PluginWebapplicationsEntity::displayFullPageForItem($_GET['id'], $menus, $options );
+    PluginWebapplicationsEntity::displayFullPageForItem($_GET['id'], $menus, $options);
     Html::popFooter();
-
-}
-else {
-
+} else {
     if (Session::getCurrentInterface() == "central") {
-
         Html::header(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsentity", "config");
         $entity->display(['id' => $_GET["id"]]);
     }

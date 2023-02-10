@@ -45,19 +45,14 @@ $process = new PluginWebapplicationsProcess();
 $processEntity = new PluginWebapplicationsProcess_Entity();
 
 if (isset($_POST["add"])) {
-
     $process->check(-1, CREATE, $_POST);
     $newID = $processEntity->add($_POST);
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($processEntity->getFormURL() . "?id=" . $newID);
     }
     Html::back();
-
-
-} else if (isset($_POST["update"])) {
-
+} elseif (isset($_POST["update"])) {
     $process->check($_POST['id'], UPDATE);
     $processEntity->update($_POST);
     Html::back();
-
 }

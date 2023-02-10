@@ -35,37 +35,37 @@ if (!defined('GLPI_ROOT')) {
 /**
  * Class PluginWebapplicationsDashboardProcess
  */
-class PluginWebapplicationsDashboardProcess extends CommonDBTM {
+class PluginWebapplicationsDashboardProcess extends CommonDBTM
+{
+    public static $rightname         = "plugin_webapplications_process_dashboards";
 
-    static $rightname         = "plugin_webapplications_process_dashboards";
-
-    static function getTypeName($nb = 0) {
-
+    public static function getTypeName($nb = 0)
+    {
         return _n('Process', 'Processes', $nb, 'webapplications');
     }
 
-    function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
-
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
         if ($_SESSION['glpishow_count_on_tabs']) {
             $nbProcess = count(self::getProcesses());
             return self::createTabEntry(self::getTypeName($nbProcess), $nbProcess);
         }
-        return __('Processes', 'webapplications');
-
+        return _n('Process', 'Processes', 2, 'webapplications');
     }
 
-    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
         self::showLists();
         return true;
     }
 
-    static function getProcesses(){
-
+    public static function getProcesses()
+    {
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $procsAppDBTM = new Appliance_Item();
-        $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsProcess']);
+        $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId,
+            'itemtype' => 'PluginWebapplicationsProcess']);
 
 
         $listProcId = array();
@@ -76,7 +76,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
         }
 
         $listProcesses = array();
-        if(!empty($listProcId)){
+        if (!empty($listProcId)) {
             $processDBTM = new PluginWebapplicationsProcess();
             $listProcesses = $processDBTM->find(['id' => $listProcId]);
         }
@@ -84,7 +84,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
     }
 
 
-    function showForm($ID, $options = [])
+    public function showForm($ID, $options = [])
     {
         global $CFG_GLPI;
 
@@ -106,11 +106,10 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
         $array['value']='__VALUE__';
         $array['type']=self::getType();
         Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-Process', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
-
     }
 
-    static function showLists() {
-
+    public static function showLists()
+    {
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $appliance = new Appliance();
@@ -145,21 +144,19 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
             'icon' => 'fas fa-plus',
             'data-bs-toggle' => 'modal',
             'data-bs-target' =>'#addProc',
-            'style' => 'float: right']
-        );
-        echo Ajax::createIframeModalWindow('addProc',
+            'style' => 'float: right']);
+        echo Ajax::createIframeModalWindow(
+            'addProc',
             $linkAddProc . "?appliance_id=" . $ApplianceId,
             ['display' => false,
                 'reloadonclose' => true]
-
         );
 
         echo "</h2>";
         echo "<div class='accordion' name=listProcessesApp>";
 
-        if(!empty($listProc)){
+        if (!empty($listProc)) {
             foreach ($listProc as $process) {
-
                 $name = $process['name'];
 
                 echo "<h3 class='accordionhead'>$name</h3>";
@@ -186,7 +183,8 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "<td style='width: 10%'>";
                 echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editProcess'.$process['id']]);
 
-                echo Ajax::createIframeModalWindow('editProcess'.$process['id'],
+                echo Ajax::createIframeModalWindow(
+                    'editProcess'.$process['id'],
                     $linkProc,
                     ['display' => false,
                         'reloadonclose' => true]
@@ -206,8 +204,11 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo __("Owner", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                if($ownerid>0) echo "<a href=$linkOwner>$ownerName</a>";
-                else echo $ownerName;
+                if ($ownerid>0) {
+                    echo "<a href=$linkOwner>$ownerName</a>";
+                } else {
+                    echo $ownerName;
+                }
                 echo "</td>";
                 echo "</tr>";
 
@@ -218,7 +219,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo __('List Entities','webapplications');
+                echo __('List Entities', 'webapplications');
                 echo "</th>";
                 echo "</tr>";
 
@@ -226,7 +227,6 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "<td></td>";
                 echo "<td>";
                 if (!empty($entities)) {
-
                     echo "<select name='entities' id='list' Size='3' ondblclick='location = this.value;'>";
                     foreach ($entities as $entity) {
                         $entityDBTM->getFromDB($entity['plugin_webapplications_entities_id']);
@@ -235,8 +235,9 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                         echo "<option value=$link>$name</option>";
                     }
                     echo "</select>";
-
-                } else echo __("no associated entity",'webapplications');
+                } else {
+                    echo __("no associated entity", 'webapplications');
+                }
                 echo "</td>";
                 echo "</tr>";
 
@@ -247,7 +248,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th>";
-                echo __('List Appliances','webapplications');
+                echo __('Appliances list', 'webapplications');
                 echo "</th>";
                 echo "</tr>";
 
@@ -255,7 +256,6 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "<td></td>";
                 echo "<td>";
                 if (!empty($appliances)) {
-
                     echo "<select name='appliances' id='list' Size='3' ondblclick='location = this.value;'>";
                     foreach ($appliances as $appliance) {
                         $applianceDBTM->getFromDB($appliance['appliances_id']);
@@ -264,8 +264,9 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                         echo "<option value=$link>$name</option>";
                     }
                     echo "</select>";
-
-                } else echo __("no associated entity",'webapplications');
+                } else {
+                    echo __("no associated entity", 'webapplications');
+                }
                 echo "</td>";
                 echo "</tr>";
 
@@ -278,7 +279,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
 
                 echo "<tr>";
                 echo "<th style='padding-top: 20px; padding-bottom: 20px'>";
-                echo __('DICT','webapplications');
+                echo __('DICT', 'webapplications');
                 echo "</th>";
                 echo "<td class='inTable'>";
 
@@ -295,7 +296,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "<td></td>";
 
                 echo "<td class='dict'>";
-                echo __('Integrity','webapplications')."&nbsp";
+                echo __('Integrity', 'webapplications')."&nbsp";
                 echo "</td>";
                 echo "<td name='webapplicationintegrities' id='6'>";
                 echo $int;
@@ -304,7 +305,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "<td></td>";
 
                 echo "<td class='dict'>";
-                echo __('Confidentiality','webapplications')."&nbsp";
+                echo __('Confidentiality', 'webapplications')."&nbsp";
                 echo "</td>";
                 echo "<td name='webapplicationconfidentialities' id='7'>";
                 echo $conf;
@@ -313,7 +314,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "<td></td>";
 
                 echo "<td class='dict'>";
-                echo __('Tracabeality','webapplications')."&nbsp";
+                echo __('Tracabeality', 'webapplications')."&nbsp";
                 echo "</td>";
                 echo "<td name='webapplicationtraceabilities' id='8'>";
                 echo $tra;
@@ -342,14 +343,12 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM {
                 echo "</tbody>";
                 echo "</table></div>";
             }
+        } else {
+            echo __("No associated process", 'webapplications');
         }
-        else echo __("No process",'webapplications');
 
         echo "</div>";
 
         echo "<script>accordion();</script>";
-
-
     }
-
 }

@@ -28,7 +28,7 @@
  */
 
 if (!defined('GLPI_ROOT')) {
-   die("Sorry. You can't access directly to this file");
+    die("Sorry. You can't access directly to this file");
 }
 
 use Glpi\Application\View\TemplateRenderer;
@@ -36,17 +36,17 @@ use Glpi\Application\View\TemplateRenderer;
 /**
  * Class PluginWebapplicationsStream
  */
-class PluginWebapplicationsStream extends CommonDBTM {
+class PluginWebapplicationsStream extends CommonDBTM
+{
+    public static $rightname         = "plugin_webapplications_streams";
 
-    static $rightname         = "plugin_webapplications_streams";
+    public static function getTypeName($nb = 0)
+    {
+        return _n('Stream', 'Streams', $nb, 'webapplications');
+    }
 
-   static function getTypeName($nb = 0) {
-
-      return _n('Stream', 'Streams', $nb, 'webapplications');
-   }
-
-    static function getMenuContent() {
-
+    public static function getMenuContent()
+    {
         $menu = [];
 
         $menu['title']           = self::getMenuName();
@@ -63,21 +63,21 @@ class PluginWebapplicationsStream extends CommonDBTM {
     }
 
 
-    static function getIcon() {
+    public static function getIcon()
+    {
         return "fas fa-rss";
     }
 
 
-    function showForm($ID, $options = []) {
-
+    public function showForm($ID, $options = [])
+    {
         $this->initForm($ID, $options);
 
         $this->getFromDB($ID);
 
         $transmitter_type = $this->getField('transmitter_type');
         $transmitterId = $this->getField('transmitter');
-        if(!empty($transmitter_type) && !empty($transmitterId)){
-
+        if (!empty($transmitter_type) && !empty($transmitterId)) {
             $transmitter = new $transmitter_type;
             $transmitter->getFromDB($transmitterId);
             $linkTransmitter= $transmitter_type::getFormURLWithID($transmitterId);
@@ -88,8 +88,7 @@ class PluginWebapplicationsStream extends CommonDBTM {
 
         $receiver_type = $this->getField('receiver_type');
         $receiverId = $this->getField('receiver');
-        if(!empty($receiver_type) && !empty($receiverId)) {
-
+        if (!empty($receiver_type) && !empty($receiverId)) {
             $receiver = new $receiver_type;
             $receiver->getFromDB($receiverId);
             $linkReceiver = $receiver_type::getFormURLWithID($receiverId);
@@ -107,34 +106,33 @@ class PluginWebapplicationsStream extends CommonDBTM {
         return true;
     }
 
-    function pre_update()
+    public function pre_update()
     {
-        if(isset($_POST["update"])){
-            if(isset($_POST["transmitter_type"])){
-                if((strcmp($_POST["transmitter_type"], "0")==0) || (strcmp($_POST["transmitter"], "0")==0)){
+        if (isset($_POST["update"])) {
+            if (isset($_POST["transmitter_type"])) {
+                if ((strcmp($_POST["transmitter_type"], "0")==0) || (strcmp($_POST["transmitter"], "0")==0)) {
                     unset($_POST['transmitter_type'], $_POST['transmitter']);
                 }
             }
-            if(isset($_POST["receiver_type"])){
-                if((strcmp($_POST["receiver_type"], "0")==0) || (strcmp($_POST["receiver"], "0")==0)){
+            if (isset($_POST["receiver_type"])) {
+                if ((strcmp($_POST["receiver_type"], "0")==0) || (strcmp($_POST["receiver"], "0")==0)) {
                     unset($_POST['receiver_type'], $_POST['receiver']);
                 }
             }
         }
     }
 
-    function post_addItem()
+    public function post_addItem()
     {
         $appliance_id = $this->input['appliances_id'];
-        if(!is_null($appliance_id)&&$appliance_id!=0){
-
+        if (!is_null($appliance_id)&&$appliance_id!=0) {
             $itemDBTM = new Appliance_Item();
             $itemDBTM->add(['appliances_id' => $appliance_id, 'items_id' => $this->getID(), 'itemtype' => 'PluginWebapplicationsStream']);
-
         }
     }
 
-    function defineTabs($options=[]) {
+    public function defineTabs($options = [])
+    {
         $ong = [];
         //add main tab for current object
         $this->addDefaultFormTab($ong);
@@ -142,6 +140,4 @@ class PluginWebapplicationsStream extends CommonDBTM {
         $this->addStandardTab('PluginWebapplicationsStream_Item', $ong, $options);
         return $ong;
     }
-
-
 }
