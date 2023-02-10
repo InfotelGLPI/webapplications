@@ -4,72 +4,291 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Xavier CAILLAUD <thetsmr@gmail.com>, 2021
+# Xavier CAILLAUD <thetsmr@gmail.com>, 2023
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 10:32+0000\n"
+"POT-Creation-Date: 2023-02-10 13:56+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
-"Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2021\n"
+"Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2023\n"
 "Language-Team: French (France) (https://www.transifex.com/infotelGLPI/teams/12376/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr_FR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: hook.php:279
+#: hook.php:296 inc/dashboard.class.php:405
 msgid "Backoffice URL"
 msgstr "URL d'administration"
 
-#: setup.php:72 inc/appliance.class.php:44 inc/profile.class.php:175
-#: inc/webapplication.class.php:48
+#: setup.php:110 inc/appliance.class.php:43 inc/databaseinstance.class.php:43
+#: inc/profile.class.php:194 inc/webapplication.class.php:48
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "Application Web"
 msgstr[1] "Applications Web"
+msgstr[2] "Applications Web"
 
-#: front/webapplication.php:42 front/webapplication.php:45
+#: front/webapplication.php:42 front/webapplication.php:48
 msgid "Core migration"
 msgstr "Migration dans le coeur"
 
-#: front/webapplication.php:47
+#: front/webapplication.php:52
 msgid "Are you sure you want to do core migration ?"
 msgstr "Êtes-vous sûr de vouloir effectuer une migration de base ?"
 
-#: front/webapplication.php:58
+#: front/webapplication.php:64
 msgid "Data migration"
 msgstr "Migration des données"
 
-#: front/webapplication.php:144
+#: front/webapplication.php:151
 msgid "Tables purge"
 msgstr "Purge des tables"
 
-#: front/webapplication.php:166
+#: front/webapplication.php:175
 msgid "Link with core purge"
 msgstr "Purge des liens avec le coeur"
 
-#: front/webapplication.php:187
+#: front/webapplication.php:196
 msgid "Migration was successful"
 msgstr "La migration a réussi"
 
-#: inc/webapplicationservertype.class.php:49
+#: inc/dashboard.class.php:44
+msgid "Appliance dashboard"
+msgstr "Dashboard applicatif"
+
+#: inc/dashboard.class.php:199
+msgid "Administrator"
+msgid_plural "Administrators"
+msgstr[0] "Administrateur"
+msgstr[1] "Documents associés"
+msgstr[2] "Administrateurs"
+
+#: inc/dashboard.class.php:211
+msgid "Associated document"
+msgid_plural "Associated documents"
+msgstr[0] "Document associé"
+msgstr[1] "Documents associés"
+msgstr[2] "Documents associés"
+
+#: inc/dashboard.class.php:230
+msgid "Summary"
+msgstr "Résumé"
+
+#: inc/dashboard.class.php:269 inc/dashboardecosystem.class.php:44
+#: inc/dashboardecosystem.class.php:138
+msgid "Ecosystem"
+msgstr "Ecosystème"
+
+#: inc/dashboard.class.php:291 inc/dashboarddatabase.class.php:348
+#: inc/webapplicationexternalexposition.class.php:49
+msgid "External exposition"
+msgid_plural "External exposition"
+msgstr[0] "Exposition externe"
+msgstr[1] "Expositions externe"
+msgstr[2] "Expositions externe"
+
+#: inc/dashboard.class.php:321 inc/webapplicationservertype.class.php:49
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] "Type de serveur de traitement"
 msgstr[1] "Types de serveur de traitement"
+msgstr[2] "Types de serveur de traitement"
 
-#: inc/webapplicationtechnic.class.php:49
+#: inc/dashboard.class.php:332 inc/webapplicationtechnic.class.php:49
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
-msgstr[0] "Langue de traitement"
-msgstr[1] "Langues de traitement"
+msgstr[0] "Langage de l'applicatif"
+msgstr[1] "Langages de l'applicatif"
+msgstr[2] "Langages de l'applicatif"
+
+#: inc/dashboard.class.php:339 inc/dashboarddatabase.class.php:283
+#: inc/dashboardprocess.class.php:282
+msgid "DICT"
+msgstr "DICT"
+
+#: inc/dashboard.class.php:363 inc/dashboarddatabase.class.php:313
+#: inc/dashboardprocess.class.php:299
+msgid "Integrity"
+msgstr "Intégrité"
+
+#: inc/dashboard.class.php:372 inc/dashboarddatabase.class.php:322
+#: inc/dashboardprocess.class.php:308
+msgid "Confidentiality"
+msgstr "Confidentialité"
+
+#: inc/dashboard.class.php:381 inc/dashboarddatabase.class.php:332
+#: inc/dashboardprocess.class.php:317
+msgid "Tracabeality"
+msgstr "Tracabilité"
+
+#: inc/dashboard.class.php:397
+msgid "Installed version"
+msgstr "Version installée"
+
+#: inc/dashboard.class.php:430 inc/dashboardprocess.class.php:44
+#: inc/dashboardprocess.class.php:53 inc/dashboardprocess.class.php:138
+#: inc/process.class.php:46 inc/process_entity.class.php:64
+#: inc/process_entity.class.php:129 inc/profile.class.php:202
+msgid "Process"
+msgid_plural "Processes"
+msgstr[0] "Processus"
+msgstr[1] "Processus"
+msgstr[2] "Processus"
+
+#: inc/dashboard.class.php:442 inc/dashboardecosystem.class.php:226
+msgid "List Processes"
+msgstr "Liste des processus"
+
+#: inc/dashboard.class.php:458 inc/dashboardecosystem.class.php:243
+#: inc/dashboardprocess.class.php:347
+msgid "No associated process"
+msgstr "Pas de processus associé"
+
+#: inc/dashboard.class.php:467
+msgid "Application"
+msgstr "Application"
+
+#: inc/dashboard.class.php:479
+msgid "List Databases"
+msgstr "Liste des bases de données"
+
+#: inc/dashboard.class.php:495
+msgid "No associated database"
+msgstr "Pas de base de donnée associée"
+
+#: inc/dashboard.class.php:535
+msgid "Referent editor"
+msgstr "Editeur référent"
+
+#: inc/dashboard.class.php:547
+msgid "Mail support"
+msgstr "Email de support"
+
+#: inc/dashboard.class.php:564
+msgid "Phone support"
+msgstr "Support téléphonique"
+
+#: inc/dashboardadministration.class.php:44
+msgid "Dashboard Administration"
+msgstr "Administration du dashboard"
+
+#: inc/dashboarddatabase.class.php:244
+msgid "Technology type"
+msgstr "Type de technologie"
+
+#: inc/dashboarddatabase.class.php:258
+msgid "List Streams"
+msgstr "Liste des flux"
+
+#: inc/dashboarddatabase.class.php:275
+msgid "no associated stream"
+msgstr "Pas de flux associé"
+
+#: inc/dashboardecosystem.class.php:213 inc/dashboardprocess.class.php:204
+msgid "Owner"
+msgstr "Propriétaire"
+
+#: inc/dashboardecosystem.class.php:252
+msgid "Security Contact"
+msgstr "Contact de sécurité"
+
+#: inc/dashboardecosystem.class.php:262
+msgid "Relation nature"
+msgstr "Nature de la relation"
+
+#: inc/dashboardecosystem.class.php:275
+msgid "no entity"
+msgstr "Pas d'entité trouvée"
+
+#: inc/dashboardlogicalinfrastructure.class.php:44
+#: inc/dashboardlogicalinfrastructure.class.php:50
+#: inc/dashboardlogicalinfrastructure.class.php:104
+msgid "Logical Infrastructure"
+msgstr "Infrastructure logique"
+
+#: inc/dashboardphysicalinfrastructure.class.php:44
+#: inc/dashboardphysicalinfrastructure.class.php:129
+msgid "Physical Infrastructure"
+msgstr "Infrastructure physique"
+
+#: inc/dashboardphysicalinfrastructure.class.php:267
+msgid "Technical characteristics"
+msgstr "Caractéristiques techniques"
+
+#: inc/dashboardprocess.class.php:222
+msgid "List Entities"
+msgstr "Liste des entités"
+
+#: inc/dashboardprocess.class.php:239 inc/dashboardprocess.class.php:268
+msgid "no associated entity"
+msgstr "Pas d'entité associée"
+
+#: inc/dashboardprocess.class.php:251
+msgid "Appliances list"
+msgstr "Liste des applicatifs"
+
+#: inc/dashboardstream.class.php:44 inc/dashboardstream.class.php:53
+#: inc/dashboardstream.class.php:138 inc/profile.class.php:198
+#: inc/stream.class.php:45
+msgid "Stream"
+msgid_plural "Streams"
+msgstr[0] "Flux"
+msgstr[1] "Flux"
+msgstr[2] "Flux"
+
+#: inc/dashboardstream.class.php:205
+msgid "Source"
+msgstr "Source"
+
+#: inc/dashboardstream.class.php:222
+msgid "Destination"
+msgstr "Destination"
+
+#: inc/dashboardstream.class.php:284
+msgid "Protocole"
+msgstr "Protocole"
+
+#: inc/dashboardstream.class.php:296
+msgid "No stream founded"
+msgstr "Pas de flux trouvé"
+
+#: inc/item.class.php:43
+msgid "Item"
+msgid_plural "Items"
+msgstr[0] "Item"
+msgstr[1] "Items"
+msgstr[2] "Items"
+
+#: inc/process_entity.class.php:46
+msgid "Process Entity"
+msgid_plural "Processes Entity"
+msgstr[0] "Processus de l'entité"
+msgstr[1] "Processus de l'entité"
+msgstr[2] "Processus de l'entité"
+
+#: inc/process_entity.class.php:106
+msgid "Add a process"
+msgstr "Ajouter un processus"
+
+#: inc/process_entity.class.php:169
+msgid "Add an entity"
+msgstr "Ajouter une entité"
+
+#: inc/profile.class.php:206
+msgid "Dashboard"
+msgid_plural "Dashboards"
+msgstr[0] "Dashboard"
+msgstr[1] "Dashboards"
+msgstr[2] "Dashboards"
 
 #: inc/webapplicationtype.class.php:50
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Catégorie"
 msgstr[1] "Catégories"
+msgstr[2] "Catégories"
