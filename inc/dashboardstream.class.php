@@ -240,7 +240,7 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM
 
                 echo "<tr>";
                 echo "<th>";
-                echo __("Encryption");
+                echo __("Encryption", 'webapplications');
                 echo "</th>";
                 echo "<td>";
                 if ($encryption==0) {
@@ -257,7 +257,7 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM
                     echo "<td></td>";
                 } else {
                     echo "<th>";
-                    echo __("Encryption type");
+                    echo __("Encryption type", 'webapplications');
                     echo "</th>";
                     echo "<td>";
                     echo $encryption_type;
@@ -293,7 +293,7 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM
                 echo "</table></div>";
             }
         } else {
-            echo __("No stream founded", 'webapplications');
+            echo __("No associated stream", 'webapplications');
         }
         echo "</div>";
 

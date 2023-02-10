@@ -83,7 +83,7 @@
                 <div class="row flex-row">
 
 
-                    {{ fields.smallTitle(__('Security Needs'))}}
+                    {{ fields.smallTitle(__('Security Needs', 'webapplications'))}}
                     <a><h2 class="fas fa-info fa-fw"
                            title="Critères DICT :
 Disponibilité (D) : Identifier l’impact sur la disponibilité de l’actif informatique suite à la réalisation du changement
@@ -164,7 +164,7 @@ Traçabilité (T) : Identifier l’impact sur les traitements de l’actif infor
                         </tbody>
                     </table>
 
-                    {{ fields.smallTitle(__('Installation')) }}
+                    {{ fields.smallTitle(__('Validation', 'webapplications')) }}
 
                     {% if item.isField('webapplicationreferringdepartmentvalidation') %}
                         {{ fields.dropdownYesNo(
@@ -184,7 +184,7 @@ Traçabilité (T) : Identifier l’impact sur les traitements de l’actif infor
 
 
                     <div id="support">
-                        {{ fields.smallTitle(__('Support')) }}
+                        {{ fields.smallTitle(__('Support', 'webapplications')) }}
 
                         {% if item.isField('webapplicationmailsupport') %}
                             {{ fields.autoNameField(

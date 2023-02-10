@@ -300,7 +300,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
 
                     echo "<table style='text-align : center; width: 60%'>";
                     echo "<td class='dict'>";
-                    echo __('Availability')."&nbsp";
+                    echo __('Availability', 'webapplications')."&nbsp";
                     echo "</td>";
 
                     echo "<td name='webapplicationavailabilities' id='5'>";
@@ -329,7 +329,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
                     echo "<td></td>";
 
                     echo "<td class='dict'>";
-                    echo __('Tracabeality', 'webapplications')."&nbsp";
+                    echo __('Traceability', 'webapplications')."&nbsp";
                     echo "</td>";
                     echo "<td name='webapplicationtraceabilities' id='8'>";
                     echo $tra;
@@ -367,7 +367,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
                 echo "</table></div>";
             }
         } else {
-            echo __("No database");
+            echo __("No associated database", 'webapplications');
         }
         echo "</div>";
 

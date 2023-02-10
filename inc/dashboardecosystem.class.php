@@ -65,7 +65,8 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $entitiesAppDBTM = new Appliance_Item();
-        $entitiesApp     = $entitiesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsEntity']);
+        $entitiesApp     = $entitiesAppDBTM->find(['appliances_id' => $ApplianceId,
+            'itemtype' => 'PluginWebapplicationsEntity']);
 
 
         $listEntitiesId = array();
