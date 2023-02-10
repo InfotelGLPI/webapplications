@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 13:56+0000\n"
+"POT-Creation-Date: 2023-02-10 14:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,7 +198,7 @@ msgstr ""
 #: inc/dashboardlogicalinfrastructure.class.php:44
 #: inc/dashboardlogicalinfrastructure.class.php:50
 #: inc/dashboardlogicalinfrastructure.class.php:104
-msgid "Logical Infrastructure"
+msgid "Logical infrastructure"
 msgstr ""
 
 #: inc/dashboardphysicalinfrastructure.class.php:44
@@ -245,12 +245,6 @@ msgstr ""
 #: inc/dashboardstream.class.php:296
 msgid "No stream founded"
 msgstr ""
-
-#: inc/item.class.php:43
-msgid "Item"
-msgid_plural "Items"
-msgstr[0] ""
-msgstr[1] ""
 
 #: inc/process_entity.class.php:46
 msgid "Process Entity"
