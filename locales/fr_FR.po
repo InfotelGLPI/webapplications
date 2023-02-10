@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 14:05+0000\n"
+"POT-Creation-Date: 2023-02-10 14:15+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2023\n"
 "Language-Team: French (France) (https://www.transifex.com/infotelGLPI/teams/12376/fr_FR/)\n"
@@ -74,6 +74,10 @@ msgid_plural "Associated documents"
 msgstr[0] "Document associé"
 msgstr[1] "Documents associés"
 msgstr[2] "Documents associés"
+
+#: inc/dashboard.class.php:222
+msgid "No associated documents"
+msgstr "Pas de documents associées"
 
 #: inc/dashboard.class.php:230
 msgid "Summary"
@@ -186,8 +190,8 @@ msgid "List Streams"
 msgstr "Liste des flux"
 
 #: inc/dashboarddatabase.class.php:275
-msgid "no associated stream"
-msgstr "Pas de flux associé"
+msgid "No associated stream"
+msgstr "Pas de flux associés"
 
 #: inc/dashboardecosystem.class.php:213 inc/dashboardprocess.class.php:204
 msgid "Owner"
@@ -202,7 +206,7 @@ msgid "Relation nature"
 msgstr "Nature de la relation"
 
 #: inc/dashboardecosystem.class.php:275
-msgid "no entity"
+msgid "No entity founded"
 msgstr "Pas d'entité trouvée"
 
 #: inc/dashboardlogicalinfrastructure.class.php:44
@@ -225,8 +229,8 @@ msgid "List Entities"
 msgstr "Liste des entités"
 
 #: inc/dashboardprocess.class.php:239 inc/dashboardprocess.class.php:268
-msgid "no associated entity"
-msgstr "Pas d'entité associée"
+msgid "No associated entity"
+msgstr "Pas d'entités associés"
 
 #: inc/dashboardprocess.class.php:251
 msgid "Appliances list"
