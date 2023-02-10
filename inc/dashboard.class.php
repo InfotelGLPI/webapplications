@@ -219,7 +219,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             echo "</select>";
             echo "</div>";
         } else {
-            echo __("No associated documents");
+            echo __("No associated documents", 'webapplications');
         }
 
 
