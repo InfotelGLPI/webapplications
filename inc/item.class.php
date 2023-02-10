@@ -40,7 +40,7 @@ class PluginWebapplicationsItem extends CommonDBTM
 {
     public static function getTypeName($nb = 0)
     {
-        return _n('Item', 'Items', $nb, 'webapplications');
+        return _n('Item', 'Items', $nb);
     }
     
 

@@ -41,13 +41,13 @@ class PluginWebapplicationsDashboardLogicalInfrastructure extends CommonDBTM
 
     public static function getTypeName($nb = 0)
     {
-        return __('Logical Infrastructure', 'webapplications');
+        return __('Logical infrastructure', 'webapplications');
     }
 
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate=0)
     {
-        return __('Logical Infrastructure', 'webapplications');
+        return __('Logical infrastructure', 'webapplications');
     }
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
@@ -101,7 +101,7 @@ class PluginWebapplicationsDashboardLogicalInfrastructure extends CommonDBTM
                            </h3>
         </div>';
 
-        echo "<h1>".__('Logical Infrastructure', 'webapplications')."</h1>";
+        echo "<h1>".__('Logical infrastructure', 'webapplications')."</h1>";
         echo "<hr>";
 
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
