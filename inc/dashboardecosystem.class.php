@@ -272,7 +272,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM
                 echo "</table></div>";
             }
         } else {
-            echo __("no entity", 'webapplications');
+            echo __("No entity founded", 'webapplications');
         }
 
         echo "</div>";

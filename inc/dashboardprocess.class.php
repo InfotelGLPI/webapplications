@@ -236,7 +236,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM
                     }
                     echo "</select>";
                 } else {
-                    echo __("no associated entity", 'webapplications');
+                    echo __("No associated entity", 'webapplications');
                 }
                 echo "</td>";
                 echo "</tr>";
@@ -265,7 +265,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM
                     }
                     echo "</select>";
                 } else {
-                    echo __("no associated entity", 'webapplications');
+                    echo __("No associated entity", 'webapplications');
                 }
                 echo "</td>";
                 echo "</tr>";

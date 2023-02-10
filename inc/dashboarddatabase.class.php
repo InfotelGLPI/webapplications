@@ -272,7 +272,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
                     }
                     echo "</select>";
                 } else {
-                    echo __("no associated stream", 'webapplications');
+                    echo __("No associated stream", 'webapplications');
                 }
                 echo "</td>";
                 echo "</tr>";
