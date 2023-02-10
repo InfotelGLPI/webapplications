@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GLPI - Webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-10 13:56+0000\n"
+"POT-Creation-Date: 2023-02-10 14:05+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2023\n"
 "Language-Team: French (France) (https://www.transifex.com/infotelGLPI/teams/12376/fr_FR/)\n"
@@ -208,7 +208,7 @@ msgstr "Pas d'entité trouvée"
 #: inc/dashboardlogicalinfrastructure.class.php:44
 #: inc/dashboardlogicalinfrastructure.class.php:50
 #: inc/dashboardlogicalinfrastructure.class.php:104
-msgid "Logical Infrastructure"
+msgid "Logical infrastructure"
 msgstr "Infrastructure logique"
 
 #: inc/dashboardphysicalinfrastructure.class.php:44
@@ -256,13 +256,6 @@ msgstr "Protocole"
 #: inc/dashboardstream.class.php:296
 msgid "No stream founded"
 msgstr "Pas de flux trouvé"
-
-#: inc/item.class.php:43
-msgid "Item"
-msgid_plural "Items"
-msgstr[0] "Item"
-msgstr[1] "Items"
-msgstr[2] "Items"
 
 #: inc/process_entity.class.php:46
 msgid "Process Entity"
