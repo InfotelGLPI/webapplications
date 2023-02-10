@@ -1,0 +1,68 @@
+{% import "components/form/fields_macros.html.twig" as fields %}
+
+{% extends "generic_show_form.html.twig" %}
+
+{% block more_fields %}
+
+    {{ fields.noLabelField(
+        html_side
+    ) }}
+
+    {{ fields.dropdownItemsFromItemtypes(
+        'transmitter',
+        __('Transmitter', 'webapplications'),
+        {'items_id_name': 'transmitter',
+            'itemtype_name': 'transmitter_type',
+            'itemtypes': params['stream_types']}
+    ) }}
+
+    {{ fields.htmlField(
+        'transmitter',
+        params['linkTransmitter'],
+        __('')
+    ) }}
+
+    {{ fields.dropdownItemsFromItemtypes(
+        'receiver',
+        __('Receiver', 'webapplications'),
+        {'items_id_name': 'receiver',
+            'itemtype_name': 'receiver_type',
+            'itemtypes': params['stream_types']}
+    ) }}
+
+    {{ fields.htmlField(
+        'receiver',
+        params['linkReceiver'],
+        __('')
+    ) }}
+
+    {{ fields.dropdownYesNo(
+        "encryption",
+        item.fields['encryption'],
+        __('Encryption', 'webapplications'),
+    ) }}
+
+    {{ fields.autoNameField(
+        'encryption_type',
+        item,
+        __('Encryption type', 'webapplications'),
+        withtemplate
+    ) }}
+
+    {{ fields.autoNameField(
+        'ports',
+        item,
+        __('Ports', 'webapplications'),
+        withtemplate
+    ) }}
+
+    {{ fields.autoNameField(
+        'protocole',
+        item,
+        __('Protocole', 'webapplications'),
+        withtemplate
+    ) }}
+
+    <input type="hidden" name="appliances_id" value="{{ params['appliances_id'] }}">
+{% endblock %}
+

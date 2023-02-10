@@ -1,0 +1,38 @@
+{% import "components/form/fields_macros.html.twig" as fields %}
+
+
+{% extends "generic_show_form.html.twig" %}
+
+{% block more_fields %}
+
+    {% if item.isField('owner') %}
+        {{ fields.dropdownField(
+            'User',
+            'owner',
+            item.fields['owner'],
+            __('Owner', 'webapplications'),
+            field_options|merge({
+                'right': 'all',
+            })
+        )}}
+    {% endif %}
+
+    {{ fields.autoNameField(
+        'security_contact',
+        item,
+        __('Security Contact', 'webapplications'),
+        withtemplate
+    ) }}
+
+
+    {{ fields.autoNameField(
+        'relation_nature',
+        item,
+        __('Relation Nature', 'webapplications'),
+        withtemplate
+    ) }}
+
+    <input type="hidden" name="appliances_id" value="{{ params['appliances_id'] }}">
+
+{% endblock %}
+

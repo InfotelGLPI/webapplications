@@ -3,7 +3,7 @@
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
  webapplications plugin for GLPI
- Copyright (C) 2009-2022 by the webapplications Development Team.
+ Copyright (C) 2009-2023 by the webapplications Development Team.
 
  https://github.com/InfotelGLPI/webapplications
  -------------------------------------------------------------------------
@@ -33,50 +33,49 @@
 function plugin_webapplications_install() {
    global $DB;
 
-   include_once(PLUGIN_WEBAPPLICATIONS_DIR. "/inc/profile.class.php");
+    include_once(PLUGIN_WEBAPPLICATIONS_DIR . "/inc/profile.class.php");
 
    $update = false;
    //from 3.0 version (glpi 9.5)
-   if (!$DB->tableExists("glpi_plugin_webapplications_webapplicationtypes")
-       && !$DB->tableExists("glpi_plugin_webapplications_appliances")) {
+   if (!$DB->tableExists("glpi_plugin_webapplications_webapplicationtypes")) {
 
-      $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/empty-4.0.0.sql");
+       $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/empty-5.0.0.sql");
 
    } else {
 
       if ($DB->tableExists("glpi_application") && !$DB->tableExists("glpi_plugin_appweb")) {
          $update = true;
-         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.1.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-1.1.sql");
       }
 
       //from 1.1 version
       if ($DB->tableExists("glpi_plugin_appweb") && !$DB->fieldExists("glpi_plugin_appweb", "location")) {
          $update = true;
-         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.3.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-1.3.sql");
       }
 
       //from 1.3 version
       if ($DB->tableExists("glpi_plugin_appweb") && !$DB->fieldExists("glpi_plugin_appweb", "recursive")) {
          $update = true;
-         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.4.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-1.4.sql");
       }
 
       if ($DB->tableExists("glpi_plugin_appweb_profiles")
           && $DB->fieldExists("glpi_plugin_appweb_profiles", "interface")) {
          $update = true;
-         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.5.0.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-1.5.0.sql");
       }
 
       if ($DB->tableExists("glpi_plugin_appweb")
           && !$DB->fieldExists("glpi_plugin_appweb", "helpdesk_visible")) {
          $update = true;
-         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.5.1.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-1.5.1.sql");
       }
 
       if ($DB->tableExists("glpi_plugin_appweb")
           && !$DB->tableExists("glpi_plugin_webapplications_webapplications")) {
          $update = true;
-         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.6.0.sql");
+         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-1.6.0.sql");
 
          //not same index name depending on installation version for (`FK_appweb`, `FK_device`, `device_type`)
          $query = "ALTER TABLE `glpi_plugin_webapplications_webapplications_items` DROP INDEX `FK_compte`;";
@@ -90,7 +89,7 @@ function plugin_webapplications_install() {
       //from 1.6 version
       if ($DB->tableExists("glpi_plugin_webapplications_webapplications")
           && !$DB->fieldExists("glpi_plugin_webapplications_webapplications", "users_id_tech")) {
-         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.8.0.sql");
+          $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-1.8.0.sql");
       }
    }
 
@@ -120,13 +119,18 @@ function plugin_webapplications_install() {
    }
 
    if (!$DB->fieldExists("glpi_plugin_webapplications_webapplicationtypes", "is_recursive")) {
-      $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-1.9.0.sql");
+       $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-1.9.0.sql");
    }
 
-   //from 3.0 version (glpi 9.5)
-   if ($DB->tableExists("glpi_plugin_webapplications_webapplications")
-       && !$DB->tableExists("glpi_plugin_webapplications_appliances")) {
-      $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-3.0.0.sql");
+    //from 3.0 version (glpi 9.5)
+    if ($DB->tableExists("glpi_plugin_webapplications_webapplications")
+        && !$DB->tableExists("glpi_plugin_webapplications_appliances")) {
+        $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR. "/sql/update-3.0.0.sql");
+    }
+
+   //from 4.0 version (glpi 10.0)
+   if (!$DB->tableExists("glpi_plugin_webapplications_processes")) {
+       $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-5.0.0.sql");
    }
 
 
@@ -156,6 +160,9 @@ function plugin_webapplications_install() {
 
       Plugin::migrateItemType([1200 => "PluginAppliancesAppliance"],
                               ["glpi_plugin_webapplications_webapplications_items"]);
+
+      Plugin::migrateItemType([1400 => "PluginDatabasesDatabase"],
+                              ["glpi_plugin_webapplications_webapplications_items"]);
    }
 
    PluginWebapplicationsProfile::initProfile();
@@ -175,12 +182,19 @@ function plugin_webapplications_install() {
 function plugin_webapplications_uninstall() {
    global $DB;
 
-   include_once(PLUGIN_WEBAPPLICATIONS_DIR. "/inc/profile.class.php");
+   include_once(PLUGIN_WEBAPPLICATIONS_DIR . "/inc/profile.class.php");
 
    $tables = ["glpi_plugin_webapplications_appliances",
+              "glpi_plugin_webapplications_databaseinstances",
+              "glpi_plugin_webapplications_streams",
+              "glpi_plugin_webapplications_processes",
+              "glpi_plugin_webapplications_entities",
+              "glpi_plugin_webapplications_dashboards",
+              "glpi_plugin_webapplications_ecosystem_dashboards",
               "glpi_plugin_webapplications_webapplicationtypes",
               "glpi_plugin_webapplications_webapplicationservertypes",
-              "glpi_plugin_webapplications_webapplicationtechnics"];
+              "glpi_plugin_webapplications_webapplicationtechnics",
+              "glpi_plugin_webapplications_webapplicationexternalexpositions"];
 
    foreach ($tables as $table) {
       $DB->query("DROP TABLE IF EXISTS `$table`;");
@@ -232,10 +246,12 @@ function plugin_webapplications_uninstall() {
  */
 function plugin_webapplications_getDatabaseRelations() {
 
-   $plugin = new Plugin();
-
-   if ($plugin->isActivated("webapplications")) {
-      return ["glpi_appliances" => ["glpi_plugin_webapplications_appliances" => "appliances_id"]];
+   if (Plugin::isPluginActive("webapplications")) {
+      return ["glpi_appliances" => ["glpi_plugin_webapplications_appliances" => "appliances_id"],
+              "glpi_databaseinstances" => ["glpi_plugin_webapplications_databaseinstances" => "databases_id"],
+              "glpi_streams" => ["glpi_plugin_webapplications_streams" => "entities_id"],
+              "glpi_processes" => ["glpi_plugin_webapplications_processes" => "entities_id"],
+              "glpi_entities" => ["glpi_plugin_webapplications_entities" => "entities_id"]];
    }
 
    return [];
@@ -248,12 +264,11 @@ function plugin_webapplications_getDatabaseRelations() {
  */
 function plugin_webapplications_getDropdown() {
 
-   $plugin = new Plugin();
-
-   if ($plugin->isActivated("webapplications")) {
+   if (Plugin::isPluginActive("webapplications")) {
       return ['PluginWebapplicationsWebapplicationServerType' => PluginWebapplicationsWebapplicationServerType::getTypeName(2),
 //              'PluginWebapplicationsWebapplicationType'       => PluginWebapplicationsWebapplicationType::getTypeName(2),
-              'PluginWebapplicationsWebapplicationTechnic'    => PluginWebapplicationsWebapplicationTechnic::getTypeName(2)];
+              'PluginWebapplicationsWebapplicationTechnic'    => PluginWebapplicationsWebapplicationTechnic::getTypeName(2),
+              'PluginWebapplicationsWebapplicationExternalExposition' => PluginWebapplicationsWebapplicationExternalExposition::getTypeName(2)];
    }
    return [];
 }
@@ -334,9 +349,48 @@ function plugin_webapplications_getAddSearchOptions($itemtype) {
             ]
          ];
 
+          $sopt[8107]['table']         = 'glpi_plugin_webapplications_webapplicationexternalexpositions';
+          $sopt[8107]['field']         = 'name';
+          $sopt[8107]['datatype']      = 'dropdown';
+          $sopt[8107]['name']          = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
+          $sopt[8107]['forcegroupby']  = true;
+          $sopt[8107]['massiveaction'] = false;
+          $sopt[8107]['linkfield']     = 'webapplicationexternalexpositions_id';
+          $sopt[8107]['joinparams']    = [
+              'beforejoin' => [
+                  'table'      => 'glpi_plugin_webapplications_appliances',
+                  'joinparams' => [
+                      'jointype'  => 'child',
+                      'condition' => ''
+                  ]
+              ]
+          ];
 
 
       }
    }
+    if ($itemtype == "DatabaseInstance") {
+        if (Session::haveRight("plugin_webapplications", READ)) {
+
+            $sopt[8108]['table']         = 'glpi_plugin_webapplications_webapplicationexternalexpositions';
+            $sopt[8108]['field']         = 'name';
+            $sopt[8108]['datatype']      = 'dropdown';
+            $sopt[8108]['name']          = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
+            $sopt[8108]['forcegroupby']  = true;
+            $sopt[8108]['massiveaction'] = false;
+            $sopt[8108]['linkfield']     = 'webapplicationexternalexpositions_id';
+            $sopt[8108]['joinparams']    = [
+                'beforejoin' => [
+                    'table'      => 'glpi_plugin_webapplications_databaseinstances',
+                    'joinparams' => [
+                        'jointype'  => 'child',
+                        'condition' => ''
+                    ]
+                ]
+            ];
+
+
+        }
+    }
    return $sopt;
 }
