@@ -27,8 +27,7 @@ Dans le dashboard - au niveau BDD : Liste des flux ?? Type de technologie ??
 
 Faire tous les rawsearchoptions !!
 
-
-
+Pouvoir lier la base de connaissance ou des liens externes
 
 Erreur affichage Entité -
 
