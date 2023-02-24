@@ -346,7 +346,7 @@ function plugin_webapplications_getAddSearchOptions($itemtype) {
           $sopt[8107]['table']         = 'glpi_plugin_webapplications_webapplicationexternalexpositions';
           $sopt[8107]['field']         = 'name';
           $sopt[8107]['datatype']      = 'dropdown';
-          $sopt[8107]['name']          = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
+          $sopt[8107]['name']          = PluginWebapplicationsWebapplicationExternalExposition::getTypeName(1);
           $sopt[8107]['forcegroupby']  = true;
           $sopt[8107]['massiveaction'] = false;
           $sopt[8107]['linkfield']     = 'webapplicationexternalexpositions_id';

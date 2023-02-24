@@ -16,10 +16,9 @@ ALTER TABLE `glpi_plugin_webapplications_appliances`
   ADD `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
   ADD `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
   ADD `address` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  ADD `editor` int unsigned NOT NULL default '0',
   ADD `version` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   ADD `backoffice` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  ADD `webapplicationmailsupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  ADD `webapplicationphonesupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL;
 
 CREATE TABLE `glpi_plugin_webapplications_databaseinstances` (
    `id` int unsigned NOT NULL auto_increment,
@@ -54,7 +53,7 @@ CREATE TABLE `glpi_plugin_webapplications_entities` (
    `entities_id` int unsigned NOT NULL,
    `name` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    `owner` int unsigned NOT NULL default '0',
-   `securitycontact` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+   `securitycontact` int unsigned NOT NULL default '0',
    `relationnature` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    PRIMARY KEY  (`id`),
    KEY `entities_id` (`entities_id`)

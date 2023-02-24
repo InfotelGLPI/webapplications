@@ -135,6 +135,75 @@ class PluginWebapplicationsStream extends CommonDBTM {
         }
     }
 
+    /**
+     * @return array
+     */
+    public function rawSearchOptions()
+    {
+        $tab = [];
+
+        $tab[] = [
+            'id' => 'common',
+            'name' => self::getTypeName(2)
+        ];
+
+        $tab[] = [
+            'id' => '1',
+            'table' => $this->getTable(),
+            'field' => 'name',
+            'name' => __('Name'),
+            'datatype' => 'itemlink',
+            'itemlink_type' => $this->getType(),
+        ];
+
+        $tab[] = [
+            'id'            => '2',
+            'table'         => self::getTable(),
+            'field'         => 'transmitter_type',
+            'name'          => __('Transmitter type', 'webapplications'),
+            'datatype'      => 'dropdown',
+        ];
+
+        $tab[] = [
+            'id'            => '3',
+            'table'         => self::getTable(),
+            'field'         => 'receiver_type',
+            'name'          => __('Receiver type', 'webapplications'),
+            'datatype'      => 'dropdown'
+        ];
+
+        $tab[] = [
+            'id'            => '6',
+            'table'         => self::getTable(),
+            'field'         => 'encryption',
+            'name'          => __('Encryption', 'webapplications'),
+            'datatype'      => 'bool'
+        ];
+        $tab[] = [
+            'id'            => '7',
+            'table'         => self::getTable(),
+            'field'         => 'encryption_type',
+            'name'          => __('Encryption type', 'webapplications'),
+            'datatype'      => 'text'
+        ];
+        $tab[] = [
+            'id'            => '8',
+            'table'         => self::getTable(),
+            'field'         => 'ports',
+            'name'          => __('Ports', 'webapplications'),
+            'datatype'      => 'text'
+        ];
+        $tab[] = [
+            'id'            => '9',
+            'table'         => self::getTable(),
+            'field'         => 'protocole',
+            'name'          => __('Protocole', 'webapplications'),
+            'datatype'      => 'text'
+        ];
+
+        return $tab;
+    }
+
     function defineTabs($options=[]) {
         $ong = [];
         //add main tab for current object

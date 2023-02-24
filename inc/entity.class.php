@@ -95,6 +95,57 @@ class PluginWebapplicationsEntity extends CommonDBTM {
         }
     }
 
+    /**
+     * @return array
+     */
+    public function rawSearchOptions()
+    {
+        $tab = [];
+
+        $tab[] = [
+            'id' => 'common',
+            'name' => self::getTypeName(2)
+        ];
+
+        $tab[] = [
+            'id' => '1',
+            'table' => $this->getTable(),
+            'field' => 'name',
+            'name' => __('Name'),
+            'datatype' => 'itemlink',
+            'itemlink_type' => $this->getType(),
+        ];
+
+        $tab[] = [
+            'id'            => '2',
+            'table'         => User::getTable(),
+            'field'         => 'name',
+            'linkfield'     => 'owner',
+            'name'          => __('Owner', 'webapplications'),
+            'datatype'      => 'dropdown'
+        ];
+
+
+        $tab[] = [
+            'id'            => '3',
+            'table'         => User::getTable(),
+            'field'         => 'name',
+            'linkfield'     => 'security_contact',
+            'name'          => __('Security Contact', 'webapplications'),
+            'datatype'      => 'dropdown'
+        ];
+
+        $tab[] = [
+            'id'            => '4',
+            'table'         => $this->getTable(),
+            'field'         => 'relation_nature',
+            'name'          => __('Relation Nature', 'webapplications'),
+            'datatype'      => 'text'
+        ];
+
+        return $tab;
+    }
+
     function defineTabs($options=[]) {
         $ong = [];
         //add main tab for current object
