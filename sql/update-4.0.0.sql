@@ -15,10 +15,16 @@ ALTER TABLE `glpi_plugin_webapplications_appliances`
   ADD `webapplicationintegrities` int unsigned   NOT NULL     DEFAULT '1',
   ADD `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
   ADD `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
+<<<<<<< HEAD
   ADD `address` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   ADD `editor` int unsigned NOT NULL default '0',
   ADD `version` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   ADD `backoffice` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+=======
+  ADD `version` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  ADD `webapplicationmailsupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  ADD `webapplicationphonesupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL;
+>>>>>>> b4ce644d53ab08b8bbc7f143f38dcc467ed8e9a3
 
 CREATE TABLE `glpi_plugin_webapplications_databaseinstances` (
    `id` int unsigned NOT NULL auto_increment,
@@ -91,7 +97,7 @@ CREATE TABLE `glpi_plugin_webapplications_streams_items` (
     `itemtype` varchar(100) NOT NULL DEFAULT '',
     PRIMARY KEY  (`id`),
     UNIQUE KEY `unicity` (`plugin_webapplications_streams_id`,`items_id`,`itemtype`),
-    KEY `item` (`itemtype`, `item_id`)
+    KEY `item` (`itemtype`, `items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
