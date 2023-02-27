@@ -612,6 +612,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM {
         $this->addStandardTab('PluginWebapplicationsDashboardPhysicalInfrastructure', $ong, $options);//Vue Infra physiques
         $this->addStandardTab('PluginWebapplicationsDashboardDatabase', $ong, $options);//Vue Base de données
         $this->addStandardTab('PluginWebapplicationsDashboardStream', $ong, $options);//Vue Flux
+        $this->addStandardTab('KnowbaseItem_Item', $ong, $options);
 
         return $ong;
     }
