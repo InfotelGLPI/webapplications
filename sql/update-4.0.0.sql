@@ -28,14 +28,14 @@ ALTER TABLE `glpi_plugin_webapplications_appliances`
 
 CREATE TABLE `glpi_plugin_webapplications_databaseinstances` (
    `id` int unsigned NOT NULL auto_increment,
-   `databases_id`  int unsigned NOT NULL        DEFAULT '0',
+   `databaseinstances_id`  int unsigned NOT NULL        DEFAULT '0',
    `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0' COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
    `webapplicationavailabilities` int unsigned   NOT NULL     DEFAULT '1',
    `webapplicationintegrities` int unsigned   NOT NULL     DEFAULT '1',
    `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
    `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
    PRIMARY KEY  (`id`),
-   KEY `databases_id` (`databases_id`)
+   KEY `databaseinstances_id` (`databaseinstances_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE `glpi_plugin_webapplications_streams` (
