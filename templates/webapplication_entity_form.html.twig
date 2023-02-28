@@ -17,11 +17,14 @@
         )}}
     {% endif %}
 
-    {{ fields.autoNameField(
+    {{ fields.dropdownField(
+        'User',
         'security_contact',
-        item,
+        item.fields['security_contact'],
         __('Security Contact', 'webapplications'),
-        withtemplate
+        field_options|merge({
+            'right': 'all',
+        })
     ) }}
 
 

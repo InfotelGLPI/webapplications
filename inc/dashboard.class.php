@@ -527,20 +527,31 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<table class='tab_cadre_fixe'>";
         echo "<tbody>";
 
-        $refEditid = $appliance->getField('manufacturers_id');
-        $refEdit = new Manufacturer();
-        $refEdit->getFromDB($refEditid);
+        $applianceplugin = new PluginWebapplicationsAppliance();
+        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
+
+
+        $editorName = null;
+        $editor = null;
+        if($is_known){
+            $refEditId = $applianceplugin->fields['editor'];
+            $linkEdit = Supplier::getFormURLWithID($refEditId);
+            $linkEdit .= "&forcetab=main";
+            $editor = new Supplier();
+            $editor->getFromDB($refEditId);
+            $editorName = $editor->getName();
+        }
+
+        if(!$is_known || $editorName == null) $editorName = NOT_AVAILABLE;
+
         echo "<tr>";
         echo "<th>";
         echo __("Referent editor", 'webapplications');
         echo "</th>";
         echo "<td>";
-        echo $refEdit->getName();
+        echo "<a href=$linkEdit>$editorName</a>";
         echo "</td>";
         echo "</tr>";
-
-        $applianceplugin = new PluginWebapplicationsAppliance();
-        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 
         echo "<tr>";
         echo "<th>";
@@ -549,8 +560,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<td>";
 
         $mail = null;
-        if ($is_known) {
-            $mail = $applianceplugin->fields['webapplicationmailsupport'];
+        if ($editor) {
+            $mail = $editor->getField('email');
         }
 
         if (!$is_known || $mail == null) {
@@ -566,8 +577,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<td>";
 
         $phone = null;
-        if ($is_known) {
-            $phone = $applianceplugin->fields['webapplicationphonesupport'];
+        if ($editor) {
+            $phone = $editor->getField('phonenumber');
         }
 
         if (!$is_known || $phone == null) {
@@ -614,6 +625,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $this->addStandardTab('PluginWebapplicationsDashboardPhysicalInfrastructure', $ong, $options);//Vue Infra physiques
         $this->addStandardTab('PluginWebapplicationsDashboardDatabase', $ong, $options);//Vue Base de données
         $this->addStandardTab('PluginWebapplicationsDashboardStream', $ong, $options);//Vue Flux
+        $this->addStandardTab('KnowbaseItem_Item', $ong, $options);
 
         return $ong;
     }

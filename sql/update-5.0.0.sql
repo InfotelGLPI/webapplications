@@ -15,20 +15,19 @@ ALTER TABLE `glpi_plugin_webapplications_appliances`
   ADD `webapplicationintegrities` int unsigned   NOT NULL     DEFAULT '1',
   ADD `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
   ADD `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
+  ADD `editor` int unsigned NOT NULL default '0',
   ADD `version` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  ADD `webapplicationmailsupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  ADD `webapplicationphonesupport` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL;
 
 CREATE TABLE `glpi_plugin_webapplications_databaseinstances` (
    `id` int unsigned NOT NULL auto_increment,
-   `databases_id`  int unsigned NOT NULL        DEFAULT '0',
+   `databaseinstances_id`  int unsigned NOT NULL        DEFAULT '0',
    `webapplicationexternalexpositions_id` int unsigned  NOT NULL     DEFAULT '0' COMMENT 'RELATION to glpi_plugin_webapplications_webapplicationexternalexpositions (id)',
    `webapplicationavailabilities` int unsigned   NOT NULL     DEFAULT '1',
    `webapplicationintegrities` int unsigned   NOT NULL     DEFAULT '1',
    `webapplicationconfidentialities` int unsigned   NOT NULL     DEFAULT '0',
    `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
    PRIMARY KEY  (`id`),
-   KEY `databases_id` (`databases_id`)
+   KEY `databaseinstances_id` (`databaseinstances_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 CREATE TABLE `glpi_plugin_webapplications_streams` (
@@ -52,7 +51,7 @@ CREATE TABLE `glpi_plugin_webapplications_entities` (
    `entities_id` int unsigned NOT NULL,
    `name` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    `owner` int unsigned NOT NULL default '0',
-   `securitycontact` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+   `securitycontact` int unsigned NOT NULL default '0',
    `relationnature` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    PRIMARY KEY  (`id`),
    KEY `entities_id` (`entities_id`)

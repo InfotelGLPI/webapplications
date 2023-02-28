@@ -286,7 +286,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
 
 
                 $databaseplugin = new PluginWebapplicationsDatabaseInstance();
-                $is_known = $databaseplugin->getFromDBByCrit(['databases_id'=>$database['id']]);
+                $is_known = $databaseplugin->getFromDBByCrit(['databaseinstances_id'=>$database['id']]);
 
 
                 if ($is_known) {

@@ -95,6 +95,77 @@ class PluginWebapplicationsProcess extends CommonDBTM
         }
     }
 
+    /**
+     * @return array
+     */
+    public function rawSearchOptions()
+    {
+        $tab = [];
+
+        $tab[] = [
+            'id' => 'common',
+            'name' => self::getTypeName(2)
+        ];
+
+        $tab[] = [
+            'id' => '1',
+            'table' => $this->getTable(),
+            'field' => 'name',
+            'name' => __('Name'),
+            'datatype' => 'itemlink',
+            'itemlink_type' => $this->getType(),
+        ];
+
+        $tab[] = [
+            'id'            => '2',
+            'table'         => self::getTable(),
+            'field'         =>  'comment',
+            'name'          =>  __('Comments'),
+            'datatype'      =>  'text'
+        ];
+
+        $tab[] = [
+            'id'            => '3',
+            'table'         => User::getTable(),
+            'field'         => 'name',
+            'linkfield'     => 'owner',
+            'name'          => __('Owner', 'webapplications'),
+            'datatype'      => 'dropdown'
+        ];
+
+        $tab[] = [
+            'id'            => '4',
+            'table'         => self::getTable(),
+            'field'         => 'webapplicationavailabilities',
+            'name'          => __('Availability', 'webapplications'),
+            'datatype'      => 'dropdown'
+        ];
+        $tab[] = [
+            'id'            => '5',
+            'table'         => self::getTable(),
+            'field'         => 'webapplicationintegrities',
+            'name'          => __('Integrity', 'webapplications'),
+            'datatype'      => 'dropdown'
+        ];
+        $tab[] = [
+            'id'            => '6',
+            'table'         => self::getTable(),
+            'field'         => 'webapplicationconfidentialities',
+            'name'          => __('Confidentiality', 'webapplications'),
+            'datatype'      => 'dropdown'
+        ];
+        $tab[] = [
+            'id'            => '7',
+            'table'         => self::getTable(),
+            'field'         => 'webapplicationtraceabilities',
+            'name'          => __('Traceability', 'webapplications'),
+            'datatype'      => 'dropdown'
+        ];
+
+
+        return $tab;
+    }
+
     public function defineTabs($options = [])
     {
         $ong = [];
