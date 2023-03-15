@@ -206,7 +206,6 @@ class PluginWebapplicationsStream extends CommonDBTM
         //add main tab for current object
         $this->addDefaultFormTab($ong);
         $this->addStandardTab('Appliance_Item', $ong, $options);
-        $this->addStandardTab('PluginWebapplicationsStream_Item', $ong, $options);
         return $ong;
     }
 }
