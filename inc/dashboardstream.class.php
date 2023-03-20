@@ -70,8 +70,6 @@ class PluginWebapplicationsDashboardStream extends CommonDBTM
 
         $listStreamId = array();
         foreach ($streamApp as $st) {
-            $streamAppDBTM->getFromDB($st['id']);
-
             array_push($listStreamId, $st['items_id']);
         }
 

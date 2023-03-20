@@ -71,8 +71,6 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM
 
         $listEntitiesId = array();
         foreach ($entitiesApp as $entityApp) {
-            $entitiesAppDBTM->getFromDB($entityApp['id']);
-
             array_push($listEntitiesId, $entityApp['items_id']);
         }
 
@@ -265,8 +263,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM
                 $relation = $entity['relation_nature'];
                 echo "<tr>";
                 echo "<th>";
-                echo __("Relation nature", 'webapplicatiodakapoasoe
-                ns');
+                echo __("Relation nature", 'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $relation;

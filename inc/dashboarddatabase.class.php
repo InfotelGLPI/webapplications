@@ -69,8 +69,6 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
 
         $listDatabaseId = array();
         foreach ($databaseApp as $db) {
-            $databasesAppDBTM->getFromDB($db['id']);
-
             array_push($listDatabaseId, $db['items_id']);
         }
 

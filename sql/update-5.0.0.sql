@@ -51,8 +51,8 @@ CREATE TABLE `glpi_plugin_webapplications_entities` (
    `entities_id` int unsigned NOT NULL,
    `name` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    `owner` int unsigned NOT NULL default '0',
-   `securitycontact` int unsigned NOT NULL default '0',
-   `relationnature` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+   `security_contact` int unsigned NOT NULL default '0',
+   `relation_nature` VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
    PRIMARY KEY  (`id`),
    KEY `entities_id` (`entities_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;

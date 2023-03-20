@@ -93,7 +93,6 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
 
         $listItem = array();
         foreach ($itemApp as $st) {
-            $itemsAppDBTM->getFromDB($st['id']);
             $item = ['id' => $st['items_id'], 'itemtype' => $st['itemtype']];
 
             $itemDBTM = new $st['itemtype'];
