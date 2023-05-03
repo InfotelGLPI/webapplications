@@ -86,7 +86,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
     public function post_addItem()
     {
         $appliance_id = $this->input['appliances_id'];
-        if (!is_null($appliance_id)&&$appliance_id!=0) {
+        if (isset($appliance_id) && !empty($appliance_id)) {
             $itemDBTM = new Appliance_Item();
             $itemDBTM->add(['appliances_id' => $appliance_id, 'items_id' => $this->getID(), 'itemtype' => 'PluginWebapplicationsEntity']);
         }

@@ -116,7 +116,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
                 $appliance->update(['id'                           => $appliance->fields['id'],
                                     'address'                      => $address,
                                     'version'                      => $version,
-                                    'editor'                      => $editor,
+                                    'editor'                       => $editor,
                                     'backoffice'                   => $backoffice,
                                     'webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : $appliance->fields['plugin_webapplications_webapplicationservertypes_id'],
                                     'webapplicationtechnics_id'    => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : $appliance->fields['plugin_webapplications_webapplicationtechnics_id'],
@@ -140,6 +140,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
                                  'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : 0,
                                  'address'                      => $address,
                                  'version'                      => $version,
+                                 'editor'                       => $editor,
                                  'appliances_id'                => $item->getID(),
                                  'backoffice'                   => $backoffice]);
             }

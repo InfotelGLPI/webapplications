@@ -448,10 +448,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         if (!empty($procsApp)) {
             echo "<select name='processes' id='list' Size='3' ondblclick='location = this.value;'>";
             foreach ($procsApp as $procApp) {
-                $processDBTM->getFromDB($procApp['items_id']);
-                $name = $processDBTM->getName();
-                $link = PluginWebapplicationsProcess::getFormURLWithID($procApp['items_id']);
-                echo "<option value=$link>$name</option>";
+                if($processDBTM->getFromDB($procApp['items_id'])) {
+                    $name = $processDBTM->getName();
+                    $link = PluginWebapplicationsProcess::getFormURLWithID($procApp['items_id']);
+                    echo "<option value=$link>$name</option>";
+                }
             }
             echo "</select>";
         } else {
@@ -485,10 +486,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         if (!empty($databasesApp)) {
             echo "<select name='databases' id='list' Size='3' ondblclick='location = this.value;'>";
             foreach ($databasesApp as $dbApp) {
-                $databaseDBTM->getFromDB($dbApp['items_id']);
-                $name = $databaseDBTM->getName();
-                $link = DatabaseInstance::getFormURLWithID($dbApp['items_id']);
-                echo "<option value=$link>$name</option>";
+                if($databaseDBTM->getFromDB($dbApp['items_id'])){
+                    $name = $databaseDBTM->getName();
+                    $link = DatabaseInstance::getFormURLWithID($dbApp['items_id']);
+                    echo "<option value=$link>$name</option>";
+                }
             }
             echo "</select>";
         } else {
