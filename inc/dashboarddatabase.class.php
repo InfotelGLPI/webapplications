@@ -263,9 +263,6 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
                     $conf = $databaseplugin->fields['webapplicationconfidentialities'];
                     $tra = $databaseplugin->fields['webapplicationtraceabilities'];
 
-
-                    echo "<table style='text-align : center; width: 60%'>";
-
                     echo "<table style='text-align : center; width: 60%'>";
                     echo "<td class='dict'>";
                     echo __('Availability', 'webapplications')."&nbsp";

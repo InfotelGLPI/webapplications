@@ -257,7 +257,8 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
                     $OSVersionId = $itemOSDBTM->fields['operatingsystemversions_id'];
                     $OSVersion = new OperatingSystemVersion();
                     $OSVersion->getFromDB($OSVersionId);
-                    $OSVersionName = $OSVersion->getName();
+                    $OSVersionName=$OSVersion->getName();
+                    if ($OSVersionName == NOT_AVAILABLE || $OSName == NOT_AVAILABLE) $OSVersionName = null;
                 }
 
 

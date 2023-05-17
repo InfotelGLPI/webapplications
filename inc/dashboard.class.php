@@ -170,19 +170,15 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $groupId = $appliance->getField('groups_id');
         $groupUserDBTM = new Group_User();
-        $groupUser = $groupUserDBTM->find(['groups_id' => $groupId]);
+        $groupUser = array_column($groupUserDBTM->find(['groups_id' => $groupId]), 'users_id');
 
         $groupAdminId = $appliance->getField('groups_id_tech');
         $groupUserAdminDBTM = new Group_User();
-        $groupUserAdmin = $groupUserAdminDBTM->find(['groups_id' => $groupAdminId]);
-        $numberAdmin = count($groupUserAdmin);
+        $groupUserAdmin = array_column($groupUserAdminDBTM->find(['groups_id' => $groupAdminId]), 'users_id');
+        $numberAdmin = count(array_unique($groupUserAdmin));
 
         $listUser = array_merge($groupUser, $groupUserAdmin);
-        $listUniqueUser = array();
-        foreach ($listUser as $user) {
-            array_push($listUniqueUser, $user['users_id']);
-        }
-        $numberUser = count(array_unique($listUniqueUser));
+        $numberUser = count(array_unique($listUser));
 
         echo "<td>";
         echo "<div style='text-align:center'>";
