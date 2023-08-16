@@ -1,0 +1,363 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Soporte Infraestructura Standby, 2023
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-13 08:46+0000\n"
+"PO-Revision-Date: 2020-11-02 16:31+0000\n"
+"Last-Translator: Soporte Infraestructura Standby, 2023\n"
+"Language-Team: Spanish (Ecuador) (https://app.transifex.com/infotelGLPI/teams/12376/es_EC/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_EC\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: inc/process_entity.class.php:106
+msgid "Add a process"
+msgstr "Agregar un proceso"
+
+#: inc/process_entity.class.php:169
+msgid "Add an entity"
+msgstr "Agregar una entidad"
+
+#: inc/dashboard.class.php:199
+msgid "Administrator"
+msgid_plural "Administrators"
+msgstr[0] "Administradores"
+msgstr[1] "Administradores"
+msgstr[2] "Administradores"
+
+#: inc/dashboard.class.php:44
+msgid "Appliance dashboard"
+msgstr "Administradores"
+
+#: inc/dashboardprocess.class.php:251
+msgid "Appliances list"
+msgstr "Administradores"
+
+#: inc/dashboard.class.php:467
+msgid "Application"
+msgstr "Aplicación"
+
+#: front/webapplication.php:52
+msgid "Are you sure you want to do core migration ?"
+msgstr "¿Está seguro de que desea realizar la migración del núcleo?"
+
+#: inc/dashboard.class.php:211
+msgid "Associated document"
+msgid_plural "Associated documents"
+msgstr[0] "Documentos asociados"
+msgstr[1] "Documentos asociados"
+msgstr[2] "Documentos asociados"
+
+#: inc/dashboard.class.php:353 inc/dashboarddatabase.class.php:303
+#: inc/dashboardprocess.class.php:289
+#: templates/webapplication_process_form.html.twig:27
+#: templates/webapplication_appliance_form.html.twig:102
+#: templates/webapplication_database_form.html.twig:32
+msgid "Availability"
+msgstr "Disponibilidad"
+
+#: hook.php:296 inc/dashboard.class.php:405
+#: templates/webapplication_appliance_form.html.twig:32
+#: templates/webapplication_form.html.twig:32
+msgid "Backoffice URL"
+msgstr "URL del servicio de gestión"
+
+#: inc/webapplicationtype.class.php:50
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "Categorías"
+msgstr[1] "Categorías"
+msgstr[2] "Categorías"
+
+#: inc/dashboard.class.php:372 inc/dashboarddatabase.class.php:322
+#: inc/dashboardprocess.class.php:308
+#: templates/webapplication_process_form.html.twig:60
+#: templates/webapplication_appliance_form.html.twig:134
+#: templates/webapplication_database_form.html.twig:62
+msgid "Confidentiality"
+msgstr "Confidencialidad"
+
+#: front/webapplication.php:42 front/webapplication.php:48
+msgid "Core migration"
+msgstr "Migración del núcleo"
+
+#: inc/dashboard.class.php:339 inc/dashboarddatabase.class.php:283
+#: inc/dashboardprocess.class.php:282
+msgid "DICT"
+msgstr "DICT"
+
+#: inc/profile.class.php:206
+msgid "Dashboard"
+msgid_plural "Dashboards"
+msgstr[0] "Paneles"
+msgstr[1] "Paneles"
+msgstr[2] "Paneles de control"
+
+#: inc/dashboardadministration.class.php:44
+msgid "Dashboard Administration"
+msgstr "Administración del panel de control"
+
+#: front/webapplication.php:64
+msgid "Data migration"
+msgstr "Transferencia de datos"
+
+#: inc/dashboardstream.class.php:222
+#: templates/webapplication_stream_form.html.twig:27
+msgid "Destination"
+msgstr "Destino"
+
+#: inc/dashboard.class.php:269 inc/dashboardecosystem.class.php:44
+#: inc/dashboardecosystem.class.php:139
+msgid "Ecosystem"
+msgstr "Ecosistema"
+
+#: inc/dashboardstream.class.php:243
+#: templates/webapplication_stream_form.html.twig:42
+msgid "Encryption"
+msgstr "Encriptación"
+
+#: inc/dashboardstream.class.php:260
+#: templates/webapplication_stream_form.html.twig:48
+msgid "Encryption type"
+msgstr "Tipo de encriptación"
+
+#: inc/dashboard.class.php:291 inc/dashboarddatabase.class.php:348
+#: inc/webapplicationexternalexposition.class.php:49
+msgid "External exposition"
+msgid_plural "External exposition"
+msgstr[0] "Exposición externa"
+msgstr[1] "Exposición externa"
+msgstr[2] "Exposición externa"
+
+#: inc/dashboard.class.php:397
+#: templates/webapplication_appliance_form.html.twig:41
+msgid "Installed version"
+msgstr "Versión instalada"
+
+#: inc/dashboard.class.php:363 inc/dashboarddatabase.class.php:313
+#: inc/dashboardprocess.class.php:299
+#: templates/webapplication_process_form.html.twig:44
+#: templates/webapplication_appliance_form.html.twig:118
+#: templates/webapplication_database_form.html.twig:48
+msgid "Integrity"
+msgstr "Integridad"
+
+#: inc/dashboard.class.php:332 inc/webapplicationtechnic.class.php:49
+msgid "Language of treatment"
+msgid_plural "Languages of treatment"
+msgstr[0] "Idiomas de tratamiento"
+msgstr[1] "Idiomas de tratamiento"
+msgstr[2] "Idiomas de tratamiento"
+
+#: front/webapplication.php:175
+msgid "Link with core purge"
+msgstr "Enlace con la purga del núcleo"
+
+#: inc/dashboard.class.php:479
+msgid "List Databases"
+msgstr "Lista de bases de datos"
+
+#: inc/dashboardprocess.class.php:222
+msgid "List Entities"
+msgstr "Lista de entidades"
+
+#: inc/dashboard.class.php:442 inc/dashboardecosystem.class.php:227
+msgid "List Processes"
+msgstr "Lista de procesos"
+
+#: inc/dashboarddatabase.class.php:258
+msgid "List Streams"
+msgstr "Lista de flujos"
+
+#: inc/dashboardlogicalinfrastructure.class.php:44
+#: inc/dashboardlogicalinfrastructure.class.php:50
+#: inc/dashboardlogicalinfrastructure.class.php:104
+msgid "Logical infrastructure"
+msgstr "Infraestructura lógica"
+
+#: inc/dashboard.class.php:547
+#: templates/webapplication_appliance_form.html.twig:193
+msgid "Mail support"
+msgstr "Asistencia por correo"
+
+#: front/webapplication.php:196
+msgid "Migration was successful"
+msgstr "La exportación ha sido un éxito"
+
+#: inc/dashboard.class.php:495 inc/dashboarddatabase.class.php:370
+msgid "No associated database"
+msgstr "No hay base de datos asociada"
+
+#: inc/dashboard.class.php:222
+msgid "No associated documents"
+msgstr "No hay documentos asociados"
+
+#: inc/dashboardprocess.class.php:239 inc/dashboardprocess.class.php:268
+msgid "No associated entity"
+msgstr "Ninguna entidad asociada"
+
+#: inc/dashboard.class.php:458 inc/dashboardecosystem.class.php:244
+#: inc/dashboardprocess.class.php:347
+msgid "No associated process"
+msgstr "Ningún proceso asociado"
+
+#: inc/dashboarddatabase.class.php:275 inc/dashboardstream.class.php:296
+msgid "No associated stream"
+msgstr "Sin flujo asociado"
+
+#: inc/dashboardecosystem.class.php:276
+msgid "No entity founded"
+msgstr "No se fundó ninguna entidad"
+
+#: inc/dashboardecosystem.class.php:214 inc/dashboardprocess.class.php:204
+#: templates/webapplication_process_form.html.twig:12
+#: templates/webapplication_entity_form.html.twig:13
+msgid "Owner"
+msgstr "Propietario"
+
+#: templates/webapplication_appliance_form.html.twig:203
+msgid "Phone number support"
+msgstr "Soporte de número de teléfono"
+
+#: inc/dashboard.class.php:564
+msgid "Phone support"
+msgstr "Soporte telefónico"
+
+#: inc/dashboardphysicalinfrastructure.class.php:44
+#: inc/dashboardphysicalinfrastructure.class.php:129
+msgid "Physical Infrastructure"
+msgstr "Infraestructura física"
+
+#: templates/webapplication_stream_form.html.twig:55
+msgid "Port"
+msgstr "Puerto"
+
+#: inc/dashboard.class.php:430 inc/dashboardprocess.class.php:44
+#: inc/dashboardprocess.class.php:53 inc/dashboardprocess.class.php:138
+#: inc/process.class.php:46 inc/process_entity.class.php:64
+#: inc/process_entity.class.php:129 inc/profile.class.php:202
+msgid "Process"
+msgid_plural "Processes"
+msgstr[0] "Procesos"
+msgstr[1] "Procesos"
+msgstr[2] "Procesos"
+
+#: inc/process_entity.class.php:46
+msgid "Process Entity"
+msgid_plural "Processes Entity"
+msgstr[0] "Entidad de procesos"
+msgstr[1] "Entidad de procesos"
+msgstr[2] "Entidad de procesos"
+
+#: templates/webapplication_stream_form.html.twig:62
+msgid "Protocol"
+msgstr "Protocolo"
+
+#: inc/dashboardstream.class.php:284
+msgid "Protocole"
+msgstr "Protocolo"
+
+#: inc/dashboard.class.php:535
+msgid "Referent editor"
+msgstr "Editor de referencia"
+
+#: inc/dashboardecosystem.class.php:263
+#: templates/webapplication_entity_form.html.twig:31
+msgid "Relation nature"
+msgstr "Naturaleza de la relación"
+
+#: inc/dashboardecosystem.class.php:253
+#: templates/webapplication_entity_form.html.twig:23
+msgid "Security Contact"
+msgstr "Contacto de seguridad"
+
+#: templates/webapplication_process_form.html.twig:18
+#: templates/webapplication_appliance_form.html.twig:86
+#: templates/webapplication_database_form.html.twig:24
+msgid "Security Needs"
+msgstr "Necesidades de seguridad"
+
+#: inc/dashboardstream.class.php:205
+#: templates/webapplication_stream_form.html.twig:13
+msgid "Source"
+msgstr "Fuente"
+
+#: inc/dashboardstream.class.php:44 inc/dashboardstream.class.php:53
+#: inc/dashboardstream.class.php:138 inc/profile.class.php:198
+#: inc/stream.class.php:45
+msgid "Stream"
+msgid_plural "Streams"
+msgstr[0] "Corrientes"
+msgstr[1] "Corrientes"
+msgstr[2] "Corrientes"
+
+#: inc/dashboard.class.php:230
+msgid "Summary"
+msgstr "Resumen"
+
+#: templates/webapplication_appliance_form.html.twig:187
+msgid "Support"
+msgstr "Soporte"
+
+#: front/webapplication.php:151
+msgid "Tables purge"
+msgstr "Depuración de tablas"
+
+#: inc/dashboardphysicalinfrastructure.class.php:267
+msgid "Technical characteristics"
+msgstr "Características técnicas"
+
+#: inc/dashboarddatabase.class.php:244
+msgid "Technology type"
+msgstr "Tipo de tecnología"
+
+#: inc/dashboard.class.php:381 inc/dashboarddatabase.class.php:332
+#: inc/dashboardprocess.class.php:317
+#: templates/webapplication_process_form.html.twig:77
+#: templates/webapplication_appliance_form.html.twig:151
+#: templates/webapplication_database_form.html.twig:77
+msgid "Traceability"
+msgstr "Trazabilidad"
+
+#: inc/dashboard.class.php:321 inc/webapplicationservertype.class.php:49
+msgid "Type of treatment server"
+msgid_plural "Types of treatment server"
+msgstr[0] "Tipos de servidor de tratamiento"
+msgstr[1] "Tipos de servidor de tratamiento"
+msgstr[2] "Tipos de servidor de tratamiento"
+
+#: templates/webapplication_appliance_form.html.twig:23
+#: templates/webapplication_form.html.twig:23
+msgid "URL"
+msgstr "URL"
+
+#: templates/webapplication_appliance_form.html.twig:167
+msgid "Validation"
+msgstr "Validación"
+
+#: templates/webapplication_appliance_form.html.twig:181
+msgid "Validation by CISO"
+msgstr "Validación del CISO"
+
+#: templates/webapplication_appliance_form.html.twig:173
+msgid "Validation of the request by the referring department"
+msgstr "Validación de la solicitud por el servicio remitente"
+
+#: setup.php:110 inc/appliance.class.php:43 inc/databaseinstance.class.php:43
+#: inc/profile.class.php:194 inc/webapplication.class.php:48
+msgid "Web application"
+msgid_plural "Web applications"
+msgstr[0] "Aplicaciones web"
+msgstr[1] "Aplicaciones web"
+msgstr[2] "Aplicaciones web"
