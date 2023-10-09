@@ -84,12 +84,15 @@
 
 
                     {{ fields.smallTitle(__('Security Needs', 'webapplications'))}}
+
+                    {% set info  = __("DICT Criteria:
+Availability (A): Identify the impact on the availability of the IT asset as a result of the change
+Integrity (I): Identify the impact on the data managed by the IT asset
+Confidentiality (C): Identify the impact on the IT asset's processing related to data confidentiality
+Traceability (T): Identify the impact on the IT asset's processes related to data traceability",'webapplications') %}
+
                     <a><h2 class="fas fa-info fa-fw"
-                           title="Critères DICT :
-Disponibilité (D) : Identifier l’impact sur la disponibilité de l’actif informatique suite à la réalisation du changement
-Intégrité (I) : Identifier l’impact sur les données gérées par l’actif informatique
-Confidentialité (C) : Identifier l’impact sur les traitements de l’actif informatique liés à la confidentialité des données
-Traçabilité (T) : Identifier l’impact sur les traitements de l’actif informatique liés à la traçabilité des données"></h2>
+                           title="{{ info }}"></h2>
                     </a>
                     <table>
                         <tbody>
@@ -186,22 +189,12 @@ Traçabilité (T) : Identifier l’impact sur les traitements de l’actif infor
                     <div id="support">
                         {{ fields.smallTitle(__('Support', 'webapplications')) }}
 
-                        {% if item.isField('webapplicationmailsupport') %}
-                            {{ fields.autoNameField(
-                                "webapplicationmailsupport",
-                                item,
-                                __('Mail support', 'webapplications'),
-                                withtemplate
-                            ) }}
-                        {% endif %}
-
-
-                        {% if item.isField('webapplicationphonesupport') %}
-                            {{ fields.autoNameField(
-                                "webapplicationphonesupport",
-                                item,
-                                __('Phone number support', 'webapplications'),
-                                withtemplate
+                        {% if item.isField('editor') %}
+                            {{ fields.dropdownField(
+                                "Supplier",
+                                "editor",
+                                item.fields['editor'],
+                                __('Referent editor', 'webapplications'),
                             ) }}
                         {% endif %}
                     </div>

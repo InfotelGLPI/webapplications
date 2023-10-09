@@ -170,19 +170,15 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $groupId = $appliance->getField('groups_id');
         $groupUserDBTM = new Group_User();
-        $groupUser = $groupUserDBTM->find(['groups_id' => $groupId]);
+        $groupUser = array_column($groupUserDBTM->find(['groups_id' => $groupId]), 'users_id');
 
         $groupAdminId = $appliance->getField('groups_id_tech');
         $groupUserAdminDBTM = new Group_User();
-        $groupUserAdmin = $groupUserAdminDBTM->find(['groups_id' => $groupAdminId]);
-        $numberAdmin = count($groupUserAdmin);
+        $groupUserAdmin = array_column($groupUserAdminDBTM->find(['groups_id' => $groupAdminId]), 'users_id');
+        $numberAdmin = count(array_unique($groupUserAdmin));
 
         $listUser = array_merge($groupUser, $groupUserAdmin);
-        $listUniqueUser = array();
-        foreach ($listUser as $user) {
-            array_push($listUniqueUser, $user['users_id']);
-        }
-        $numberUser = count(array_unique($listUniqueUser));
+        $numberUser = count(array_unique($listUser));
 
         echo "<td>";
         echo "<div style='text-align:center'>";
@@ -448,10 +444,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         if (!empty($procsApp)) {
             echo "<select name='processes' id='list' Size='3' ondblclick='location = this.value;'>";
             foreach ($procsApp as $procApp) {
-                $processDBTM->getFromDB($procApp['items_id']);
-                $name = $processDBTM->getName();
-                $link = PluginWebapplicationsProcess::getFormURLWithID($procApp['items_id']);
-                echo "<option value=$link>$name</option>";
+                if($processDBTM->getFromDB($procApp['items_id'])) {
+                    $name = $processDBTM->getName();
+                    $link = PluginWebapplicationsProcess::getFormURLWithID($procApp['items_id']);
+                    echo "<option value=$link>$name</option>";
+                }
             }
             echo "</select>";
         } else {
@@ -485,10 +482,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         if (!empty($databasesApp)) {
             echo "<select name='databases' id='list' Size='3' ondblclick='location = this.value;'>";
             foreach ($databasesApp as $dbApp) {
-                $databaseDBTM->getFromDB($dbApp['items_id']);
-                $name = $databaseDBTM->getName();
-                $link = DatabaseInstance::getFormURLWithID($dbApp['items_id']);
-                echo "<option value=$link>$name</option>";
+                if($databaseDBTM->getFromDB($dbApp['items_id'])){
+                    $name = $databaseDBTM->getName();
+                    $link = DatabaseInstance::getFormURLWithID($dbApp['items_id']);
+                    echo "<option value=$link>$name</option>";
+                }
             }
             echo "</select>";
         } else {
@@ -527,20 +525,32 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<table class='tab_cadre_fixe'>";
         echo "<tbody>";
 
-        $refEditid = $appliance->getField('manufacturers_id');
-        $refEdit = new Manufacturer();
-        $refEdit->getFromDB($refEditid);
+        $applianceplugin = new PluginWebapplicationsAppliance();
+        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id'=>$ApplianceId]);
+
+
+        $editorName = null;
+        $editor = null;
+        $linkEdit = "";
+        if($is_known){
+            $refEditId = $applianceplugin->fields['editor'];
+            $linkEdit = Supplier::getFormURLWithID($refEditId);
+            $linkEdit .= "&forcetab=main";
+            $editor = new Supplier();
+            $editor->getFromDB($refEditId);
+            $editorName = $editor->getName();
+        }
+
+        if(!$is_known || $editorName == null) $editorName = NOT_AVAILABLE;
+
         echo "<tr>";
         echo "<th>";
         echo __("Referent editor", 'webapplications');
         echo "</th>";
         echo "<td>";
-        echo $refEdit->getName();
+        echo "<a href=$linkEdit>$editorName</a>";
         echo "</td>";
         echo "</tr>";
-
-        $applianceplugin = new PluginWebapplicationsAppliance();
-        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 
         echo "<tr>";
         echo "<th>";
@@ -549,8 +559,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<td>";
 
         $mail = null;
-        if ($is_known) {
-            $mail = $applianceplugin->fields['webapplicationmailsupport'];
+        if ($editor) {
+            $mail = $editor->getField('email');
         }
 
         if (!$is_known || $mail == null) {
@@ -566,8 +576,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<td>";
 
         $phone = null;
-        if ($is_known) {
-            $phone = $applianceplugin->fields['webapplicationphonesupport'];
+        if ($editor) {
+            $phone = $editor->getField('phonenumber');
         }
 
         if (!$is_known || $phone == null) {
@@ -614,6 +624,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $this->addStandardTab('PluginWebapplicationsDashboardPhysicalInfrastructure', $ong, $options);//Vue Infra physiques
         $this->addStandardTab('PluginWebapplicationsDashboardDatabase', $ong, $options);//Vue Base de données
         $this->addStandardTab('PluginWebapplicationsDashboardStream', $ong, $options);//Vue Flux
+        $this->addStandardTab('KnowbaseItem_Item', $ong, $options);
 
         return $ong;
     }

@@ -96,7 +96,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                                                       "' . $webapp['plugin_webapplications_webapplicationtechnics_id'] . '",
                                                          "' . $webapp['address'] . '", "' . $webapp['backoffice'] . '", "' . $webapp['webapplicationexternalexpositions_id'] . '", "' . $webapp['webapplicationreferringdepartmentvalidation'] . '", "' . $webapp['webapplicationciovalidation'] . '", "' . $webapp['webapplicationavailabilities'] . '", "' . $webapp['webapplicationintegrities'] . '", "' . $webapp['webapplicationconfidentialities'] . '", "' . $webapp['webapplicationtraceabilities'] . '");
                                               
-                                              INSERT INTO `glpi_plugin_webapplications_databaseinstances` (`databases_id`, 
+                                              INSERT INTO `glpi_plugin_webapplications_databaseinstances` (`databaseinstances_id`, 
                                                `webapplicationexternalexpositions_id`, `webapplicationavailabilities`, `webapplicationintegrities`, `webapplicationconfidentialities`, `webapplicationtraceabilities`) VALUES
                                               ("' . $webapp['id'] . '", "' . $webapp['webapplicationexternalexpositions_id'] . '", 
                                               "' . $webapp['webapplicationavailabilities'] . '", "' . $webapp['webapplicationintegrities'] . '", "' . $webapp['webapplicationconfidentialities'] . '", "' . $webapp['webapplicationtraceabilities'] . '")';

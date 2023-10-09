@@ -52,7 +52,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
         $webapp_database = new self();
         if ($item->getType() == 'DatabaseInstance') {
             if ($item->getID()) {
-                $webapp_database->getFromDBByCrit(['databases_id' => $item->getID()]);
+                $webapp_database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
             } else {
                 $webapp_database->getEmpty();
             }
@@ -82,8 +82,8 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
      public function post_addItem()
      {
          $appliance_id = $this->input['appliances_id'];
-         $items_id = $this->input['databases_id'];
-         if (!is_null($appliance_id)&&$appliance_id!=0) {
+         $items_id = $this->input['databaseinstances_id'];
+         if (isset($appliance_id) && !empty($appliance_id)) {
              $itemDBTM = new Appliance_Item();
              $itemDBTM->add(['appliances_id' => $appliance_id,
                  'items_id' => $items_id,
@@ -127,7 +127,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
     {
         $database = new PluginWebapplicationsDatabaseInstance();
         if (!empty($item->fields)) {
-            $database->getFromDBByCrit(['databases_id' => $item->getID()]);
+            $database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
             if (is_array($database->fields) && count($database->fields) > 0) {
                 $database->update(['id'                           => $database->fields['id'],
                                     'webapplicationexternalexpositions_id'    => isset($item->input['webapplicationexternalexpositions_id']) ? $item->input['webapplicationexternalexpositions_id'] : $database->fields['plugin_webapplications_webapplicationexternalexpositions_id'],
@@ -143,7 +143,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
                                  'webapplicationconfidentialities' => isset($item->input['webapplicationconfidentialities']) ? $item->input['webapplicationconfidentialities'] : 0,
                                  'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : 0,
                                  'appliances_id' => isset($item->input['appliances_id']) ? $item->input['appliances_id'] : 0,
-                                 'databases_id'                => $item->getID()]);
+                                 'databaseinstances_id'                => $item->getID()]);
             }
         }
     }
@@ -159,6 +159,6 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
     public static function cleanRelationToDatabase($item)
     {
         $temp = new self();
-        $temp->deleteByCriteria(['databases_id' => $item->getID()]);
+        $temp->deleteByCriteria(['databaseinstances_id' => $item->getID()]);
     }
 }

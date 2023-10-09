@@ -250,7 +250,7 @@ function plugin_webapplications_uninstall()
 //{
 //    if (Plugin::isPluginActive("webapplications")) {
 //        return ["glpi_appliances" => ["glpi_plugin_webapplications_appliances" => "appliances_id"],
-//                "glpi_databaseinstances" => ["glpi_plugin_webapplications_databaseinstances" => "databases_id"],
+//                "glpi_databaseinstances" => ["glpi_plugin_webapplications_databaseinstances" => "databaseinstances_id"],
 //                "glpi_streams" => ["glpi_plugin_webapplications_streams" => "entities_id"],
 //                "glpi_processes" => ["glpi_plugin_webapplications_processes" => "entities_id"],
 //                "glpi_entities" => ["glpi_plugin_webapplications_entities" => "entities_id"]];
@@ -354,7 +354,7 @@ function plugin_webapplications_getAddSearchOptions($itemtype)
             $sopt[8107]['table']         = 'glpi_plugin_webapplications_webapplicationexternalexpositions';
             $sopt[8107]['field']         = 'name';
             $sopt[8107]['datatype']      = 'dropdown';
-            $sopt[8107]['name']          = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
+            $sopt[8107]['name']          = PluginWebapplicationsWebapplicationExternalExposition::getTypeName(1);
             $sopt[8107]['forcegroupby']  = true;
             $sopt[8107]['massiveaction'] = false;
             $sopt[8107]['linkfield']     = 'webapplicationexternalexpositions_id';
@@ -367,18 +367,98 @@ function plugin_webapplications_getAddSearchOptions($itemtype)
                     ]
                 ]
             ];
+
+            $sopt[8108]['table']         = 'glpi_plugin_webapplications_appliances';
+            $sopt[8108]['field']         = 'version';
+            $sopt[8108]['name']          = __('Installed version', 'webapplications');
+            $sopt[8108]['massiveaction'] = false;
+            $sopt[8108]['datatype']      = 'text';
+            $sopt[8108]['linkfield']     = 'appliances_id';
+            $sopt[8108]['joinparams']    = array('jointype' => 'child');
+            $sopt[8108]['forcegroupby']  = false;
+
+            $sopt[8109]['table']         = 'glpi_plugin_webapplications_appliances';
+            $sopt[8109]['field']         = 'webapplicationreferringdepartmentvalidation';
+            $sopt[8109]['name']          = __('Validation of the request by the referring Department', 'webapplications');
+            $sopt[8109]['massiveaction'] = false;
+            $sopt[8109]['datatype']      = 'bool';
+            $sopt[8109]['linkfield']     = 'appliances_id';
+            $sopt[8109]['joinparams']    = array('jointype' => 'child');
+            $sopt[8109]['forcegroupby']  = false;
+
+            $sopt[8110]['table']         = 'glpi_plugin_webapplications_appliances';
+            $sopt[8110]['field']         = 'webapplicationciovalidation';
+            $sopt[8110]['name']          = __('Validation by CIO', 'webapplications');
+            $sopt[8110]['massiveaction'] = false;
+            $sopt[8110]['datatype']      = 'bool';
+            $sopt[8110]['linkfield']     = 'appliances_id';
+            $sopt[8110]['joinparams']    = array('jointype' => 'child');
+            $sopt[8110]['forcegroupby']  = false;
+
+            $sopt[8111]['table']         = 'glpi_plugin_webapplications_appliances';
+            $sopt[8111]['field']         = 'webapplicationavailabilities';
+            $sopt[8111]['name']          = __('Availability', 'webapplications');
+            $sopt[8111]['massiveaction'] = false;
+            $sopt[8111]['datatype']      = 'dropdown';
+            $sopt[8111]['linkfield']     = 'appliances_id';
+            $sopt[8111]['joinparams']    = array('jointype' => 'child');
+            $sopt[8111]['forcegroupby']  = false;
+
+            $sopt[8112]['table']         = 'glpi_plugin_webapplications_appliances';
+            $sopt[8112]['field']         = 'webapplicationintegrities';
+            $sopt[8112]['name']          = __('Integrity', 'webapplications');
+            $sopt[8112]['massiveaction'] = false;
+            $sopt[8112]['datatype']      = 'dropdown';
+            $sopt[8112]['linkfield']     = 'appliances_id';
+            $sopt[8112]['joinparams']    = array('jointype' => 'child');
+            $sopt[8112]['forcegroupby']  = false;
+
+            $sopt[8113]['table']         = 'glpi_plugin_webapplications_appliances';
+            $sopt[8113]['field']         = 'webapplicationconfidentialities';
+            $sopt[8113]['name']          = __('Confidentiality', 'webapplications');
+            $sopt[8113]['massiveaction'] = false;
+            $sopt[8113]['datatype']      = 'dropdown';
+            $sopt[8113]['linkfield']     = 'appliances_id';
+            $sopt[8113]['joinparams']    = array('jointype' => 'child');
+            $sopt[8113]['forcegroupby']  = false;
+
+            $sopt[8114]['table']         = 'glpi_plugin_webapplications_appliances';
+            $sopt[8114]['field']         = 'webapplicationtraceabilities';
+            $sopt[8114]['name']          = __('Traceability', 'webapplications');
+            $sopt[8114]['massiveaction'] = false;
+            $sopt[8114]['datatype']      = 'dropdown';
+            $sopt[8114]['linkfield']     = 'appliances_id';
+            $sopt[8114]['joinparams']    = array('jointype' => 'child');
+            $sopt[8114]['forcegroupby']  = false;
+
+            $sopt[8115]['table']         = 'glpi_suppliers';
+            $sopt[8115]['field']         = 'name';
+            $sopt[8115]['datatype']      = 'dropdown';
+            $sopt[8115]['name']          = __('Referent editor', 'webapplications');
+            $sopt[8115]['forcegroupby']  = true;
+            $sopt[8115]['massiveaction'] = false;
+            $sopt[8115]['linkfield']     = 'editor';
+            $sopt[8115]['joinparams']    = [
+                'beforejoin' => [
+                    'table'      => 'glpi_plugin_webapplications_appliances',
+                    'joinparams' => [
+                        'jointype'  => 'child',
+                        'condition' => ''
+                    ]
+                ]
+            ];
         }
     }
     if ($itemtype == "DatabaseInstance") {
         if (Session::haveRight("plugin_webapplications", READ)) {
-            $sopt[8108]['table']         = 'glpi_plugin_webapplications_webapplicationexternalexpositions';
-            $sopt[8108]['field']         = 'name';
-            $sopt[8108]['datatype']      = 'dropdown';
-            $sopt[8108]['name']          = PluginWebapplicationsWebapplicationTechnic::getTypeName(1);
-            $sopt[8108]['forcegroupby']  = true;
-            $sopt[8108]['massiveaction'] = false;
-            $sopt[8108]['linkfield']     = 'webapplicationexternalexpositions_id';
-            $sopt[8108]['joinparams']    = [
+            $sopt[8116]['table']         = 'glpi_plugin_webapplications_webapplicationexternalexpositions';
+            $sopt[8116]['field']         = 'name';
+            $sopt[8116]['datatype']      = 'dropdown';
+            $sopt[8116]['name']          = PluginWebapplicationsWebapplicationExternalExposition::getTypeName(1);
+            $sopt[8116]['forcegroupby']  = true;
+            $sopt[8116]['massiveaction'] = false;
+            $sopt[8116]['linkfield']     = 'webapplicationexternalexpositions_id';
+            $sopt[8116]['joinparams']    = [
                 'beforejoin' => [
                     'table'      => 'glpi_plugin_webapplications_databaseinstances',
                     'joinparams' => [
@@ -387,6 +467,39 @@ function plugin_webapplications_getAddSearchOptions($itemtype)
                     ]
                 ]
             ];
+
+            $sopt[8117]['table']         = 'glpi_plugin_webapplications_databaseinstances';
+            $sopt[8117]['field']         = 'webapplicationavailabilities';
+            $sopt[8117]['name']          = __('Availability', 'webapplications');
+            $sopt[8117]['massiveaction'] = false;
+            $sopt[8117]['datatype']      = 'dropdown';
+            $sopt[8117]['joinparams']    = array('jointype' => 'child');
+            $sopt[8117]['forcegroupby']  = false;
+
+            $sopt[8118]['table']         = 'glpi_plugin_webapplications_databaseinstances';
+            $sopt[8118]['field']         = 'webapplicationintegrities';
+            $sopt[8118]['name']          = __('Integrity', 'webapplications');
+            $sopt[8118]['massiveaction'] = false;
+            $sopt[8118]['datatype']      = 'dropdown';
+            $sopt[8118]['joinparams']    = array('jointype' => 'child');
+            $sopt[8118]['forcegroupby']  = false;
+
+            $sopt[8119]['table']         = 'glpi_plugin_webapplications_databaseinstances';
+            $sopt[8119]['field']         = 'webapplicationconfidentialities';
+            $sopt[8119]['name']          = __('Confidentiality', 'webapplications');
+            $sopt[8119]['massiveaction'] = false;
+            $sopt[8119]['datatype']      = 'dropdown';
+            $sopt[8119]['joinparams']    = array('jointype' => 'child');
+            $sopt[8119]['forcegroupby']  = false;
+
+            $sopt[8120]['table']         = 'glpi_plugin_webapplications_databaseinstances';
+            $sopt[8120]['field']         = 'webapplicationtraceabilities';
+            $sopt[8120]['name']          = __('Traceability', 'webapplications');
+            $sopt[8120]['massiveaction'] = false;
+            $sopt[8120]['datatype']      = 'dropdown';
+            $sopt[8120]['joinparams']    = array('jointype' => 'child');
+            $sopt[8120]['forcegroupby']  = false;
+
         }
     }
     return $sopt;

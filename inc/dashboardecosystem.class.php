@@ -71,8 +71,6 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM
 
         $listEntitiesId = array();
         foreach ($entitiesApp as $entityApp) {
-            $entitiesAppDBTM->getFromDB($entityApp['id']);
-
             array_push($listEntitiesId, $entityApp['items_id']);
         }
 
@@ -247,21 +245,25 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM
                 echo "</tr>";
 
 
-                $securityContact = $entity['security_contact'];
+                $secContid = $entity['security_contact'];
+                $linkSecCont = User::getFormURLWithID($secContid);
+                $linkSecCont .= "&forcetab=main";
+                $secCont = new User();
+                $secCont->getFromDB($secContid);
+                $secContName = $secCont->getName();
                 echo "<tr>";
                 echo "<th>";
                 echo __("Security Contact", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo $securityContact;
+                echo "<a href=$linkSecCont>$secContName</a>";
                 echo "</td>";
                 echo "</tr>";
 
                 $relation = $entity['relation_nature'];
                 echo "<tr>";
                 echo "<th>";
-                echo __("Relation nature", 'webapplicatiodakapoasoe
-                ns');
+                echo __("Relation nature", 'webapplications');
                 echo "</th>";
                 echo "<td>";
                 echo $relation;

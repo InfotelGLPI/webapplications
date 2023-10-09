@@ -17,20 +17,27 @@
         )}}
     {% endif %}
 
-    {{ fields.autoNameField(
-        'security_contact',
-        item,
-        __('Security Contact', 'webapplications'),
-        withtemplate
-    ) }}
+    {% if item.isField('security_contact') %}
+        {{ fields.dropdownField(
+            'User',
+            'security_contact',
+            item.fields['security_contact'],
+            __('Security Contact', 'webapplications'),
+            field_options|merge({
+                'right': 'all',
+            })
+        ) }}
+    {% endif %}
 
 
-    {{ fields.autoNameField(
-        'relation_nature',
-        item,
-        __('Relation nature', 'webapplications'),
-        withtemplate
-    ) }}
+    {% if item.isField('relation_nature') %}
+        {{ fields.autoNameField(
+            'relation_nature',
+            item,
+            __('Relation nature', 'webapplications'),
+            withtemplate
+        ) }}
+    {% endif %}
 
     <input type="hidden" name="appliances_id" value="{{ params['appliances_id'] }}">
 

@@ -111,18 +111,18 @@ class PluginWebapplicationsAppliance extends CommonDBTM
             $address    = isset($item->input['address']) ? $item->input['address'] : $appliance->fields['address'];
             $backoffice = isset($item->input['backoffice']) ? $item->input['backoffice'] : $appliance->fields['backoffice'];
             $version = isset($item->input['version']) ? $item->input['version'] : $appliance->fields['version'];
+            $editor = isset($item->input['editor']) ? $item->input['editor'] : $appliance->fields['editor'];
             if (is_array($appliance->fields) && count($appliance->fields) > 0) {
                 $appliance->update(['id'                           => $appliance->fields['id'],
                                     'address'                      => $address,
                                     'version'                      => $version,
+                                    'editor'                       => $editor,
                                     'backoffice'                   => $backoffice,
                                     'webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : $appliance->fields['plugin_webapplications_webapplicationservertypes_id'],
                                     'webapplicationtechnics_id'    => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : $appliance->fields['plugin_webapplications_webapplicationtechnics_id'],
                                     'webapplicationexternalexpositions_id'    => isset($item->input['webapplicationexternalexpositions_id']) ? $item->input['webapplicationexternalexpositions_id'] : $appliance->fields['webapplicationexternalexpositions_id'],
                                     'webapplicationreferringdepartmentvalidation'    => isset($item->input['webapplicationreferringdepartmentvalidation']) ? $item->input['webapplicationreferringdepartmentvalidation'] : $appliance->fields['webapplicationreferringdepartmentvalidation'],
                                     'webapplicationciovalidation'    => isset($item->input['webapplicationciovalidation']) ? $item->input['webapplicationciovalidation'] : $appliance->fields['webapplicationciovalidation'],
-                                    'webapplicationmailsupport'    => isset($item->input['webapplicationmailsupport']) ? $item->input['webapplicationmailsupport'] : $appliance->fields['webapplicationmailsupport'],
-                                    'webapplicationphonesupport'    => isset($item->input['webapplicationphonesupport']) ? $item->input['webapplicationphonesupport'] : $appliance->fields['webapplicationphonesupport'],
                                     'webapplicationavailabilities'    => isset($item->input['webapplicationavailabilities']) ? $item->input['webapplicationavailabilities'] : $appliance->fields['webapplicationavailabilities'],
                                     'webapplicationintegrities'    => isset($item->input['webapplicationintegrities']) ? $item->input['webapplicationintegrities'] : $appliance->fields['webapplicationintegrities'],
                                     'webapplicationconfidentialities'    => isset($item->input['webapplicationconfidentialities']) ? $item->input['webapplicationconfidentialities'] : $appliance->fields['webapplicationconfidentialities'],
@@ -134,14 +134,13 @@ class PluginWebapplicationsAppliance extends CommonDBTM
                                  'webapplicationexternalexpositions_id' => isset($item->input['webapplicationexternalexpositions_id']) ? $item->input['webapplicationexternalexpositions_id'] : 0,
                                  'webapplicationreferringdepartmentvalidation' => isset($item->input['webapplicationreferringdepartmentvalidation']) ? $item->input['webapplicationreferringdepartmentvalidation'] : 0,
                                  'webapplicationciovalidation' => isset($item->input['webapplicationciovalidation']) ? $item->input['webapplicationciovalidation'] : 0,
-                                 'webapplicationmailsupport' => isset($item->input['webapplicationmailsupport']) ? $item->input['webapplicationmailsupport'] : 0,
-                                 'webapplicationphonesupport' => isset($item->input['webapplicationphonesupport']) ? $item->input['webapplicationphonesupport'] : 0,
                                  'webapplicationavailabilities' => isset($item->input['webapplicationavailabilities']) ? $item->input['webapplicationavailabilities'] : 0,
                                  'webapplicationintegrities' => isset($item->input['webapplicationintegrities']) ? $item->input['webapplicationintegrities'] : 0,
                                  'webapplicationconfidentialities' => isset($item->input['webapplicationconfidentialities']) ? $item->input['webapplicationconfidentialities'] : 0,
                                  'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : 0,
                                  'address'                      => $address,
                                  'version'                      => $version,
+                                 'editor'                       => $editor,
                                  'appliances_id'                => $item->getID(),
                                  'backoffice'                   => $backoffice]);
             }

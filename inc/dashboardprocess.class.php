@@ -70,8 +70,6 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM
 
         $listProcId = array();
         foreach ($procsApp as $proc) {
-            $procsAppDBTM->getFromDB($proc['id']);
-
             array_push($listProcId, $proc['items_id']);
         }
 

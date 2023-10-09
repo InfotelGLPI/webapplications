@@ -69,8 +69,6 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
 
         $listDatabaseId = array();
         foreach ($databaseApp as $db) {
-            $databasesAppDBTM->getFromDB($db['id']);
-
             array_push($listDatabaseId, $db['items_id']);
         }
 
@@ -248,36 +246,6 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
                 echo "</td>";
                 echo "</tr>";
 
-
-                $streamItemDBTM = new PluginWebapplicationsStream_Item();
-                $streams = $streamItemDBTM->find(['items_id' => $database['id'], 'itemtype' => 'DatabaseInstance']);
-                $streamDBTM = new PluginWebapplicationsStream();
-
-                echo "<tr>";
-                echo "<th>";
-                echo __("List Streams", 'webapplications');
-                echo "</th>";
-                echo "</tr>";
-
-                echo "<tr>";
-                echo "<td></td>";
-                echo "<td>";
-                if (!empty($streams)) {
-                    echo "<select name='streams' id='list' Size='3' ondblclick='location = this.value;'>";
-                    foreach ($streams as $stream) {
-                        $streamDBTM->getFromDB($stream['plugin_webapplications_streams_id']);
-                        $name = $streamDBTM->getName();
-                        $link = PluginWebapplicationsStream::getFormURLWithID($stream['plugin_webapplications_streams_id']);
-                        echo "<option value=$link>$name</option>";
-                    }
-                    echo "</select>";
-                } else {
-                    echo __("No associated stream", 'webapplications');
-                }
-                echo "</td>";
-                echo "</tr>";
-
-
                 echo "<tr>";
                 echo "<th style='padding-top: 20px; padding-bottom: 20px'>";
                 echo __('DICT', 'webapplications');
@@ -286,7 +254,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
 
 
                 $databaseplugin = new PluginWebapplicationsDatabaseInstance();
-                $is_known = $databaseplugin->getFromDBByCrit(['databases_id'=>$database['id']]);
+                $is_known = $databaseplugin->getFromDBByCrit(['databaseinstances_id'=>$database['id']]);
 
 
                 if ($is_known) {
@@ -294,9 +262,6 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
                     $int = $databaseplugin->fields['webapplicationintegrities'];
                     $conf = $databaseplugin->fields['webapplicationconfidentialities'];
                     $tra = $databaseplugin->fields['webapplicationtraceabilities'];
-
-
-                    echo "<table style='text-align : center; width: 60%'>";
 
                     echo "<table style='text-align : center; width: 60%'>";
                     echo "<td class='dict'>";

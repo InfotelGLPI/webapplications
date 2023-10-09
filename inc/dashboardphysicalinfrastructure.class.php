@@ -93,7 +93,6 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
 
         $listItem = array();
         foreach ($itemApp as $st) {
-            $itemsAppDBTM->getFromDB($st['id']);
             $item = ['id' => $st['items_id'], 'itemtype' => $st['itemtype']];
 
             $itemDBTM = new $st['itemtype'];
@@ -258,7 +257,8 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
                     $OSVersionId = $itemOSDBTM->fields['operatingsystemversions_id'];
                     $OSVersion = new OperatingSystemVersion();
                     $OSVersion->getFromDB($OSVersionId);
-                    $OSVersionName = $OSVersion->getName();
+                    $OSVersionName=$OSVersion->getName();
+                    if ($OSVersionName == NOT_AVAILABLE || $OSName == NOT_AVAILABLE) $OSVersionName = null;
                 }
 
 
