@@ -246,18 +246,18 @@ function plugin_webapplications_uninstall()
 /**
  * @return array
  */
-function plugin_webapplications_getDatabaseRelations()
-{
-    if (Plugin::isPluginActive("webapplications")) {
-        return ["glpi_appliances" => ["glpi_plugin_webapplications_appliances" => "appliances_id"],
-                "glpi_databaseinstances" => ["glpi_plugin_webapplications_databaseinstances" => "databases_id"],
-                "glpi_streams" => ["glpi_plugin_webapplications_streams" => "entities_id"],
-                "glpi_processes" => ["glpi_plugin_webapplications_processes" => "entities_id"],
-                "glpi_entities" => ["glpi_plugin_webapplications_entities" => "entities_id"]];
-    }
-
-    return [];
-}
+//function plugin_webapplications_getDatabaseRelations()
+//{
+//    if (Plugin::isPluginActive("webapplications")) {
+//        return ["glpi_appliances" => ["glpi_plugin_webapplications_appliances" => "appliances_id"],
+//                "glpi_databaseinstances" => ["glpi_plugin_webapplications_databaseinstances" => "databases_id"],
+//                "glpi_streams" => ["glpi_plugin_webapplications_streams" => "entities_id"],
+//                "glpi_processes" => ["glpi_plugin_webapplications_processes" => "entities_id"],
+//                "glpi_entities" => ["glpi_plugin_webapplications_entities" => "entities_id"]];
+//    }
+//
+//    return [];
+//}
 
 
 // Define Dropdown tables to be manage in GLPI :
