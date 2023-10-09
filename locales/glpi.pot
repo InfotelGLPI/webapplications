@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-13 08:46+0000\n"
+"POT-Creation-Date: 2023-10-09 12:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,8 +57,8 @@ msgstr[1] ""
 
 #: inc/dashboard.class.php:353 inc/dashboarddatabase.class.php:303
 #: inc/dashboardprocess.class.php:289
-#: templates/webapplication_process_form.html.twig:27
 #: templates/webapplication_appliance_form.html.twig:102
+#: templates/webapplication_process_form.html.twig:27
 #: templates/webapplication_database_form.html.twig:32
 msgid "Availability"
 msgstr ""
@@ -77,8 +77,8 @@ msgstr[1] ""
 
 #: inc/dashboard.class.php:372 inc/dashboarddatabase.class.php:322
 #: inc/dashboardprocess.class.php:308
-#: templates/webapplication_process_form.html.twig:60
 #: templates/webapplication_appliance_form.html.twig:134
+#: templates/webapplication_process_form.html.twig:60
 #: templates/webapplication_database_form.html.twig:62
 msgid "Confidentiality"
 msgstr ""
@@ -137,8 +137,8 @@ msgstr ""
 
 #: inc/dashboard.class.php:363 inc/dashboarddatabase.class.php:313
 #: inc/dashboardprocess.class.php:299
-#: templates/webapplication_process_form.html.twig:44
 #: templates/webapplication_appliance_form.html.twig:118
+#: templates/webapplication_process_form.html.twig:44
 #: templates/webapplication_database_form.html.twig:48
 msgid "Integrity"
 msgstr ""
@@ -210,8 +210,8 @@ msgid "No entity founded"
 msgstr ""
 
 #: inc/dashboardecosystem.class.php:214 inc/dashboardprocess.class.php:204
-#: templates/webapplication_process_form.html.twig:12
 #: templates/webapplication_entity_form.html.twig:13
+#: templates/webapplication_process_form.html.twig:12
 msgid "Owner"
 msgstr ""
 
@@ -269,8 +269,8 @@ msgstr ""
 msgid "Security Contact"
 msgstr ""
 
-#: templates/webapplication_process_form.html.twig:18
 #: templates/webapplication_appliance_form.html.twig:86
+#: templates/webapplication_process_form.html.twig:18
 #: templates/webapplication_database_form.html.twig:24
 msgid "Security Needs"
 msgstr ""
@@ -309,8 +309,8 @@ msgstr ""
 
 #: inc/dashboard.class.php:381 inc/dashboarddatabase.class.php:332
 #: inc/dashboardprocess.class.php:317
-#: templates/webapplication_process_form.html.twig:77
 #: templates/webapplication_appliance_form.html.twig:151
+#: templates/webapplication_process_form.html.twig:77
 #: templates/webapplication_database_form.html.twig:77
 msgid "Traceability"
 msgstr ""
