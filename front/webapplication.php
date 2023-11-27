@@ -41,18 +41,22 @@ global $DB;
 
 echo "<div align='center'><h1>" . __('Core migration', 'webapplications') . "</h1><br/>";
 
-echo "<table align='center'><tr><td>";
-Html::showSimpleForm(
-    $_SERVER['PHP_SELF'],
-    'migration',
-    __('Core migration', 'webapplications'),
-    ['do_migration' => '1'],
-    '',
-    '',
-    [__('Are you sure you want to do core migration ?', 'webapplications')]
-);
 
-echo "</td></tr></table>";
+if ($DB->TableExists("glpi_plugin_webapplications_webapplications")){
+    echo "<table align='center'><tr><td>";
+    
+    
+    Html::showSimpleForm($_SERVER['PHP_SELF'], 'migration', __('Core migration', 'webapplications'),
+                         ['do_migration' => '1'], '', '',
+                         [__('Are you sure you want to do core migration ?', 'webapplications')]);
+    
+    }else {
+    
+       echo __('Web application was migrated successfully. No tasks to do.', 'webapplications');
+    
+    }
+
+    echo "</td></tr></table>";
 
 if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['do_migration'] == 1) {
     $dbu      = new DbUtils();
@@ -112,6 +116,34 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                             SET `appliances_id`='" . $new_appliance['id'] . "'
                             WHERE `appliances_id`= " . $new_appliance['old_id'] . ";";
         $DB->query($query);
+
+        // update tickets 
+        $query = "UPDATE `glpi_items_tickets` 
+        set `itemtype`= 'Appliance' , `items_id` =  '" . $new_appliance['id'] . "'
+        WHERE `itemtype` = 'PluginWebapplicationsWebapplication' and `items_id`= " . $new_appliance['old_id'] . ";";
+        $DB->query($query);
+
+
+        // update changes items 
+        $query = "UPDATE `glpi_changes_items` 
+        set `itemtype`= 'Appliance' , `items_id` =  '" . $new_appliance['id'] . "'
+        WHERE `itemtype` = 'PluginWebapplicationsWebapplication' and `items_id`= " . $new_appliance['old_id'] . ";";
+        $DB->query($query);
+
+
+        // insert computers items. 
+        $webapplications_items = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplications_items', 
+                                                            [
+                                                                'itemtype' => ['=', 'Computer'],
+                                                                'plugin_webapplications_webapplications_id' => ['=', $new_appliance['old_id']]
+                                                            ]);    
+                                                
+        foreach ($webapplications_items as $webapplications_item) {
+            $query ="INSERT INTO `glpi_appliances_items` (appliances_id,items_id,itemtype) 
+            VALUE  (".$new_appliance['id'].",".$webapplications_item['items_id'].",'Computer');";
+            $DB->query($query);
+        } 
+
 
         if (Plugin::isPluginActive('accounts')) {
             $queryUpdateAccountsAssociatedItems = "UPDATE `glpi_plugin_accounts_accounts_items` 
