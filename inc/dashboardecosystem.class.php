@@ -222,7 +222,7 @@ class PluginWebapplicationsDashboardEcosystem extends CommonDBTM
 
                 echo "<tr>";
                 echo "<th>";
-                echo __('List Processes', 'webapplications');
+                echo __('Processes list', 'webapplications');
                 echo "</th>";
                 echo "</tr>";
 

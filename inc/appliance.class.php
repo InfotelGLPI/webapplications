@@ -48,6 +48,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
      */
     public static function addFields($params)
     {
+
         $item             = $params['item'];
         $webapp_appliance = new self();
         if ($item->getType() == 'Appliance') {

@@ -1,0 +1,27 @@
+{#{% extends "generic_show_form.html.twig" %}#}
+{% import 'components/form/fields_macros.html.twig' as fields %}
+{% set params  = params ?? [] %}
+{% set field_options = field_options ?? {} %}
+
+{% block more_fields %}
+
+    {% set editor_item = get_item(params['itemtype'], params['items_id']) %}
+    {{ fields.htmlField(
+        'editor',
+        editor_item.getLink(),
+        __("Referent editor", 'webapplications')
+    ) }}
+
+    {{ fields.htmlField(
+        "email",
+        params['editoremail'],
+        __("Mail support", 'webapplications')
+    ) }}
+
+    {{ fields.htmlField(
+        "phonenumber",
+        params['editorephonenumber'],
+        __("Phone support", 'webapplications')
+    ) }}
+
+{% endblock %}

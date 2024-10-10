@@ -41,15 +41,22 @@ function plugin_init_webapplications()
 {
     global $PLUGIN_HOOKS, $CFG_GLPI;
 
-    $PLUGIN_HOOKS['csrf_compliant']['webapplications']   = true;
+    $PLUGIN_HOOKS['csrf_compliant']['webapplications'] = true;
 
-    $PLUGIN_HOOKS['change_profile']['webapplications']   = ['PluginWebapplicationsProfile',
-       'initProfile'];
+    $PLUGIN_HOOKS['change_profile']['webapplications'] = [
+        'PluginWebapplicationsProfile',
+        'initProfile'
+    ];
 
     Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
     if (Session::getLoginUserID()) {
         if (Session::haveRight("plugin_webapplications", READ)) {
-            $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = array('PluginWebapplicationsDashboard','PluginWebapplicationsEntity', 'PluginWebapplicationsProcess', 'PluginWebapplicationsStream');
+            $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = array(
+                'PluginWebapplicationsDashboard',
+                'PluginWebapplicationsEntity',
+                'PluginWebapplicationsProcess',
+                'PluginWebapplicationsStream'
+            );
         }
     }
 
@@ -63,38 +70,64 @@ function plugin_init_webapplications()
 //      }
     //   }
 
-    if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") ==true) {
-        $PLUGIN_HOOKS['post_item_form']['webapplications']= ['PluginWebapplicationsAppliance', 'addFields'];
-    } elseif (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") ==true) {
-        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsDatabaseInstance', 'addFields'];
-    }
+//    if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") === true) {
+    $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsAppliance', 'addFields'];
+//    } elseif (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") ==true) {
+//        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsDatabaseInstance', 'addFields'];
+//    }
 
-    $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = ['PluginWebapplicationsAppliance', 'cleanRelationToAppliance'];
-    $PLUGIN_HOOKS['item_purge']['webapplications']['DatabaseInstance'] = ['PluginWebapplicationsDatabaseInstance', 'cleanRelationToDatabase'];
+    $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = [
+        'PluginWebapplicationsAppliance',
+        'cleanRelationToAppliance'
+    ];
+    $PLUGIN_HOOKS['item_purge']['webapplications']['DatabaseInstance'] = [
+        'PluginWebapplicationsDatabaseInstance',
+        'cleanRelationToDatabase'
+    ];
 
     // Other fields inherited from webapplications
-    $PLUGIN_HOOKS['item_add']['webapplications']       = ['Appliance' => ['PluginWebapplicationsAppliance',
-                                                                          'applianceAdd'],
-                                                          'DatabaseInstance' => ['PluginWebapplicationsDatabaseInstance',
-                                                                          'databaseAdd'],
-                                                         'Item' => ['PluginWebapplicationsItem',
-                                                                          'addApplianceItem']];
+    $PLUGIN_HOOKS['item_add']['webapplications'] = [
+        'Appliance' => [
+            'PluginWebapplicationsAppliance',
+            'applianceAdd'
+        ],
+        'DatabaseInstance' => [
+            'PluginWebapplicationsDatabaseInstance',
+            'databaseAdd'
+        ],
+        'Item' => [
+            'PluginWebapplicationsItem',
+            'addApplianceItem'
+        ]
+    ];
 
-    $PLUGIN_HOOKS['pre_item_update']['webapplications'] = ['Appliance' => ['PluginWebapplicationsAppliance',
-                                                                           'applianceUpdate'],
-                                                           'DatabaseInstance' => ['PluginWebapplicationsDatabaseInstance',
-                                                                           'databaseUpdate']];
+    $PLUGIN_HOOKS['pre_item_update']['webapplications'] = [
+        'Appliance' => [
+            'PluginWebapplicationsAppliance',
+            'applianceUpdate'
+        ],
+        'DatabaseInstance' => [
+            'PluginWebapplicationsDatabaseInstance',
+            'databaseUpdate'
+        ]
+    ];
 
 
-    array_push($CFG_GLPI['appliance_types'], 'PluginWebapplicationsProcess', 'PluginWebapplicationsEntity', 'PluginWebapplicationsStream', 'Appliance');
+    array_push(
+        $CFG_GLPI['appliance_types'],
+        'PluginWebapplicationsProcess',
+        'PluginWebapplicationsEntity',
+        'PluginWebapplicationsStream',
+        'Appliance'
+    );
     $CFG_GLPI['stream_types'] = ['DatabaseInstance', 'Computer', 'NetworkEquipment'];
 
 
     if (isset($_SERVER['REQUEST_URI'])
-        && (strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") ==true
-        || strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") == true
-        || strpos($_SERVER['REQUEST_URI'], "front/process.form.php") ==true
-        || strpos($_SERVER['REQUEST_URI'], "front/dashboard.php") ==true)) {
+        && (strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") == true
+            || strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") == true
+            || strpos($_SERVER['REQUEST_URI'], "front/process.form.php") == true
+            || strpos($_SERVER['REQUEST_URI'], "front/dashboard.php") == true)) {
         $PLUGIN_HOOKS["add_javascript"]['webapplications'][] = 'scripts/securityneedscolor.js.php';
     }
 }
@@ -107,19 +140,20 @@ function plugin_init_webapplications()
  */
 function plugin_version_webapplications()
 {
-    return ['name'           => _n('Web application', 'Web applications', 2, 'webapplications'),
-                 'version'        => PLUGIN_WEBAPPLICATIONS_VERSION,
-                 'license'        => 'GPLv2+',
-                 'oldname'        => 'appweb',
-                 'author'         => "<a href='http://blogglpi.infotel.com'>Infotel</a>",
-                 'homepage'       => 'https://github.com/InfotelGLPI/webapplications',
-                 'requirements'   => [
-                   'glpi' => [
-                      'min' => '10.0',
-                      'dev' => false
-                   ]
-                ]
-             ];
+    return [
+        'name' => _n('Web application dashboard', 'Web applications dashboard', 2, 'webapplications'),
+        'version' => PLUGIN_WEBAPPLICATIONS_VERSION,
+        'license' => 'GPLv2+',
+        'oldname' => 'appweb',
+        'author' => "<a href='http://blogglpi.infotel.com'>Infotel</a>",
+        'homepage' => 'https://github.com/InfotelGLPI/webapplications',
+        'requirements' => [
+            'glpi' => [
+                'min' => '10.0',
+                'dev' => false
+            ]
+        ]
+    ];
 }
 
 
@@ -131,7 +165,7 @@ function plugin_version_webapplications()
 function plugin_webapplications_check_prerequisites()
 {
     if (version_compare(GLPI_VERSION, '10.0', 'lt')
-       || version_compare(GLPI_VERSION, '11.0', 'ge')) {
+        || version_compare(GLPI_VERSION, '11.0', 'ge')) {
         if (method_exists('Plugin', 'messageIncompatible')) {
             echo Plugin::messageIncompatible('core', '10.0');
         }

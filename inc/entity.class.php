@@ -136,7 +136,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
             'id'            => '4',
             'table'         => $this->getTable(),
             'field'         => 'relation_nature',
-            'name'          => __('Relation Nature', 'webapplications'),
+            'name'          => __('Relation nature', 'webapplications'),
             'datatype'      => 'text'
         ];
 

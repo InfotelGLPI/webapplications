@@ -29,10 +29,7 @@
 
 include('../../../inc/includes.php');
 
-
 Session::checkLoginUser();
-
-use Glpi\Event;
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "1";
@@ -43,11 +40,18 @@ if (!isset($_GET["withtemplate"])) {
 
 $dashboard = new PluginWebapplicationsDashboard;
 
-if (Session::getCurrentInterface() == "central") {
+Html::header(
+    PluginWebapplicationsDashboard::getTypeName(2),
+    $_SERVER['PHP_SELF'],
+    "appliancedashboard",
+    "pluginwebapplicationsdashboard"
+);
 
-    Html::header(PluginWebapplicationsDashboard::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsdashboard");
-    PluginWebapplicationsDashboard::selectAppliance();
+$id = 0;
+if (isset($_SESSION['plugin_webapplications_loaded_appliances_id'])) {
+    $id = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 }
 
+PluginWebapplicationsDashboard::selectAppliance($id);
 
 Html::footer();

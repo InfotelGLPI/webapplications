@@ -221,7 +221,7 @@ class PluginWebapplicationsDashboardDatabase extends CommonDBTM
 
                 echo "<tr>";
                 echo "<th>";
-                echo __('Technician in charge of the hardware');
+                echo __('Technician in charge');
                 echo "</th>";
                 echo "<td>";
                 if ($respSecurityid>0) {

@@ -81,122 +81,140 @@
         <div class="d-flex flex-row flex-wrap flex-xl-nowrap">
             <div class="row flex-row align-items-start flex-grow-1">
                 <div class="row flex-row">
+                    <div class="card border-0 shadow-none p-0 m-0 {{ margins }}">
+                        <div class="card-body">
+                            <h3 class="card-header">
+                                {{ __('Security Needs', 'webapplications') }}
 
-
-                    {{ fields.smallTitle(__('Security Needs', 'webapplications'))}}
-
-                    {% set info  = __("DICT Criteria:
+                                {% set info  = __("DICT Criteria:
 Availability (A): Identify the impact on the availability of the IT asset as a result of the change
 Integrity (I): Identify the impact on the data managed by the IT asset
 Confidentiality (C): Identify the impact on the IT asset's processing related to data confidentiality
 Traceability (T): Identify the impact on the IT asset's processes related to data traceability",'webapplications') %}
+                                <i class="fas fa-info fa-fw"
+                                   title="{{ info }}"></i>
+                            </h3>
+                        </div>
+                        <div class="card-body row flex-row">
+                            <table style="width: 100%;">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        {% if item.isField('webapplicationavailabilities') %}
+                                            {{ fields.dropdownNumberField(
+                                                'webapplicationavailabilities',
+                                                item.fields['webapplicationavailabilities'],
+                                                __('Availability', 'webapplications'),
+                                                {
+                                                    'min'            : 1,
+                                                    'max'            : 4,
+                                                    'step'           : 1,
+                                                    'field_class': 'col-12',
+                                                    'label_class': 'col-xxl-8',
+                                                    'input_class': 'col-xxl-4',}
+                                            ) }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.isField('webapplicationintegrities') %}
+                                            {{ fields.dropdownNumberField(
+                                                'webapplicationintegrities',
+                                                item.fields['webapplicationintegrities'],
+                                                __('Integrity', 'webapplications'),
+                                                {
+                                                    'min'            : 1,
+                                                    'max'            : 4,
+                                                    'step'           : 1,
+                                                    'field_class'    : 'col-12',
+                                                    'label_class'    : 'col-xxl-8',
+                                                    'input_class'    : 'col-xxl-4',}
+                                            ) }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.isField('webapplicationconfidentialities') %}
+                                            {{ fields.dropdownNumberField(
+                                                'webapplicationconfidentialities',
+                                                item.fields['webapplicationconfidentialities'],
+                                                __('Confidentiality', 'webapplications'),
+                                                {
+                                                    'min'            : 0,
+                                                    'max'            : 4,
+                                                    'step'           : 1,
+                                                    'field_class': 'col-12',
+                                                    'label_class': 'col-xxl-8',
+                                                    'input_class': 'col-xxl-4',}
+                                            ) }}
+                                        {% endif %}
 
-                    <a><h2 class="fas fa-info fa-fw"
-                           title="{{ info }}"></h2>
-                    </a>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>
-                                {% if item.isField('webapplicationavailabilities') %}
-                                    {{ fields.dropdownNumberField(
-                                        'webapplicationavailabilities',
-                                        item.fields['webapplicationavailabilities'],
-                                        __('Availability', 'webapplications'),
-                                        {
-                                            'min'            : 1,
-                                            'max'            : 4,
-                                            'step'           : 1,
-                                            'field_class': 'col-12',
-                                            'label_class': 'col-xxl-8',
-                                            'input_class': 'col-xxl-4',}
+                                    </td>
+                                    <td>
+                                        {% if item.isField('webapplicationtraceabilities') %}
+                                            {{ fields.dropdownNumberField(
+                                                'webapplicationtraceabilities',
+                                                item.fields['webapplicationtraceabilities'],
+                                                __('Traceability', 'webapplications'),
+                                                {
+                                                    'min'            : 1,
+                                                    'max'            : 4,
+                                                    'step'           : 1,
+                                                    'field_class': 'col-12',
+                                                    'label_class': 'col-xxl-8',
+                                                    'input_class': 'col-xxl-4',}
+                                            ) }}
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-none p-0 m-0 {{ margins }}">
+                        <div class="card-body">
+                            <h3 class="card-header">
+                                {{ __('Validation', 'webapplications') }}
+                            </h3>
+                        </div>
+                        <div class="card-body row flex-row">
+
+                            {% if item.isField('webapplicationreferringdepartmentvalidation') %}
+                                {{ fields.dropdownYesNo(
+                                    "webapplicationreferringdepartmentvalidation",
+                                    item.fields['webapplicationreferringdepartmentvalidation'],
+                                    __('Validation of the request by the referring department', 'webapplications'),
+                                ) }}
+                            {% endif %}
+
+                            {% if item.isField('webapplicationciovalidation') %}
+                                {{ fields.dropdownYesNo(
+                                    "webapplicationciovalidation",
+                                    item.fields['webapplicationciovalidation'],
+                                    __('Validation by CISO', 'webapplications'),
+                                ) }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-none p-0 m-0 {{ margins }}">
+                        <div class="card-body">
+                            <h3 class="card-header">
+                                {{ __('Support', 'webapplications') }}
+                            </h3>
+                        </div>
+                        <div class="card-body row flex-row">
+                            <div id="support">
+                                {% if item.isField('editor') %}
+                                    {{ fields.dropdownField(
+                                        "Supplier",
+                                        "editor",
+                                        item.fields['editor'],
+                                        __('Referent editor', 'webapplications'),
                                     ) }}
                                 {% endif %}
-                            </td>
-                            <td>
-                                {% if item.isField('webapplicationintegrities') %}
-                                    {{ fields.dropdownNumberField(
-                                        'webapplicationintegrities',
-                                        item.fields['webapplicationintegrities'],
-                                        __('Integrity', 'webapplications'),
-                                        {
-                                            'min'            : 1,
-                                            'max'            : 4,
-                                            'step'           : 1,
-                                            'field_class'    : 'col-12',
-                                            'label_class'    : 'col-xxl-8',
-                                            'input_class'    : 'col-xxl-4',}
-                                    ) }}
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if item.isField('webapplicationconfidentialities') %}
-                                    {{ fields.dropdownNumberField(
-                                        'webapplicationconfidentialities',
-                                        item.fields['webapplicationconfidentialities'],
-                                        __('Confidentiality', 'webapplications'),
-                                        {
-                                            'min'            : 0,
-                                            'max'            : 4,
-                                            'step'           : 1,
-                                            'field_class': 'col-12',
-                                            'label_class': 'col-xxl-8',
-                                            'input_class': 'col-xxl-4',}
-                                    ) }}
-                                {% endif %}
-
-                            </td>
-                            <td>
-                                {% if item.isField('webapplicationtraceabilities') %}
-                                    {{ fields.dropdownNumberField(
-                                        'webapplicationtraceabilities',
-                                        item.fields['webapplicationtraceabilities'],
-                                        __('Traceability', 'webapplications'),
-                                        {
-                                            'min'            : 1,
-                                            'max'            : 4,
-                                            'step'           : 1,
-                                            'field_class': 'col-12',
-                                            'label_class': 'col-xxl-8',
-                                            'input_class': 'col-xxl-4',}
-                                    ) }}
-                                {% endif %}
-                            </td>
-
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    {{ fields.smallTitle(__('Validation', 'webapplications')) }}
-
-                    {% if item.isField('webapplicationreferringdepartmentvalidation') %}
-                        {{ fields.dropdownYesNo(
-                            "webapplicationreferringdepartmentvalidation",
-                            item.fields['webapplicationreferringdepartmentvalidation'],
-                            __('Validation of the request by the referring department', 'webapplications'),
-                        ) }}
-                    {% endif %}
-
-                    {% if item.isField('webapplicationciovalidation') %}
-                        {{ fields.dropdownYesNo(
-                            "webapplicationciovalidation",
-                            item.fields['webapplicationciovalidation'],
-                            __('Validation by CISO', 'webapplications'),
-                        ) }}
-                    {% endif %}
-
-
-                    <div id="support">
-                        {{ fields.smallTitle(__('Support', 'webapplications')) }}
-
-                        {% if item.isField('editor') %}
-                            {{ fields.dropdownField(
-                                "Supplier",
-                                "editor",
-                                item.fields['editor'],
-                                __('Referent editor', 'webapplications'),
-                            ) }}
-                        {% endif %}
+                            </div>
+                        </div>
                     </div>
 
 

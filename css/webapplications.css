@@ -38,13 +38,13 @@
 
 .ui-accordion-header{
 
-    background-color: #005091;
+    background-color: #7d91a1;
     color: white;
 }
 
 
 .ui-accordion-header:hover {
-    background-color: dimgrey;
+    background-color: #b1a7a7;
 }
 
 .panel {

@@ -33,14 +33,9 @@ Html::header_nocache();
 
 Session::checkLoginUser();
 
-if (isset($_POST['type'])
-   && isset($_POST['value'])
-&& $_POST['value'] > 0) {
-    switch ($_POST['type']) {
-        case PluginWebapplicationsDashboard::getType():
-            $_SESSION['plugin_webapplications_loaded_appliances_id'] = $_POST['value'];
-            $dashboard = new PluginWebapplicationsDashboard();
-            $dashboard->display(['id' => 1, 'appliances_id' => $_POST['value']]);
-            break;
-    }
+if (isset($_POST['value'])
+    && $_POST['value'] > 0) {
+    $_SESSION['plugin_webapplications_loaded_appliances_id'] = $_POST['value'];
+    $dashboard = new PluginWebapplicationsDashboard();
+    $dashboard->display(['id' => 1, 'appliances_id' => $_SESSION['plugin_webapplications_loaded_appliances_id']]);
 }

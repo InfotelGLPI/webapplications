@@ -217,7 +217,7 @@ class PluginWebapplicationsDashboardProcess extends CommonDBTM
 
                 echo "<tr>";
                 echo "<th>";
-                echo __('List Entities', 'webapplications');
+                echo __('Entities list', 'webapplications');
                 echo "</th>";
                 echo "</tr>";
 
