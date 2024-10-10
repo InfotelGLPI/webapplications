@@ -292,7 +292,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
         $listProc = self::getProcesses();
 
         echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
-        echo __('Processes', 'webapplications');
+        echo _n('Process', 'Processes', 2, 'webapplications');
 
         echo "<span style='float: right'>";
         echo Html::submit(_sx('button', 'Add'), [
@@ -395,7 +395,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
 
                 echo "<tr>";
                 echo "<th>";
-                echo __('Entities list', 'webapplications');
+                echo _n("Entity list", "Entities list", 2, 'webapplications');
                 echo "</th>";
                 echo "</tr>";
 

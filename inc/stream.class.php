@@ -205,7 +205,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             'id' => '8',
             'table' => self::getTable(),
             'field' => 'ports',
-            'name' => __('Ports', 'webapplications'),
+            'name' => __('Port', 'webapplications'),
             'datatype' => 'text'
         ];
         $tab[] = [

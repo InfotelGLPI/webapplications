@@ -194,7 +194,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
         echo "<div class='form-field row col-12 col-sm-6  mb-2'>";
 
         echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
-        echo __('Entities list', 'webapplications');
+        echo _n("Entity list", "Entities list", 2, 'webapplications');
         echo "</label>";
 
         echo "<div class='col-xxl-7 field-container'>";
