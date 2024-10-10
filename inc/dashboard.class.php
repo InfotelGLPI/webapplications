@@ -126,7 +126,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $appliance->getFromDB($ApplianceId);
 
 
-        echo "<div class='card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch'>";
+        echo "<div class='card-header card-web-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch'>";
         echo "<h3 class='card-title d-flex align-items-center ps-4'>";
         echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
         echo "<i class='ti ti-versions fa-2x'></i>";
@@ -266,8 +266,15 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "</td></tr></table>";
         echo "</div>";
 
+        PluginWebapplicationsAppliance::showSupportPartFromDashboard($appliance);
+
         echo "<div class='card-body border-0'>";
-        echo "<h3 class='card-subtitle mb-2 text-muted'>" . __('Summary', 'webapplications') . "</h3>";
+
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . __(
+                'Summary',
+                'webapplications'
+            );
+        echo "</h2>";
         echo "</div>";
 
         $options = [];
@@ -439,13 +446,16 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 //        echo "</table>";
 //        echo "</p>";
 
+        echo "<div style='display: flex;'>";
+
         PluginWebapplicationsEntity::showEcosystemFromDashboard($appliance);
 
         PluginWebapplicationsProcess::showProcessFromDashboard($appliance);
 
         PluginWebapplicationsDatabaseInstance::showDatabaseFromDashboard($appliance);
 
-        PluginWebapplicationsAppliance::showSupportPartFromDashboard($appliance);
+        echo "</div>";
+
     }
 
 
@@ -489,7 +499,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         );//Vue Infra physiques
         $this->addStandardTab('PluginWebapplicationsDatabaseInstance', $ong, $options);//Vue Base de données
         $this->addStandardTab('PluginWebapplicationsStream', $ong, $options);//Vue Flux
-        $this->addStandardTab('KnowbaseItem_Item', $ong, $options);
+        $this->addStandardTab('PluginWebapplicationsKnowbase', $ong, $options);
 
         return $ong;
     }

@@ -169,11 +169,12 @@ class PluginWebapplicationsAppliance extends CommonDBTM
         return __('Appliance');
     }
 
+
     public static function showSupportPartFromDashboard($appliance)
     {
         echo "<div class='card-body'>";
 
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . __(
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . __(
                 'Support',
                 'webapplications'
             );

@@ -41,7 +41,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
     public static $rightname = "plugin_webapplications";
     public static function getTypeName($nb = 0)
     {
-        return _n('Web application', 'Web applications', $nb, 'webapplications');
+        return _n("Database", 'Databases', $nb);
     }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -186,7 +186,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
     public static function showDatabaseFromDashboard($appliance)
     {
         echo "<div class='card-body'>";
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . _n(
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . _n(
                 'Database',
                 'Databases',
                 2
@@ -199,7 +199,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
         $databaseDBTM = new DatabaseInstance();
 
         echo "<div class='row flex-row'>";
-        echo "<div class='form-field row col-12 col-sm-6  mb-2'>";
+        echo "<div class='form-field row col-12 col-sm-12  mb-2'>";
 
         echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
         echo _n("Database list", "Databases list", count($databasesApp), 'webapplications');
@@ -268,7 +268,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
 
         $listDatabase = self::getDatabases();
 
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>";
         echo _n("Database", 'Databases', count($listDatabase));
         echo "</h2>";
 
@@ -295,9 +295,24 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
         echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
         echo _n("Database list", "Databases list", count($listDatabase), 'webapplications');
         echo "</h2>";
-        echo "<div class='accordion' name=listDatabaseApp>";
 
-        if (!empty($listDatabase)) {
+
+        if (empty($listDatabase)) {
+
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tbody>";
+            echo "<tr class='center'>";
+            echo "<td colspan='4'>";
+            echo __("No associated databases", 'webapplications');
+            echo "</td>";
+            echo "</tr>";
+            echo "</tbody>";
+            echo "</table>";
+
+        } else {
+
+            echo "<div class='accordion' name=listDatabaseApp>";
+
             foreach ($listDatabase as $database) {
                 $name = $database['name'];
 
@@ -483,12 +498,8 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
                 echo "</tbody>";
                 echo "</table></div>";
             }
-        } else {
-            echo __("No associated database", 'webapplications');
         }
         echo "</div>";
-
-
         echo "<script>accordion();</script>";
     }
 }

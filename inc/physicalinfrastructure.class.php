@@ -60,30 +60,6 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
         return true;
     }
 
-    public function showForm($ID, $options = [])
-    {
-        global $CFG_GLPI;
-
-        echo "<div align='center'>
-        <table class='tab_cadre_fixe'>";
-        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
-
-        echo "<td >";
-        $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
-        echo "</td>";
-        echo "</tr>";
-        echo "</table></div>";
-        echo "<div id=lists-physicalInfra></div>";
-
-        $array['value'] = '__VALUE__';
-        $array['type'] = self::getType();
-        Ajax::updateItemOnSelectEvent(
-            'dropdown_applianceDropdown' . $rand,
-            'lists-physicalInfra',
-            $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . '/ajax/getLists.php',
-            $array
-        );
-    }
 
     public static function getItems()
     {
@@ -131,7 +107,7 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
         echo "</h3>";
         echo "</div>";
 
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>";
         echo __('Physical Infrastructure', 'webapplications');
         echo "</h2>";
 
@@ -176,9 +152,24 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
         echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
         echo _n("Item list", "Items list", count($listItem), 'webapplications');
         echo "</h2>";
-        echo "<div class='accordion' name=listItem>";
 
-        if (!empty($listItem)) {
+
+        if (empty($listItem)) {
+
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tbody>";
+            echo "<tr class='center'>";
+            echo "<td colspan='4'>";
+            echo __('No associated items', 'webapplications');
+            echo "</td>";
+            echo "</tr>";
+            echo "</tbody>";
+            echo "</table>";
+
+        } else {
+
+            echo "<div class='accordion' name=listItem>";
+
             foreach ($listItem as $item) {
                 $itemtype = $item['itemtype'];
 
@@ -331,8 +322,6 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
                 echo "</tbody>";
                 echo "</table></div>";
             }
-        } else {
-            echo __('No item found');
         }
         echo "</div>";
     }

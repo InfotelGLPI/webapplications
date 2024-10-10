@@ -54,7 +54,7 @@
 
 #list {
     border:1px solid grey;
-    width:60%;
+    width: 100%;
     color: inherit;
     font: inherit !important;
     background-color: inherit;
@@ -80,4 +80,10 @@ option {
 hr {
     color: grey;
     height: 3px !important;
+}
+
+.card-web-header {
+    background-color: rgba(0, 0, 0, .03);
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    margin-bottom: 15px;
 }

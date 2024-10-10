@@ -45,7 +45,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
 
     public static function getTypeName($nb = 0)
     {
-        return _n('Entity', 'Entities', $nb);
+        return __('Ecosystem', 'webapplications');
     }
 
     public static function getMenuContent()
@@ -177,7 +177,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
     public static function showEcosystemFromDashboard($appliance)
     {
         echo "<div class='card-body'>";
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . __(
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . __(
                 'Ecosystem',
                 'webapplications'
             ) . "</h2>";
@@ -191,7 +191,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
         $processDBTM = new PluginWebapplicationsEntity();
 
         echo "<div class='row flex-row'>";
-        echo "<div class='form-field row col-12 col-sm-6  mb-2'>";
+        echo "<div class='form-field row col-12 col-sm-12  mb-2'>";
 
         echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
         echo _n("Entity list", "Entities list", 2, 'webapplications');
@@ -261,29 +261,32 @@ class PluginWebapplicationsEntity extends CommonDBTM
         echo "</div>";
 
         $entitiesDBTM = new PluginWebapplicationsEntity();
-        $linkAddEnt   = $entitiesDBTM::getFormURL();
-
+        $linkAddEnt = $entitiesDBTM::getFormURL();
 
         $listEntities = self::getEntities();
 
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>";
         echo __('Ecosystem', 'webapplications');
 
         echo "<span style='float: right'>";
         echo Html::submit(
             _sx('button', 'Add'),
-            ['name' => 'edit',
+            [
+                'name' => 'edit',
                 'class' => 'btn btn-primary',
                 'icon' => 'fas fa-plus',
                 'data-bs-toggle' => 'modal',
-                'data-bs-target' =>'#addEntity',
-                'style' => 'float: right']
+                'data-bs-target' => '#addEntity',
+                'style' => 'float: right'
+            ]
         );
         echo Ajax::createIframeModalWindow(
             'addEntity',
-            $linkAddEnt."?appliance_id=".$ApplianceId,
-            ['display' => false,
-                'reloadonclose' => true]
+            $linkAddEnt . "?appliance_id=" . $ApplianceId,
+            [
+                'display' => false,
+                'reloadonclose' => true
+            ]
         );
         echo "</span>";
         echo "</h2>";
@@ -292,10 +295,22 @@ class PluginWebapplicationsEntity extends CommonDBTM
         echo _n("Entity list", "Entities list", count($listEntities), 'webapplications');
         echo "</h2>";
 
-        echo "<div class='accordion' name=listEntitiesApp>";
+        if (empty($listEntities)) {
 
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tbody>";
+            echo "<tr class='center'>";
+            echo "<td colspan='4'>";
+            echo __("No associated entities", 'webapplications');
+            echo "</td>";
+            echo "</tr>";
+            echo "</tbody>";
+            echo "</table>";
 
-        if (!empty($listEntities)) {
+        } else {
+
+            echo "<div class='accordion' name=listEntitiesApp>";
+
             foreach ($listEntities as $entity) {
                 $name = $entity['name'];
 
@@ -303,9 +318,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
 
                 echo "<div class='panel' id='tabsbody'>";
 
-
                 echo "<table class='tab_cadre_fixe'>";
-
 
                 echo "<tbody>";
 
@@ -321,13 +334,24 @@ class PluginWebapplicationsEntity extends CommonDBTM
                 echo "</td>";
 
                 echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary', 'icon' => 'fas fa-edit', 'data-bs-toggle' => 'modal', 'data-bs-target' =>'#editEntity'.$entity['id']]);
+                echo Html::submit(
+                    _sx('button', 'Edit'),
+                    [
+                        'name' => 'edit',
+                        'class' => 'btn btn-secondary',
+                        'icon' => 'fas fa-edit',
+                        'data-bs-toggle' => 'modal',
+                        'data-bs-target' => '#editEntity' . $entity['id']
+                    ]
+                );
 
                 echo Ajax::createIframeModalWindow(
-                    'editEntity'.$entity['id'],
+                    'editEntity' . $entity['id'],
                     $linkEntity,
-                    ['display' => false,
-                        'reloadonclose' => true]
+                    [
+                        'display' => false,
+                        'reloadonclose' => true
+                    ]
                 );
 
                 echo "</td>";
@@ -344,13 +368,13 @@ class PluginWebapplicationsEntity extends CommonDBTM
                 echo __("Owner", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo "<a href='$linkOwner'>".getUserName($ownerid)."</a>";
+                echo "<a href='$linkOwner'>" . getUserName($ownerid) . "</a>";
                 echo "</td>";
                 echo "</tr>";
 
                 $processEntityDBTM = new PluginWebapplicationsProcess_Entity();
-                $processes         = $processEntityDBTM->find(['plugin_webapplications_entities_id' => $entity['id']]);
-                $processDBTM       = new PluginWebapplicationsProcess();
+                $processes = $processEntityDBTM->find(['plugin_webapplications_entities_id' => $entity['id']]);
+                $processDBTM = new PluginWebapplicationsProcess();
 
                 echo "<tr>";
                 echo "<th>";
@@ -366,7 +390,9 @@ class PluginWebapplicationsEntity extends CommonDBTM
                     foreach ($processes as $process) {
                         $processDBTM->getFromDB($process['plugin_webapplications_processes_id']);
                         $name = $processDBTM->getName();
-                        $link = PluginWebapplicationsProcess::getFormURLWithID($process['plugin_webapplications_processes_id']);
+                        $link = PluginWebapplicationsProcess::getFormURLWithID(
+                            $process['plugin_webapplications_processes_id']
+                        );
                         echo "<option value=$link>$name</option>";
                     }
                     echo "</select>";
@@ -386,7 +412,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
                 echo __("Security Contact", 'webapplications');
                 echo "</th>";
                 echo "<td>";
-                echo "<a href='$linkSecCont'>".getUserName($secContid)."</a>";
+                echo "<a href='$linkSecCont'>" . getUserName($secContid) . "</a>";
                 echo "</td>";
                 echo "</tr>";
 
@@ -404,10 +430,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
                 echo "</tbody>";
                 echo "</table></div>";
             }
-        } else {
-            echo __("No entity founded", 'webapplications');
         }
-
         echo "</div>";
         echo "<script>accordion();</script>";
     }

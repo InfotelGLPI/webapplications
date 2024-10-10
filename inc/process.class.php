@@ -202,7 +202,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
     {
         echo "<div class='card-body'>";
 
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . __(
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . __(
                 'Process',
                 'webapplications'
             ) . "</h2>";
@@ -216,7 +216,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
         $processDBTM = new PluginWebapplicationsProcess();
 
         echo "<div class='row flex-row'>";
-        echo "<div class='form-field row col-12 col-sm-6  mb-2'>";
+        echo "<div class='form-field row col-12 col-sm-12  mb-2'>";
 
         echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
         echo __('Processes list', 'webapplications');
@@ -291,7 +291,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
 
         $listProc = self::getProcesses();
 
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>";
         echo _n('Process', 'Processes', 2, 'webapplications');
 
         echo "<span style='float: right'>";
@@ -318,9 +318,24 @@ class PluginWebapplicationsProcess extends CommonDBTM
         echo _n("Process list", "Processes list", count($listProc), 'webapplications');
         echo "</h2>";
 
-        echo "<div class='accordion' name=listProcessesApp>";
 
-        if (!empty($listProc)) {
+
+        if (empty($listProc)) {
+
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tbody>";
+            echo "<tr class='center'>";
+            echo "<td colspan='4'>";
+            echo __("No associated processes", 'webapplications');
+            echo "</td>";
+            echo "</tr>";
+            echo "</tbody>";
+            echo "</table>";
+
+        } else {
+
+            echo "<div class='accordion' name=listProcessesApp>";
+
             foreach ($listProc as $process) {
                 $name = $process['name'];
 
@@ -523,12 +538,11 @@ class PluginWebapplicationsProcess extends CommonDBTM
                 echo "</tbody>";
                 echo "</table></div>";
             }
-        } else {
-            echo __("No associated process", 'webapplications');
+            echo "</div>";
+
+            echo "<script>accordion();</script>";
         }
 
-        echo "</div>";
 
-        echo "<script>accordion();</script>";
     }
 }

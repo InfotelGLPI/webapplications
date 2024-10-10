@@ -277,7 +277,7 @@ class PluginWebapplicationsStream extends CommonDBTM
 
         $listStream = self::getStreams();
 
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>";
         echo _n('Stream', 'Streams', 2, 'webapplications');
 
         echo "<span style='float: right'>";
@@ -307,10 +307,25 @@ class PluginWebapplicationsStream extends CommonDBTM
         echo _n("Stream list", 'Streams list', count($listStream), 'webapplications');
         echo "</h2>";
 
-        echo "<div class='accordion' name=listStreamApp>";
 
 
-        if (!empty($listStream)) {
+
+        if (empty($listStream)) {
+
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tbody>";
+            echo "<tr class='center'>";
+            echo "<td colspan='4'>";
+            echo __("No associated streams", 'webapplications');
+            echo "</td>";
+            echo "</tr>";
+            echo "</tbody>";
+            echo "</table>";
+
+        } else {
+
+            echo "<div class='accordion' name=listStreamApp>";
+
             foreach ($listStream as $stream) {
                 $name = $stream['name'];
 
@@ -452,8 +467,6 @@ class PluginWebapplicationsStream extends CommonDBTM
                 echo "</tbody>";
                 echo "</table></div>";
             }
-        } else {
-            echo __("No associated stream", 'webapplications');
         }
         echo "</div>";
 

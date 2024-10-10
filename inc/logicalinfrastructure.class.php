@@ -157,7 +157,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
         echo "</h3>";
         echo "</div>";
 
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>";
         echo _n('Logical infrastructure', 'Logical infrastructure', 1,'webapplications');
         echo "</h2>";
 
