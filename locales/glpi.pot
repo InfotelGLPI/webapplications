@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 07:11+0000\n"
+"POT-Creation-Date: 2024-10-10 08:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "Add an entity"
 msgstr ""
 
-#: inc/dashboard.class.php:45
+#: setup.php:144 inc/dashboard.class.php:45
 msgid "Appliance dashboard"
 msgstr ""
 
@@ -39,7 +39,7 @@ msgstr ""
 msgid "Are you sure you want to do core migration ?"
 msgstr ""
 
-#: inc/dashboard.class.php:241
+#: inc/dashboard.class.php:250
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] ""
@@ -94,11 +94,7 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: inc/dashboard.class.php:535
-msgid "Databases"
-msgstr ""
-
-#: inc/dashboard.class.php:549
+#: inc/dashboard.class.php:555
 msgid "Databases list"
 msgstr ""
 
@@ -110,7 +106,7 @@ msgstr ""
 msgid "Destination type"
 msgstr ""
 
-#: inc/dashboard.class.php:449 inc/dashboardecosystem.class.php:44
+#: inc/dashboard.class.php:458 inc/dashboardecosystem.class.php:44
 #: inc/dashboardecosystem.class.php:137
 msgid "Ecosystem"
 msgstr ""
@@ -123,7 +119,7 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: inc/dashboard.class.php:465 inc/dashboardprocess.class.php:220
+#: inc/dashboard.class.php:474 inc/dashboardprocess.class.php:220
 msgid "Entities list"
 msgstr ""
 
@@ -174,7 +170,7 @@ msgstr ""
 msgid "No associated database"
 msgstr ""
 
-#: inc/dashboard.class.php:255
+#: inc/dashboard.class.php:264
 msgid "No associated documents"
 msgstr ""
 
@@ -218,7 +214,7 @@ msgstr ""
 msgid "Ports"
 msgstr ""
 
-#: inc/dashboard.class.php:493 inc/dashboardprocess.class.php:44
+#: inc/dashboard.class.php:502 inc/dashboardprocess.class.php:44
 #: inc/dashboardprocess.class.php:53 inc/dashboardprocess.class.php:136
 #: inc/process.class.php:46 inc/process_entity.class.php:64
 #: inc/process_entity.class.php:129 inc/profile.class.php:202
@@ -233,15 +229,15 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:509 inc/dashboardecosystem.class.php:225
+#: inc/dashboard.class.php:518 inc/dashboardecosystem.class.php:225
 msgid "Processes list"
 msgstr ""
 
-#: inc/dashboard.class.php:208
+#: inc/dashboard.class.php:217
 msgid "Project leader"
 msgstr ""
 
-#: inc/dashboard.class.php:223
+#: inc/dashboard.class.php:232
 msgid "Project team"
 msgstr ""
 
@@ -290,11 +286,11 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:262
+#: inc/dashboard.class.php:271
 msgid "Summary"
 msgstr ""
 
-#: inc/dashboard.class.php:576
+#: inc/dashboard.class.php:582
 #: templates/webapplication_appliance_form.html.twig:203
 msgid "Support"
 msgstr ""
@@ -354,11 +350,5 @@ msgstr ""
 #: inc/profile.class.php:194 inc/webapplication.class.php:48
 msgid "Web application"
 msgid_plural "Web applications"
-msgstr[0] ""
-msgstr[1] ""
-
-#: setup.php:144
-msgid "Web application dashboard"
-msgid_plural "Web applications dashboard"
 msgstr[0] ""
 msgstr[1] ""
