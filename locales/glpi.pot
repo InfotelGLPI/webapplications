@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 11:08+0000\n"
+"POT-Creation-Date: 2024-10-10 15:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "Appliance dashboard"
 msgstr ""
 
-#: inc/process.class.php:431
+#: inc/process.class.php:446
 msgid "Appliances list"
 msgstr ""
 
@@ -45,8 +45,8 @@ msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:400 hook.php:473 inc/databaseinstance.class.php:420
-#: inc/process.class.php:162 inc/process.class.php:469
+#: hook.php:400 hook.php:473 inc/databaseinstance.class.php:435
+#: inc/process.class.php:162 inc/process.class.php:484
 #: templates/webapplication_process_form.html.twig:27
 #: templates/webapplication_appliance_form.html.twig:107
 #: templates/webapplication_database_form.html.twig:32
@@ -64,8 +64,8 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:418 hook.php:489 inc/databaseinstance.class.php:439
-#: inc/process.class.php:176 inc/process.class.php:488
+#: hook.php:418 hook.php:489 inc/databaseinstance.class.php:454
+#: inc/process.class.php:176 inc/process.class.php:503
 #: templates/webapplication_process_form.html.twig:60
 #: templates/webapplication_appliance_form.html.twig:139
 #: templates/webapplication_database_form.html.twig:62
@@ -76,7 +76,7 @@ msgstr ""
 msgid "Core migration"
 msgstr ""
 
-#: inc/databaseinstance.class.php:403 inc/process.class.php:462
+#: inc/databaseinstance.class.php:418 inc/process.class.php:477
 msgid "DICT"
 msgstr ""
 
@@ -96,29 +96,29 @@ msgid_plural "Databases list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/stream.class.php:186 inc/stream.class.php:383 templates/webapplication_stream_form.html.twig:27
+#: inc/stream.class.php:186 inc/stream.class.php:398 templates/webapplication_stream_form.html.twig:27
 msgid "Destination"
 msgstr ""
 
-#: inc/entity.class.php:181 inc/entity.class.php:270
+#: inc/entity.class.php:48 inc/entity.class.php:181 inc/entity.class.php:269
 msgid "Ecosystem"
 msgstr ""
 
-#: inc/stream.class.php:194 inc/stream.class.php:404 templates/webapplication_stream_form.html.twig:42
+#: inc/stream.class.php:194 inc/stream.class.php:419 templates/webapplication_stream_form.html.twig:42
 msgid "Encryption"
 msgstr ""
 
-#: inc/stream.class.php:201 inc/stream.class.php:421 templates/webapplication_stream_form.html.twig:48
+#: inc/stream.class.php:201 inc/stream.class.php:436 templates/webapplication_stream_form.html.twig:48
 msgid "Encryption type"
 msgstr ""
 
-#: inc/entity.class.php:197 inc/entity.class.php:292 inc/process.class.php:398
+#: inc/entity.class.php:197 inc/entity.class.php:295 inc/process.class.php:413
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/databaseinstance.class.php:465
+#: inc/databaseinstance.class.php:480
 #: inc/webapplicationexternalexposition.class.php:49
 msgid "External exposition"
 msgid_plural "External exposition"
@@ -129,15 +129,15 @@ msgstr[1] ""
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:409 hook.php:481 inc/databaseinstance.class.php:430
-#: inc/process.class.php:169 inc/process.class.php:479
+#: hook.php:409 hook.php:481 inc/databaseinstance.class.php:445
+#: inc/process.class.php:169 inc/process.class.php:494
 #: templates/webapplication_process_form.html.twig:44
 #: templates/webapplication_appliance_form.html.twig:123
 #: templates/webapplication_database_form.html.twig:48
 msgid "Integrity"
 msgstr ""
 
-#: inc/physicalinfrastructure.class.php:177
+#: inc/physicalinfrastructure.class.php:153
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
@@ -168,32 +168,40 @@ msgstr ""
 msgid "Migration was successful"
 msgstr ""
 
-#: inc/databaseinstance.class.php:487
-msgid "No associated database"
+#: inc/databaseinstance.class.php:306
+msgid "No associated databases"
 msgstr ""
 
 #: inc/dashboard.class.php:263
 msgid "No associated documents"
 msgstr ""
 
-#: inc/process.class.php:417 inc/process.class.php:448
+#: inc/entity.class.php:304
+msgid "No associated entities"
+msgstr ""
+
+#: inc/process.class.php:432 inc/process.class.php:463
 msgid "No associated entity"
 msgstr ""
 
-#: inc/entity.class.php:374 inc/process.class.php:527
+#: inc/physicalinfrastructure.class.php:163
+msgid "No associated items"
+msgstr ""
+
+#: inc/entity.class.php:400
 msgid "No associated process"
 msgstr ""
 
-#: inc/stream.class.php:456
-msgid "No associated stream"
+#: inc/process.class.php:329
+msgid "No associated processes"
 msgstr ""
 
-#: inc/entity.class.php:408
-msgid "No entity founded"
+#: inc/stream.class.php:319
+msgid "No associated streams"
 msgstr ""
 
-#: inc/entity.class.php:142 inc/entity.class.php:344 inc/process.class.php:154
-#: inc/process.class.php:380 templates/webapplication_entity_form.html.twig:13
+#: inc/entity.class.php:142 inc/entity.class.php:368 inc/process.class.php:154
+#: inc/process.class.php:395 templates/webapplication_entity_form.html.twig:13
 #: templates/webapplication_process_form.html.twig:12
 msgid "Owner"
 msgstr ""
@@ -203,11 +211,11 @@ msgid "Phone support"
 msgstr ""
 
 #: inc/physicalinfrastructure.class.php:44
-#: inc/physicalinfrastructure.class.php:135
+#: inc/physicalinfrastructure.class.php:111
 msgid "Physical Infrastructure"
 msgstr ""
 
-#: inc/stream.class.php:208 inc/stream.class.php:434 templates/webapplication_stream_form.html.twig:55
+#: inc/stream.class.php:208 inc/stream.class.php:449 templates/webapplication_stream_form.html.twig:55
 msgid "Port"
 msgstr ""
 
@@ -231,7 +239,7 @@ msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/entity.class.php:357 inc/process.class.php:222
+#: inc/entity.class.php:381 inc/process.class.php:222
 msgid "Processes list"
 msgstr ""
 
@@ -243,7 +251,7 @@ msgstr ""
 msgid "Project team"
 msgstr ""
 
-#: inc/stream.class.php:215 inc/stream.class.php:444 templates/webapplication_stream_form.html.twig:62
+#: inc/stream.class.php:215 inc/stream.class.php:459 templates/webapplication_stream_form.html.twig:62
 msgid "Protocol"
 msgstr ""
 
@@ -252,12 +260,12 @@ msgstr ""
 msgid "Referent editor"
 msgstr ""
 
-#: inc/entity.class.php:160 inc/entity.class.php:396
+#: inc/entity.class.php:160 inc/entity.class.php:422
 #: templates/webapplication_entity_form.html.twig:37
 msgid "Relation nature"
 msgstr ""
 
-#: inc/entity.class.php:152 inc/entity.class.php:386
+#: inc/entity.class.php:152 inc/entity.class.php:412
 #: templates/webapplication_entity_form.html.twig:25
 msgid "Security Contact"
 msgstr ""
@@ -268,7 +276,7 @@ msgstr ""
 msgid "Security Needs"
 msgstr ""
 
-#: inc/stream.class.php:178 inc/stream.class.php:366 templates/webapplication_stream_form.html.twig:13
+#: inc/stream.class.php:178 inc/stream.class.php:381 templates/webapplication_stream_form.html.twig:13
 msgid "Source"
 msgstr ""
 
@@ -285,11 +293,11 @@ msgid_plural "Streams list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:270
+#: inc/dashboard.class.php:274
 msgid "Summary"
 msgstr ""
 
-#: inc/appliance.class.php:177
+#: inc/appliance.class.php:178
 #: templates/webapplication_appliance_form.html.twig:203
 msgid "Support"
 msgstr ""
@@ -298,16 +306,16 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: inc/physicalinfrastructure.class.php:281
+#: inc/physicalinfrastructure.class.php:272
 msgid "Technical characteristics"
 msgstr ""
 
-#: inc/databaseinstance.class.php:394
+#: inc/databaseinstance.class.php:409
 msgid "Technology type"
 msgstr ""
 
-#: hook.php:427 hook.php:497 inc/databaseinstance.class.php:449
-#: inc/process.class.php:183 inc/process.class.php:497
+#: hook.php:427 hook.php:497 inc/databaseinstance.class.php:464
+#: inc/process.class.php:183 inc/process.class.php:512
 #: templates/webapplication_process_form.html.twig:77
 #: templates/webapplication_appliance_form.html.twig:156
 #: templates/webapplication_database_form.html.twig:77
@@ -341,8 +349,8 @@ msgstr ""
 msgid "Validation of the request by the referring Department"
 msgstr ""
 
-#: inc/appliance.class.php:44 inc/databaseinstance.class.php:44
-#: inc/profile.class.php:203 inc/webapplication.class.php:49
+#: inc/appliance.class.php:44 inc/profile.class.php:203
+#: inc/webapplication.class.php:49
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] ""
