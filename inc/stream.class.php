@@ -304,7 +304,7 @@ class PluginWebapplicationsStream extends CommonDBTM
         echo "</h2>";
 
         echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
-        echo _n("Stream list", 'Streams list', count($listStream), 'wbapplications');
+        echo _n("Stream list", 'Streams list', count($listStream), 'webapplications');
         echo "</h2>";
 
         echo "<div class='accordion' name=listStreamApp>";
