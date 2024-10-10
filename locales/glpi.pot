@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-10 10:57+0000\n"
+"POT-Creation-Date: 2024-10-10 11:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,11 +112,7 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: inc/entity.class.php:197 inc/process.class.php:398
-msgid "Entities list"
-msgstr ""
-
-#: inc/entity.class.php:292
+#: inc/entity.class.php:197 inc/entity.class.php:292 inc/process.class.php:398
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
@@ -211,17 +207,13 @@ msgstr ""
 msgid "Physical Infrastructure"
 msgstr ""
 
-#: inc/stream.class.php:434 templates/webapplication_stream_form.html.twig:55
+#: inc/stream.class.php:208 inc/stream.class.php:434 templates/webapplication_stream_form.html.twig:55
 msgid "Port"
 msgstr ""
 
-#: inc/stream.class.php:208
-msgid "Ports"
-msgstr ""
-
 #: inc/process.class.php:47 inc/process.class.php:78 inc/process.class.php:206
-#: inc/process_entity.class.php:71 inc/process_entity.class.php:142
-#: inc/profile.class.php:213
+#: inc/process.class.php:295 inc/process_entity.class.php:71
+#: inc/process_entity.class.php:142 inc/profile.class.php:213
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] ""
@@ -238,10 +230,6 @@ msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
-
-#: inc/process.class.php:295
-msgid "Processes"
-msgstr ""
 
 #: inc/entity.class.php:357 inc/process.class.php:222
 msgid "Processes list"
@@ -349,12 +337,8 @@ msgstr ""
 msgid "Validation by CISO"
 msgstr ""
 
-#: hook.php:382
+#: hook.php:382 templates/webapplication_appliance_form.html.twig:186
 msgid "Validation of the request by the referring Department"
-msgstr ""
-
-#: templates/webapplication_appliance_form.html.twig:186
-msgid "Validation of the request by the referring department"
 msgstr ""
 
 #: inc/appliance.class.php:44 inc/databaseinstance.class.php:44
