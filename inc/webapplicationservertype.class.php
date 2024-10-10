@@ -36,7 +36,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginWebapplicationsWebapplicationServerType extends CommonDropdown
 {
-    public static $rightname         = "dropdown";
+    public static $rightname = "plugin_webapplications";
     public $can_be_translated = true;
 
     /**

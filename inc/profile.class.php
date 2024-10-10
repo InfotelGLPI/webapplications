@@ -40,7 +40,7 @@ class PluginWebapplicationsProfile extends Profile
 
     /**
      * @param CommonGLPI $item
-     * @param int        $withtemplate
+     * @param int $withtemplate
      *
      * @return string|translated
      */
@@ -55,24 +55,26 @@ class PluginWebapplicationsProfile extends Profile
 
     /**
      * @param CommonGLPI $item
-     * @param int        $tabnum
-     * @param int        $withtemplate
+     * @param int $tabnum
+     * @param int $withtemplate
      *
      * @return bool
      */
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         if ($item->getType() == 'Profile') {
-            $ID   = $item->getID();
+            $ID = $item->getID();
             $prof = new self();
 
             self::addDefaultProfileInfos(
                 $ID,
-                ['plugin_webapplications'             => 0,
-                    'plugin_webapplications_streams'     => 0,
-                    'plugin_webapplications_processes'     => 0,
-                    'plugin_webapplications_entities'     => 0,
-                      'plugin_webapplications_open_ticket' => 0]
+                [
+                    'plugin_webapplications' => 0,
+                    'plugin_webapplications_streams' => 0,
+                    'plugin_webapplications_processes' => 0,
+                    'plugin_webapplications_entities' => 0,
+                    'plugin_webapplications_open_ticket' => 0
+                ]
             );
             $prof->showForm($ID);
         }
@@ -87,12 +89,14 @@ class PluginWebapplicationsProfile extends Profile
         //85
         self::addDefaultProfileInfos(
             $ID,
-            ['plugin_webapplications'             => 127,
-                  'plugin_webapplications_open_ticket' => 1,
-                  'plugin_webapplications_streams' => READ + CREATE + UPDATE + PURGE,
-                  'plugin_webapplications_entities' => READ + CREATE + UPDATE + PURGE,
-                  'plugin_webapplications_dashboards' => READ + CREATE + UPDATE + PURGE,
-                  'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE],
+            [
+                'plugin_webapplications' => 127,
+                'plugin_webapplications_open_ticket' => 1,
+                'plugin_webapplications_streams' => READ + CREATE + UPDATE + PURGE,
+                'plugin_webapplications_entities' => READ + CREATE + UPDATE + PURGE,
+                'plugin_webapplications_dashboards' => READ + CREATE + UPDATE + PURGE,
+                'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE
+            ],
             true
         );
     }
@@ -106,13 +110,13 @@ class PluginWebapplicationsProfile extends Profile
      */
     public static function addDefaultProfileInfos($profiles_id, $rights, $drop_existing = false)
     {
-        $dbu          = new DbUtils();
+        $dbu = new DbUtils();
         $profileRight = new ProfileRight();
         foreach ($rights as $right => $value) {
             if ($dbu->countElementsInTable(
-                'glpi_profilerights',
-                ["profiles_id" => $profiles_id, "name" => $right]
-            ) && $drop_existing) {
+                    'glpi_profilerights',
+                    ["profiles_id" => $profiles_id, "name" => $right]
+                ) && $drop_existing) {
                 $profileRight->deleteByCriteria(['profiles_id' => $profiles_id, 'name' => $right]);
             }
             if (!$dbu->countElementsInTable(
@@ -120,8 +124,8 @@ class PluginWebapplicationsProfile extends Profile
                 ["profiles_id" => $profiles_id, "name" => $right]
             )) {
                 $myright['profiles_id'] = $profiles_id;
-                $myright['name']        = $right;
-                $myright['rights']      = $value;
+                $myright['name'] = $right;
+                $myright['rights'] = $value;
                 $profileRight->add($myright);
 
                 //Add right to the current session
@@ -134,7 +138,7 @@ class PluginWebapplicationsProfile extends Profile
     /**
      * Show profile form
      *
-     * @param int  $profiles_id
+     * @param int $profiles_id
      * @param bool $openform
      * @param bool $closeform
      *
@@ -155,9 +159,11 @@ class PluginWebapplicationsProfile extends Profile
         $profile->getFromDB($profiles_id);
         if ($profile->getField('interface') == 'central') {
             $rights = $this->getAllRights();
-            $profile->displayRightsChoiceMatrix($rights, ['canedit'       => $canedit,
-                                                               'default_class' => 'tab_bg_2',
-                                                               'title'         => __('General')]);
+            $profile->displayRightsChoiceMatrix($rights, [
+                'canedit' => $canedit,
+                'default_class' => 'tab_bg_2',
+                'title' => __('General')
+            ]);
         }
         echo "<table class='tab_cadre_fixehov'>";
         echo "<tr class='tab_bg_1'><th colspan='4'>" . __('Helpdesk') . "</th></tr>\n";
@@ -166,8 +172,10 @@ class PluginWebapplicationsProfile extends Profile
         echo "<tr class='tab_bg_2'>";
         echo "<td width='20%'>" . __('Associable items to a ticket') . "</td>";
         echo "<td colspan='5'>";
-        Html::showCheckbox(['name'    => '_plugin_webapplications_open_ticket',
-                                 'checked' => $effective_rights['plugin_webapplications_open_ticket']]);
+        Html::showCheckbox([
+            'name' => '_plugin_webapplications_open_ticket',
+            'checked' => $effective_rights['plugin_webapplications_open_ticket']
+        ]);
         echo "</td></tr>\n";
         echo "</table>";
 
@@ -190,32 +198,39 @@ class PluginWebapplicationsProfile extends Profile
     public static function getAllRights($all = false)
     {
         $rights = [
-           ['itemtype' => 'PluginWebapplicationsWebapplication',
-                 'label'    => _n('Web application', 'Web applications', 2, 'webapplications'),
-                 'field'    => 'plugin_webapplications'
-           ],
-            ['itemtype' => 'PluginWebapplicationsStream',
-                'label'    => _n('Stream', 'Streams', 2, 'webapplications'),
-                'field'    => 'plugin_webapplications_streams'
+            [
+                'itemtype' => 'PluginWebapplicationsWebapplication',
+                'label' => _n('Web application', 'Web applications', 2, 'webapplications'),
+                'field' => 'plugin_webapplications'
             ],
-            ['itemtype' => 'PluginWebapplicationsProcess',
-                'label'    => _n('Process', 'Processes', 2, 'webapplications'),
-                'field'    => 'plugin_webapplications_processes'
+            [
+                'itemtype' => 'PluginWebapplicationsStream',
+                'label' => _n('Stream', 'Streams', 2, 'webapplications'),
+                'field' => 'plugin_webapplications_streams'
             ],
-            ['itemtype' => 'PluginWebapplicationsDashboard',
-                'label'    => _n('Dashboard', 'Dashboards', 2, 'webapplications'),
-                'field'    => 'plugin_webapplications_dashboards'
+            [
+                'itemtype' => 'PluginWebapplicationsProcess',
+                'label' => _n('Process', 'Processes', 2, 'webapplications'),
+                'field' => 'plugin_webapplications_processes'
             ],
-            ['itemtype' => 'PluginWebapplicationsEntity',
-                'label'    => _n('Entity', 'Entities', 2),
-                'field'    => 'plugin_webapplications_entities'
+            [
+                'itemtype' => 'PluginWebapplicationsDashboard',
+                'label' => _n('Dashboard', 'Dashboards', 2, 'webapplications'),
+                'field' => 'plugin_webapplications_dashboards'
+            ],
+            [
+                'itemtype' => 'PluginWebapplicationsEntity',
+                'label' => _n('Entity', 'Entities', 2),
+                'field' => 'plugin_webapplications_entities'
             ]
         ];
 
         if ($all) {
-            $rights[] = ['itemtype' => 'PluginWebapplicationsWebapplication',
-                              'label'    => __('Associable items to a ticket'),
-                              'field'    => 'plugin_webapplications_open_ticket'];
+            $rights[] = [
+                'itemtype' => 'PluginWebapplicationsWebapplication',
+                'label' => __('Associable items to a ticket'),
+                'field' => 'plugin_webapplications_open_ticket'
+            ];
         }
 
         return $rights;
@@ -248,12 +263,12 @@ class PluginWebapplicationsProfile extends Profile
     }
 
     /**
-     * @since 0.85
-     * Migration rights from old system to the new one for one profile
-     *
      * @param $profiles_id the profile ID
      *
      * @return bool
+     * @since 0.85
+     * Migration rights from old system to the new one for one profile
+     *
      */
     public static function migrateOneProfile($profiles_id)
     {
@@ -263,12 +278,16 @@ class PluginWebapplicationsProfile extends Profile
             return true;
         }
 
-        foreach ($DB->request(
-            'glpi_plugin_webapplications_profiles',
-            "`profiles_id`='$profiles_id'"
-        ) as $profile_data) {
-            $matching       = ['webapplications' => 'plugin_webapplications',
-                                    'open_ticket'     => 'plugin_webapplications_open_ticket'];
+        foreach (
+            $DB->request(
+                'glpi_plugin_webapplications_profiles',
+                "`profiles_id`='$profiles_id'"
+            ) as $profile_data
+        ) {
+            $matching = [
+                'webapplications' => 'plugin_webapplications',
+                'open_ticket' => 'plugin_webapplications_open_ticket'
+            ];
             $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
             foreach ($matching as $old => $new) {
                 if (!isset($current_rights[$old])) {
@@ -288,13 +307,13 @@ class PluginWebapplicationsProfile extends Profile
     {
         global $DB;
         $profile = new self();
-        $dbu     = new DbUtils();
+        $dbu = new DbUtils();
         //Add new rights in glpi_profilerights table
         foreach ($profile->getAllRights(true) as $data) {
             if ($dbu->countElementsInTable(
-                "glpi_profilerights",
-                ["name" => $data['field']]
-            ) == 0) {
+                    "glpi_profilerights",
+                    ["name" => $data['field']]
+                ) == 0) {
                 ProfileRight::addProfileRights([$data['field']]);
             }
         }
@@ -303,10 +322,14 @@ class PluginWebapplicationsProfile extends Profile
         foreach ($DB->request("SELECT `id` FROM `glpi_profiles`") as $prof) {
             self::migrateOneProfile($prof['id']);
         }
-        foreach ($DB->request("SELECT *
+        foreach (
+            $DB->request(
+                "SELECT *
                            FROM `glpi_profilerights` 
                            WHERE `profiles_id`='" . $_SESSION['glpiactiveprofile']['id'] . "' 
-                              AND `name` LIKE '%plugin_webapplications%'") as $prof) {
+                              AND `name` LIKE '%plugin_webapplications%'"
+            ) as $prof
+        ) {
             if (isset($_SESSION['glpiactiveprofile'])) {
                 $_SESSION['glpiactiveprofile'][$prof['name']] = $prof['rights'];
             }

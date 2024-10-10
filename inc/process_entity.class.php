@@ -39,7 +39,8 @@ use Glpi\Application\View\TemplateRenderer;
 class PluginWebapplicationsProcess_Entity extends CommonDBTM
 {
     use Glpi\Features\Inventoriable;
-    public static $rightname         = "plugin_webapplications_processes";
+
+    public static $rightname = "plugin_webapplications_processes";
 
     public static function getTypeName($nb = 0)
     {
@@ -59,14 +60,26 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             case 'PluginWebapplicationsEntity':
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
-                    return self::createTabEntry(PluginWebapplicationsProcess::getTypeName(), $dbu->countElementsInTable($this->getTable(), ["plugin_webapplications_entities_id" => $item->getID()]));
+                    return self::createTabEntry(
+                        PluginWebapplicationsProcess::getTypeName(),
+                        $dbu->countElementsInTable(
+                            $this->getTable(),
+                            ["plugin_webapplications_entities_id" => $item->getID()]
+                        )
+                    );
                 }
                 return _n('Process', 'Processes', 2, 'webapplications');
                 break;
             case 'PluginWebapplicationsProcess':
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
-                    return self::createTabEntry(PluginWebapplicationsEntity::getTypeName(), $dbu->countElementsInTable($this->getTable(), ["plugin_webapplications_processes_id" => $item->getID()]));
+                    return self::createTabEntry(
+                        PluginWebapplicationsEntity::getTypeName(),
+                        $dbu->countElementsInTable(
+                            $this->getTable(),
+                            ["plugin_webapplications_processes_id" => $item->getID()]
+                        )
+                    );
                 }
                 return _n('Entity', 'Entities', 2);
                 break;
@@ -96,7 +109,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             return false;
         }
 
-        $entity    = new PluginWebapplicationsEntity();
+        $entity = new PluginWebapplicationsEntity();
         $canedit = $entity->can($item->fields['id'], UPDATE);
         if ($canedit) {
             echo "<form name='form' method='post' action='" .
@@ -140,7 +153,10 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             $processDBTM->getFromDB($process['plugin_webapplications_processes_id']);
             echo "<tr class='tab_bg_2'>";
             echo "<td colspan='3'>";
-            echo Html::link($processDBTM->getName(), PluginWebapplicationsProcess::getFormURLWithID($process['plugin_webapplications_processes_id']));
+            echo Html::link(
+                $processDBTM->getName(),
+                PluginWebapplicationsProcess::getFormURLWithID($process['plugin_webapplications_processes_id'])
+            );
             echo "</td>";
             echo "</tr>";
         }
@@ -159,7 +175,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             return false;
         }
 
-        $process    = new PluginWebapplicationsProcess();
+        $process = new PluginWebapplicationsProcess();
         $canedit = $process->can($item->fields['id'], UPDATE);
         if ($canedit) {
             echo "<form name='form' method='post' action='" .
@@ -203,7 +219,10 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             $entityDBTM->getFromDB($entity['plugin_webapplications_entities_id']);
             echo "<tr class='tab_bg_2'>";
             echo "<td colspan='3'>";
-            echo Html::link($entityDBTM->getName(), PluginWebapplicationsEntity::getFormURLWithID($entity['plugin_webapplications_entities_id']));
+            echo Html::link(
+                $entityDBTM->getName(),
+                PluginWebapplicationsEntity::getFormURLWithID($entity['plugin_webapplications_entities_id'])
+            );
             echo "</td>";
             echo "</tr>";
         }

@@ -36,8 +36,9 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginWebapplicationsWebapplication extends CommonDBTM
 {
-    public $dohistory  = true;
-    public static $rightname  = "plugin_webapplications";
+    public $dohistory = true;
+    public static $rightname = "plugin_webapplications";
+
     /**
      * @param int $nb
      *

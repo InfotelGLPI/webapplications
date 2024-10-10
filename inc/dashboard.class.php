@@ -38,7 +38,7 @@ use Glpi\Application\View\TemplateRenderer;
  */
 class PluginWebapplicationsDashboard extends CommonDBTM
 {
-    public static $rightname = "plugin_webapplications_dashboards";
+    public static $rightname = "plugin_webapplications";
 
     public static function getTypeName($nb = 0)
     {
@@ -126,12 +126,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $appliance->getFromDB($ApplianceId);
 
 
-        echo '<div class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
-              <h3 class="card-title d-flex align-items-center ps-4">
-              <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
-              <i class="ti ti-versions fa-2x"></i>
-              </div>
-               </h3>';
+        echo "<div class='card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch'>";
+        echo "<h3 class='card-title d-flex align-items-center ps-4'>";
+        echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
+        echo "<i class='ti ti-versions fa-2x'></i>";
+        echo "</div>";
 
 //        $pictures = importArrayFromDB($appliance->getField('pictures'));
 //
@@ -253,8 +252,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             foreach ($docuItems as $docuItem) {
                 $docuDBTM->getFromDB($docuItem['documents_id']);
                 $name = $docuDBTM->getName();
-                $open  = $CFG_GLPI["root_doc"] . "/front/document.send.php";
-                $open   .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
+                $open = $CFG_GLPI["root_doc"] . "/front/document.send.php";
+                $open .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
                 echo "<option value='$open'>$name</option>";
             }
             echo "</select>";
@@ -276,9 +275,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $options['candel'] = false;
 
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_summary.html.twig', [
-            'item'   => $appliance,
+            'item' => $appliance,
             'params' => $options,
-            'no_header'     => true,
+            'no_header' => true,
         ]);
 
 
@@ -299,7 +298,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 //
 //        $link = User::getFormURLWithID($respSecurityid);
 //        $respSec = $respSecurity->getName();
-
 
 
 //        echo "<table class='tab_cadre_fixe'>";
@@ -441,215 +439,15 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 //        echo "</table>";
 //        echo "</p>";
 
-        self::showEcosystem($appliance);
+        PluginWebapplicationsEntity::showEcosystemFromDashboard($appliance);
 
-        self::showProcess($appliance);
+        PluginWebapplicationsProcess::showProcessFromDashboard($appliance);
 
-        self::showDatabase($appliance);
+        PluginWebapplicationsDatabaseInstance::showDatabaseFromDashboard($appliance);
 
-        self::showSupportPart($appliance);
+        PluginWebapplicationsAppliance::showSupportPartFromDashboard($appliance);
     }
 
-
-    public static function showEcosystem($appliance)
-    {
-        echo "<div class='card-body'>";
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . __(
-                'Ecosystem',
-                'webapplications'
-            ) . "</h2>";
-
-
-        $ApplianceId = $appliance->getField('id');
-
-        $procsAppDBTM = new Appliance_Item();
-        $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsEntity']
-        );
-        $processDBTM = new PluginWebapplicationsEntity();
-
-        echo "<div class='row flex-row'>";
-        echo "<div class='form-field row col-12 col-sm-6  mb-2'>";
-
-        echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
-        echo __('Entities list', 'webapplications');
-        echo "</label>";
-
-        echo "<div class='col-xxl-7 field-container'>";
-        if (!empty($procsApp)) {
-            echo "<select name='processes' id='list' Size='3' ondblclick='location = this.value;'>";
-            foreach ($procsApp as $procApp) {
-                if ($processDBTM->getFromDB($procApp['items_id'])) {
-                    $name = $processDBTM->getName();
-                    $link = PluginWebapplicationsEntity::getFormURLWithID($procApp['items_id']);
-                    echo "<option value='$link'>$name</option>";
-                }
-            }
-            echo "</select>";
-        }
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-
-        echo "</div>";
-
-    }
-
-    public static function showProcess($appliance)
-    {
-        echo "<div class='card-body'>";
-
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . __(
-                'Process',
-                'webapplications'
-            ) . "</h2>";
-
-
-        $ApplianceId = $appliance->getField('id');
-
-        $procsAppDBTM = new Appliance_Item();
-        $procsApp = $procsAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'PluginWebapplicationsProcess']
-        );
-        $processDBTM = new PluginWebapplicationsProcess();
-
-        echo "<div class='row flex-row'>";
-        echo "<div class='form-field row col-12 col-sm-6  mb-2'>";
-
-        echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
-        echo __('Processes list', 'webapplications');
-        echo "</label>";
-
-        echo "<div class='col-xxl-7 field-container'>";
-        if (!empty($procsApp)) {
-            echo "<select name='processes' id='list' Size='3' ondblclick='location = this.value;'>";
-            foreach ($procsApp as $procApp) {
-                if ($processDBTM->getFromDB($procApp['items_id'])) {
-                    $name = $processDBTM->getName();
-                    $link = PluginWebapplicationsProcess::getFormURLWithID($procApp['items_id']);
-                    echo "<option value='$link'>$name</option>";
-                }
-            }
-            echo "</select>";
-        }
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-
-        echo "</div>";
-    }
-
-    public static function showDatabase($appliance)
-    {
-        echo "<div class='card-body'>";
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . _n('Database', 'Databases', 2) . "</h2>";
-
-        $ApplianceId = $appliance->getField('id');
-
-        $databasesAppDBTM = new Appliance_Item();
-        $databasesApp = $databasesAppDBTM->find(['appliances_id' => $ApplianceId, 'itemtype' => 'DatabaseInstance']);
-        $databaseDBTM = new DatabaseInstance();
-
-        echo "<div class='row flex-row'>";
-        echo "<div class='form-field row col-12 col-sm-6  mb-2'>";
-
-        echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
-        echo __('Databases list', 'webapplications');
-        echo "</label>";
-
-        echo "<div class='col-xxl-7 field-container'>";
-        if (!empty($databasesApp)) {
-            echo "<select name='databases' id='list' Size='3' ondblclick='location = this.value;'>";
-            foreach ($databasesApp as $dbApp) {
-                if ($databaseDBTM->getFromDB($dbApp['items_id'])) {
-                    $name = $databaseDBTM->getName();
-                    $link = DatabaseInstance::getFormURLWithID($dbApp['items_id']);
-                    echo "<option value='$link'>$name</option>";
-                }
-            }
-            echo "</select>";
-        }
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
-
-        echo "</div>";
-    }
-
-    public static function showSupportPart($appliance)
-    {
-        echo "<div class='card-body'>";
-
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . __(
-                'Support',
-                'webapplications'
-            );
-
-
-//        echo "<p class='card-text'>";
-        $ApplianceId = $appliance->getField('id');
-
-        $linkApp = PluginWebapplicationsAppliance::getFormURLWithID($ApplianceId);
-        $linkApp .= "&forcetab=main";
-
-        $appliance = new Appliance();
-        $appliance->getFromDB($ApplianceId);
-        echo "<span style='float: right'>";
-        echo Html::submit(
-            _sx('button', 'Edit'),
-            [
-                'name' => 'edit',
-                'class' => 'btn btn-secondary',
-                'icon' => 'fas fa-edit',
-                'style' => 'float: right',
-                'data-bs-toggle' => 'modal',
-                'data-bs-target' => '#editAppSupport' . $ApplianceId
-            ]
-        );
-
-        echo Ajax::createIframeModalWindow(
-            'editAppSupport' . $ApplianceId,
-            $linkApp,
-            [
-                'display' => false,
-                'reloadonclose' => true
-            ]
-        );
-        echo "</span>";
-        echo "</h2>";
-
-
-        $applianceplugin = new PluginWebapplicationsAppliance();
-        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
-
-        $refEditId = 0;
-        $editor = null;
-        $editorName = null;
-        $editoremail = null;
-        $editorephonenumber = null;
-
-        $linkEdit = "";
-        if ($is_known) {
-            $refEditId = $applianceplugin->fields['editor'];
-
-            $editor = new Supplier();
-            $editor->getFromDB($refEditId);
-            $editorName = $editor->getName();
-            $editoremail = $editor->getField('email');
-            $editorephonenumber = $editor->getField('phonenumber');
-        }
-
-        $options['itemtype'] = 'Supplier';
-        $options['items_id'] = $refEditId;
-        $options['editorName'] = $editorName ?? NOT_AVAILABLE;
-        $options['editoremail'] =  $editoremail ?? NOT_AVAILABLE;
-        $options['editorephonenumber'] = $editorephonenumber ?? NOT_AVAILABLE;
-
-        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_support.html.twig', [
-            'item'   => $appliance,
-            'params' => $options,
-        ]);
-
-        echo "</div>";
-    }
 
     public function defineTabs($options = [])
     {
@@ -677,24 +475,23 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $ong = [];
         //add main tab for current object
         $this->addDefaultFormTab($ong);
-        $this->addStandardTab('PluginWebapplicationsDashboardEcosystem', $ong, $options);// Vue Ecosystème
-        $this->addStandardTab('PluginWebapplicationsDashboardProcess', $ong, $options);//Vue Metier
+        $this->addStandardTab('PluginWebapplicationsEntity', $ong, $options);// Vue Ecosystème
+        $this->addStandardTab('PluginWebapplicationsProcess', $ong, $options);//Vue Metier
         $this->addStandardTab(
-            'PluginWebapplicationsDashboardPhysicalInfrastructure',
+            'PluginWebapplicationsPhysicalInfrastructure',
             $ong,
             $options
         );//Vue Infra physiques
-        $this->addStandardTab('PluginWebapplicationsDashboardDatabase', $ong, $options);//Vue Base de données
-        $this->addStandardTab('PluginWebapplicationsDashboardStream', $ong, $options);//Vue Flux
+        $this->addStandardTab(
+            'PluginWebapplicationsLogicalInfrastructure',
+            $ong,
+            $options
+        );//Vue Infra physiques
+        $this->addStandardTab('PluginWebapplicationsDatabaseInstance', $ong, $options);//Vue Base de données
+        $this->addStandardTab('PluginWebapplicationsStream', $ong, $options);//Vue Flux
         $this->addStandardTab('KnowbaseItem_Item', $ong, $options);
 
         return $ong;
     }
 
-
-    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
-    {
-        self::showLists();
-        return true;
-    }
 }

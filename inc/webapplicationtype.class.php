@@ -32,12 +32,13 @@ if (!defined('GLPI_ROOT')) {
 }
 
 // Class for a Dropdown
+
 /**
  * Class PluginWebapplicationsWebapplicationType
  */
 class PluginWebapplicationsWebapplicationType extends CommonDropdown
 {
-    public static $rightname         = "dropdown";
+    public static $rightname = "plugin_webapplications";
     public $can_be_translated = true;
 
     /**

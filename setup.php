@@ -73,7 +73,7 @@ function plugin_init_webapplications()
 //    if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") === true) {
     $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsAppliance', 'addFields'];
 //    } elseif (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") ==true) {
-//        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsDatabaseInstance', 'addFields'];
+        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsDatabaseInstance', 'addFields'];
 //    }
 
     $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = [
@@ -95,10 +95,6 @@ function plugin_init_webapplications()
             'PluginWebapplicationsDatabaseInstance',
             'databaseAdd'
         ],
-        'Item' => [
-            'PluginWebapplicationsItem',
-            'addApplianceItem'
-        ]
     ];
 
     $PLUGIN_HOOKS['pre_item_update']['webapplications'] = [

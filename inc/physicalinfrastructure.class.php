@@ -33,11 +33,11 @@ if (!defined('GLPI_ROOT')) {
 
 
 /**
- * Class PluginWebapplicationsDashboardPhysicalInfrastructure
+ * Class PluginWebapplicationsPhysicalInfrastructure
  */
-class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
+class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
 {
-    public static $rightname         = "plugin_webapplications_physical_infra_dashboards";
+    public static $rightname = "plugin_webapplications";
 
     public static function getTypeName($nb = 0)
     {
@@ -75,9 +75,14 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
         echo "</table></div>";
         echo "<div id=lists-physicalInfra></div>";
 
-        $array['value']='__VALUE__';
-        $array['type']=self::getType();
-        Ajax::updateItemOnSelectEvent('dropdown_applianceDropdown'.$rand, 'lists-physicalInfra', $CFG_GLPI['root_doc'].PLUGIN_WEBAPPLICATIONS_DIR_NOFULL.'/ajax/getLists.php', $array);
+        $array['value'] = '__VALUE__';
+        $array['type'] = self::getType();
+        Ajax::updateItemOnSelectEvent(
+            'dropdown_applianceDropdown' . $rand,
+            'lists-physicalInfra',
+            $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . '/ajax/getLists.php',
+            $array
+        );
     }
 
     public static function getItems()
@@ -87,11 +92,13 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
 
         $itemsAppDBTM = new Appliance_Item();
 
-        $itemApp = $itemsAppDBTM->find(['appliances_id' => $ApplianceId,
-            'itemtype' => $CFG_GLPI['inventory_types']], 'itemtype');
+        $itemApp = $itemsAppDBTM->find([
+            'appliances_id' => $ApplianceId,
+            'itemtype' => $CFG_GLPI['inventory_types']
+        ], 'itemtype');
 
 
-        $listItem = array();
+        $listItem = [];
         foreach ($itemApp as $st) {
             $item = ['id' => $st['items_id'], 'itemtype' => $st['itemtype']];
 
@@ -111,22 +118,22 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-        echo '<div class="card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
-                        <h3 class="card-title d-flex align-items-center ps-4">
-                                                <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
-                     <i class="ti ti-versions fa-2x"></i>
-                  </div>
-                              <h3 style="margin: auto">';
+        echo "<div class='card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch'>";
+        echo "<h3 class='card-title d-flex align-items-center ps-4'>";
+        echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
+        echo "<i class='ti ti-versions fa-2x'></i>";
+        echo "</div>";
+        echo "<h3 style='margin: auto'>";
         $linkApp = Appliance::getFormURLWithID($ApplianceId);
         $name = $appliance->getName();
-        echo "<a href=$linkApp>$name</a>";
+        echo "<a href='$linkApp'>$name</a>";
+        echo "</h3>";
+        echo "</h3>";
+        echo "</div>";
 
-        echo ' </h3>
-                           </h3>
- </div>';
-
-        echo "<h1>".__('Physical Infrastructure', 'webapplications')."</h1>";
-        echo "<hr>";
+        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+        echo __('Physical Infrastructure', 'webapplications');
+        echo "</h2>";
 
         self::showListItem();
 
@@ -149,9 +156,10 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
         echo "<tr class='tab_bg_1'>";
         echo "<td class='center'>";
         Dropdown::showSelectItemFromItemtypes(
-            ['items_id_name'   => 'items_id',
-                'itemtypes'       => $CFG_GLPI['inventory_types'],
-                'checkright'      => true,
+            [
+                'items_id_name' => 'items_id',
+                'itemtypes' => $CFG_GLPI['inventory_types'],
+                'checkright' => true,
             ]
         );
         echo "</td>";
@@ -165,9 +173,8 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
         Html::closeForm();
 
 
-
-        echo "<h2>";
-        echo _n("Item", "Items", count($listItem));
+        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+        echo _n("Item list", "Items list", count($listItem), 'webapplications');
         echo "</h2>";
         echo "<div class='accordion' name=listItem>";
 
@@ -175,7 +182,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
             foreach ($listItem as $item) {
                 $itemtype = $item['itemtype'];
 
-                $itemDBTM = new $itemtype;
+                $itemDBTM = new $itemtype();
 
                 $itemDBTM->getFromDB($item['id']);
 
@@ -192,30 +199,35 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
 
                 echo "<tbody>";
 
-                $linkItem = PluginWebapplicationsItem::getFormURLWithID($item['id']);
+                $linkItem = $itemDBTM::getFormURLWithID($item['id']);
                 $linkItem .= "&forcetab=main";
-                $linkItem .= "&type=".$itemtype;
+                $linkItem .= "&type=" . $itemtype;
 
                 echo "<tr>";
                 echo "<th>";
                 echo __("Name");
                 echo "</th>";
                 echo "<td>";
-                echo "<a href=$linkItem>$name</a>";
+                echo "<a href='$linkItem'>$name</a>";
                 echo "</td>";
 
 
                 echo "<td style='width: 10%'>";
-                echo Html::submit(_sx('button', 'Edit'), ['name' => 'edit', 'class' => 'btn btn-secondary',
+                echo Html::submit(_sx('button', 'Edit'), [
+                    'name' => 'edit',
+                    'class' => 'btn btn-secondary',
                     'icon' => 'fas fa-edit',
                     'data-bs-toggle' => 'modal',
-                    'data-bs-target' =>'#edit'.$itemtype.$item['id']]);
+                    'data-bs-target' => '#edit' . $itemtype . $item['id']
+                ]);
 
                 echo Ajax::createIframeModalWindow(
-                    'edit'.$itemtype.$item['id'],
+                    'edit' . $itemtype . $item['id'],
                     $linkItem,
-                    ['display' => false,
-                        'reloadonclose' => true]
+                    [
+                        'display' => false,
+                        'reloadonclose' => true
+                    ]
                 );
                 echo "</td>";
 
@@ -230,14 +242,14 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
                 echo "</td>";
                 echo "</tr>";
 
-                $typeField = $itemtype.'Type';
-                $typeId = $itemDBTM->getField(strtolower($typeField).'s_id');
+                $typeField = $itemtype . 'Type';
+                $typeId = $itemDBTM->getField(strtolower($typeField) . 's_id');
                 $ct = new $typeField;
                 $ct->getFromDB($typeId);
                 $type = $ct->getName();
 
-                $modelField = $itemtype.'Model';
-                $modelId = $itemDBTM->getField(strtolower($modelField).'s_id');
+                $modelField = $itemtype . 'Model';
+                $modelId = $itemDBTM->getField(strtolower($modelField) . 's_id');
                 $cm = new $modelField;
                 $cm->getFromDB($modelId);
                 $model = $cm->getName();
@@ -257,8 +269,10 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
                     $OSVersionId = $itemOSDBTM->fields['operatingsystemversions_id'];
                     $OSVersion = new OperatingSystemVersion();
                     $OSVersion->getFromDB($OSVersionId);
-                    $OSVersionName=$OSVersion->getName();
-                    if ($OSVersionName == NOT_AVAILABLE || $OSName == NOT_AVAILABLE) $OSVersionName = null;
+                    $OSVersionName = $OSVersion->getName();
+                    if ($OSVersionName == NOT_AVAILABLE || $OSName == NOT_AVAILABLE) {
+                        $OSVersionName = null;
+                    }
                 }
 
 
@@ -268,12 +282,12 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
                 echo "</th>";
                 echo "<td class='inTable'>";
                 echo "<table style='width:60%'>";
-                echo "<tr><td><b>".__('Type')."</b></td>";
+                echo "<tr><td><b>" . __('Type') . "</b></td>";
                 echo "<td>" . $type . "</td></tr>";
-                echo "<tr><td><b>".__('Model')."</b> </td>";
+                echo "<tr><td><b>" . __('Model') . "</b> </td>";
                 echo "<td>" . $model . "</td></tr>";
-                echo "<tr><td><b>".__('Operating System')."</b></td>";
-                echo "<td>" . $OSName." ".$OSVersionName. "</td></tr>";
+                echo "<tr><td><b>" . __('Operating System') . "</b></td>";
+                echo "<td>" . $OSName . " " . $OSVersionName . "</td></tr>";
                 echo "</table>";
                 echo "</td>";
                 echo "</tr>";
@@ -295,7 +309,6 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
                 echo "</tr>";
 
 
-
                 $location = new Location();
                 $locationId = $itemDBTM->getField('locations_id');
                 $location->getFromDB($locationId);
@@ -307,7 +320,7 @@ class PluginWebapplicationsDashboardPhysicalInfrastructure extends CommonDBTM
                 echo __("Location");
                 echo "</th>";
                 echo "<td>";
-                if ($locationId>0) {
+                if ($locationId > 0) {
                     echo "<a href=$link>$locationName</a>";
                 } else {
                     echo $locationName;

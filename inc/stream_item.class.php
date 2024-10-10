@@ -39,7 +39,8 @@ use Glpi\Application\View\TemplateRenderer;
 class PluginWebapplicationsStream_Item extends CommonDBTM
 {
     use Glpi\Features\Inventoriable;
-    public static $rightname         = "plugin_webapplications_streams";
+
+    public static $rightname = "plugin_webapplications_streams";
 
     public static function getTypeName($nb = 0)
     {
@@ -53,13 +54,16 @@ class PluginWebapplicationsStream_Item extends CommonDBTM
     }
 
 
-    public function getTabNameForItem(CommonGLPI $item, $withtemplate=0)
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         switch ($item::getType()) {
             case 'PluginWebapplicationsStream':
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
-                    $nbItems = $dbu->countElementsInTable($this->getTable(), ["plugin_webapplications_streams_id" => $item->getID()]);
+                    $nbItems = $dbu->countElementsInTable(
+                        $this->getTable(),
+                        ["plugin_webapplications_streams_id" => $item->getID()]
+                    );
                     return self::createTabEntry(self::getTypeName($nbItems), $nbItems);
                 }
                 return _n("Database", 'Databases', 2);
@@ -92,13 +96,13 @@ class PluginWebapplicationsStream_Item extends CommonDBTM
         }
 
         $items = $DB->request([
-            'FROM'   => self::getTable(),
-            'WHERE'  => [
+            'FROM' => self::getTable(),
+            'WHERE' => [
                 'plugin_webapplications_streams_id' => $ID
             ]
         ]);
 
-        $stream    = new PluginWebapplicationsStream();
+        $stream = new PluginWebapplicationsStream();
         $canedit = $stream->can($item->fields['id'], UPDATE);
         if ($canedit) {
             echo "<form name='form' method='post' action='" .
@@ -110,9 +114,10 @@ class PluginWebapplicationsStream_Item extends CommonDBTM
             echo "<tr class='tab_bg_1'>";
             echo "<td class='center'>";
             Dropdown::showSelectItemFromItemtypes(
-                ['items_id_name'   => 'items_id',
-                    'itemtypes'       => 'Assets',
-                    'checkright'      => true,
+                [
+                    'items_id_name' => 'items_id',
+                    'itemtypes' => 'Assets',
+                    'checkright' => true,
                 ]
             );
             echo "</td>";
@@ -135,8 +140,8 @@ class PluginWebapplicationsStream_Item extends CommonDBTM
             if ($canedit) {
                 Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
                 $massiveactionparams = [
-                    'num_displayed'   => min($_SESSION['glpilist_limit'], count($items)),
-                    'container'       => 'mass' . __CLASS__ . $rand
+                    'num_displayed' => min($_SESSION['glpilist_limit'], count($items)),
+                    'container' => 'mass' . __CLASS__ . $rand
                 ];
                 Html::showMassiveActions($massiveactionparams);
             }
