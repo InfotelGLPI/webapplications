@@ -51,6 +51,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
     {
         $item = $params['item'];
         $webapp_appliance = new self();
+        $webapp_database = new PluginWebapplicationsDatabaseInstance();
         if ($item->getType() == 'Appliance') {
             if ($item->getID()) {
                 $webapp_appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
@@ -65,6 +66,23 @@ class PluginWebapplicationsAppliance extends CommonDBTM
 
             TemplateRenderer::getInstance()->display('@webapplications/webapplication_appliance_form.html.twig', [
                 'item' => $webapp_appliance,
+                'params' => $options,
+            ]);
+        } else if ($item->getType() == 'DatabaseInstance') {
+            if ($item->getID()) {
+                $webapp_database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
+            } else {
+                $webapp_database->getEmpty();
+            }
+
+            $options = [];
+
+            if (isset($params["options"]["appliances_id"])) {
+                $options = ['appliances_id' => $params["options"]["appliances_id"]];
+            }
+
+            TemplateRenderer::getInstance()->display('@webapplications/webapplication_database_form.html.twig', [
+                'item' => $webapp_database,
                 'params' => $options,
             ]);
         }

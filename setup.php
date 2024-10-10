@@ -73,7 +73,7 @@ function plugin_init_webapplications()
 //    if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") === true) {
     $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsAppliance', 'addFields'];
 //    } elseif (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") ==true) {
-        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsDatabaseInstance', 'addFields'];
+//        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsDatabaseInstance', 'addFields'];
 //    }
 
     $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = [
@@ -126,6 +126,8 @@ function plugin_init_webapplications()
             || strpos($_SERVER['REQUEST_URI'], "front/dashboard.php") == true)) {
         $PLUGIN_HOOKS["add_javascript"]['webapplications'][] = 'scripts/securityneedscolor.js.php';
     }
+
+    $PLUGIN_HOOKS['add_css']['webapplications'] = ['css/webapplications.css'];
 }
 
 
@@ -137,7 +139,7 @@ function plugin_init_webapplications()
 function plugin_version_webapplications()
 {
     return [
-        'name' =>  __('Appliance dashboard', 'webapplications'),
+        'name' => __('Appliance dashboard', 'webapplications'),
         'version' => PLUGIN_WEBAPPLICATIONS_VERSION,
         'license' => 'GPLv2+',
         'oldname' => 'appweb',
