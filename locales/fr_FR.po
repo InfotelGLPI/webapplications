@@ -365,7 +365,7 @@ msgstr "Validation"
 
 #: hook.php:391
 msgid "Validation by CIO"
-msgstr "Validé par le RSSI"
+msgstr "Validé par le DSI"
 
 #: templates/webapplication_appliance_form.html.twig:194
 msgid "Validation by CISO"
