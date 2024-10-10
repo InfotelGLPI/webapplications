@@ -141,7 +141,7 @@ function plugin_init_webapplications()
 function plugin_version_webapplications()
 {
     return [
-        'name' => _n('Web application dashboard', 'Web applications dashboard', 2, 'webapplications'),
+        'name' =>  __('Appliance dashboard', 'webapplications'),
         'version' => PLUGIN_WEBAPPLICATIONS_VERSION,
         'license' => 'GPLv2+',
         'oldname' => 'appweb',

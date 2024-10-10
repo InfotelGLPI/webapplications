@@ -47,10 +47,16 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
     public function getHeaderName($options = []): string
     {
-        $appId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
-        $appliance = new Appliance();
-        $appliance->getFromDB($appId);
-        return $appliance->getName();
+        $appId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
+        if (!isset($_SESSION['plugin_webapplications_loaded_appliances_id'])) {
+            $_SESSION['plugin_webapplications_loaded_appliances_id'] = 0;
+        }
+        if ($appId > 0) {
+            $appliance = new Appliance();
+            $appliance->getFromDB($appId);
+            return $appliance->getName();
+        }
+        return "";
     }
 
 
@@ -89,8 +95,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
 
         echo "<div id='lists-dashboard'>";
-        $dashboard = new PluginWebapplicationsDashboard();
-        $dashboard->display(['id' => 1, 'appliances_id' => $id]);
+        if ($id > 0) {
+            $dashboard = new PluginWebapplicationsDashboard();
+            $dashboard->display(['id' => 1, 'appliances_id' => $id]);
+        }
+
         echo "</div>";
 
         $array['value'] = '__VALUE__';
@@ -531,10 +540,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
     public static function showDatabase($appliance)
     {
         echo "<div class='card-body'>";
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . __(
-                'Databases',
-                'webapplications'
-            ) . "</h2>";
+        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>" . _n('Database', 'Databases', 2) . "</h2>";
 
         $ApplianceId = $appliance->getField('id');
 
@@ -615,7 +621,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 
         $refEditId = 0;
+        $editor = null;
         $editorName = null;
+        $editoremail = null;
+        $editorephonenumber = null;
+
         $linkEdit = "";
         if ($is_known) {
             $refEditId = $applianceplugin->fields['editor'];
@@ -623,13 +633,15 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             $editor = new Supplier();
             $editor->getFromDB($refEditId);
             $editorName = $editor->getName();
+            $editoremail = $editor->getField('email');
+            $editorephonenumber = $editor->getField('phonenumber');
         }
 
         $options['itemtype'] = 'Supplier';
         $options['items_id'] = $refEditId;
         $options['editorName'] = $editorName ?? NOT_AVAILABLE;
-        $options['editoremail'] = $editor->getField('email') ?? NOT_AVAILABLE;
-        $options['editorephonenumber'] = $editor->getField('phonenumber') ?? NOT_AVAILABLE;
+        $options['editoremail'] =  $editoremail ?? NOT_AVAILABLE;
+        $options['editorephonenumber'] = $editorephonenumber ?? NOT_AVAILABLE;
 
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_support.html.twig', [
             'item'   => $appliance,
