@@ -212,7 +212,7 @@ msgstr "Pas de processus associés"
 
 #: inc/stream.class.php:319
 msgid "No associated streams"
-msgstr "Pas de fluxassociés"
+msgstr "Pas de flux associés"
 
 #: inc/entity.class.php:142 inc/entity.class.php:368 inc/process.class.php:154
 #: inc/process.class.php:395 templates/webapplication_entity_form.html.twig:13
