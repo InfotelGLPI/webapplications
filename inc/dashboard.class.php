@@ -415,7 +415,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             if ($item->getType() == "PluginWebapplicationsEntity") {
                 echo _n("Entity list", "Entities list", count($apps), 'webapplications');
             } elseif ($item->getType() == "PluginWebapplicationsProcess") {
-                echo _n('Process list', 'Processes list', count($apps), 'webapplications');
+                echo _n("Process list", "Processes list", count($apps), 'webapplications');
             } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
                 echo _n("Item list", "Items list", count($apps), 'webapplications');
             } elseif ($item->getType() == "DatabaseInstance") {
@@ -549,7 +549,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             if ($item->getType() == "PluginWebapplicationsEntity") {
                 echo _n("Entity list", "Entities list", count($list), 'webapplications');
             } elseif ($item->getType() == "PluginWebapplicationsProcess") {
-                echo _n('Process list', 'Processes list', count($list), 'webapplications');
+                echo _n("Process list", "Processes list", count($list), 'webapplications');
             } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
                 echo _n("Item list", "Items list", count($list), 'webapplications');
             } elseif ($item->getType() == "DatabaseInstance") {
