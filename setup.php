@@ -60,22 +60,8 @@ function plugin_init_webapplications()
         }
     }
 
-
-    //if glpi is loaded
-    //   if (Session::getLoginUserID()) {
-//
-//      if (Session::haveRight("plugin_webapplications", READ)
-//          || Session::haveRight("config", UPDATE)) {
-//         $PLUGIN_HOOKS['config_page']['webapplications']        = 'front/webapplication.php';
-//      }
-    //   }
-
-//    if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") === true) {
     $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsAppliance', 'addFields'];
-//    } elseif (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") ==true) {
-//        $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsDatabaseInstance', 'addFields'];
-//    }
-
+    
     $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = [
         'PluginWebapplicationsAppliance',
         'cleanRelationToAppliance'
