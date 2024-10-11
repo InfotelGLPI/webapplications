@@ -411,16 +411,18 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
 
-        if ($item->getType() == "PluginWebapplicationsEntity") {
-            echo _n("Entity list", "Entities list", count($apps), 'webapplications');
-        } elseif ($item->getType() == "PluginWebapplicationsProcess") {
-            echo _n('Process list', 'Processes list', count($apps), 'webapplications');
-        } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
-            echo _n("Item list", "Items list", count($apps), 'webapplications');
-        } elseif ($item->getType() == "DatabaseInstance") {
-            echo _n("Database list", "Databases list", count($apps), 'webapplications');
-        } elseif ($item->getType() == "PluginWebapplicationsStream") {
-            echo _n("Stream list", "Streams list", count($apps), 'webapplications');
+        if (count($apps) > 0) {
+            if ($item->getType() == "PluginWebapplicationsEntity") {
+                echo _n("Entity list", "Entities list", count($apps), 'webapplications');
+            } elseif ($item->getType() == "PluginWebapplicationsProcess") {
+                echo _n('Process list', 'Processes list', count($apps), 'webapplications');
+            } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+                echo _n("Item list", "Items list", count($apps), 'webapplications');
+            } elseif ($item->getType() == "DatabaseInstance") {
+                echo _n("Database list", "Databases list", count($apps), 'webapplications');
+            } elseif ($item->getType() == "PluginWebapplicationsStream") {
+                echo _n("Stream list", "Streams list", count($apps), 'webapplications');
+            }
         }
 
         echo "</label>";
@@ -542,19 +544,21 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             Html::closeForm();
         }
 
-        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
-        if ($item->getType() == "PluginWebapplicationsEntity") {
-            echo _n("Entity list", "Entities list", count($list), 'webapplications');
-        } elseif ($item->getType() == "PluginWebapplicationsProcess") {
-            echo _n('Process list', 'Processes list', count($list), 'webapplications');
-        } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
-            echo _n("Item list", "Items list", count($list), 'webapplications');
-        } elseif ($item->getType() == "DatabaseInstance") {
-            echo _n("Database list", "Databases list", count($list), 'webapplications');
-        } elseif ($item->getType() == "PluginWebapplicationsStream") {
-            echo _n("Stream list", "Streams list", count($list), 'webapplications');
+        if (count($list) > 0) {
+            echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+            if ($item->getType() == "PluginWebapplicationsEntity") {
+                echo _n("Entity list", "Entities list", count($list), 'webapplications');
+            } elseif ($item->getType() == "PluginWebapplicationsProcess") {
+                echo _n('Process list', 'Processes list', count($list), 'webapplications');
+            } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+                echo _n("Item list", "Items list", count($list), 'webapplications');
+            } elseif ($item->getType() == "DatabaseInstance") {
+                echo _n("Database list", "Databases list", count($list), 'webapplications');
+            } elseif ($item->getType() == "PluginWebapplicationsStream") {
+                echo _n("Stream list", "Streams list", count($list), 'webapplications');
+            }
+            echo "</h2>";
         }
-        echo "</h2>";
 
         if (empty($list)) {
             echo "<table class='tab_cadre_fixe'>";
