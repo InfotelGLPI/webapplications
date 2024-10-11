@@ -18,6 +18,7 @@ ALTER TABLE `glpi_plugin_webapplications_appliances`
   ADD `webapplicationtraceabilities` int unsigned   NOT NULL     DEFAULT '1',
   ADD `editor` int unsigned NOT NULL default '0',
   ADD `version` VARCHAR (255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  ADD `number_users` int unsigned NOT NULL default '0';
 
 CREATE TABLE `glpi_plugin_webapplications_databaseinstances`
 (

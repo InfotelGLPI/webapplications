@@ -70,6 +70,14 @@
                         ) }}
                     {% endif %}
 
+                    {{ fields.dropdownArrayField(
+                        'number_users',
+                        item.fields['number_users'],
+                        nbusers,
+                        __('Number of users', 'webapplications'),
+
+                    ) }}
+
                 </div> {# .row #}
             </div> {# .row #}
         </div> {# .flex-row #}

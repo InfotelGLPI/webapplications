@@ -94,6 +94,7 @@ CREATE TABLE `glpi_plugin_webapplications_appliances`
     `version`                                     VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `editor`                                      int unsigned NOT NULL default '0',
     `backoffice`                                  VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `number_users`                               int unsigned NOT NULL default '0',
     PRIMARY KEY (`id`),
     KEY                                           `appliances_id` (`appliances_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;

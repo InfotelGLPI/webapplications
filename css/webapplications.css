@@ -29,15 +29,14 @@
 .accordionhead {
     border: 2px grey solid;
     text-align: left;
-    margin-top: 15px !important;
+    padding: 15px !important;
 }
 
 .inTable {
     padding-left: 0px !important;
 }
 
-.ui-accordion-header{
-
+.ui-accordion-header {
     background-color: #7d91a1;
     color: white;
 }
@@ -49,31 +48,31 @@
 
 .panel {
     background-color: inherit;
-    color : inherit;
+    color: inherit;
 }
 
 #list {
-    border:1px solid grey;
+    border: 1px solid grey;
     width: 100%;
     color: inherit;
     font: inherit !important;
     background-color: inherit;
 }
 
-option {
-    background-color: inherit !important;
-    color: inherit;
-    padding: 5px;
-    border: none !important;
-}
+/*option {*/
+/*    background-color: inherit !important;*/
+/*    color: inherit;*/
+/*    padding: 5px;*/
+/*    border: none !important;*/
+/*}*/
 
 .dict {
-    text-align : left;
+    text-align: left;
     white-space: nowrap;
     width: 1%;
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
     background: darkgrey !important;
 }
 
@@ -81,4 +80,8 @@ option {
     background-color: rgba(0, 0, 0, .03);
     border-bottom: 1px solid rgba(0, 0, 0, .125);
     margin-bottom: 15px;
+}
+
+.child {
+    flex: 1 0 50%;
 }

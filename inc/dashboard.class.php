@@ -125,66 +125,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-
-        echo "<div class='card-header card-web-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch'>";
-        echo "<h3 class='card-title d-flex align-items-center ps-4'>";
-        echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
-        echo "<i class='ti ti-versions fa-2x'></i>";
-        echo "</div>";
-
-//        $pictures = importArrayFromDB($appliance->getField('pictures'));
-//
-//
-//        if (!empty($pictures)) {
-//            $urlPicture = $pictures[0];
-//
-//            $rand = mt_rand();
-//
-//            echo "<div style='width:150px; text-align:center;' id='picture$rand'>";
-//            echo "<img alt=\"" . __s('Picture') . "\" src='" .
-//                $CFG_GLPI["root_doc"] . "/front/document.send.php?file=_pictures/" . $urlPicture . "'>";
-//            echo "</div>";
-//        }
-
-        echo '<h1 style="margin: auto">';
-        $linkApp = Appliance::getFormURLWithID($ApplianceId);
-        $name = $appliance->getName();
-        echo "<a href='$linkApp'>$name</a>";
-        echo "</h1>";
-
-        $linkApp = PluginWebapplicationsAppliance::getFormURLWithID($ApplianceId);
-        $linkApp .= "&forcetab=main";
-
-        echo "<div style='align-self: center'>";
-        echo Html::submit(
-            _sx('button', 'Edit'),
-            [
-                'name' => 'edit',
-                'class' => 'btn btn-secondary',
-                'icon' => 'fas fa-edit',
-                'style' => 'float: right',
-                'data-bs-toggle' => 'modal',
-                'data-bs-target' => '#editApp' . $ApplianceId
-            ]
-        );
-        echo Ajax::createIframeModalWindow(
-            'editApp' . $ApplianceId,
-            $linkApp,
-            [
-                'display' => false,
-                'reloadonclose' => true
-            ]
-        );
-        echo "</div>";
-
-        echo '</div>';
+        self::showHeaderDashboard($appliance);
 
         echo '<div class="card-body">';
         echo "<table class='tab_cadre_fixe'><tr>";
 
-        $groupId = $appliance->getField('groups_id');
-        $groupUserDBTM = new Group_User();
-        $groupUser = array_column($groupUserDBTM->find(['groups_id' => $groupId]), 'users_id');
 
         $userAdminId = $appliance->getField('users_id_tech');
         $groupAdminId = $appliance->getField('groups_id_tech');
@@ -193,18 +138,19 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $groupUserAdmin = array_column($groupUserAdminDBTM->find(['groups_id' => $groupAdminId]), 'users_id');
         $numberAdmin = count(array_unique($groupUserAdmin));
 
-        $listUser = array_merge($groupUser, $groupUserAdmin);
-        $numberUser = count(array_unique($listUser));
+        $applianceplugin = new PluginWebapplicationsAppliance();
+        $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 
         echo "<td>";
         echo "<div style='text-align:center;font-weight: bold'>";
         echo "<h2>";
-        echo User::getTypeName($numberUser);
+        echo _n('User', 'Users', 2);
         echo "</h2>";
         echo "<i class='fa fa-users fa-3x'></i>";
         echo "<br>";
         echo "<h1>";
-        echo $numberUser;
+        $number_users = $applianceplugin->fields['number_users'] ?? 0;
+        echo PluginWebapplicationsAppliance::getNbUsersValue($number_users);
         echo "</h1>";
         echo "</div>";
         echo "</td>";
@@ -218,7 +164,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             echo "<i class='fa fa-user-cog fa-3x'></i>";
             echo "<br>";
             echo "<h2>";
-            echo getUserName($userAdminId);
+            echo getUserName($userAdminId, 1);
             echo "</h2>";
             echo "</div>";
             echo "</td>";
@@ -269,12 +215,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         PluginWebapplicationsAppliance::showSupportPartFromDashboard($appliance);
 
         echo "<div class='card-body border-0'>";
+        $title = __('Summary', 'webapplications');
+        self::showTitleforDashboard($title, $ApplianceId);
 
-        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . __(
-                'Summary',
-                'webapplications'
-            );
-        echo "</h2>";
         echo "</div>";
 
         $options = [];
@@ -287,177 +230,110 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             'no_header' => true,
         ]);
 
+        echo "<div style='display: flex;flex-wrap: wrap;'>";
 
-//        $ApplianceId = $appliance->getField('id');
-//
-//        $applianceplugin = new PluginWebapplicationsAppliance();
-//        $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
-//
-//        $extexpoid = $applianceplugin->getField('webapplicationexternalexpositions_id');
-//
-//        $extexpo = new PluginWebapplicationsWebapplicationExternalExposition();
-//        $extexpo->getFromDB($extexpoid);
-//        $extexpoName = $extexpo->getName();
-//
-//        $respSecurityid = $appliance->getField('users_id_tech');
-//        $respSecurity = new User();
-//        $respSecurity->getFromDB($respSecurityid);
-//
-//        $link = User::getFormURLWithID($respSecurityid);
-//        $respSec = $respSecurity->getName();
+        self::showFromDashboard($appliance, new PluginWebapplicationsEntity());
 
+        self::showFromDashboard($appliance, new PluginWebapplicationsProcess());
 
-//        echo "<table class='tab_cadre_fixe'>";
-//        echo "<tr>";
-//        echo "<td><h4>" . _n('External exposition', 'External exposition', 1, 'webapplications') .
-//            "</h4></td>";
-//        echo "<td>$extexpoName</td>";
-//        echo "</tr>";
-//        echo "<tr>";
-//        echo "<td><h4>" . __('Technician in charge') . "</h4></td>";
-//        if ($respSecurityid > 0) {
-//            echo "<td><a href=$link>$respSec</a></td>";
-//        } else {
-//            echo "<td>$respSec</td>";
-//        }
-//        echo "</tr>";
-//
-//
-//        $stateId = $appliance->getField('states_id');
-//        $state = new State();
-//        $state->getFromDB($stateId);
-//        $stateName = $state->getName();
-//
-//        echo "<tr>";
-//        echo "<td><h4>" . __('Status') . "</h4></td>";
-//        echo "<td>$stateName</td>";
-//        echo "</tr>";
-//
-//        $serverTypeId = $applianceplugin->getField('webapplicationservertypes_id');
-//        $serverType = new PluginWebapplicationsWebapplicationServerType();
-//        $serverType->getFromDB($serverTypeId);
-//        $serverTypeName = $serverType->getName();
-//
-//        echo "<tr>";
-//        echo "<td><h4>" . __('Type of treatment server', 'webapplications') . "</h4></td>";
-//        echo "<td>$serverTypeName</td>";
-//        echo "</tr>";
-//
-//
-//        $technicId = $applianceplugin->getField('webapplicationtechnics_id');
-//        $technic = new PluginWebapplicationsWebapplicationTechnic();
-//        $technic->getFromDB($technicId);
-//        $technicName = $technic->getName();
-//
-//        echo "<tr>";
-//        echo "<td><h4>" . __('Language of treatment', 'webapplications') . "</h4></td>";
-//        echo "<td>$technicName</td>";
-//        echo "</tr>";
-//
-//
-//        echo "<tr>";
-//        echo "<td>";
-//        echo "<h4>" . __('DICT', 'webapplications') . "</h4>";
-//        echo "</td>";
-//        echo "<td class='inTable'>";
-//
-//
-//        if ($is_known) {
-//            $disp = $applianceplugin->fields['webapplicationavailabilities'];
-//            $int = $applianceplugin->fields['webapplicationintegrities'];
-//            $conf = $applianceplugin->fields['webapplicationconfidentialities'];
-//            $tra = $applianceplugin->fields['webapplicationtraceabilities'];
-//
-//
-//            echo "<table style='text-align : center; width: 60%'>";
-//            echo "<td class='dict'>";
-//            echo __('Availability', 'webapplications') . "&nbsp";
-//            echo "</td>";
-//
-//            echo "<td name='webapplicationavailabilities' id='5'>";
-//            echo $disp;
-//            echo "</td>";
-//
-//            echo "<td></td>";
-//
-//            echo "<td class='dict'>";
-//            echo __('Integrity', 'webapplications') . "&nbsp";
-//            echo "</td>";
-//            echo "<td name='webapplicationintegrities' id='6'>";
-//            echo $int;
-//            echo "</td>";
-//
-//            echo "<td></td>";
-//
-//            echo "<td class='dict'>";
-//            echo __('Confidentiality', 'webapplications') . "&nbsp";
-//            echo "</td>";
-//            echo "<td name='webapplicationconfidentialities' id='7'>";
-//            echo $conf;
-//            echo "</td>";
-//
-//            echo "<td></td>";
-//
-//            echo "<td class='dict'>";
-//            echo __('Traceability', 'webapplications') . "&nbsp";
-//            echo "</td>";
-//            echo "<td name='webapplicationtraceabilities' id='8'>";
-//            echo $tra;
-//            echo "</td>";
-//
-//            echo "</table>";
-//        } else {
-//            echo NOT_AVAILABLE;
-//        }
-//        echo "</td>";
-//        echo "</tr>";
-//
-//        $version = $applianceplugin->getField('version');
-//
-//        echo "<tr>";
-//        echo "<td><h4>" . __('Installed version', 'webapplications') . "</h4></td>";
-//        echo "<td>$version</td>";
-//        echo "</tr>";
-//
-//
-//        $backoffice = $applianceplugin->getField('backoffice');
-//
-//        echo "<tr>";
-//        echo "<td><h4>" . __('Backoffice URL', 'webapplications') . "</h4></td>";
-//        echo "<td><a href=$backoffice>$backoffice</a></td>";
-//        echo "</tr>";
-//
-//        $comment = $appliance->getField('comment');
-//
-//        echo "<tr>";
-//        echo "<td>";
-//        echo "<h4>" . __('Comment') . "</h4>";
-//        echo "</td>";
-//        echo "<td>";
-//        if (!empty($comment)) {
-//            echo "<table style='border:1px solid; width:60%'>";
-//            echo "<td>" . $comment . "</td>";
-//            echo "</table>";
-//        }
-//        echo "</td>";
-//        echo "</tr>";
-//
-//
-//        echo "</table>";
-//        echo "</p>";
+        self::showFromDashboard($appliance, new PluginWebapplicationsPhysicalInfrastructure());
 
-        echo "<div style='display: flex;'>";
+        self::showFromDashboard($appliance, new DatabaseInstance());
 
-        PluginWebapplicationsEntity::showEcosystemFromDashboard($appliance);
-
-        PluginWebapplicationsProcess::showProcessFromDashboard($appliance);
-
-        PluginWebapplicationsDatabaseInstance::showDatabaseFromDashboard($appliance);
+        self::showFromDashboard($appliance, new PluginWebapplicationsStream());
 
         echo "</div>";
-
     }
 
+    //0296333734
+
+    public static function showHeaderDashboard($appliance)
+    {
+        echo "<div class='card-header card-web-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch'>";
+        echo "<h3 class='card-title d-flex align-items-center ps-4'>";
+
+        echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
+        echo "<i class='ti ti-versions fa-2x'></i>";
+        echo "</div>";
+
+        echo "<h1 style='margin: auto'>";
+        $linkApp = Appliance::getFormURLWithID($appliance->getID());
+        $name = $appliance->getLink();
+        echo "<a href='$linkApp'>" . $name . "</a>";
+        echo "</h3>";
+
+
+        $linkApp = PluginWebapplicationsAppliance::getFormURLWithID($appliance->getID());
+        $linkApp .= "&forcetab=main";
+
+        echo "<div style='align-self: center'>";
+        echo Html::submit(
+            _sx('button', 'Edit'),
+            [
+                'name' => 'edit',
+                'class' => 'btn btn-secondary',
+                'icon' => 'fas fa-edit',
+                'style' => 'float: right',
+                'data-bs-toggle' => 'modal',
+                'data-bs-target' => '#editApp' . $appliance->getID()
+            ]
+        );
+        echo Ajax::createIframeModalWindow(
+            'editApp' . $appliance->getID(),
+            $linkApp,
+            [
+                'display' => false,
+                'reloadonclose' => true
+            ]
+        );
+        echo "</div>";
+        echo "</h1>";
+        echo "</div>";
+    }
+
+    public static function showTitleforDashboard($title, $id, $item = false, $type = "add", $name = "")
+    {
+        // <i class='fas fa-1x fa-caret-right'></i>
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . $title;
+
+        if ($item != false && $id > 0) {
+            if ($type == "add") {
+                $linkApp = $item::getFormURL();
+                $title = _sx('button', 'Add');
+            } else {
+                $linkApp = $item::getFormURLWithID($id);
+                $linkApp .= "&forcetab=main";
+                $title = _sx('button', 'Edit');
+            }
+
+            if ($item->getType() != "DatabaseInstance"
+                && $item->getType() != "PluginWebapplicationsPhysicalInfrastructure") {
+                echo "<span style='float: right'>";
+                echo Html::submit(
+                    $title,
+                    [
+                        'name' => 'edit',
+                        'class' => 'btn btn-secondary',
+                        'icon' => 'fas fa-edit',
+                        'style' => 'float: right',
+                        'data-bs-toggle' => 'modal',
+                        'data-bs-target' => '#' . $name . $id
+                    ]
+                );
+
+                echo Ajax::createIframeModalWindow(
+                    $name . $id,
+                    $linkApp,
+                    [
+                        'display' => false,
+                        'reloadonclose' => true
+                    ]
+                );
+                echo "</span>";
+            }
+        }
+        echo "</h2>";
+    }
 
     public function defineTabs($options = [])
     {
@@ -504,4 +380,312 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         return $ong;
     }
 
+
+    public static function showFromDashboard($appliance, $item)
+    {
+        global $CFG_GLPI;
+
+        echo "<div class='card-body child'>";
+
+        $ApplianceId = $appliance->getField('id');
+
+        $title = $item->getTypeName(1);
+
+        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId);
+
+        $app_item = new Appliance_Item();
+
+        if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+            $apps = $app_item->find([
+                'appliances_id' => $ApplianceId,
+                'itemtype' => $CFG_GLPI['inventory_types']
+            ], 'itemtype');
+        } else {
+            $apps = $app_item->find(['appliances_id' => $ApplianceId, 'itemtype' => $item->getType()]);
+        }
+
+        $obj = new $item();
+
+        echo "<div class='row flex-row'>";
+        echo "<div class='form-field row col-12 col-sm-12  mb-2'>";
+
+        echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
+
+        if ($item->getType() == "PluginWebapplicationsEntity") {
+            echo _n("Entity list", "Entities list", count($apps), 'webapplications');
+        } elseif ($item->getType() == "PluginWebapplicationsProcess") {
+            echo _n('Process list', 'Processes list', count($apps), 'webapplications');
+        } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+            echo _n("Item list", "Items list", count($apps), 'webapplications');
+        } elseif ($item->getType() == "DatabaseInstance") {
+            echo _n("Database list", "Databases list", count($apps), 'webapplications');
+        } elseif ($item->getType() == "PluginWebapplicationsStream") {
+            echo _n("Stream list", "Streams list", count($apps), 'webapplications');
+        }
+
+        echo "</label>";
+
+        echo "<div class='col-xxl-7 field-container'>";
+        if (!empty($apps)) {
+            echo "<select name='objects' id='list' Size='3' ondblclick='location = this.value;'>";
+            foreach ($apps as $app) {
+                if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+                    $itemDBTM = new $app['itemtype'];
+                    if ($itemDBTM->getFromDB($app['items_id'])) {
+                        $name = $itemDBTM->getName();
+                        $link = $itemDBTM::getFormURLWithID($app['items_id']);
+                        echo "<option value='$link'>$name</option>";
+                    }
+                } else {
+                    if ($obj->getFromDB($app['items_id'])) {
+                        $name = $obj->getName();
+                        $link = $item::getFormURLWithID($app['items_id']);
+                        echo "<option value='$link'>$name</option>";
+                    }
+                }
+            }
+            echo "</select>";
+        }
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+
+        echo "</div>";
+    }
+
+    public static function getObjects($item, $ApplianceId)
+    {
+        $app_item = new Appliance_Item();
+
+        $apps = $app_item->find([
+            'appliances_id' => $ApplianceId,
+            'itemtype' => $item->getType()
+        ]);
+
+        $listId = [];
+        foreach ($apps as $app) {
+            array_push($listId, $app['items_id']);
+        }
+
+        $list = [];
+        if (!empty($listId)) {
+            $obj = new $item();
+            $list = $obj->find(['id' => $listId]);
+        }
+
+        return $list;
+    }
+
+    public static function showList($item)
+    {
+        global $CFG_GLPI;
+
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+
+        $appliance = new Appliance();
+        $appliance->getFromDB($ApplianceId);
+
+        PluginWebapplicationsDashboard::showHeaderDashboard($appliance);
+
+        $object = new $item();
+
+        if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+            $list = PluginWebapplicationsPhysicalInfrastructure::getItems();
+        } else {
+            $list = self::getObjects($item, $ApplianceId);
+        }
+        $title = $object->getTypeName(2);
+        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addStream');
+
+        if ($object->getType() == "DatabaseInstance") {
+            echo "<form name='form' method='post' action='" .
+                Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
+            echo "<div align='center'><table class='tab_cadre_fixe'>";
+            echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
+
+            echo "<tr class='tab_bg_1'>";
+            echo "<td class='center'>";
+            DatabaseInstance::dropdown(['name' => 'items_id']);
+            echo "</td>";
+            echo "<td class='tab_bg_2 center' colspan='6'>";
+            echo Html::hidden('itemtype', ['value' => 'DatabaseInstance']);
+            echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
+            echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
+            echo "</td>";
+            echo "</tr>";
+            echo "</table></div>";
+
+            Html::closeForm();
+        } elseif ($object->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+            echo "<form name='form' method='post' action='" .
+                Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
+            echo "<div align='center'><table class='tab_cadre_fixe'>";
+            echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
+
+            echo "<tr class='tab_bg_1'>";
+            echo "<td class='center'>";
+            Dropdown::showSelectItemFromItemtypes(
+                [
+                    'items_id_name' => 'items_id',
+                    'itemtypes' => $CFG_GLPI['inventory_types'],
+                    'checkright' => true,
+                ]
+            );
+            echo "</td>";
+            echo "<td class='tab_bg_2 center' colspan='6'>";
+            echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
+            echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
+            echo "</td>";
+            echo "</tr>";
+            echo "</table></div>";
+
+            Html::closeForm();
+        }
+
+        echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
+        if ($item->getType() == "PluginWebapplicationsEntity") {
+            echo _n("Entity list", "Entities list", count($list), 'webapplications');
+        } elseif ($item->getType() == "PluginWebapplicationsProcess") {
+            echo _n('Process list', 'Processes list', count($list), 'webapplications');
+        } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+            echo _n("Item list", "Items list", count($list), 'webapplications');
+        } elseif ($item->getType() == "DatabaseInstance") {
+            echo _n("Database list", "Databases list", count($list), 'webapplications');
+        } elseif ($item->getType() == "PluginWebapplicationsStream") {
+            echo _n("Stream list", "Streams list", count($list), 'webapplications');
+        }
+        echo "</h2>";
+
+        if (empty($list)) {
+            echo "<table class='tab_cadre_fixe'>";
+            echo "<tbody>";
+            echo "<tr class='center'>";
+            echo "<td colspan='4'>";
+            echo __("No associated objects", 'webapplications');
+            echo "</td>";
+            echo "</tr>";
+            echo "</tbody>";
+            echo "</table>";
+        } else {
+            echo "<div class='accordion' name='list'>";
+
+            foreach ($list as $field) {
+
+                if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+                    $itemtype = $field['itemtype'];
+                    $object = new $itemtype();
+                    $object->getFromDB($field['id']);
+                    $id = $field['id'];
+                    $name = $object->fields['name'];
+                } else {
+                    $name = $field['name'];
+                    $id = $field['id'];
+                    $object->getFromDB($id);
+                }
+                echo "<h3 class='accordionhead'>";
+                echo $name;
+                echo "</td>";
+                echo "</h3>";
+
+                echo "<div class='panel' id='tabsbody'>";
+
+                $options = [];
+                $options['canedit'] = false;
+                $options['candel'] = false;
+
+                if ($item->getType() == "PluginWebapplicationsEntity") {
+                    TemplateRenderer::getInstance()->display('@webapplications/webapplication_entity_form.html.twig', [
+                        'item' => $object,
+                        'params' => $options,
+                        'no_header' => true,
+                    ]);
+                } else if ($item->getType() == "PluginWebapplicationsProcess") {
+                    TemplateRenderer::getInstance()->display('@webapplications/webapplication_process_form.html.twig', [
+                        'item' => $object,
+                        'params' => $options,
+                        'no_header' => true,
+                    ]);
+                } else if ($item->getType() == "DatabaseInstance") {
+                    TemplateRenderer::getInstance()->display(
+                        '@webapplications/webapplication_dashboard_generic_form.html.twig',
+                        [
+                            'item' => $object,
+                            'params' => $options,
+                            'no_header' => true,
+                        ]
+                    );
+                } else if ($item->getType() == "PluginWebapplicationsStream") {
+                    $receiverType = $field['receiver_type'];
+                    $receiverid = $field['receiver'];
+                    if (!empty($receiverType) && !empty($receiverid)) {
+                        $receiver = new $receiverType;
+                        $receiver->getFromDB($receiverid);
+                        $linkR = $receiverType::getFormURLWithID($receiverid);
+                        $receiverName = $receiver->getName();
+                        $linkReceiver = "<a href='$linkR'>" . $receiverName . "</a>";
+                    }
+
+                    $transmitterType = $field['transmitter_type'];
+                    $transmitterid = $field['transmitter'];
+                    if (!empty($transmitterType) && !empty($transmitterid)) {
+                        $transmitter = new $transmitterType;
+                        $transmitter->getFromDB($transmitterid);
+                        $linkT = $transmitterType::getFormURLWithID($transmitterid);
+                        $transmitterName = $transmitter->getName();
+                        $linkTransmitter = "<a href='$linkT'>" . $transmitterName . "</a>";
+                    }
+
+                    TemplateRenderer::getInstance()->display('@webapplications/webapplication_stream_form.html.twig', [
+                        'item' => $object,
+                        'params' => $options,
+                        'no_header' => true,
+                        'readlonly' => true,
+                        'linkReceiver' => $linkReceiver,
+                        'linkTransmitter' => $linkTransmitter,
+                    ]);
+                } else if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+
+                    TemplateRenderer::getInstance()->display(
+                        '@webapplications/webapplication_dashboard_generic_form.html.twig',
+                        [
+                            'item' => $object,
+                            'params' => $options,
+                            'no_header' => true,
+                        ]
+                    );
+                }
+
+
+                $link = $object::getFormURLWithID($id);
+                $link .= "&forcetab=main";
+                $rand = mt_rand();
+                echo "<span style='float: right'>";
+                echo Html::submit(
+                    _sx('button', 'Edit'),
+                    [
+                        'name' => 'edit',
+                        'class' => 'btn btn-secondary right',
+                        'icon' => 'fas fa-edit',
+                        'form' => '',
+                        'data-bs-toggle' => 'modal',
+                        'data-bs-target' => '#edit' . $id . $rand
+                    ]
+                );
+
+                echo Ajax::createIframeModalWindow(
+                    'edit' . $id . $rand,
+                    $link,
+                    [
+                        'display' => false,
+                        'reloadonclose' => true
+                    ]
+                );
+                echo "</span>";
+                echo "</div>";
+            }
+        }
+        echo "</div>";
+
+        echo "<script>accordion();</script>";
+    }
 }

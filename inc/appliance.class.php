@@ -67,6 +67,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
             TemplateRenderer::getInstance()->display('@webapplications/webapplication_appliance_form.html.twig', [
                 'item' => $webapp_appliance,
                 'params' => $options,
+                'nbusers' => self::getNbUsers(),
             ]);
         } else if ($item->getType() == 'DatabaseInstance') {
             if ($item->getID()) {
@@ -87,6 +88,31 @@ class PluginWebapplicationsAppliance extends CommonDBTM
             ]);
         }
         return true;
+    }
+
+    public static function getNbUsers()
+    {
+        return [
+            0 => Dropdown::EMPTY_VALUE,
+            1 => __('1 to 100', 'webapplications'),
+            2 => __('100 to 500', 'webapplications'),
+            3 => __('500 to 1000', 'webapplications'),
+            4 => __('1000 to 5000', 'webapplications'),
+            5 => __('All users', 'webapplications'),
+        ];
+    }
+
+    public static function getNbUsersValue($value)
+    {
+        $nb = [
+            0 => Dropdown::EMPTY_VALUE,
+            1 => __('1 to 100', 'webapplications'),
+            2 => __('100 to 500', 'webapplications'),
+            3 => __('500 to 1000', 'webapplications'),
+            4 => __('1000 to 5000', 'webapplications'),
+            5 => __('All users', 'webapplications'),
+        ];
+        return $value > 0 ? $nb[$value] : Dropdown::EMPTY_VALUE;
     }
 
     /**
@@ -128,6 +154,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
             $appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
             $address = isset($item->input['address']) ? $item->input['address'] : $appliance->fields['address'];
             $backoffice = isset($item->input['backoffice']) ? $item->input['backoffice'] : $appliance->fields['backoffice'];
+            $number_users = isset($item->input['number_users']) ? $item->input['number_users'] : $appliance->fields['number_users'];
             $version = isset($item->input['version']) ? $item->input['version'] : $appliance->fields['version'];
             $editor = isset($item->input['editor']) ? $item->input['editor'] : $appliance->fields['editor'];
             if (is_array($appliance->fields) && count($appliance->fields) > 0) {
@@ -137,6 +164,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
                     'version' => $version,
                     'editor' => $editor,
                     'backoffice' => $backoffice,
+                    'number_users' => $number_users,
                     'webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : $appliance->fields['plugin_webapplications_webapplicationservertypes_id'],
                     'webapplicationtechnics_id' => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : $appliance->fields['plugin_webapplications_webapplicationtechnics_id'],
                     'webapplicationexternalexpositions_id' => isset($item->input['webapplicationexternalexpositions_id']) ? $item->input['webapplicationexternalexpositions_id'] : $appliance->fields['webapplicationexternalexpositions_id'],
@@ -162,7 +190,8 @@ class PluginWebapplicationsAppliance extends CommonDBTM
                     'version' => $version,
                     'editor' => $editor,
                     'appliances_id' => $item->getID(),
-                    'backoffice' => $backoffice
+                    'backoffice' => $backoffice,
+                    'number_users' => $number_users,
                 ]);
             }
         }
@@ -192,47 +221,18 @@ class PluginWebapplicationsAppliance extends CommonDBTM
     {
         echo "<div class='card-body'>";
 
-        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . __(
-                'Support',
-                'webapplications'
-            );
-
-
-//        echo "<p class='card-text'>";
         $ApplianceId = $appliance->getField('id');
 
-        $linkApp = PluginWebapplicationsAppliance::getFormURLWithID($ApplianceId);
-        $linkApp .= "&forcetab=main";
+        $supplier = new Supplier();
 
-        $appliance = new Appliance();
-        $appliance->getFromDB($ApplianceId);
-        echo "<span style='float: right'>";
-        echo Html::submit(
-            _sx('button', 'Edit'),
-            [
-                'name' => 'edit',
-                'class' => 'btn btn-secondary',
-                'icon' => 'fas fa-edit',
-                'style' => 'float: right',
-                'data-bs-toggle' => 'modal',
-                'data-bs-target' => '#editAppSupport' . $ApplianceId
-            ]
-        );
-
-        echo Ajax::createIframeModalWindow(
-            'editAppSupport' . $ApplianceId,
-            $linkApp,
-            [
-                'display' => false,
-                'reloadonclose' => true
-            ]
-        );
-        echo "</span>";
-        echo "</h2>";
 
 
         $applianceplugin = new PluginWebapplicationsAppliance();
         $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
+
+        $supplier_id = $applianceplugin->fields['editor'] ?? 0;
+        $title = __('Support', 'webapplications');
+        PluginWebapplicationsDashboard::showTitleforDashboard($title, $supplier_id, $supplier, 'edit','editAppSupport');
 
         $refEditId = 0;
         $editor = null;

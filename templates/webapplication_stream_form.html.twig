@@ -8,33 +8,48 @@
         html_side
     ) }}
 
-    {{ fields.dropdownItemsFromItemtypes(
-        'transmitter',
-        __('Source', 'webapplications'),
-        {'items_id_name': 'transmitter',
-            'itemtype_name': 'transmitter_type',
-            'itemtypes': params['stream_types']}
-    ) }}
 
-    {{ fields.htmlField(
-        'transmitter',
-        params['linkTransmitter'],
-        __('')
-    ) }}
+    {% if readlonly == true %}
+        {{ fields.htmlField(
+            'transmitter',
+            linkTransmitter,
+            __('Source', 'webapplications'),
+        ) }}
+    {% else %}
+        {{ fields.dropdownItemsFromItemtypes(
+            'transmitter',
+            __('Source', 'webapplications'),
+            {'items_id_name': 'transmitter',
+                'itemtype_name': 'transmitter_type',
+                'itemtypes': params['stream_types']}
+        ) }}
+        {{ fields.htmlField(
+            'transmitter',
+            params['linkTransmitter'],
+            __('')
+        ) }}
+    {% endif %}
 
-    {{ fields.dropdownItemsFromItemtypes(
-        'receiver',
-        __('Destination', 'webapplications'),
-        {'items_id_name': 'receiver',
-            'itemtype_name': 'receiver_type',
-            'itemtypes': params['stream_types']}
-    ) }}
-
-    {{ fields.htmlField(
-        'receiver',
-        params['linkReceiver'],
-        __('')
-    ) }}
+    {% if readlonly == true %}
+        {{ fields.htmlField(
+            'receiver',
+            linkReceiver,
+            __('Destination', 'webapplications'),
+        ) }}
+    {% else %}
+        {{ fields.dropdownItemsFromItemtypes(
+            'receiver',
+            __('Destination', 'webapplications'),
+            {'items_id_name': 'receiver',
+                'itemtype_name': 'receiver_type',
+                'itemtypes': params['stream_types']}
+        ) }}
+        {{ fields.htmlField(
+            'receiver',
+            params['linkReceiver'],
+            __('')
+        ) }}
+    {% endif %}
 
     {{ fields.dropdownYesNo(
         "encryption",

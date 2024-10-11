@@ -145,17 +145,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
         $item = new Appliance();
         $item->getFromDB($ApplianceId);
 
-
-        echo "<div class='card-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch'>";
-        echo "<h3 class='card-title d-flex align-items-center ps-4'>";
-        echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
-        echo "<i class='ti ti-versions fa-2x'></i>";
-        echo "</div>";
-        echo "<h3 style='margin: auto'>";
-        echo $item->getName();
-        echo "</h3>";
-        echo "</h3>";
-        echo "</div>";
+        PluginWebapplicationsDashboard::showHeaderDashboard($item);
 
         echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>";
         echo _n('Logical infrastructure', 'Logical infrastructure', 1,'webapplications');
