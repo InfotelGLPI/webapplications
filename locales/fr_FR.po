@@ -67,7 +67,7 @@ msgstr "Migration dans le coeur"
 
 #: front/webapplication.php:52
 msgid "Are you sure you want to do core migration ?"
-msgstr "Êtes-vous sûr de vouloir effectuer une migration de base ?"
+msgstr "Êtes-vous sûr de vouloir effectuer une migration de base ?"
 
 #: front/webapplication.php:64
 msgid "Data migration"
