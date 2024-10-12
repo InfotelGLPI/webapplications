@@ -95,6 +95,8 @@ class PluginWebapplicationsStream extends CommonDBTM
 
         $transmitter_type = $this->getField('transmitter_type');
         $transmitterId = $this->getField('transmitter');
+
+
         if (!empty($transmitter_type) && !empty($transmitterId)) {
             $transmitter = new $transmitter_type;
             $transmitter->getFromDB($transmitterId);
@@ -102,6 +104,8 @@ class PluginWebapplicationsStream extends CommonDBTM
             $transmitterName = $transmitter->getName();
 
             $options['linkTransmitter'] = "<a href= $linkTransmitter>$transmitterName</a>";
+        } else {
+            $options['linkTransmitter'] = __('All');
         }
 
         $receiver_type = $this->getField('receiver_type');
@@ -113,6 +117,8 @@ class PluginWebapplicationsStream extends CommonDBTM
             $receiverName = $receiver->getName();
 
             $options['linkReceiver'] = "<a href= $linkReceiver>$receiverName</a>";
+        }  else {
+            $options['linkReceiver'] = __('All');
         }
 
         $options['appliances_id'] = $_SESSION['plugin_webapplications_loaded_appliances_id'];

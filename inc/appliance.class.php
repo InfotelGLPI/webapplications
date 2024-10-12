@@ -225,8 +225,6 @@ class PluginWebapplicationsAppliance extends CommonDBTM
 
         $supplier = new Supplier();
 
-
-
         $applianceplugin = new PluginWebapplicationsAppliance();
         $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 

@@ -628,6 +628,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                         ]
                     );
                 } elseif ($item->getType() == "PluginWebapplicationsStream") {
+
+                    $linkReceiver = __('All');
                     $receiverType = $field['receiver_type'];
                     $receiverid = $field['receiver'];
                     if (!empty($receiverType) && !empty($receiverid)) {
@@ -638,6 +640,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                         $linkReceiver = "<a href='$linkR'>" . $receiverName . "</a>";
                     }
 
+                    $linkTransmitter = __('All');
                     $transmitterType = $field['transmitter_type'];
                     $transmitterid = $field['transmitter'];
                     if (!empty($transmitterType) && !empty($transmitterid)) {
