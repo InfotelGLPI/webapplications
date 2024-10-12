@@ -91,7 +91,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
     {
         $this->initForm($ID, $options);
 
-
+        $options['appliances_id'] = $_SESSION['plugin_webapplications_loaded_appliances_id'];
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_process_form.html.twig', [
             'item' => $this,
             'params' => $options,
@@ -103,6 +103,19 @@ class PluginWebapplicationsProcess extends CommonDBTM
     public function post_getEmpty()
     {
         $this->fields["webapplicationconfidentialities"] = 0;
+    }
+
+    public function prepareInputForAdd($input)
+    {
+        if (isset($input['appliances_id'])
+            && !empty($input['appliances_id'])) {
+            $item = new Appliance();
+            if($item->getFromDB($input['appliances_id'])) {
+                $input['entities_id'] = $item->fields['entities_id'];
+                $input['is_recursive'] = $item->fields['is_recursive'];
+            }
+        }
+        return $input;
     }
 
     public function post_addItem()

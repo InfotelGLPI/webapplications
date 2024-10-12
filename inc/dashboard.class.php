@@ -96,7 +96,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         echo "<div id='lists-dashboard'>";
         if ($id > 0) {
-            $dashboard = new PluginWebapplicationsDashboard();
+            $dashboard = new self();
             $dashboard->display(['id' => 1, 'appliances_id' => $id]);
         }
 
@@ -306,6 +306,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                 $title = _sx('button', 'Edit');
             }
 
+            $rand = mt_rand();
             if ($item->getType() != "DatabaseInstance"
                 && $item->getType() != "PluginWebapplicationsPhysicalInfrastructure") {
                 echo "<span style='float: right'>";
@@ -317,12 +318,12 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                         'icon' => 'fas fa-edit',
                         'style' => 'float: right',
                         'data-bs-toggle' => 'modal',
-                        'data-bs-target' => '#' . $name . $id
+                        'data-bs-target' => '#' . $name . $id . $rand
                     ]
                 );
 
                 echo Ajax::createIframeModalWindow(
-                    $name . $id,
+                    $name . $id . $rand,
                     $linkApp,
                     [
                         'display' => false,
@@ -391,7 +392,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $title = $item->getTypeName(1);
 
-        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId);
+        self::showTitleforDashboard($title, $ApplianceId);
 
         $app_item = new Appliance_Item();
 
@@ -488,7 +489,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-        PluginWebapplicationsDashboard::showHeaderDashboard($appliance);
+        self::showHeaderDashboard($appliance);
 
         $object = new $item();
 
@@ -498,7 +499,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             $list = self::getObjects($item, $ApplianceId);
         }
         $title = $object->getTypeName(2);
-        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addStream');
+        self::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addObject');
 
         if ($object->getType() == "DatabaseInstance") {
             echo "<form name='form' method='post' action='" .
@@ -547,6 +548,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $nb = count($list);
         if ($nb > 0) {
+            echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
             if ($item->getType() == "PluginWebapplicationsEntity") {
                 echo _n("Entity list", "Entities list", $nb, 'webapplications');
             } elseif ($item->getType() == "PluginWebapplicationsProcess") {
@@ -558,6 +560,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             } elseif ($item->getType() == "PluginWebapplicationsStream") {
                 echo _n("Stream list", "Streams list", $nb, 'webapplications');
             }
+            echo "</h2>";
         }
 
         if (empty($list)) {

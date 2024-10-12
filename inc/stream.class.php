@@ -115,7 +115,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             $options['linkReceiver'] = "<a href= $linkReceiver>$receiverName</a>";
         }
 
-
+        $options['appliances_id'] = $_SESSION['plugin_webapplications_loaded_appliances_id'];
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_stream_form.html.twig', [
             'item' => $this,
             'params' => $options,
@@ -138,6 +138,19 @@ class PluginWebapplicationsStream extends CommonDBTM
                 }
             }
         }
+    }
+
+    public function prepareInputForAdd($input)
+    {
+        if (isset($input['appliances_id'])
+            && !empty($input['appliances_id'])) {
+            $item = new Appliance();
+            if ($item->getFromDB($input['appliances_id'])) {
+                $input['entities_id'] = $item->fields['entities_id'];
+                $input['is_recursive'] = $item->fields['is_recursive'];
+            }
+        }
+        return $input;
     }
 
     public function post_addItem()
@@ -179,7 +192,10 @@ class PluginWebapplicationsStream extends CommonDBTM
             'table' => self::getTable(),
             'field' => 'transmitter_type',
             'name' => __('Source', 'webapplications'),
-            'datatype' => 'dropdown',
+            'datatype' => 'specific',
+            'massiveaction' => 'false',
+            'nosort' => true,
+            'nosearch' => true
         ];
 
         $tab[] = [
@@ -187,7 +203,10 @@ class PluginWebapplicationsStream extends CommonDBTM
             'table' => self::getTable(),
             'field' => 'receiver_type',
             'name' => __('Destination', 'webapplications'),
-            'datatype' => 'dropdown'
+            'datatype' => 'specific',
+            'massiveaction' => 'false',
+            'nosort' => true,
+            'nosearch' => true
         ];
 
         $tab[] = [
@@ -220,6 +239,74 @@ class PluginWebapplicationsStream extends CommonDBTM
         ];
 
         return $tab;
+    }
+
+    /**
+     * display a value according to a field
+     *
+     * @param $field     String         name of the field
+     * @param $values    String / Array with the value to display
+     * @param $options   Array          of option
+     *
+     * @return string
+     *
+     */
+    static function getSpecificValueToDisplay($field, $values, array $options = [])
+    {
+        global $CFG_GLPI;
+
+        switch ($field) {
+            case "transmitter_type":
+            case "receiver_type":
+                $types = $CFG_GLPI['inventory_types'];
+                $types[] = 'DatabaseInstance';
+                $items = [];
+                foreach ($types as $k => $type) {
+                    $items[$type] = $type::getTypeName();
+                }
+
+                if (isset($items[$values['name']])) {
+                    return $items[$values['name']];
+                }
+
+                return "";
+        }
+        return parent::getSpecificValueToDisplay($field, $values, $options);
+    }
+
+    /**
+     * @param $field
+     * @param $name (default '')
+     * @param $values (defaut '')
+     * @param $options   array
+     **@since version 2.3.0
+     *
+     */
+    public static function getSpecificValueToSelect($field, $name = '', $values = '', array $options = [])
+    {
+        global $CFG_GLPI;
+
+        if (!is_array($values)) {
+            $values = [$field => $values];
+        }
+        $options['display'] = false;
+        switch ($field) {
+            case 'transmitter_type':
+            case "receiver_type":
+                $types = $CFG_GLPI['inventory_types'];
+                $types[] = 'DatabaseInstance';
+                $items = [];
+                foreach ($types as $k => $type) {
+                    $items[$type] = $type::getTypeName();
+                }
+                $options['value'] = $values[$field];
+                return Dropdown::showFromArray(
+                    $name,
+                    $items,
+                    $options
+                );
+        }
+        return parent::getSpecificValueToSelect($field, $name, $values, $options);
     }
 
     public function defineTabs($options = [])
