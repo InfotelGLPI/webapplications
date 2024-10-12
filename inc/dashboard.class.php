@@ -38,7 +38,7 @@ use Glpi\Application\View\TemplateRenderer;
  */
 class PluginWebapplicationsDashboard extends CommonDBTM
 {
-    public static $rightname = "plugin_webapplications";
+    public static $rightname = "plugin_webapplications_dashboards";
 
     public static function getTypeName($nb = 0)
     {
@@ -267,25 +267,27 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $linkApp .= "&forcetab=main";
 
         echo "<div style='align-self: center'>";
-        echo Html::submit(
-            _sx('button', 'Edit'),
-            [
-                'name' => 'edit',
-                'class' => 'btn btn-secondary',
-                'icon' => 'fas fa-edit',
-                'style' => 'float: right',
-                'data-bs-toggle' => 'modal',
-                'data-bs-target' => '#editApp' . $appliance->getID()
-            ]
-        );
-        echo Ajax::createIframeModalWindow(
-            'editApp' . $appliance->getID(),
-            $linkApp,
-            [
-                'display' => false,
-                'reloadonclose' => true
-            ]
-        );
+        if ($appliance->canUpdate()) {
+            echo Html::submit(
+                _sx('button', 'Edit'),
+                [
+                    'name' => 'edit',
+                    'class' => 'btn btn-secondary',
+                    'icon' => 'fas fa-edit',
+                    'style' => 'float: right',
+                    'data-bs-toggle' => 'modal',
+                    'data-bs-target' => '#editApp' . $appliance->getID()
+                ]
+            );
+            echo Ajax::createIframeModalWindow(
+                'editApp' . $appliance->getID(),
+                $linkApp,
+                [
+                    'display' => false,
+                    'reloadonclose' => true
+                ]
+            );
+        }
         echo "</div>";
         echo "</h1>";
         echo "</div>";
@@ -308,7 +310,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
             $rand = mt_rand();
             if ($item->getType() != "DatabaseInstance"
-                && $item->getType() != "PluginWebapplicationsPhysicalInfrastructure") {
+                && $item->getType() != "PluginWebapplicationsPhysicalInfrastructure"
+                && $item->canUpdate()) {
                 echo "<span style='float: right'>";
                 echo Html::submit(
                     $title,
@@ -514,7 +517,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             echo "<td class='tab_bg_2 center' colspan='6'>";
             echo Html::hidden('itemtype', ['value' => 'DatabaseInstance']);
             echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
-            echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
+            if ($object->canCreate()) {
+                echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
+            }
             echo "</td>";
             echo "</tr>";
             echo "</table></div>";
@@ -538,7 +543,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             echo "</td>";
             echo "<td class='tab_bg_2 center' colspan='6'>";
             echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
-            echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
+            if ($object->canCreate()) {
+                echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
+            }
             echo "</td>";
             echo "</tr>";
             echo "</table></div>";
@@ -577,7 +584,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             echo "<div class='accordion' name='list'>";
 
             foreach ($list as $field) {
-
                 if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
                     $itemtype = $field['itemtype'];
                     $object = new $itemtype();
@@ -606,13 +612,13 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                         'params' => $options,
                         'no_header' => true,
                     ]);
-                } else if ($item->getType() == "PluginWebapplicationsProcess") {
+                } elseif ($item->getType() == "PluginWebapplicationsProcess") {
                     TemplateRenderer::getInstance()->display('@webapplications/webapplication_process_form.html.twig', [
                         'item' => $object,
                         'params' => $options,
                         'no_header' => true,
                     ]);
-                } else if ($item->getType() == "DatabaseInstance") {
+                } elseif ($item->getType() == "DatabaseInstance") {
                     TemplateRenderer::getInstance()->display(
                         '@webapplications/webapplication_dashboard_generic_form.html.twig',
                         [
@@ -621,7 +627,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                             'no_header' => true,
                         ]
                     );
-                } else if ($item->getType() == "PluginWebapplicationsStream") {
+                } elseif ($item->getType() == "PluginWebapplicationsStream") {
                     $receiverType = $field['receiver_type'];
                     $receiverid = $field['receiver'];
                     if (!empty($receiverType) && !empty($receiverid)) {
@@ -650,8 +656,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                         'linkReceiver' => $linkReceiver,
                         'linkTransmitter' => $linkTransmitter,
                     ]);
-                } else if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
-
+                } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
                     TemplateRenderer::getInstance()->display(
                         '@webapplications/webapplication_dashboard_generic_form.html.twig',
                         [
@@ -667,26 +672,28 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                 $link .= "&forcetab=main";
                 $rand = mt_rand();
                 echo "<span style='float: right'>";
-                echo Html::submit(
-                    _sx('button', 'Edit'),
-                    [
-                        'name' => 'edit',
-                        'class' => 'btn btn-secondary right',
-                        'icon' => 'fas fa-edit',
-                        'form' => '',
-                        'data-bs-toggle' => 'modal',
-                        'data-bs-target' => '#edit' . $id . $rand
-                    ]
-                );
+                if ($object->canUpdate()) {
+                    echo Html::submit(
+                        _sx('button', 'Edit'),
+                        [
+                            'name' => 'edit',
+                            'class' => 'btn btn-secondary right',
+                            'icon' => 'fas fa-edit',
+                            'form' => '',
+                            'data-bs-toggle' => 'modal',
+                            'data-bs-target' => '#edit' . $id . $rand
+                        ]
+                    );
 
-                echo Ajax::createIframeModalWindow(
-                    'edit' . $id . $rand,
-                    $link,
-                    [
-                        'display' => false,
-                        'reloadonclose' => true
-                    ]
-                );
+                    echo Ajax::createIframeModalWindow(
+                        'edit' . $id . $rand,
+                        $link,
+                        [
+                            'display' => false,
+                            'reloadonclose' => true
+                        ]
+                    );
+                }
                 echo "</span>";
                 echo "</div>";
             }

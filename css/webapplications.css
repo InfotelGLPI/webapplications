@@ -39,6 +39,7 @@
 .ui-accordion-header {
     background-color: #7d91a1;
     color: white;
+    font-size: 16px !important;
 }
 
 

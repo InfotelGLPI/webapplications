@@ -105,9 +105,6 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
         if (!$this->canView()) {
             return false;
         }
-        if (!$this->canCreate()) {
-            return false;
-        }
 
         $entity = new PluginWebapplicationsEntity();
         $canedit = $entity->can($item->fields['id'], UPDATE);
@@ -169,9 +166,6 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
     public function showForProcess($item)
     {
         if (!$this->canView()) {
-            return false;
-        }
-        if (!$this->canCreate()) {
             return false;
         }
 

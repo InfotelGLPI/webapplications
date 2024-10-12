@@ -37,7 +37,7 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginWebapplicationsKnowbase extends CommonDBTM
 {
-    public static $rightname = "plugin_webapplications";
+    public static $rightname = "plugin_webapplications_appliances";
 
     public static function getTypeName($nb = 0)
     {

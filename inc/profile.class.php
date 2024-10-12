@@ -47,7 +47,9 @@ class PluginWebapplicationsProfile extends Profile
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($item->getType() == 'Profile') {
-            return PluginWebapplicationsWebapplication::getTypeName(2);
+            if ($item->getField('interface') == 'central') {
+                return PluginWebapplicationsWebapplication::getTypeName(2);
+            }
         }
         return '';
     }
@@ -69,11 +71,10 @@ class PluginWebapplicationsProfile extends Profile
             self::addDefaultProfileInfos(
                 $ID,
                 [
-                    'plugin_webapplications' => 0,
+                    'plugin_webapplications_appliances' => 0,
                     'plugin_webapplications_streams' => 0,
                     'plugin_webapplications_processes' => 0,
-                    'plugin_webapplications_entities' => 0,
-                    'plugin_webapplications_open_ticket' => 0
+                    'plugin_webapplications_entities' => 0
                 ]
             );
             $prof->showForm($ID);
@@ -90,8 +91,7 @@ class PluginWebapplicationsProfile extends Profile
         self::addDefaultProfileInfos(
             $ID,
             [
-                'plugin_webapplications' => 127,
-                'plugin_webapplications_open_ticket' => 1,
+                'plugin_webapplications_appliances' => 127,
                 'plugin_webapplications_streams' => READ + CREATE + UPDATE + PURGE,
                 'plugin_webapplications_entities' => READ + CREATE + UPDATE + PURGE,
                 'plugin_webapplications_dashboards' => READ + CREATE + UPDATE + PURGE,
@@ -165,19 +165,6 @@ class PluginWebapplicationsProfile extends Profile
                 'title' => __('General')
             ]);
         }
-        echo "<table class='tab_cadre_fixehov'>";
-        echo "<tr class='tab_bg_1'><th colspan='4'>" . __('Helpdesk') . "</th></tr>\n";
-
-        $effective_rights = ProfileRight::getProfileRights($profiles_id, ['plugin_webapplications_open_ticket']);
-        echo "<tr class='tab_bg_2'>";
-        echo "<td width='20%'>" . __('Associable items to a ticket') . "</td>";
-        echo "<td colspan='5'>";
-        Html::showCheckbox([
-            'name' => '_plugin_webapplications_open_ticket',
-            'checked' => $effective_rights['plugin_webapplications_open_ticket']
-        ]);
-        echo "</td></tr>\n";
-        echo "</table>";
 
         if ($canedit
             && $closeform) {
@@ -199,9 +186,14 @@ class PluginWebapplicationsProfile extends Profile
     {
         $rights = [
             [
-                'itemtype' => 'PluginWebapplicationsWebapplication',
+                'itemtype' => 'PluginWebapplicationsAppliance',
                 'label' => _n('Web application', 'Web applications', 2, 'webapplications'),
-                'field' => 'plugin_webapplications'
+                'field' => 'plugin_webapplications_appliances'
+            ],
+            [
+                'itemtype' => 'PluginWebapplicationsDashboard',
+                'label' =>__('Appliance dashboard', 'webapplications'),
+                'field' => 'plugin_webapplications_dashboards'
             ],
             [
                 'itemtype' => 'PluginWebapplicationsStream',
@@ -214,24 +206,11 @@ class PluginWebapplicationsProfile extends Profile
                 'field' => 'plugin_webapplications_processes'
             ],
             [
-                'itemtype' => 'PluginWebapplicationsDashboard',
-                'label' => _n('Dashboard', 'Dashboards', 2, 'webapplications'),
-                'field' => 'plugin_webapplications_dashboards'
-            ],
-            [
                 'itemtype' => 'PluginWebapplicationsEntity',
                 'label' => _n('Entity', 'Entities', 2),
                 'field' => 'plugin_webapplications_entities'
             ]
         ];
-
-        if ($all) {
-            $rights[] = [
-                'itemtype' => 'PluginWebapplicationsWebapplication',
-                'label' => __('Associable items to a ticket'),
-                'field' => 'plugin_webapplications_open_ticket'
-            ];
-        }
 
         return $rights;
     }
@@ -285,8 +264,7 @@ class PluginWebapplicationsProfile extends Profile
             ) as $profile_data
         ) {
             $matching = [
-                'webapplications' => 'plugin_webapplications',
-                'open_ticket' => 'plugin_webapplications_open_ticket'
+                'webapplications' => 'plugin_webapplications'
             ];
             $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
             foreach ($matching as $old => $new) {
