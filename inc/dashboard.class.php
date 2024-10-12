@@ -361,7 +361,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $ong = [];
         //add main tab for current object
         $this->addDefaultFormTab($ong);
-        $this->addStandardTab('PluginWebapplicationsEntity', $ong, $options);// Vue EcosystÃ¨me
+        $this->addStandardTab('PluginWebapplicationsEntity', $ong, $options);// Vue Ecosystème
         $this->addStandardTab('PluginWebapplicationsProcess', $ong, $options);//Vue Metier
         $this->addStandardTab(
             'PluginWebapplicationsPhysicalInfrastructure',
@@ -373,7 +373,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             $ong,
             $options
         );//Vue Infra physiques
-        $this->addStandardTab('PluginWebapplicationsDatabaseInstance', $ong, $options);//Vue Base de donnÃ©es
+        $this->addStandardTab('PluginWebapplicationsDatabaseInstance', $ong, $options);//Vue Base de données
         $this->addStandardTab('PluginWebapplicationsStream', $ong, $options);//Vue Flux
         $this->addStandardTab('PluginWebapplicationsKnowbase', $ong, $options);
 
@@ -414,7 +414,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $nb = count($apps);
         if ($nb > 0) {
             if ($item->getType() == "PluginWebapplicationsEntity") {
-                echo _n("Entity list", "Entities list", $nb, 'webapplications');
+                echo _n('Entity list', 'Entities list', $nb, 'webapplications');
             } elseif ($item->getType() == "PluginWebapplicationsProcess") {
                 echo _n("Process list", "Processes list", $nb, 'webapplications');
             } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
