@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-12 14:03+0000\n"
+"POT-Creation-Date: 2024-10-12 14:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: inc/stream.class.php:205 templates/webapplication_stream_form.html.twig:37 templates/webapplication_stream_form.html.twig:42
+#: inc/stream.class.php:211 templates/webapplication_stream_form.html.twig:37 templates/webapplication_stream_form.html.twig:42
 msgid "Destination"
 msgstr ""
 
@@ -102,11 +102,11 @@ msgstr ""
 msgid "Ecosystem"
 msgstr ""
 
-#: inc/stream.class.php:216 templates/webapplication_stream_form.html.twig:57
+#: inc/stream.class.php:222 templates/webapplication_stream_form.html.twig:57
 msgid "Encryption"
 msgstr ""
 
-#: inc/stream.class.php:223 templates/webapplication_stream_form.html.twig:63
+#: inc/stream.class.php:229 templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr ""
 msgid "Physical Infrastructure"
 msgstr ""
 
-#: inc/stream.class.php:230 templates/webapplication_stream_form.html.twig:70
+#: inc/stream.class.php:236 templates/webapplication_stream_form.html.twig:70
 msgid "Port"
 msgstr ""
 
@@ -199,7 +199,7 @@ msgstr ""
 msgid "Project team"
 msgstr ""
 
-#: inc/stream.class.php:237 templates/webapplication_stream_form.html.twig:77
+#: inc/stream.class.php:243 templates/webapplication_stream_form.html.twig:77
 msgid "Protocol"
 msgstr ""
 
@@ -222,7 +222,7 @@ msgstr ""
 msgid "Security Needs"
 msgstr ""
 
-#: inc/stream.class.php:194 templates/webapplication_stream_form.html.twig:16 templates/webapplication_stream_form.html.twig:21
+#: inc/stream.class.php:200 templates/webapplication_stream_form.html.twig:16 templates/webapplication_stream_form.html.twig:21
 msgid "Source"
 msgstr ""
 
@@ -236,7 +236,7 @@ msgstr[1] ""
 msgid "Summary"
 msgstr ""
 
-#: inc/appliance.class.php:234
+#: inc/appliance.class.php:232
 #: templates/webapplication_appliance_form.html.twig:211
 msgid "Support"
 msgstr ""
