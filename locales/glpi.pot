@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-12 10:40+0000\n"
+"POT-Creation-Date: 2024-10-12 11:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:400 hook.php:473 inc/process.class.php:165
+#: hook.php:400 hook.php:473 inc/process.class.php:178
 #: templates/webapplication_process_form.html.twig:27
 #: templates/webapplication_appliance_form.html.twig:115
 #: templates/webapplication_database_form.html.twig:32
@@ -79,7 +79,7 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:418 hook.php:489 inc/process.class.php:179
+#: hook.php:418 hook.php:489 inc/process.class.php:192
 #: templates/webapplication_process_form.html.twig:60
 #: templates/webapplication_appliance_form.html.twig:147
 #: templates/webapplication_database_form.html.twig:62
@@ -100,7 +100,7 @@ msgstr[1] ""
 msgid "Data migration"
 msgstr ""
 
-#: inc/stream.class.php:189 templates/webapplication_stream_form.html.twig:37 templates/webapplication_stream_form.html.twig:42
+#: inc/stream.class.php:205 templates/webapplication_stream_form.html.twig:37 templates/webapplication_stream_form.html.twig:42
 msgid "Destination"
 msgstr ""
 
@@ -108,11 +108,11 @@ msgstr ""
 msgid "Ecosystem"
 msgstr ""
 
-#: inc/stream.class.php:197 templates/webapplication_stream_form.html.twig:57
+#: inc/stream.class.php:216 templates/webapplication_stream_form.html.twig:57
 msgid "Encryption"
 msgstr ""
 
-#: inc/stream.class.php:204 templates/webapplication_stream_form.html.twig:63
+#: inc/stream.class.php:223 templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr[1] ""
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:409 hook.php:481 inc/process.class.php:172
+#: hook.php:409 hook.php:481 inc/process.class.php:185
 #: templates/webapplication_process_form.html.twig:44
 #: templates/webapplication_appliance_form.html.twig:131
 #: templates/webapplication_database_form.html.twig:48
@@ -166,7 +166,7 @@ msgstr ""
 msgid "Number of users"
 msgstr ""
 
-#: inc/entity.class.php:145 inc/process.class.php:157
+#: inc/entity.class.php:158 inc/process.class.php:170
 #: templates/webapplication_entity_form.html.twig:13
 #: templates/webapplication_process_form.html.twig:12
 msgid "Owner"
@@ -180,7 +180,7 @@ msgstr ""
 msgid "Physical Infrastructure"
 msgstr ""
 
-#: inc/stream.class.php:211 templates/webapplication_stream_form.html.twig:70
+#: inc/stream.class.php:230 templates/webapplication_stream_form.html.twig:70
 msgid "Port"
 msgstr ""
 
@@ -205,7 +205,7 @@ msgstr ""
 msgid "Project team"
 msgstr ""
 
-#: inc/stream.class.php:218 templates/webapplication_stream_form.html.twig:77
+#: inc/stream.class.php:237 templates/webapplication_stream_form.html.twig:77
 msgid "Protocol"
 msgstr ""
 
@@ -214,11 +214,11 @@ msgstr ""
 msgid "Referent editor"
 msgstr ""
 
-#: inc/entity.class.php:163 templates/webapplication_entity_form.html.twig:37
+#: inc/entity.class.php:176 templates/webapplication_entity_form.html.twig:37
 msgid "Relation nature"
 msgstr ""
 
-#: inc/entity.class.php:155 templates/webapplication_entity_form.html.twig:25
+#: inc/entity.class.php:168 templates/webapplication_entity_form.html.twig:25
 msgid "Security Contact"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "Security Needs"
 msgstr ""
 
-#: inc/stream.class.php:181 templates/webapplication_stream_form.html.twig:16 templates/webapplication_stream_form.html.twig:21
+#: inc/stream.class.php:194 templates/webapplication_stream_form.html.twig:16 templates/webapplication_stream_form.html.twig:21
 msgid "Source"
 msgstr ""
 
@@ -251,7 +251,7 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: hook.php:427 hook.php:497 inc/process.class.php:186
+#: hook.php:427 hook.php:497 inc/process.class.php:199
 #: templates/webapplication_process_form.html.twig:77
 #: templates/webapplication_appliance_form.html.twig:164
 #: templates/webapplication_database_form.html.twig:77
