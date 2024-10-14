@@ -66,30 +66,30 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
     /**
      * @param $params
      */
-    public static function addFields($params)
-    {
-        $item = $params['item'];
-        $webapp_database = new self();
-        if ($item->getType() == 'DatabaseInstance') {
-            if ($item->getID()) {
-                $webapp_database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
-            } else {
-                $webapp_database->getEmpty();
-            }
-
-            $options = [];
-
-            if (isset($params["options"]["appliances_id"])) {
-                $options = ['appliances_id' => $params["options"]["appliances_id"]];
-            }
-
-            TemplateRenderer::getInstance()->display('@webapplications/webapplication_database_form.html.twig', [
-                'item' => $webapp_database,
-                'params' => $options,
-            ]);
-        }
-        return true;
-    }
+//    public static function addFields($params)
+//    {
+//        $item = $params['item'];
+//        $webapp_database = new self();
+//        if ($item->getType() == 'DatabaseInstance') {
+//            if ($item->getID()) {
+//                $webapp_database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
+//            } else {
+//                $webapp_database->getEmpty();
+//            }
+//
+//            $options = [];
+//
+//            if (isset($params["options"]["appliances_id"])) {
+//                $options = ['appliances_id' => $params["options"]["appliances_id"]];
+//            }
+//
+//            TemplateRenderer::getInstance()->display('@webapplications/webapplication_database_form.html.twig', [
+//                'item' => $webapp_database,
+//                'params' => $options,
+//            ]);
+//        }
+//        return true;
+//    }
 
     public function showForm($ID, $options = [])
     {

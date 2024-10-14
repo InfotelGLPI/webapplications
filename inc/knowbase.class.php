@@ -44,6 +44,10 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
         return __('Knowledge base');
     }
 
+    public static function getIcon()
+    {
+        return "ti ti-lifebuoy";
+    }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
@@ -69,18 +73,19 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
     {
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $item = new Appliance();
+        $item->getFromDB($ApplianceId);
 
-        echo "<div class='card-body'>";
+        PluginWebapplicationsDashboard::showHeaderDashboard($item);
 
         echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . __(
                 'Knowledge base'
             );
         echo "</h2>";
 
-        $item = new Appliance();
-        $item->getFromDB($ApplianceId);
-        $withtemplate = 0;
+        echo "<div class='card-body'>";
 
+        $withtemplate = 0;
         KnowbaseItem_Item::showForItem($item, $withtemplate);
 
         echo "</div>";

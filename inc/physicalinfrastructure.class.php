@@ -44,6 +44,10 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
         return __('Physical Infrastructure', 'webapplications');
     }
 
+    public static function getIcon()
+    {
+        return "ti ti-server";
+    }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {

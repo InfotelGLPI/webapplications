@@ -191,18 +191,16 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         echo "<td>";
         if (count($docuItems) > 0) {
-            echo "<div>";
+            echo "<div class='list-group'>";
             echo _n('Associated document', 'Associated documents', count($docuItems), 'webapplications');
 
-            echo "<br><select name='documents' id='list' Size='3' onclick=\"window.open(this.value, '_blank');\" style='max-width: 400px'>";
             foreach ($docuItems as $docuItem) {
                 $docuDBTM->getFromDB($docuItem['documents_id']);
                 $name = $docuDBTM->getName();
                 $open = $CFG_GLPI["root_doc"] . "/front/document.send.php";
                 $open .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
-                echo "<option value='$open'>$name</option>";
+                echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
             }
-            echo "</select>";
 
             echo "</div>";
         } else {
@@ -253,7 +251,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<h3 class='card-title d-flex align-items-center ps-4'>";
 
         echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
-        echo "<i class='ti ti-versions fa-2x'></i>";
+        $icon = $appliance->getIcon();
+        echo "<i class='" . $icon . " fa-2x'></i>";
         echo "</div>";
 
         echo "<h1 style='margin: auto'>";
@@ -299,6 +298,10 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . $title;
 
         if ($item != false && $id > 0) {
+            echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
+            echo "<i class='" . $item->getIcon() . " fa-2x'></i>";
+            echo "</div>";
+
             if ($type == "add") {
                 $linkApp = $item::getFormURL();
                 $title = _sx('button', 'Add');
@@ -432,26 +435,24 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         echo "</label>";
 
-        echo "<div class='col-xxl-7 field-container'>";
+        echo "<div class='col-xxl-7 field-container list-group'>";
         if (!empty($apps)) {
-            echo "<select name='objects' id='list' Size='3' ondblclick='location = this.value;'>";
             foreach ($apps as $app) {
                 if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
                     $itemDBTM = new $app['itemtype'];
                     if ($itemDBTM->getFromDB($app['items_id'])) {
                         $name = $itemDBTM->getName();
                         $link = $itemDBTM::getFormURLWithID($app['items_id']);
-                        echo "<option value='$link'>$name</option>";
+                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name</a>";
                     }
                 } else {
                     if ($obj->getFromDB($app['items_id'])) {
                         $name = $obj->getName();
                         $link = $item::getFormURLWithID($app['items_id']);
-                        echo "<option value='$link'>$name</option>";
+                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name</a>";
                     }
                 }
             }
-            echo "</select>";
         }
         echo "</div>";
         echo "</div>";
@@ -628,7 +629,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                         ]
                     );
                 } elseif ($item->getType() == "PluginWebapplicationsStream") {
-
                     $linkReceiver = __('All');
                     $receiverType = $field['receiver_type'];
                     $receiverid = $field['receiver'];

@@ -44,6 +44,11 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
         return _n('Logical infrastructure', 'Logical infrastructure', $nb,'webapplications');
     }
 
+    public static function getIcon()
+    {
+        return "ti ti-lifebuoy";
+    }
+
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
