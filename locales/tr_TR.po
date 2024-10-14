@@ -315,7 +315,7 @@ msgstr "CISO onayı"
 
 #: hook.php:382 templates/webapplication_appliance_form.html.twig:194
 msgid "Validation of the request by the referring Department"
-msgstr "Yönlendiren bölüm tarafından isteğin doğrulanması"
+msgstr "Yönlendiren bölüm tarafından isteğin onaylanması"
 
 #: inc/appliance.class.php:44 inc/profile.class.php:190
 #: inc/webapplication.class.php:49
