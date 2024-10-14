@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-12 14:48+0000\n"
+"POT-Creation-Date: 2024-10-14 06:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -138,7 +138,7 @@ msgid "Link with core purge"
 msgstr ""
 
 #: inc/logicalinfrastructure.class.php:44
-#: inc/logicalinfrastructure.class.php:151
+#: inc/logicalinfrastructure.class.php:156
 msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] ""
@@ -152,7 +152,7 @@ msgstr ""
 msgid "Migration was successful"
 msgstr ""
 
-#: inc/dashboard.class.php:209
+#: inc/dashboard.class.php:207
 msgid "No associated documents"
 msgstr ""
 
@@ -232,7 +232,7 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:218
+#: inc/dashboard.class.php:216
 msgid "Summary"
 msgstr ""
 
