@@ -229,9 +229,9 @@ msgstr[2] "Processus de l'entité"
 #: inc/dashboard.class.php:542
 msgid "Process list"
 msgid_plural "Processes list"
-msgstr[0] "Liste des matériels"
-msgstr[1] "Liste des matériels"
-msgstr[2] "Liste des matériels"
+msgstr[0] "Liste des processus"
+msgstr[1] "Liste des processus"
+msgstr[2] "Liste des processus"
 
 #: inc/dashboard.class.php:205
 msgid "Project leader"
