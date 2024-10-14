@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-12 14:03+0000\n"
+"POT-Creation-Date: 2024-10-14 09:05+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2024\n"
 "Language-Team: French (France) (https://app.transifex.com/infotelGLPI/teams/12376/fr_FR/)\n"
@@ -49,7 +49,7 @@ msgstr "Ajouter une entité"
 msgid "All users"
 msgstr "Tous les utilisateurs"
 
-#: setup.php:128 inc/dashboard.class.php:45 inc/profile.class.php:195
+#: setup.php:128 inc/dashboard.class.php:88 inc/profile.class.php:195
 msgid "Appliance dashboard"
 msgstr "Dashboard applicatif"
 
@@ -57,7 +57,7 @@ msgstr "Dashboard applicatif"
 msgid "Are you sure you want to do core migration ?"
 msgstr "Êtes-vous sûr de vouloir effectuer une migration de base ?"
 
-#: inc/dashboard.class.php:195
+#: inc/dashboard.class.php:238
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] "Document associé"
@@ -98,7 +98,14 @@ msgstr "Migration dans le coeur"
 msgid "Data migration"
 msgstr "Migration des données"
 
-#: inc/stream.class.php:205 templates/webapplication_stream_form.html.twig:37
+#: inc/dashboard.class.php:546
+msgid "Database list"
+msgid_plural "Databases list"
+msgstr[0] "Liste des bases de données"
+msgstr[1] "Liste des bases de données"
+msgstr[2] "Liste des bases de données"
+
+#: inc/stream.class.php:211 templates/webapplication_stream_form.html.twig:37
 #: templates/webapplication_stream_form.html.twig:42
 msgid "Destination"
 msgstr "Destination"
@@ -107,13 +114,20 @@ msgstr "Destination"
 msgid "Ecosystem"
 msgstr "Ecosystème"
 
-#: inc/stream.class.php:216 templates/webapplication_stream_form.html.twig:57
+#: inc/stream.class.php:222 templates/webapplication_stream_form.html.twig:57
 msgid "Encryption"
 msgstr "Chiffrement"
 
-#: inc/stream.class.php:223 templates/webapplication_stream_form.html.twig:63
+#: inc/stream.class.php:229 templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr "Type de chiffrement"
+
+#: inc/dashboard.class.php:540
+msgid "Entity list"
+msgid_plural "Entities list"
+msgstr[0] "Liste des entités"
+msgstr[1] "Liste des entités"
+msgstr[2] "Liste des entités"
 
 #: inc/webapplicationexternalexposition.class.php:49
 msgid "External exposition"
@@ -133,6 +147,13 @@ msgstr "Version installée"
 msgid "Integrity"
 msgstr "Intégrité"
 
+#: inc/dashboard.class.php:544
+msgid "Item list"
+msgid_plural "Items list"
+msgstr[0] "Liste des matériels"
+msgstr[1] "Liste des matériels"
+msgstr[2] "Liste des matériels"
+
 #: inc/webapplicationtechnic.class.php:49
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
@@ -145,7 +166,7 @@ msgid "Link with core purge"
 msgstr "Purge des liens avec le coeur"
 
 #: inc/logicalinfrastructure.class.php:44
-#: inc/logicalinfrastructure.class.php:151
+#: inc/logicalinfrastructure.class.php:156
 msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] "Infrastructure logique"
@@ -160,9 +181,13 @@ msgstr "Email du support"
 msgid "Migration was successful"
 msgstr "La migration a réussi"
 
-#: inc/dashboard.class.php:209
+#: inc/dashboard.class.php:250
 msgid "No associated documents"
 msgstr "Pas de documents associées"
+
+#: inc/dashboard.class.php:558
+msgid "No associated objects"
+msgstr "Pas d'objets associés"
 
 #: templates/webapplication_appliance_form.html.twig:77
 msgid "Number of users"
@@ -182,7 +207,7 @@ msgstr "Support téléphonique"
 msgid "Physical Infrastructure"
 msgstr "Infrastructure physique"
 
-#: inc/stream.class.php:230 templates/webapplication_stream_form.html.twig:70
+#: inc/stream.class.php:236 templates/webapplication_stream_form.html.twig:70
 msgid "Port"
 msgstr "Port"
 
@@ -201,15 +226,22 @@ msgstr[0] "Processus de l'entité"
 msgstr[1] "Processus de l'entité"
 msgstr[2] "Processus de l'entité"
 
-#: inc/dashboard.class.php:162
+#: inc/dashboard.class.php:542
+msgid "Process list"
+msgid_plural "Processes list"
+msgstr[0] "Liste des matériels"
+msgstr[1] "Liste des matériels"
+msgstr[2] "Liste des matériels"
+
+#: inc/dashboard.class.php:205
 msgid "Project leader"
 msgstr "Chef de projet"
 
-#: inc/dashboard.class.php:177
+#: inc/dashboard.class.php:220
 msgid "Project team"
 msgstr "Equipe du projet"
 
-#: inc/stream.class.php:237 templates/webapplication_stream_form.html.twig:77
+#: inc/stream.class.php:243 templates/webapplication_stream_form.html.twig:77
 msgid "Protocol"
 msgstr "Protocole"
 
@@ -232,7 +264,7 @@ msgstr "Contact de sécurité"
 msgid "Security Needs"
 msgstr "Besoins de sécurité"
 
-#: inc/stream.class.php:194 templates/webapplication_stream_form.html.twig:16
+#: inc/stream.class.php:200 templates/webapplication_stream_form.html.twig:16
 #: templates/webapplication_stream_form.html.twig:21
 msgid "Source"
 msgstr "Source"
@@ -244,11 +276,18 @@ msgstr[0] "Flux"
 msgstr[1] "Flux"
 msgstr[2] "Flux"
 
-#: inc/dashboard.class.php:218
+#: inc/dashboard.class.php:548
+msgid "Stream list"
+msgid_plural "Streams list"
+msgstr[0] "Liste des flux"
+msgstr[1] "Liste des flux"
+msgstr[2] "Liste des flux"
+
+#: inc/dashboard.class.php:259
 msgid "Summary"
 msgstr "Résumé"
 
-#: inc/appliance.class.php:234
+#: inc/appliance.class.php:232
 #: templates/webapplication_appliance_form.html.twig:211
 msgid "Support"
 msgstr "Support"
