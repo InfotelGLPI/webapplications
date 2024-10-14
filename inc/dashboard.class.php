@@ -414,28 +414,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $obj = new $item();
 
         echo "<div class='row flex-row'>";
-        echo "<div class='form-field row col-12 col-sm-12  mb-2'>";
+        echo "<div class='form-field row col-12 col-sm-12 mb-2'>";
 
-        echo "<label class='col-form-label col-xxl-5 text-xxl-end'>";
-
-        $nb = count($apps);
-        if ($nb > 0) {
-            if ($item->getType() == "PluginWebapplicationsEntity") {
-                echo _n('Entity list', 'Entities list', $nb, 'webapplications');
-            } elseif ($item->getType() == "PluginWebapplicationsProcess") {
-                echo _n("Process list", "Processes list", $nb, 'webapplications');
-            } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
-                echo _n("Item list", "Items list", $nb, 'webapplications');
-            } elseif ($item->getType() == "DatabaseInstance") {
-                echo _n("Database list", "Databases list", $nb, 'webapplications');
-            } elseif ($item->getType() == "PluginWebapplicationsStream") {
-                echo _n("Stream list", "Streams list", $nb, 'webapplications');
-            }
-        }
-
-        echo "</label>";
-
-        echo "<div class='col-xxl-7 field-container list-group'>";
+        echo "<div class='col-xxl-12 field-container list-group'>";
         if (!empty($apps)) {
             foreach ($apps as $app) {
                 if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
