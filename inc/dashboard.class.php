@@ -40,6 +40,49 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 {
     public static $rightname = "plugin_webapplications_dashboards";
 
+    public function defineTabs($options = [])
+    {
+        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
+        echo Html::script(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.js");
+        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
+
+        echo Html::scriptBlock(
+            "function accordion(classname) {
+             if(classname == undefined){
+                 classname  = 'accordion';
+             }
+             jQuery(document).ready(function () {
+                 $("."+classname).accordion({
+                     collapsible: true,
+                     heightStyle: 'content',
+                     active: false
+                 });
+             });
+         };"
+        );
+
+        $ong = [];
+        //add main tab for current object
+        $this->addDefaultFormTab($ong);
+        $this->addStandardTab('PluginWebapplicationsEntity', $ong, $options);// Vue Ecosystème
+        $this->addStandardTab('PluginWebapplicationsProcess', $ong, $options);//Vue Metier
+        $this->addStandardTab(
+            'PluginWebapplicationsPhysicalInfrastructure',
+            $ong,
+            $options
+        );//Vue Infra physiques
+        $this->addStandardTab(
+            'PluginWebapplicationsLogicalInfrastructure',
+            $ong,
+            $options
+        );//Vue Infra physiques
+        $this->addStandardTab('PluginWebapplicationsDatabaseInstance', $ong, $options);//Vue Base de données
+        $this->addStandardTab('PluginWebapplicationsStream', $ong, $options);//Vue Flux
+        $this->addStandardTab('PluginWebapplicationsKnowbase', $ong, $options);
+
+        return $ong;
+    }
+
     public static function getTypeName($nb = 0)
     {
         return __('Appliance dashboard', 'webapplications');
@@ -342,51 +385,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "</h2>";
     }
 
-    public function defineTabs($options = [])
-    {
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
-        echo Html::script(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.js");
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
-
-        echo $JS = <<<JAVASCRIPT
-         <script type='text/javascript'>
-         function accordion(classname) {
-             if(classname == undefined){
-                 classname  = 'accordion';
-             }
-             jQuery(document).ready(function () {
-                 $("."+classname).accordion({
-                     collapsible: true,
-                     heightStyle: "content",
-                     active: false
-                 });
-             });
-         };
-         </script>
-        JAVASCRIPT;
-
-        $ong = [];
-        //add main tab for current object
-        $this->addDefaultFormTab($ong);
-        $this->addStandardTab('PluginWebapplicationsEntity', $ong, $options);// Vue Ecosystème
-        $this->addStandardTab('PluginWebapplicationsProcess', $ong, $options);//Vue Metier
-        $this->addStandardTab(
-            'PluginWebapplicationsPhysicalInfrastructure',
-            $ong,
-            $options
-        );//Vue Infra physiques
-        $this->addStandardTab(
-            'PluginWebapplicationsLogicalInfrastructure',
-            $ong,
-            $options
-        );//Vue Infra physiques
-        $this->addStandardTab('PluginWebapplicationsDatabaseInstance', $ong, $options);//Vue Base de données
-        $this->addStandardTab('PluginWebapplicationsStream', $ong, $options);//Vue Flux
-        $this->addStandardTab('PluginWebapplicationsKnowbase', $ong, $options);
-
-        return $ong;
-    }
-
 
     public static function showFromDashboard($appliance, $item)
     {
@@ -686,4 +684,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         echo "<script>accordion();</script>";
     }
+
+
 }
