@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-14 07:35+0000\n"
+"POT-Creation-Date: 2024-10-14 09:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,7 +47,7 @@ msgstr ""
 msgid "All users"
 msgstr ""
 
-#: setup.php:128 inc/dashboard.class.php:45 inc/profile.class.php:195
+#: setup.php:128 inc/dashboard.class.php:88 inc/profile.class.php:195
 msgid "Appliance dashboard"
 msgstr ""
 
@@ -55,7 +55,7 @@ msgstr ""
 msgid "Are you sure you want to do core migration ?"
 msgstr ""
 
-#: inc/dashboard.class.php:195
+#: inc/dashboard.class.php:238
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] ""
@@ -94,6 +94,12 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
+#: inc/dashboard.class.php:546
+msgid "Database list"
+msgid_plural "Databases list"
+msgstr[0] ""
+msgstr[1] ""
+
 #: inc/stream.class.php:211 templates/webapplication_stream_form.html.twig:37 templates/webapplication_stream_form.html.twig:42
 msgid "Destination"
 msgstr ""
@@ -109,6 +115,12 @@ msgstr ""
 #: inc/stream.class.php:229 templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr ""
+
+#: inc/dashboard.class.php:540
+msgid "Entity list"
+msgid_plural "Entities list"
+msgstr[0] ""
+msgstr[1] ""
 
 #: inc/webapplicationexternalexposition.class.php:49
 msgid "External exposition"
@@ -126,6 +138,12 @@ msgstr ""
 #: templates/webapplication_database_form.html.twig:48
 msgid "Integrity"
 msgstr ""
+
+#: inc/dashboard.class.php:544
+msgid "Item list"
+msgid_plural "Items list"
+msgstr[0] ""
+msgstr[1] ""
 
 #: inc/webapplicationtechnic.class.php:49
 msgid "Language of treatment"
@@ -152,8 +170,12 @@ msgstr ""
 msgid "Migration was successful"
 msgstr ""
 
-#: inc/dashboard.class.php:207
+#: inc/dashboard.class.php:250
 msgid "No associated documents"
+msgstr ""
+
+#: inc/dashboard.class.php:558
+msgid "No associated objects"
 msgstr ""
 
 #: templates/webapplication_appliance_form.html.twig:77
@@ -191,11 +213,17 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:162
+#: inc/dashboard.class.php:542
+msgid "Process list"
+msgid_plural "Processes list"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/dashboard.class.php:205
 msgid "Project leader"
 msgstr ""
 
-#: inc/dashboard.class.php:177
+#: inc/dashboard.class.php:220
 msgid "Project team"
 msgstr ""
 
@@ -232,7 +260,13 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:216
+#: inc/dashboard.class.php:548
+msgid "Stream list"
+msgid_plural "Streams list"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/dashboard.class.php:259
 msgid "Summary"
 msgstr ""
 
