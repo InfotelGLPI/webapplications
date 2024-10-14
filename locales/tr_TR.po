@@ -321,5 +321,5 @@ msgstr "Yönlendiren bölüm tarafından isteğin doğrulanması"
 #: inc/webapplication.class.php:49
 msgid "Web application"
 msgid_plural "Web applications"
-msgstr[0] "Web uygulaması"
-msgstr[1] "Web uygulamaları"
+msgstr[0] "İnternet uygulaması"
+msgstr[1] "İnternet uygulamaları"
