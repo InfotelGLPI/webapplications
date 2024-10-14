@@ -303,7 +303,7 @@ msgstr "Adres"
 
 #: templates/webapplication_appliance_form.html.twig:185
 msgid "Validation"
-msgstr "Doğrulama"
+msgstr "Onay"
 
 #: hook.php:391
 msgid "Validation by CIO"
