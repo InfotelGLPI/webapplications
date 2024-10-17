@@ -1,7 +1,10 @@
 {#{% extends "generic_show_form.html.twig" %}#}
 {% import 'components/form/fields_macros.html.twig' as fields %}
 {% set params  = params ?? [] %}
-{% set field_options = field_options ?? {} %}
+{% set field_options = {
+    'full_width': true,
+    'add_field_class': (is_expanded ? 'col-sm-12' : ''),
+} %}
 
 {% block more_fields %}
 
@@ -9,19 +12,28 @@
     {{ fields.htmlField(
         'editor',
         editor_item.getLink(),
-        __("Referent editor", 'webapplications')
+        __("Referent editor", 'webapplications'),
+        field_options|merge({
+            'add_field_class': 'col-sm-12',
+        })
     ) }}
 
     {{ fields.htmlField(
         "email",
         params['editoremail'],
-        __("Mail support", 'webapplications')
+        __("Mail support", 'webapplications'),
+        field_options|merge({
+            'add_field_class': 'col-sm-12',
+        })
     ) }}
 
     {{ fields.htmlField(
         "phonenumber",
         params['editorephonenumber'],
-        __("Phone support", 'webapplications')
+        __("Phone support", 'webapplications'),
+        field_options|merge({
+            'add_field_class': 'col-sm-12',
+        })
     ) }}
 
 {% endblock %}

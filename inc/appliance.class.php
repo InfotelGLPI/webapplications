@@ -219,7 +219,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
 
     public static function showSupportPartFromDashboard($appliance)
     {
-        echo "<div class='card-body'>";
+        echo "<div class='card-body child33'>";
 
         $ApplianceId = $appliance->getField('id');
 
@@ -259,6 +259,41 @@ class PluginWebapplicationsAppliance extends CommonDBTM
             'item' => $appliance,
             'params' => $options,
         ]);
+
+        echo "</div>";
+    }
+
+    public static function showDocumentsFromDashboard($appliance)
+    {
+        global $CFG_GLPI;
+
+        echo "<div class='card-body child33'>";
+
+        $ApplianceId = $appliance->getField('id');
+
+        $documentItemDBTM = new Document_Item();
+        $docuItems = $documentItemDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
+
+        $title = _n('Associated document', 'Associated documents', count($docuItems), 'webapplications');
+        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId);
+
+        $docuDBTM = new Document();
+
+        if (count($docuItems) > 0) {
+            echo "<div class='list-group' style='margin-top: 10px;'>";
+            foreach ($docuItems as $docuItem) {
+                $docuDBTM->getFromDB($docuItem['documents_id']);
+                $name = $docuDBTM->getName();
+                $open = $CFG_GLPI["root_doc"] . "/front/document.send.php";
+                $open .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
+                echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
+            }
+
+            echo "</div>";
+        } else {
+            echo __("No associated documents", 'webapplications');
+        }
+
 
         echo "</div>";
     }

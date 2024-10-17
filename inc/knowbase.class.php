@@ -76,7 +76,7 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
         $item = new Appliance();
         $item->getFromDB($ApplianceId);
 
-        PluginWebapplicationsDashboard::showHeaderDashboard($item);
+        PluginWebapplicationsDashboard::showHeaderDashboard($ApplianceId);
 
         echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . __(
                 'Knowledge base'
@@ -87,6 +87,91 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
 
         $withtemplate = 0;
         KnowbaseItem_Item::showForItem($item, $withtemplate);
+
+        echo "</div>";
+    }
+
+    private static function getCountForItem(CommonDBTM $item): int
+    {
+        if ($item->getType() == KnowbaseItem::getType()) {
+            $criteria['WHERE'] = [
+                'glpi_knowbaseitems_items.knowbaseitems_id' => $item->getID(),
+            ];
+        } else {
+            $criteria = self::getVisibilityCriteriaForItem($item);
+            $criteria['WHERE'][] = [
+                'glpi_knowbaseitems_items.itemtype' => $item::getType(),
+                'glpi_knowbaseitems_items.items_id' => $item->getId(),
+            ];
+        }
+
+        return countElementsInTable('glpi_knowbaseitems_items', $criteria);
+    }
+
+    /**
+     * Return visibility criteria that must be used to find KB items related to given item.
+     */
+    private static function getVisibilityCriteriaForItem(CommonDBTM $item): array
+    {
+        $criteria = array_merge_recursive(
+            [
+                'INNER JOIN' => [
+                    'glpi_knowbaseitems' => [
+                        'ON' => [
+                            'glpi_knowbaseitems_items' => 'knowbaseitems_id',
+                            'glpi_knowbaseitems'       => 'id'
+                        ]
+                    ]
+                ]
+            ],
+            KnowbaseItem::getVisibilityCriteria()
+        );
+
+        $entity_criteria = getEntitiesRestrictCriteria($item->getTable(), '', '', $item->maybeRecursive());
+        if (!empty($entity_criteria)) {
+            $criteria['INNER JOIN'][$item->getTable()] = [
+                'ON' => [
+                    'glpi_knowbaseitems_items' => 'items_id',
+                    $item->getTable()          => 'id'
+                ]
+            ];
+            $criteria['WHERE'][] = $entity_criteria;
+        }
+
+        return $criteria;
+    }
+
+    public static function showFromDashboard($appliance)
+    {
+        global $CFG_GLPI;
+
+        echo "<div class='card-body child33'>";
+
+        $ApplianceId = $appliance->getField('id');
+
+        $title = self::getTypeName();
+        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId);
+
+        $number = self::getCountForItem($appliance);
+
+        $know_item = new KnowbaseItem();
+
+        if ($number > 0) {
+
+            echo "<div class='list-group'  style='margin-top: 10px;'>";
+            $start = 0;
+            foreach (KnowbaseItem_Item::getItems($appliance, $start, $_SESSION['glpilist_limit']) as $data) {
+                $know_item->getFromDB($data['knowbaseitems_id']);
+                $name = $know_item->getName();
+                $open = $CFG_GLPI["root_doc"] . "/front/knowbaseitem.form.php";
+                $open .= (strpos($open, '?') ? '&' : '?') . 'id=' . $data['knowbaseitems_id'];
+                echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
+            }
+
+            echo "</div>";
+
+        }
+
 
         echo "</div>";
     }

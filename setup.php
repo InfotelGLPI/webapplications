@@ -50,7 +50,7 @@ function plugin_init_webapplications()
 
     Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
     if (Session::getLoginUserID()) {
-        if (Session::haveRight("plugin_webapplications", READ)) {
+        if (Session::haveRight("plugin_webapplications_appliances", READ)) {
             $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = array(
                 'PluginWebapplicationsDashboard',
                 'PluginWebapplicationsEntity',

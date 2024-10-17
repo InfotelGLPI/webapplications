@@ -31,7 +31,7 @@ include('../../../inc/includes.php');
 
 Html::header(PluginWebapplicationsWebapplication::getTypeName(2), "", "appliancedashboard", "");
 
-Session::checkRight("plugin_webapplications", READ);
+Session::checkRight("plugin_webapplications_appliances", READ);
 
 if (!isset($_POST['do_migration'])) {
     $_POST['do_migration'] = "0";

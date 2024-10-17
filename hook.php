@@ -281,7 +281,7 @@ function plugin_webapplications_getAddSearchOptions($itemtype)
     $sopt = [];
 
     if ($itemtype == "Appliance") {
-        if (Session::haveRight("plugin_webapplications", READ)) {
+        if (Session::haveRight("plugin_webapplications_appliances", READ)) {
             $sopt[8102]['table']         = 'glpi_plugin_webapplications_appliances';
             $sopt[8102]['field']         = 'address';
             $sopt[8102]['name']          = __('URL');
@@ -450,7 +450,7 @@ function plugin_webapplications_getAddSearchOptions($itemtype)
         }
     }
     if ($itemtype == "DatabaseInstance") {
-        if (Session::haveRight("plugin_webapplications", READ)) {
+        if (Session::haveRight("plugin_webapplications_appliances", READ)) {
             $sopt[8116]['table']         = 'glpi_plugin_webapplications_webapplicationexternalexpositions';
             $sopt[8116]['field']         = 'name';
             $sopt[8116]['datatype']      = 'dropdown';

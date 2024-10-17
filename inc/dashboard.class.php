@@ -42,25 +42,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
     public function defineTabs($options = [])
     {
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
-        echo Html::script(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.js");
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
-
-        echo Html::scriptBlock(
-            "function accordion(classname) {
-             if(classname == undefined){
-                 classname  = 'accordion';
-             }
-             jQuery(document).ready(function () {
-                 $("."+classname).accordion({
-                     collapsible: true,
-                     heightStyle: 'content',
-                     active: false
-                 });
-             });
-         };"
-        );
-
         $ong = [];
         //add main tab for current object
         $this->addDefaultFormTab($ong);
@@ -124,17 +105,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
     {
         global $CFG_GLPI;
 
-        echo "<div align='center'>
-        <table class='tab_cadre'>";
-        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
-
-        echo "<td >";
-
+        echo "<div class='center' style='margin-top: 10px'>";
         $rand = Appliance::dropdown(['name' => 'applianceDropdown', 'value' => $id]);
-
-        echo "</td>";
-        echo "</tr>";
-        echo "</table></div>";
+        echo "</div>";
 
 
         echo "<div id='lists-dashboard'>";
@@ -142,7 +115,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             $dashboard = new self();
             $dashboard->display(['id' => 1, 'appliances_id' => $id]);
         }
-
         echo "</div>";
 
         $array['value'] = '__VALUE__';
@@ -158,7 +130,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
     public function showForm($ID, $options = [])
     {
-        global $CFG_GLPI;
+
+        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
 
         $options['candel'] = false;
         $options['colspan'] = 1;
@@ -168,11 +141,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-        self::showHeaderDashboard($appliance);
+        self::showHeaderDashboard($ApplianceId);
 
-        echo '<div class="card-body">';
-        echo "<table class='tab_cadre_fixe'><tr>";
-
+        echo "<div style='display: flex;flex-wrap: wrap;'>";
 
         $userAdminId = $appliance->getField('users_id_tech');
         $groupAdminId = $appliance->getField('groups_id_tech');
@@ -184,8 +155,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $applianceplugin = new PluginWebapplicationsAppliance();
         $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 
-        echo "<td>";
-        echo "<div style='text-align:center;font-weight: bold'>";
+        echo "<div class='card-body child33' style='text-align:center;font-weight: bold'>";
         echo "<h2>";
         echo _n('User', 'Users', 2);
         echo "</h2>";
@@ -196,68 +166,44 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo PluginWebapplicationsAppliance::getNbUsersValue($number_users);
         echo "</h1>";
         echo "</div>";
-        echo "</td>";
 
-        if ($userAdminId > 0) {
-            echo "<td>";
-            echo "<div style='text-align:center;font-weight: bold'>";
-            echo "<h2>";
-            echo __('Project leader', 'webapplications');
-            echo "</h2>";
-            echo "<i class='fa fa-user-cog fa-3x'></i>";
-            echo "<br>";
-            echo "<h2>";
-            echo getUserName($userAdminId, 1);
-            echo "</h2>";
-            echo "</div>";
-            echo "</td>";
-        }
-
-        if ($numberAdmin > 0) {
-            echo "<td>";
-            echo "<div style='text-align:center;font-weight: bold'>";
-            echo "<h2>";
-            echo __('Project team', 'webapplications');
-            echo "</h2>";
-            echo "<i class='fa fa-users-cog fa-3x'></i>";
-            echo "<br>";
-            echo "<h1>";
-            echo $numberAdmin;
-            echo "</h1>";
-            echo "</div>";
-            echo "</td>";
-        }
-
-        $documentItemDBTM = new Document_Item();
-        $docuItems = $documentItemDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
-        $docuDBTM = new Document();
-
-        echo "<td>";
-        if (count($docuItems) > 0) {
-            echo "<div class='list-group'>";
-            echo _n('Associated document', 'Associated documents', count($docuItems), 'webapplications');
-
-            foreach ($docuItems as $docuItem) {
-                $docuDBTM->getFromDB($docuItem['documents_id']);
-                $name = $docuDBTM->getName();
-                $open = $CFG_GLPI["root_doc"] . "/front/document.send.php";
-                $open .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
-                echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
-            }
-
-            echo "</div>";
-        } else {
-            echo __("No associated documents", 'webapplications');
-        }
-
-        echo "</td></tr></table>";
+        echo "<div class='card-body child33' style='text-align:center;font-weight: bold'>";
+        echo "<h2>";
+        echo __('Project leader', 'webapplications');
+        echo "</h2>";
+        echo "<i class='fa fa-user-cog fa-3x'></i>";
+        echo "<br>";
+        echo "<h2>";
+        echo getUserName($userAdminId, 1);
+        echo "</h2>";
         echo "</div>";
+
+        echo "<div class='card-body child33' style='text-align:center;font-weight: bold'>";
+        echo "<h2>";
+        echo __('Project team', 'webapplications');
+        echo "</h2>";
+        echo "<i class='fa fa-users-cog fa-3x'></i>";
+        echo "<br>";
+        echo "<h1>";
+        echo $numberAdmin;
+        echo "</h1>";
+        echo "</div>";
+
+        echo "</div>";
+
+        echo "<div style='display: flex;flex-wrap: wrap;'>";
 
         PluginWebapplicationsAppliance::showSupportPartFromDashboard($appliance);
 
+        PluginWebapplicationsAppliance::showDocumentsFromDashboard($appliance);
+
+        PluginWebapplicationsKnowbase::showFromDashboard($appliance);
+
+        echo "</div>";
+
         echo "<div class='card-body border-0'>";
         $title = __('Summary', 'webapplications');
-        self::showTitleforDashboard($title, $ApplianceId);
+        self::showTitleforDashboard($title, $ApplianceId, $appliance, "edit", "editapp");
 
         echo "</div>";
 
@@ -288,12 +234,14 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
     //0296333734
 
-    public static function showHeaderDashboard($appliance)
+    public static function showHeaderDashboard($ApplianceId)
     {
         echo "<div class='card-header card-web-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch'>";
         echo "<h3 class='card-title d-flex align-items-center ps-4'>";
 
         echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
+        $appliance = new Appliance();
+        $appliance->getFromDB($ApplianceId);
         $icon = $appliance->getIcon();
         echo "<i class='" . $icon . " fa-2x'></i>";
         echo "</div>";
@@ -302,36 +250,10 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $linkApp = Appliance::getFormURLWithID($appliance->getID());
         $name = $appliance->getLink();
         echo "<a href='$linkApp'>" . $name . "</a>";
+        echo "</h1>";
         echo "</h3>";
 
-
-        $linkApp = PluginWebapplicationsAppliance::getFormURLWithID($appliance->getID());
-        $linkApp .= "&forcetab=main";
-
-        echo "<div style='align-self: center'>";
-        if ($appliance->canUpdate()) {
-            echo Html::submit(
-                _sx('button', 'Edit'),
-                [
-                    'name' => 'edit',
-                    'class' => 'btn btn-secondary',
-                    'icon' => 'fas fa-edit',
-                    'style' => 'float: right',
-                    'data-bs-toggle' => 'modal',
-                    'data-bs-target' => '#editApp' . $appliance->getID()
-                ]
-            );
-            echo Ajax::createIframeModalWindow(
-                'editApp' . $appliance->getID(),
-                $linkApp,
-                [
-                    'display' => false,
-                    'reloadonclose' => true
-                ]
-            );
-        }
         echo "</div>";
-        echo "</h1>";
         echo "</div>";
     }
 
@@ -390,7 +312,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
     {
         global $CFG_GLPI;
 
-        echo "<div class='card-body child'>";
+        echo "<div class='card-body child50'>";
 
         $ApplianceId = $appliance->getField('id');
 
@@ -467,12 +389,31 @@ class PluginWebapplicationsDashboard extends CommonDBTM
     {
         global $CFG_GLPI;
 
+        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
+        echo Html::script(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.js");
+        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
+
+        echo Html::scriptBlock(
+            "function accordion(classname) {
+             if(classname == undefined){
+                 classname  = 'accordion';
+             }
+             jQuery(document).ready(function () {
+                 $('.'+classname).accordion({
+                     collapsible: true,
+                     heightStyle: 'content',
+                     active: false
+                 });
+             });
+         };"
+        );
+
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);
 
-        self::showHeaderDashboard($appliance);
+        self::showHeaderDashboard($ApplianceId);
 
         $object = new $item();
 
@@ -534,6 +475,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         }
 
         $nb = count($list);
+
         if ($nb > 0) {
             echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
             if ($item->getType() == "PluginWebapplicationsEntity") {

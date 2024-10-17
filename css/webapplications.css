@@ -32,10 +32,6 @@
     padding: 15px !important;
 }
 
-.inTable {
-    padding-left: 0px !important;
-}
-
 .ui-accordion-header {
     background-color: #7d91a1;
     color: white;
@@ -81,8 +77,14 @@
     background-color: rgba(0, 0, 0, .03);
     border-bottom: 1px solid rgba(0, 0, 0, .125);
     margin-bottom: 15px;
+    min-height: 68px;
 }
 
-.child {
-    flex: 1 0 50%;
+.child50 {
+    flex: 1 0 50% !important;
+}
+
+.child33 {
+    flex: 1 0 33%;
+    border: 0 !important;
 }

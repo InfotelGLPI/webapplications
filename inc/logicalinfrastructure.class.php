@@ -150,7 +150,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
         $item = new Appliance();
         $item->getFromDB($ApplianceId);
 
-        PluginWebapplicationsDashboard::showHeaderDashboard($item);
+        PluginWebapplicationsDashboard::showHeaderDashboard($ApplianceId);
 
         echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>";
         echo _n('Logical infrastructure', 'Logical infrastructure', 1,'webapplications');
