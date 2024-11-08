@@ -46,7 +46,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
 
     public static function getIcon()
     {
-        return "ti ti-lifebuoy";
+        return "ti ti-hierarchy-2";
     }
 
 
@@ -152,8 +152,10 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
 
         PluginWebapplicationsDashboard::showHeaderDashboard($ApplianceId);
 
-        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>";
-        echo _n('Logical infrastructure', 'Logical infrastructure', 1,'webapplications');
+        $icon = "<i class='" . self::getIcon() . " fa-1x'></i>";
+
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
+        echo "&nbsp;<span style='margin-right: auto;'>"._n('Logical infrastructure', 'Logical infrastructure', 1,'webapplications')."</span>";
         echo "</h2>";
 
         $class = get_class($item);

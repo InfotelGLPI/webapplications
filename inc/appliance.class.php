@@ -275,7 +275,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
         $docuItems = $documentItemDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
 
         $title = _n('Associated document', 'Associated documents', count($docuItems), 'webapplications');
-        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId);
+        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId, $documentItemDBTM);
 
         $docuDBTM = new Document();
 

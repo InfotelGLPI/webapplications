@@ -186,4 +186,113 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
         $temp = new self();
         $temp->deleteByCriteria(['databaseinstances_id' => $item->getID()]);
     }
+
+    public static function showListObjects($list)
+    {
+        global $DB;
+
+        $object = new DatabaseInstance();
+
+        echo "<div style='display: flex;flex-wrap: wrap;'>";
+
+        foreach ($list as $field) {
+            $name = $field['name'];
+            $id = $field['id'];
+            $object->getFromDB($id);
+
+            echo "<div class='card w-25' style='margin-right: 10px;margin-top: 10px;'>";
+            echo "<div class='card-body'>";
+            echo "<div style='display: inline-block;margin: 40px;'>";
+            echo "<i class='fa-6x fas fa-database'></i>";
+            echo "</div>";
+            echo "<div style='display: inline-block;';>";
+            echo "<h5 class='card-title'>" . $name . "</h5>";
+
+            $items = $DB->request([
+                'FROM'   => Appliance_Item::getTable(),
+                'WHERE'  => [
+                    'items_id' => $id,
+                    'itemtype' => 'DatabaseInstance'
+                ]
+            ]);
+            $items = iterator_to_array($items);
+
+            foreach ($items as $row) {
+                $iterator = $DB->request([
+                    'FROM'   => Appliance_Item_Relation::getTable(),
+                    'WHERE'  => [
+                        Appliance_Item::getForeignKeyField() => $row['id']
+                    ]
+                ]);
+
+                foreach ($iterator as $row) {
+                    $envtype = $row['itemtype'];
+                    $env = new $envtype();
+                    $env->getFromDB($row['items_id']);
+                    echo "<i class='" . $env->getIcon() . "'></i>" .
+                        "&nbsp;" . $env->getLink();
+                }
+            }
+
+            echo "<p class='card-text'>";
+            echo __('Type') . " " . Dropdown::getDropdownName(
+                    "glpi_databaseinstancetypes",
+                    $object->fields['databaseinstancetypes_id']
+                );
+            echo "</p>";
+            echo "<p class='card-text'>";
+            $databases = getAllDataFromTable(
+                Database::getTable(),
+                [
+                    'WHERE' => [
+                        'databaseinstances_id' => $id,
+                    ],
+                    'ORDER' => 'name'
+                ]
+            );
+            $db = new Database();
+            foreach ($databases as $row) {
+                $db->getFromDB($row['id']);
+                if ($row['size'] > 0) {
+                    echo $db->getLink() . " - ";
+                    echo sprintf(__('%s Mio'), $row['size']);
+                    echo "</br>";
+                }
+            }
+            echo "</p>";
+
+            $link = $object::getFormURLWithID($id);
+            $link .= "&forcetab=main";
+            $rand = mt_rand();
+            echo "<span style='float: right'>";
+            if ($object->canUpdate()) {
+                echo Html::submit(
+                    _sx('button', 'Edit'),
+                    [
+                        'name' => 'edit',
+                        'class' => 'btn btn-secondary right',
+                        'icon' => 'fas fa-edit',
+                        'form' => '',
+                        'data-bs-toggle' => 'modal',
+                        'data-bs-target' => '#edit' . $id . $rand
+                    ]
+                );
+
+                echo Ajax::createIframeModalWindow(
+                    'edit' . $id . $rand,
+                    $link,
+                    [
+                        'display' => false,
+                        'reloadonclose' => true
+                    ]
+                );
+            }
+
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+            echo "</span>";
+        }
+        echo "</div>";
+    }
 }

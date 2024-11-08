@@ -143,8 +143,8 @@ CREATE TABLE `glpi_plugin_webapplications_streams`
     `receiver_type`    VARCHAR(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `encryption`       tinyint         NOT NULL                default '0',
     `encryption_type`  VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `ports`            int(5) unsigned NOT NULL,
-    `protocole`        VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `port`            int(5) unsigned NOT NULL,
+    `protocol`        VARCHAR(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY `entities_id` (`entities_id`)
 ) ENGINE = InnoDB

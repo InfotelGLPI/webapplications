@@ -78,9 +78,12 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
 
         PluginWebapplicationsDashboard::showHeaderDashboard($ApplianceId);
 
-        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . __(
+        $icon = "<i class='" . self::getIcon() . " fa-1x'></i>";
+
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
+        echo "&nbsp;<span style='margin-right: auto;'>".__(
                 'Knowledge base'
-            );
+            )."</span>";
         echo "</h2>";
 
         echo "<div class='card-body'>";
@@ -150,11 +153,13 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
         $ApplianceId = $appliance->getField('id');
 
         $title = self::getTypeName();
-        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId);
+        $know_item = new KnowbaseItem();
+
+        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId, $know_item, "");
 
         $number = self::getCountForItem($appliance);
 
-        $know_item = new KnowbaseItem();
+
 
         if ($number > 0) {
 

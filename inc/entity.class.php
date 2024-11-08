@@ -106,7 +106,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
         if (isset($input['appliances_id'])
             && !empty($input['appliances_id'])) {
             $item = new Appliance();
-            if($item->getFromDB($input['appliances_id'])) {
+            if ($item->getFromDB($input['appliances_id'])) {
                 $input['entities_id'] = $item->fields['entities_id'];
                 $input['is_recursive'] = $item->fields['is_recursive'];
             }
@@ -188,5 +188,64 @@ class PluginWebapplicationsEntity extends CommonDBTM
         $this->addStandardTab('PluginWebapplicationsProcess_Entity', $ong, $options);
         $this->addStandardTab('Appliance_Item', $ong, $options);
         return $ong;
+    }
+
+    public static function showListObjects($list)
+    {
+        $object = new self();
+
+        echo "<div class='accordion' name='list'>";
+
+        foreach ($list as $field) {
+            $name = $field['name'];
+            $id = $field['id'];
+            $object->getFromDB($id);
+
+            echo "<h3 class='accordionhead'>";
+            echo $name;
+            echo "</td>";
+            echo "</h3>";
+
+            echo "<div class='panel' id='tabsbody'>";
+            $options = [];
+            $options['canedit'] = false;
+            $options['candel'] = false;
+
+            TemplateRenderer::getInstance()->display('@webapplications/webapplication_entity_form.html.twig', [
+                'item' => $object,
+                'params' => $options,
+                'no_header' => true,
+            ]);
+            $link = $object::getFormURLWithID($id);
+            $link .= "&forcetab=main";
+            $rand = mt_rand();
+            echo "<span style='float: right'>";
+            if ($object->canUpdate()) {
+                echo Html::submit(
+                    _sx('button', 'Edit'),
+                    [
+                        'name' => 'edit',
+                        'class' => 'btn btn-secondary right',
+                        'icon' => 'fas fa-edit',
+                        'form' => '',
+                        'data-bs-toggle' => 'modal',
+                        'data-bs-target' => '#edit' . $id . $rand
+                    ]
+                );
+
+                echo Ajax::createIframeModalWindow(
+                    'edit' . $id . $rand,
+                    $link,
+                    [
+                        'display' => false,
+                        'reloadonclose' => true
+                    ]
+                );
+            }
+            echo "</span>";
+            echo "</div>";
+        }
+        echo "</div>";
+        echo "<script>accordion();</script>";
     }
 }

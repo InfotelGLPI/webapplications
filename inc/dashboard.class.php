@@ -260,12 +260,18 @@ class PluginWebapplicationsDashboard extends CommonDBTM
     public static function showTitleforDashboard($title, $id, $item = false, $type = "add", $name = "")
     {
         // <i class='fas fa-1x fa-caret-right'></i>
-        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>" . $title;
 
+        $icon = "";
         if ($item != false && $id > 0) {
-            echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
-            echo "<i class='" . $item->getIcon() . " fa-2x'></i>";
-            echo "</div>";
+            $icon = "<i class='" . $item->getIcon() . " fa-1x'></i>";
+        }
+        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
+        echo "&nbsp;<span style='margin-right: auto;'>$title</span>";
+
+        if ($item != false && $id > 0 && $name != "") {
+//            echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
+//            echo "<i class='" . $item->getIcon() . " fa-2x'></i>";
+//            echo "</div>";
 
             if ($type == "add") {
                 $linkApp = $item::getFormURL();
@@ -318,7 +324,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $title = $item->getTypeName(1);
 
-        self::showTitleforDashboard($title, $ApplianceId);
+        self::showTitleforDashboard($title, $ApplianceId, $item);
 
         $app_item = new Appliance_Item();
 
@@ -448,7 +454,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             Html::closeForm();
         } elseif ($object->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
             echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
+                PLUGIN_WEBAPPLICATIONS_WEBDIR."/front/dashboard.php"."'>";
             echo "<div align='center'><table class='tab_cadre_fixe'>";
             echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
 
@@ -503,129 +509,12 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             echo "</tbody>";
             echo "</table>";
         } else {
-            echo "<div class='accordion' name='list'>";
 
-            foreach ($list as $field) {
-                if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
-                    $itemtype = $field['itemtype'];
-                    $object = new $itemtype();
-                    $object->getFromDB($field['id']);
-                    $id = $field['id'];
-                    $name = $object->fields['name'];
-                } else {
-                    $name = $field['name'];
-                    $id = $field['id'];
-                    $object->getFromDB($id);
-                }
-                echo "<h3 class='accordionhead'>";
-                echo $name;
-                echo "</td>";
-                echo "</h3>";
-
-                echo "<div class='panel' id='tabsbody'>";
-
-                $options = [];
-                $options['canedit'] = false;
-                $options['candel'] = false;
-
-                if ($item->getType() == "PluginWebapplicationsEntity") {
-                    TemplateRenderer::getInstance()->display('@webapplications/webapplication_entity_form.html.twig', [
-                        'item' => $object,
-                        'params' => $options,
-                        'no_header' => true,
-                    ]);
-                } elseif ($item->getType() == "PluginWebapplicationsProcess") {
-                    TemplateRenderer::getInstance()->display('@webapplications/webapplication_process_form.html.twig', [
-                        'item' => $object,
-                        'params' => $options,
-                        'no_header' => true,
-                    ]);
-                } elseif ($item->getType() == "DatabaseInstance") {
-                    TemplateRenderer::getInstance()->display(
-                        '@webapplications/webapplication_dashboard_generic_form.html.twig',
-                        [
-                            'item' => $object,
-                            'params' => $options,
-                            'no_header' => true,
-                        ]
-                    );
-                } elseif ($item->getType() == "PluginWebapplicationsStream") {
-                    $linkReceiver = __('All');
-                    $receiverType = $field['receiver_type'];
-                    $receiverid = $field['receiver'];
-                    if (!empty($receiverType) && !empty($receiverid)) {
-                        $receiver = new $receiverType;
-                        $receiver->getFromDB($receiverid);
-                        $linkR = $receiverType::getFormURLWithID($receiverid);
-                        $receiverName = $receiver->getName();
-                        $linkReceiver = "<a href='$linkR'>" . $receiverName . "</a>";
-                    }
-
-                    $linkTransmitter = __('All');
-                    $transmitterType = $field['transmitter_type'];
-                    $transmitterid = $field['transmitter'];
-                    if (!empty($transmitterType) && !empty($transmitterid)) {
-                        $transmitter = new $transmitterType;
-                        $transmitter->getFromDB($transmitterid);
-                        $linkT = $transmitterType::getFormURLWithID($transmitterid);
-                        $transmitterName = $transmitter->getName();
-                        $linkTransmitter = "<a href='$linkT'>" . $transmitterName . "</a>";
-                    }
-
-                    TemplateRenderer::getInstance()->display('@webapplications/webapplication_stream_form.html.twig', [
-                        'item' => $object,
-                        'params' => $options,
-                        'no_header' => true,
-                        'readlonly' => true,
-                        'linkReceiver' => $linkReceiver,
-                        'linkTransmitter' => $linkTransmitter,
-                    ]);
-                } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
-                    TemplateRenderer::getInstance()->display(
-                        '@webapplications/webapplication_dashboard_generic_form.html.twig',
-                        [
-                            'item' => $object,
-                            'params' => $options,
-                            'no_header' => true,
-                        ]
-                    );
-                }
-
-
-                $link = $object::getFormURLWithID($id);
-                $link .= "&forcetab=main";
-                $rand = mt_rand();
-                echo "<span style='float: right'>";
-                if ($object->canUpdate()) {
-                    echo Html::submit(
-                        _sx('button', 'Edit'),
-                        [
-                            'name' => 'edit',
-                            'class' => 'btn btn-secondary right',
-                            'icon' => 'fas fa-edit',
-                            'form' => '',
-                            'data-bs-toggle' => 'modal',
-                            'data-bs-target' => '#edit' . $id . $rand
-                        ]
-                    );
-
-                    echo Ajax::createIframeModalWindow(
-                        'edit' . $id . $rand,
-                        $link,
-                        [
-                            'display' => false,
-                            'reloadonclose' => true
-                        ]
-                    );
-                }
-                echo "</span>";
-                echo "</div>";
+            if ($item->getType() == "DatabaseInstance") {
+                PluginWebapplicationsDatabaseInstance::showListObjects($list);
+            } else {
+                $item::showListObjects($list);
             }
         }
-        echo "</div>";
-
-        echo "<script>accordion();</script>";
     }
-
-
 }

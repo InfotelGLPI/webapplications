@@ -117,7 +117,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             $receiverName = $receiver->getName();
 
             $options['linkReceiver'] = "<a href= $linkReceiver>$receiverName</a>";
-        }  else {
+        } else {
             $options['linkReceiver'] = __('All');
         }
 
@@ -232,14 +232,14 @@ class PluginWebapplicationsStream extends CommonDBTM
         $tab[] = [
             'id' => '8',
             'table' => self::getTable(),
-            'field' => 'ports',
+            'field' => 'port',
             'name' => __('Port', 'webapplications'),
             'datatype' => 'text'
         ];
         $tab[] = [
             'id' => '9',
             'table' => self::getTable(),
-            'field' => 'protocole',
+            'field' => 'protocol',
             'name' => __('Protocol', 'webapplications'),
             'datatype' => 'text'
         ];
@@ -322,5 +322,102 @@ class PluginWebapplicationsStream extends CommonDBTM
         $this->addDefaultFormTab($ong);
         $this->addStandardTab('Appliance_Item', $ong, $options);
         return $ong;
+    }
+
+
+    public static function showListObjects($list)
+    {
+        $object = new self();
+
+        echo "<div style='display: flex;flex-wrap: wrap;'>";
+
+        foreach ($list as $field) {
+            $name = $field['name'];
+            $id = $field['id'];
+            $object->getFromDB($id);
+
+//            echo "<h3 class='accordionhead'>";
+//            echo $name;
+//            echo "</td>";
+//            echo "</h3>";
+//
+//            echo "<div class='panel' id='tabsbody'>";
+//            $options = [];
+//            $options['canedit'] = false;
+//            $options['candel'] = false;
+
+            $linkReceiver = __('All');
+            $receiverType = $field['receiver_type'];
+            $receiverid = $field['receiver'];
+            if (!empty($receiverType) && !empty($receiverid)) {
+                $receiver = new $receiverType;
+                $receiver->getFromDB($receiverid);
+                $linkR = $receiverType::getFormURLWithID($receiverid);
+                $receiverName = $receiver->getName();
+                $linkReceiver = "<a href='$linkR'>" . $receiverName . "</a>";
+            }
+
+            $linkTransmitter = __('All');
+            $transmitterType = $field['transmitter_type'];
+            $transmitterid = $field['transmitter'];
+            if (!empty($transmitterType) && !empty($transmitterid)) {
+                $transmitter = new $transmitterType;
+                $transmitter->getFromDB($transmitterid);
+                $linkT = $transmitterType::getFormURLWithID($transmitterid);
+                $transmitterName = $transmitter->getName();
+                $linkTransmitter = "<a href='$linkT'>" . $transmitterName . "</a>";
+            }
+
+
+            echo "<div class='card w-25' style='margin-right: 10px;margin-top: 10px;'>";
+            echo "<div class='card-body'>";
+            echo "<div style='display: inline-block;margin: 40px;'>";
+            echo "<i class='fa-6x fas fa-ethernet'></i>";
+            echo "</div>";
+            echo "<div style='display: inline-block;';>";
+
+            echo "<h5 class='card-title'><i class='fa-1x fas fa-ethernet'></i>&nbsp;" . $linkTransmitter . "&nbsp;";
+            echo "<i class='fa-1x fas fa-arrow-right'></i>";
+            echo "&nbsp;<i class='fa-1x fas fa-ethernet'></i>&nbsp;" . $linkReceiver . "</h5>";
+            echo "<p class='card-text'>";
+            echo $object->fields['protocol']. " - ". $object->fields['port'];
+            echo "</p>";
+            if ($object->fields['encryption'] == 1) {
+                echo "<p class='card-text'>";
+                echo __('Encryption type', 'webapplications')." : ".$object->fields['encryption_type'];
+                echo "</p>";
+            }
+            $link = $object::getFormURLWithID($id);
+            $link .= "&forcetab=main";
+            $rand = mt_rand();
+            echo "<span style='float: right'>";
+            if ($object->canUpdate()) {
+                echo Html::submit(
+                    _sx('button', 'Edit'),
+                    [
+                        'name' => 'edit',
+                        'class' => 'btn btn-secondary right',
+                        'icon' => 'fas fa-edit',
+                        'form' => '',
+                        'data-bs-toggle' => 'modal',
+                        'data-bs-target' => '#edit' . $id . $rand
+                    ]
+                );
+
+                echo Ajax::createIframeModalWindow(
+                    'edit' . $id . $rand,
+                    $link,
+                    [
+                        'display' => false,
+                        'reloadonclose' => true
+                    ]
+                );
+            }
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+            echo "</span>";
+        }
+        echo "</div>";
     }
 }

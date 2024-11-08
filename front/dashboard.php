@@ -38,6 +38,67 @@ if (!isset($_GET["withtemplate"])) {
     $_GET["withtemplate"] = "";
 }
 
+$iapp = new \Appliance_Item();
+
+if (isset($_POST['add'])) {
+    $iapp->check(-1, CREATE, $_POST);
+    $iapp->add($_POST);
+
+    if ($_POST['itemtype'] == 'Computer') {
+        $instances = getAllDataFromTable(
+            DatabaseInstance::getTable(),
+            [
+                'WHERE' => [
+                    'items_id' => $_POST['items_id'],
+                    'itemtype' => $_POST['itemtype'],
+                ],
+            ]
+        );
+        foreach ($instances as $row) {
+            $input['appliances_id'] = $_POST['appliances_id'];
+            $input['items_id'] = $row['id'];
+            $input['itemtype'] = "DatabaseInstance";
+            $iapp->add($input);
+        }
+    }
+
+
+    Html::back();
+} else if (isset($_POST['reset'])) {
+
+    $itemsAppDBTM = new Appliance_Item();
+
+    $appliances_id = 0;
+    if ($itemsAppDBTM->getFromDBByCrit([
+        'items_id' => $_POST['items_id'],
+        'itemtype' => $_POST['itemtype']])) {
+        $appliances_id = $itemsAppDBTM->fields['appliances_id'];
+    }
+    $itemsAppDBTM->deleteByCriteria([
+        'items_id' => $_POST['items_id'],
+        'itemtype' => $_POST['itemtype']]);
+
+    if ($_POST['itemtype'] == 'Computer' && $appliances_id > 0) {
+        $instances = getAllDataFromTable(
+            DatabaseInstance::getTable(),
+            [
+                'WHERE' => [
+                    'items_id' => $_POST['items_id'],
+                    'itemtype' => $_POST['itemtype'],
+                ],
+            ]
+        );
+        foreach ($instances as $row) {
+            $input['appliances_id'] = $appliances_id;
+            $input['items_id'] = $row['id'];
+            $input['itemtype'] = "DatabaseInstance";
+            $itemsAppDBTM->deleteByCriteria($input);
+        }
+    }
+
+    Html::back();
+}
+
 $dashboard = new PluginWebapplicationsDashboard;
 
 Html::header(
