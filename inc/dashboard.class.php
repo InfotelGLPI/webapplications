@@ -316,7 +316,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
     public static function showFromDashboard($appliance, $item)
     {
-        global $CFG_GLPI;
+        global $DB;
 
         echo "<div class='card-body child50'>";
 
@@ -329,10 +329,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $app_item = new Appliance_Item();
 
         if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
-            $apps = $app_item->find([
-                'appliances_id' => $ApplianceId,
-                'itemtype' => $CFG_GLPI['inventory_types']
-            ], 'itemtype');
+            $apps = PluginWebapplicationsPhysicalInfrastructure::getItems();
         } else {
             $apps = $app_item->find(['appliances_id' => $ApplianceId, 'itemtype' => $item->getType()]);
         }
@@ -347,16 +344,71 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             foreach ($apps as $app) {
                 if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
                     $itemDBTM = new $app['itemtype'];
-                    if ($itemDBTM->getFromDB($app['items_id'])) {
+                    if ($itemDBTM->getFromDB($app['id'])) {
                         $name = $itemDBTM->getName();
-                        $link = $itemDBTM::getFormURLWithID($app['items_id']);
-                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name</a>";
+                        $link = $itemDBTM::getFormURLWithID($app['id']);
+                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
+
+                        $items = $DB->request([
+                            'FROM'   => Appliance_Item::getTable(),
+                            'WHERE'  => [
+                                'items_id' => $app['id'],
+                                'itemtype' => $app['itemtype']
+                            ]
+                        ]);
+                        $items = iterator_to_array($items);
+
+                        foreach ($items as $row) {
+                            $iterator = $DB->request([
+                                'FROM'   => Appliance_Item_Relation::getTable(),
+                                'WHERE'  => [
+                                    Appliance_Item::getForeignKeyField() => $row['id']
+                                ]
+                            ]);
+
+                            foreach ($iterator as $row) {
+                                $envtype = $row['itemtype'];
+                                $env = new $envtype();
+                                $env->getFromDB($row['items_id']);
+                                echo " - " . $env->getName();
+                            }
+                        }
+                        echo "</a>";
                     }
                 } else {
                     if ($obj->getFromDB($app['items_id'])) {
                         $name = $obj->getName();
                         $link = $item::getFormURLWithID($app['items_id']);
-                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name</a>";
+                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
+
+                        if ($item->getType() == "DatabaseInstance") {
+                            $items = $DB->request([
+                                'FROM' => Appliance_Item::getTable(),
+                                'WHERE' => [
+                                    'items_id' => $app['items_id'],
+                                    'itemtype' => 'DatabaseInstance'
+                                ]
+                            ]);
+                            $items = iterator_to_array($items);
+
+                            foreach ($items as $row) {
+                                $iterator = $DB->request([
+                                    'FROM' => Appliance_Item_Relation::getTable(),
+                                    'WHERE' => [
+                                        Appliance_Item::getForeignKeyField() => $row['id']
+                                    ]
+                                ]);
+
+                                foreach ($iterator as $row) {
+                                    $envtype = $row['itemtype'];
+                                    $env = new $envtype();
+                                    $env->getFromDB($row['items_id']);
+                                    echo " - " . $env->getName();
+                                }
+                            }
+                        }
+                        echo "</a>";
+
                     }
                 }
             }
