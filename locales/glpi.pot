@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-17 14:56+0000\n"
+"POT-Creation-Date: 2024-11-08 14:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: inc/dashboard.class.php:488
+#: inc/dashboard.class.php:494
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
@@ -112,11 +112,11 @@ msgstr ""
 msgid "Encryption"
 msgstr ""
 
-#: inc/stream.class.php:229 templates/webapplication_stream_form.html.twig:63
+#: inc/stream.class.php:229 inc/stream.class.php:387 templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr ""
 
-#: inc/dashboard.class.php:482
+#: inc/dashboard.class.php:488
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
@@ -139,7 +139,7 @@ msgstr ""
 msgid "Integrity"
 msgstr ""
 
-#: inc/dashboard.class.php:486
+#: inc/dashboard.class.php:492
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
@@ -156,7 +156,7 @@ msgid "Link with core purge"
 msgstr ""
 
 #: inc/logicalinfrastructure.class.php:44
-#: inc/logicalinfrastructure.class.php:156
+#: inc/logicalinfrastructure.class.php:158
 msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] ""
@@ -174,7 +174,7 @@ msgstr ""
 msgid "No associated documents"
 msgstr ""
 
-#: inc/dashboard.class.php:500
+#: inc/dashboard.class.php:506
 msgid "No associated objects"
 msgstr ""
 
@@ -213,7 +213,7 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:484
+#: inc/dashboard.class.php:490
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
@@ -260,7 +260,7 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:490
+#: inc/dashboard.class.php:496
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
