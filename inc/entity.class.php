@@ -194,28 +194,37 @@ class PluginWebapplicationsEntity extends CommonDBTM
     {
         $object = new self();
 
-        echo "<div class='accordion' name='list'>";
+        echo "<div style='display: flex;flex-wrap: wrap;'>";
 
         foreach ($list as $field) {
             $name = $field['name'];
             $id = $field['id'];
             $object->getFromDB($id);
 
-            echo "<h3 class='accordionhead'>";
-            echo $name;
-            echo "</td>";
-            echo "</h3>";
-
-            echo "<div class='panel' id='tabsbody'>";
-            $options = [];
-            $options['canedit'] = false;
-            $options['candel'] = false;
-
-            TemplateRenderer::getInstance()->display('@webapplications/webapplication_entity_form.html.twig', [
-                'item' => $object,
-                'params' => $options,
-                'no_header' => true,
-            ]);
+            echo "<div class='card w-33' style='margin-right: 10px;margin-top: 10px;'>";
+            echo "<div class='card-body'>";
+            echo "<div style='display: inline-block;margin: 40px;'>";
+            echo "<i class='fa-5x fas ".self::getIcon()."'></i>";
+            echo "</div>";
+            echo "<div style='display: inline-block;';>";
+            echo "<h5 class='card-title' style='font-size: 14px;'>" . $name . "</h5>";
+            if ($object->fields['owner'] > 0) {
+                echo "<p class='card-text'>";
+                echo __('Owner', 'webapplications')." : ".getUserName($object->fields['owner']);
+                echo "</p>";
+            }
+            if ($object->fields['security_contact'] > 0) {
+                echo "<p class='card-text'>";
+                echo __('Security Contact', 'webapplications') . " : " . getUserName(
+                        $object->fields['security_contact']
+                    );
+                echo "</p>";
+            }
+            if (!empty($object->fields['relation_nature'])) {
+                echo "<p class='card-text'>";
+                echo __('Relation nature', 'webapplications') . " : " . $object->fields['relation_nature'];
+                echo "</p>";
+            }
             $link = $object::getFormURLWithID($id);
             $link .= "&forcetab=main";
             $rand = mt_rand();
@@ -242,10 +251,11 @@ class PluginWebapplicationsEntity extends CommonDBTM
                     ]
                 );
             }
-            echo "</span>";
             echo "</div>";
+            echo "</div>";
+            echo "</div>";
+            echo "</span>";
         }
         echo "</div>";
-        echo "<script>accordion();</script>";
     }
 }

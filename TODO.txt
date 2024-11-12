@@ -1,9 +1,7 @@
 
 traiter l'environnement
 
-deployer meme DICT par défaut que l'applicatifs sur éléments liés
-
 lier des processus à des entités ?
 
 si ajout serveur - detecter si des instances de bdd existent et les ajouter automatiquement : ok
-et les ajouter directement dans l'infra logique ?
+et les ajouter directement dans l'infra logique : ok

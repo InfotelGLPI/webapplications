@@ -107,10 +107,10 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
         foreach ($list_by_itemtypes as $itemtype => $items) {
 
             $object = new $itemtype();
-
+            $nb = 2;
             $icon = "<i class='" . $object->getIcon() . " fa-1x'></i>";
             echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
-            echo "&nbsp;<span style='margin-right: auto;'>".$object->getTypeName()."</span></h2>";
+            echo "&nbsp;<span style='margin-right: auto;'>".$object->getTypeName($nb)."</span></h2>";
 
             echo "<div style='display: flex;flex-wrap: wrap;'>";
 

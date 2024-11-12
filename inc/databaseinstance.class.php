@@ -127,6 +127,74 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
         self::setDatabase($item);
     }
 
+    /**
+     * @param \Database $item
+     *
+     * @return false
+     */
+    public static function databaseLink(Appliance_Item $item)
+    {
+        if (!is_array($item->input) || !count($item->input)) {
+            // Already cancel by another plugin
+            return false;
+        }
+        if (!empty($item->input) && $item->input['itemtype'] == 'DatabaseInstance') {
+            $database = new PluginWebapplicationsDatabaseInstance();
+            $database->getFromDBByCrit(['databaseinstances_id' => $item->input['items_id']]);
+            if (is_array($database->fields) && count($database->fields) > 0) {
+                $webs = getAllDataFromTable(
+                    PluginWebapplicationsAppliance::getTable(),
+                    [
+                        'WHERE' => [
+                            'appliances_id' => $item->input['appliances_id'],
+                        ]
+                    ]
+                );
+                foreach ($webs as $web) {
+                    $item->input["webapplicationavailabilities"] = $web["webapplicationavailabilities"];
+                    $item->input["webapplicationintegrities"] = $web["webapplicationintegrities"];
+                    $item->input["webapplicationconfidentialities"] = $web["webapplicationconfidentialities"];
+                    $item->input["webapplicationtraceabilities"] = $web["webapplicationtraceabilities"];
+                }
+
+                $database->update([
+                    'webapplicationexternalexpositions_id' => 0,
+                    'webapplicationavailabilities' => isset($item->input['webapplicationavailabilities']) ? $item->input['webapplicationavailabilities'] : 0,
+                    'webapplicationintegrities' => isset($item->input['webapplicationintegrities']) ? $item->input['webapplicationintegrities'] : 0,
+                    'webapplicationconfidentialities' => isset($item->input['webapplicationconfidentialities']) ? $item->input['webapplicationconfidentialities'] : 0,
+                    'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : 0,
+                    'appliances_id' => isset($item->input['appliances_id']) ? $item->input['appliances_id'] : 0,
+                    'databaseinstances_id' => $item->input['items_id']
+                ]);
+            } else {
+                $webs = getAllDataFromTable(
+                    PluginWebapplicationsAppliance::getTable(),
+                    [
+                        'WHERE' => [
+                            'appliances_id' => $item->input['appliances_id'],
+                        ]
+                    ]
+                );
+                foreach ($webs as $web) {
+                    $item->input["webapplicationavailabilities"] = $web["webapplicationavailabilities"];
+                    $item->input["webapplicationintegrities"] = $web["webapplicationintegrities"];
+                    $item->input["webapplicationconfidentialities"] = $web["webapplicationconfidentialities"];
+                    $item->input["webapplicationtraceabilities"] = $web["webapplicationtraceabilities"];
+                }
+
+                $database->add([
+                    'webapplicationexternalexpositions_id' => 0,
+                    'webapplicationavailabilities' => isset($item->input['webapplicationavailabilities']) ? $item->input['webapplicationavailabilities'] : 0,
+                    'webapplicationintegrities' => isset($item->input['webapplicationintegrities']) ? $item->input['webapplicationintegrities'] : 0,
+                    'webapplicationconfidentialities' => isset($item->input['webapplicationconfidentialities']) ? $item->input['webapplicationconfidentialities'] : 0,
+                    'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : 0,
+                    'appliances_id' => isset($item->input['appliances_id']) ? $item->input['appliances_id'] : 0,
+                    'databaseinstances_id' => $item->input['items_id']
+                ]);
+            }
+        }
+    }
+
 
     /**
      * @param \Database $item
@@ -160,6 +228,23 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
                     'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : $database->fields['plugin_webapplications_webapplicationtraceabilities']
                 ]);
             } else {
+                if ($item->getID() > 0) {
+                    $webs = getAllDataFromTable(
+                        "glpi_plugin_webapplications_databaseinstances",
+                        [
+                            'WHERE' => [
+                                'databaseinstances_id' => $item->getID(),
+                            ]
+                        ]
+                    );
+                    foreach ($webs as $web) {
+                        $item->input["webapplicationavailabilities"] = $web["webapplicationavailabilities"];
+                        $item->input["webapplicationintegrities"] = $web["webapplicationintegrities"];
+                        $item->input["webapplicationconfidentialities"] = $web["webapplicationconfidentialities"];
+                        $item->input["webapplicationtraceabilities"] = $web["webapplicationtraceabilities"];
+                    }
+                }
+
                 $database->add([
                     'webapplicationexternalexpositions_id' => isset($item->input['webapplicationexternalexpositions_id']) ? $item->input['webapplicationexternalexpositions_id'] : 0,
                     'webapplicationavailabilities' => isset($item->input['webapplicationavailabilities']) ? $item->input['webapplicationavailabilities'] : 0,
@@ -173,10 +258,6 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
         }
     }
 
-    public function post_getEmpty()
-    {
-        $this->fields["webapplicationconfidentialities"] = 0;
-    }
 
     /**
      * @param $item
@@ -200,17 +281,17 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
             $id = $field['id'];
             $object->getFromDB($id);
 
-            echo "<div class='card w-25' style='margin-right: 10px;margin-top: 10px;'>";
+            echo "<div class='card w-33' style='margin-right: 10px;margin-top: 10px;'>";
             echo "<div class='card-body'>";
             echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='fa-6x fas fa-database'></i>";
+            echo "<i class='fa-5x fas fa-database'></i>";
             echo "</div>";
             echo "<div style='display: inline-block;';>";
-            echo "<h5 class='card-title'>" . $name . "</h5>";
+            echo "<h5 class='card-title' style='font-size: 14px;'>" . $name . "</h5>";
 
             $items = $DB->request([
-                'FROM'   => Appliance_Item::getTable(),
-                'WHERE'  => [
+                'FROM' => Appliance_Item::getTable(),
+                'WHERE' => [
                     'items_id' => $id,
                     'itemtype' => 'DatabaseInstance'
                 ]
@@ -219,8 +300,8 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
 
             foreach ($items as $row) {
                 $iterator = $DB->request([
-                    'FROM'   => Appliance_Item_Relation::getTable(),
-                    'WHERE'  => [
+                    'FROM' => Appliance_Item_Relation::getTable(),
+                    'WHERE' => [
                         Appliance_Item::getForeignKeyField() => $row['id']
                     ]
                 ]);
@@ -258,6 +339,58 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
                     echo sprintf(__('%s Mio'), $row['size']);
                     echo "</br>";
                 }
+            }
+            echo "</p>";
+            echo "<p class='card-text'>";
+            $dicts = getAllDataFromTable(
+                "glpi_plugin_webapplications_databaseinstances",
+                [
+                    'WHERE' => [
+                        'databaseinstances_id' => $id,
+                    ]
+                ]
+            );
+
+            foreach ($dicts as $dict) {
+                $background = PluginWebapplicationsAppliance::getColorForDICT(
+                    $dict['webapplicationavailabilities']
+                );
+                echo "<span class='dict-min' style='background-color:$background' title='" . __(
+                        'Availability',
+                        'webapplications'
+                    ) . "'>";
+                echo $dict['webapplicationavailabilities'];
+                echo "</span>";
+
+                $background = PluginWebapplicationsAppliance::getColorForDICT(
+                    $dict['webapplicationintegrities']
+                );
+                echo "<span class='dict-min' style='background-color:$background' title='" . __(
+                        'Integrity',
+                        'webapplications'
+                    ) . "'>";
+                echo $dict['webapplicationintegrities'];
+                echo "</span>";
+
+                $background = PluginWebapplicationsAppliance::getColorForDICT(
+                    $dict['webapplicationconfidentialities']
+                );
+                echo "<span class='dict-min' style='background-color:$background' title='" . __(
+                        'Confidentiality',
+                        'webapplications'
+                    ) . "'>";
+                echo $dict['webapplicationconfidentialities'];
+                echo "</span>";
+
+                $background = PluginWebapplicationsAppliance::getColorForDICT(
+                    $dict['webapplicationtraceabilities']
+                );
+                echo "<span class='dict-min' style='background-color:$background' title='" . __(
+                        'Traceability',
+                        'webapplications'
+                    ) . "'>";
+                echo $dict['webapplicationtraceabilities'];
+                echo "</span>";
             }
             echo "</p>";
 

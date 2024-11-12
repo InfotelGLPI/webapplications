@@ -45,6 +45,9 @@ if (isset($_POST['add'])) {
     $iapp->add($_POST);
 
     if ($_POST['itemtype'] == 'Computer') {
+        $item = new Appliance();
+        $item->getFromDB($_POST['appliances_id']);
+
         $instances = getAllDataFromTable(
             DatabaseInstance::getTable(),
             [
@@ -58,25 +61,79 @@ if (isset($_POST['add'])) {
             $input['appliances_id'] = $_POST['appliances_id'];
             $input['items_id'] = $row['id'];
             $input['itemtype'] = "DatabaseInstance";
-            $iapp->add($input);
+            if ($iapp->add($input)) {
+
+                $i_items = getAllDataFromTable(
+                    ImpactItem::getTable(),
+                    [
+                        'WHERE' => [
+                            'itemtype' => 'Appliance',
+                            'items_id' => $_POST['appliances_id'],
+                        ]
+                    ]
+                );
+
+                foreach ($i_items as $i_item) {
+                    $impact = new ImpactItem();
+                    $impact->add([
+                        'impactcontexts_id' => $i_item['impactcontexts_id'],
+                        'itemtype' => 'DatabaseInstance',
+                        'items_id' => $row['id']
+                    ]);
+                    $impactr = new ImpactRelation();
+                    $impactr->add([
+                        'itemtype_source' => $_POST['itemtype'],
+                        'items_id_source' => $_POST['items_id'],
+                        'itemtype_impacted' => 'DatabaseInstance',
+                        'items_id_impacted' => $row['id'],
+                    ]);
+                }
+            }
         }
+    }
+
+    $i_items = getAllDataFromTable(
+        ImpactItem::getTable(),
+        [
+            'WHERE' => [
+                'itemtype' => 'Appliance',
+                'items_id' => $_POST['appliances_id'],
+            ]
+        ]
+    );
+
+    foreach ($i_items as $i_item) {
+        $impact = new ImpactItem();
+        $impact->add([
+            'impactcontexts_id' => $i_item['impactcontexts_id'],
+            'itemtype' => $_POST['itemtype'],
+            'items_id' => $_POST['items_id']
+        ]);
+        $impactr = new ImpactRelation();
+        $impactr->add([
+            'itemtype_source' => 'Appliance',
+            'items_id_source' => $_POST['appliances_id'],
+            'itemtype_impacted' => $_POST['itemtype'],
+            'items_id_impacted' => $_POST['items_id'],
+        ]);
     }
 
 
     Html::back();
-} else if (isset($_POST['reset'])) {
-
+} elseif (isset($_POST['reset'])) {
     $itemsAppDBTM = new Appliance_Item();
 
     $appliances_id = 0;
     if ($itemsAppDBTM->getFromDBByCrit([
         'items_id' => $_POST['items_id'],
-        'itemtype' => $_POST['itemtype']])) {
+        'itemtype' => $_POST['itemtype']
+    ])) {
         $appliances_id = $itemsAppDBTM->fields['appliances_id'];
     }
     $itemsAppDBTM->deleteByCriteria([
         'items_id' => $_POST['items_id'],
-        'itemtype' => $_POST['itemtype']]);
+        'itemtype' => $_POST['itemtype']
+    ]);
 
     if ($_POST['itemtype'] == 'Computer' && $appliances_id > 0) {
         $instances = getAllDataFromTable(

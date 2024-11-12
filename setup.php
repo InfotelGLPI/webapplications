@@ -81,6 +81,10 @@ function plugin_init_webapplications()
             'PluginWebapplicationsDatabaseInstance',
             'databaseAdd'
         ],
+        'Appliance_Item' => [
+            'PluginWebapplicationsDatabaseInstance',
+            'databaseLink'
+        ],
     ];
 
     $PLUGIN_HOOKS['pre_item_update']['webapplications'] = [

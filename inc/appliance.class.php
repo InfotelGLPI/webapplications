@@ -297,4 +297,27 @@ class PluginWebapplicationsAppliance extends CommonDBTM
 
         echo "</div>";
     }
+
+
+    static public function getColorForDICT($field)
+    {
+        switch ($field) {
+            case '1':
+                $background = "#00FF00";
+                break;
+            case '2':
+                $background = "#FFFF00";
+                break;
+            case '3':
+                $background = "#FF9900";
+                break;
+            case '4':
+                $background = "#FF0000";
+                break;
+            default:
+                $background = "#999999";
+                break;
+        }
+        return $background;
+    }
 }

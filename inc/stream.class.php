@@ -65,7 +65,7 @@ class PluginWebapplicationsStream extends CommonDBTM
 
     public static function getIcon()
     {
-        return "fas fa-rss";
+        return "fas fa-network-wired";
     }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -372,7 +372,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             echo "<div class='card w-25' style='margin-right: 10px;margin-top: 10px;'>";
             echo "<div class='card-body'>";
             echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='fa-6x fas fa-ethernet'></i>";
+            echo "<i class='fa-5x fas ".self::getIcon()."'></i>";
             echo "</div>";
             echo "<div style='display: inline-block;';>";
 

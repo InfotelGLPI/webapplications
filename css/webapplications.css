@@ -88,3 +88,11 @@
     flex: 1 0 33%;
     border: 0 !important;
 }
+
+.dict-min {
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid #ededed;
+}
