@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-08 15:03+0000\n"
+"POT-Creation-Date: 2024-11-12 10:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,7 +47,7 @@ msgstr ""
 msgid "All users"
 msgstr ""
 
-#: setup.php:128 inc/dashboard.class.php:69 inc/profile.class.php:195
+#: setup.php:132 inc/dashboard.class.php:69 inc/profile.class.php:195
 msgid "Appliance dashboard"
 msgstr ""
 
@@ -61,7 +61,8 @@ msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:400 hook.php:473 inc/process.class.php:178
+#: hook.php:400 hook.php:473 inc/databaseinstance.class.php:359
+#: inc/process.class.php:196 inc/process.class.php:260
 #: templates/webapplication_process_form.html.twig:27
 #: templates/webapplication_appliance_form.html.twig:115
 #: templates/webapplication_database_form.html.twig:32
@@ -79,7 +80,8 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:418 hook.php:489 inc/process.class.php:192
+#: hook.php:418 hook.php:489 inc/databaseinstance.class.php:379
+#: inc/process.class.php:210 inc/process.class.php:270
 #: templates/webapplication_process_form.html.twig:60
 #: templates/webapplication_appliance_form.html.twig:147
 #: templates/webapplication_database_form.html.twig:62
@@ -132,7 +134,8 @@ msgstr[1] ""
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:409 hook.php:481 inc/process.class.php:185
+#: hook.php:409 hook.php:481 inc/databaseinstance.class.php:369
+#: inc/process.class.php:203 inc/process.class.php:265
 #: templates/webapplication_process_form.html.twig:44
 #: templates/webapplication_appliance_form.html.twig:131
 #: templates/webapplication_database_form.html.twig:48
@@ -182,8 +185,8 @@ msgstr ""
 msgid "Number of users"
 msgstr ""
 
-#: inc/entity.class.php:158 inc/process.class.php:170
-#: templates/webapplication_entity_form.html.twig:13
+#: inc/entity.class.php:158 inc/entity.class.php:213 inc/process.class.php:188
+#: inc/process.class.php:255 templates/webapplication_entity_form.html.twig:13
 #: templates/webapplication_process_form.html.twig:12
 msgid "Owner"
 msgstr ""
@@ -236,11 +239,13 @@ msgstr ""
 msgid "Referent editor"
 msgstr ""
 
-#: inc/entity.class.php:176 templates/webapplication_entity_form.html.twig:37
+#: inc/entity.class.php:176 inc/entity.class.php:225
+#: templates/webapplication_entity_form.html.twig:37
 msgid "Relation nature"
 msgstr ""
 
-#: inc/entity.class.php:168 templates/webapplication_entity_form.html.twig:25
+#: inc/entity.class.php:168 inc/entity.class.php:218
+#: templates/webapplication_entity_form.html.twig:25
 msgid "Security Contact"
 msgstr ""
 
@@ -279,7 +284,8 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: hook.php:427 hook.php:497 inc/process.class.php:199
+#: hook.php:427 hook.php:497 inc/databaseinstance.class.php:389
+#: inc/process.class.php:217 inc/process.class.php:275
 #: templates/webapplication_process_form.html.twig:77
 #: templates/webapplication_appliance_form.html.twig:164
 #: templates/webapplication_database_form.html.twig:77
