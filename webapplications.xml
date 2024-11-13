@@ -26,7 +26,7 @@
         <version>
             <num>5.0.0</num>
             <compatibility>10.0.11</compatibility>
-            <download_url>https://github.com/InfotelGLPI/webapplications/releases/download/5.0.0/glpi-metademands-5.0.0.tar.bz2</download_url>
+            <download_url>https://github.com/InfotelGLPI/webapplications/releases/download/5.0.0/glpi-webapplications-5.0.0.tar.bz2</download_url>
         </version>
         <version>
             <num>4.0.1</num>
