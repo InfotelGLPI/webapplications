@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-14 09:05+0000\n"
+"POT-Creation-Date: 2024-11-13 15:52+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2024\n"
 "Language-Team: French (France) (https://app.transifex.com/infotelGLPI/teams/12376/fr_FR/)\n"
@@ -49,7 +49,8 @@ msgstr "Ajouter une entité"
 msgid "All users"
 msgstr "Tous les utilisateurs"
 
-#: setup.php:128 inc/dashboard.class.php:88 inc/profile.class.php:195
+#: setup.php:132 inc/dashboard.class.php:69 inc/profile.class.php:195
+#: inc/webapplication.class.php:49
 msgid "Appliance dashboard"
 msgstr "Dashboard applicatif"
 
@@ -57,14 +58,22 @@ msgstr "Dashboard applicatif"
 msgid "Are you sure you want to do core migration ?"
 msgstr "Êtes-vous sûr de vouloir effectuer une migration de base ?"
 
-#: inc/dashboard.class.php:238
+#: inc/appliance.class.php:300
+msgid "Associated contract"
+msgid_plural "Associated contracts"
+msgstr[0] "Contrat associé"
+msgstr[1] "Contrats associés"
+msgstr[2] "Contrats associés"
+
+#: inc/appliance.class.php:277
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] "Document associé"
 msgstr[1] "Documents associés"
 msgstr[2] "Documents associés"
 
-#: hook.php:400 hook.php:473 inc/process.class.php:178
+#: hook.php:400 hook.php:473 inc/databaseinstance.class.php:362
+#: inc/process.class.php:196 inc/process.class.php:260
 #: templates/webapplication_process_form.html.twig:27
 #: templates/webapplication_appliance_form.html.twig:115
 #: templates/webapplication_database_form.html.twig:32
@@ -83,7 +92,8 @@ msgstr[0] "Catégorie"
 msgstr[1] "Catégories"
 msgstr[2] "Catégories"
 
-#: hook.php:418 hook.php:489 inc/process.class.php:192
+#: hook.php:418 hook.php:489 inc/databaseinstance.class.php:382
+#: inc/process.class.php:210 inc/process.class.php:270
 #: templates/webapplication_process_form.html.twig:60
 #: templates/webapplication_appliance_form.html.twig:147
 #: templates/webapplication_database_form.html.twig:62
@@ -118,7 +128,8 @@ msgstr "Ecosystème"
 msgid "Encryption"
 msgstr "Chiffrement"
 
-#: inc/stream.class.php:229 templates/webapplication_stream_form.html.twig:63
+#: inc/stream.class.php:229 inc/stream.class.php:387
+#: templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr "Type de chiffrement"
 
@@ -140,7 +151,8 @@ msgstr[2] "Expositions externe"
 msgid "Installed version"
 msgstr "Version installée"
 
-#: hook.php:409 hook.php:481 inc/process.class.php:185
+#: hook.php:409 hook.php:481 inc/databaseinstance.class.php:372
+#: inc/process.class.php:203 inc/process.class.php:265
 #: templates/webapplication_process_form.html.twig:44
 #: templates/webapplication_appliance_form.html.twig:131
 #: templates/webapplication_database_form.html.twig:48
@@ -166,14 +178,14 @@ msgid "Link with core purge"
 msgstr "Purge des liens avec le coeur"
 
 #: inc/logicalinfrastructure.class.php:44
-#: inc/logicalinfrastructure.class.php:156
+#: inc/logicalinfrastructure.class.php:158
 msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] "Infrastructure logique"
 msgstr[1] "Infrastructure logique"
 msgstr[2] "Infrastructure logique"
 
-#: templates/webapplication_dashboard_support.html.twig:18
+#: templates/webapplication_dashboard_support.html.twig:24
 msgid "Mail support"
 msgstr "Email du support"
 
@@ -181,7 +193,7 @@ msgstr "Email du support"
 msgid "Migration was successful"
 msgstr "La migration a réussi"
 
-#: inc/dashboard.class.php:250
+#: inc/appliance.class.php:294 inc/appliance.class.php:317
 msgid "No associated documents"
 msgstr "Pas de documents associées"
 
@@ -193,13 +205,13 @@ msgstr "Pas d'objets associés"
 msgid "Number of users"
 msgstr "Nombre d'utilisateurs"
 
-#: inc/entity.class.php:158 inc/process.class.php:170
-#: templates/webapplication_entity_form.html.twig:13
+#: inc/entity.class.php:158 inc/entity.class.php:213 inc/process.class.php:188
+#: inc/process.class.php:255 templates/webapplication_entity_form.html.twig:13
 #: templates/webapplication_process_form.html.twig:12
 msgid "Owner"
 msgstr "Propriétaire"
 
-#: templates/webapplication_dashboard_support.html.twig:24
+#: templates/webapplication_dashboard_support.html.twig:33
 msgid "Phone support"
 msgstr "Support téléphonique"
 
@@ -233,11 +245,11 @@ msgstr[0] "Liste des processus"
 msgstr[1] "Liste des processus"
 msgstr[2] "Liste des processus"
 
-#: inc/dashboard.class.php:205
+#: inc/dashboard.class.php:172
 msgid "Project leader"
 msgstr "Chef de projet"
 
-#: inc/dashboard.class.php:220
+#: inc/dashboard.class.php:183
 msgid "Project team"
 msgstr "Equipe du projet"
 
@@ -246,15 +258,17 @@ msgid "Protocol"
 msgstr "Protocole"
 
 #: hook.php:437 templates/webapplication_appliance_form.html.twig:221
-#: templates/webapplication_dashboard_support.html.twig:12
+#: templates/webapplication_dashboard_support.html.twig:15
 msgid "Referent editor"
 msgstr "Editeur référent"
 
-#: inc/entity.class.php:176 templates/webapplication_entity_form.html.twig:37
+#: inc/entity.class.php:176 inc/entity.class.php:225
+#: templates/webapplication_entity_form.html.twig:37
 msgid "Relation nature"
 msgstr "Nature de la relation"
 
-#: inc/entity.class.php:168 templates/webapplication_entity_form.html.twig:25
+#: inc/entity.class.php:168 inc/entity.class.php:218
+#: templates/webapplication_entity_form.html.twig:25
 msgid "Security Contact"
 msgstr "Contact de sécurité"
 
@@ -283,7 +297,7 @@ msgstr[0] "Liste des flux"
 msgstr[1] "Liste des flux"
 msgstr[2] "Liste des flux"
 
-#: inc/dashboard.class.php:259
+#: inc/dashboard.class.php:205
 msgid "Summary"
 msgstr "Résumé"
 
@@ -296,7 +310,8 @@ msgstr "Support"
 msgid "Tables purge"
 msgstr "Purge des tables"
 
-#: hook.php:427 hook.php:497 inc/process.class.php:199
+#: hook.php:427 hook.php:497 inc/databaseinstance.class.php:392
+#: inc/process.class.php:217 inc/process.class.php:275
 #: templates/webapplication_process_form.html.twig:77
 #: templates/webapplication_appliance_form.html.twig:164
 #: templates/webapplication_database_form.html.twig:77
@@ -332,7 +347,6 @@ msgid "Validation of the request by the referring Department"
 msgstr "Validation de la demande par le Service référent"
 
 #: inc/appliance.class.php:44 inc/profile.class.php:190
-#: inc/webapplication.class.php:49
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "Application Web"
