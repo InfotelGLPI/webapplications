@@ -287,7 +287,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
             echo "<i class='fa-5x fas fa-database'></i>";
             echo "</div>";
             echo "<div style='display: inline-block;';>";
-            echo "<h5 class='card-title' style='font-size: 14px;'>" . $name . "</h5>";
+            echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
 
             $items = $DB->request([
                 'FROM' => Appliance_Item::getTable(),
@@ -315,12 +315,15 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
                 }
             }
 
-            echo "<p class='card-text'>";
-            echo __('Type') . " " . Dropdown::getDropdownName(
-                    "glpi_databaseinstancetypes",
-                    $object->fields['databaseinstancetypes_id']
-                );
-            echo "</p>";
+            if ($object->fields['databaseinstancetypes_id'] > 0) {
+                echo "<p class='card-text'>";
+                echo __('Type') . " " . Dropdown::getDropdownName(
+                        "glpi_databaseinstancetypes",
+                        $object->fields['databaseinstancetypes_id']
+                    );
+                echo "</p>";
+            }
+
             echo "<p class='card-text'>";
             $databases = getAllDataFromTable(
                 Database::getTable(),

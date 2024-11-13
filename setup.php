@@ -114,7 +114,7 @@ function plugin_init_webapplications()
             || strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") == true
             || strpos($_SERVER['REQUEST_URI'], "front/process.form.php") == true
             || strpos($_SERVER['REQUEST_URI'], "front/dashboard.php") == true)) {
-        $PLUGIN_HOOKS["add_javascript"]['webapplications'][] = 'scripts/securityneedscolor.js.php';
+        $PLUGIN_HOOKS["add_javascript"]['webapplications'][] = 'scripts/securityneedscolor.js';
     }
 
     $PLUGIN_HOOKS['add_css']['webapplications'] = ['css/webapplications.css'];

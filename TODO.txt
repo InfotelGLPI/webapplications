@@ -5,3 +5,7 @@ lier des processus à des entités ?
 
 si ajout serveur - detecter si des instances de bdd existent et les ajouter automatiquement : ok
 et les ajouter directement dans l'infra logique : ok
+
+
+Si besoin de définir l'environnementen GLPI 10 : 
+https://github.com/glpi-project/glpi/pull/18288

@@ -249,7 +249,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
             echo "<i class='fa-5x fas ".self::getIcon()."'></i>";
             echo "</div>";
             echo "<div style='display: inline-block;';>";
-            echo "<h5 class='card-title' style='font-size: 14px;'>" . $name . "</h5>";
+            echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
             if ($object->fields['owner'] > 0) {
                 echo "<p class='card-text'>";
                 echo __('Owner', 'webapplications')." : ".getUserName($object->fields['owner']);

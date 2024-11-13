@@ -147,7 +147,7 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
 
                 echo "<div style='display: inline-block;';>";
 
-                echo "<h5 class='card-title' style='font-size: 14px;'>" . $name . "</h5>";
+                echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
 
                 $items = $DB->request([
                     'FROM'   => Appliance_Item::getTable(),
