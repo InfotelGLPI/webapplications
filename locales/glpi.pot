@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-12 10:00+0000\n"
+"POT-Creation-Date: 2024-11-13 10:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,7 +61,7 @@ msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:400 hook.php:473 inc/databaseinstance.class.php:359
+#: hook.php:400 hook.php:473 inc/databaseinstance.class.php:362
 #: inc/process.class.php:196 inc/process.class.php:260
 #: templates/webapplication_process_form.html.twig:27
 #: templates/webapplication_appliance_form.html.twig:115
@@ -80,7 +80,7 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:418 hook.php:489 inc/databaseinstance.class.php:379
+#: hook.php:418 hook.php:489 inc/databaseinstance.class.php:382
 #: inc/process.class.php:210 inc/process.class.php:270
 #: templates/webapplication_process_form.html.twig:60
 #: templates/webapplication_appliance_form.html.twig:147
@@ -134,7 +134,7 @@ msgstr[1] ""
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:409 hook.php:481 inc/databaseinstance.class.php:369
+#: hook.php:409 hook.php:481 inc/databaseinstance.class.php:372
 #: inc/process.class.php:203 inc/process.class.php:265
 #: templates/webapplication_process_form.html.twig:44
 #: templates/webapplication_appliance_form.html.twig:131
@@ -284,7 +284,7 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: hook.php:427 hook.php:497 inc/databaseinstance.class.php:389
+#: hook.php:427 hook.php:497 inc/databaseinstance.class.php:392
 #: inc/process.class.php:217 inc/process.class.php:275
 #: templates/webapplication_process_form.html.twig:77
 #: templates/webapplication_appliance_form.html.twig:164
