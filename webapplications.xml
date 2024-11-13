@@ -17,7 +17,7 @@
     <homepage>https://github.com/InfotelGLPI/webapplications</homepage>
     <download>https://github.com/InfotelGLPI/webapplications/releases</download>
     <issues>https://github.com/InfotelGLPI/webapplications/issues</issues>
-    <readme>https://raw.githubusercontent.com/InfotelGLPI/webapplications/master/README.md</readme>
+    <readme>https://github.com/InfotelGLPI/webapplications/blob/master/README.md</readme>
     <authors>
         <author>Xavier Caillaud</author>
         <author>Infotel</author>

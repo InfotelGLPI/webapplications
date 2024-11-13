@@ -263,7 +263,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
         echo "</div>";
     }
 
-    public static function showDocumentsFromDashboard($appliance)
+    public static function showDocumentsAndContractsFromDashboard($appliance)
     {
         global $CFG_GLPI;
 
@@ -286,6 +286,29 @@ class PluginWebapplicationsAppliance extends CommonDBTM
                 $name = $docuDBTM->getName();
                 $open = $CFG_GLPI["root_doc"] . "/front/document.send.php";
                 $open .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
+                echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
+            }
+
+            echo "</div>";
+        } else {
+            echo __("No associated documents", 'webapplications');
+        }
+
+        $contractItemDBTM = new Contract_Item();
+        $contractItems = $contractItemDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
+
+        $title = _n('Associated contract', 'Associated contracts', count($contractItems), 'webapplications');
+        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId, $contractItemDBTM);
+
+        $contractDBTM = new Contract();
+
+        if (count($contractItems) > 0) {
+            echo "<div class='list-group' style='margin-top: 10px;'>";
+            foreach ($contractItems as $contractItem) {
+                $contractDBTM->getFromDB($contractItem['contracts_id']);
+                $name = $contractDBTM->getName();
+                $open = $CFG_GLPI["root_doc"] . "/front/contract.form.php";
+                $open .= (strpos($open, '?') ? '&' : '?') . 'id=' . $contractItem['contracts_id'];
                 echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
             }
 

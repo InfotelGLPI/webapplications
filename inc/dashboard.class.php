@@ -195,7 +195,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         PluginWebapplicationsAppliance::showSupportPartFromDashboard($appliance);
 
-        PluginWebapplicationsAppliance::showDocumentsFromDashboard($appliance);
+        PluginWebapplicationsAppliance::showDocumentsAndContractsFromDashboard($appliance);
 
         PluginWebapplicationsKnowbase::showFromDashboard($appliance);
 
