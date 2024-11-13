@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-13 15:39+0000\n"
+"POT-Creation-Date: 2024-11-13 15:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,12 +48,19 @@ msgid "All users"
 msgstr ""
 
 #: setup.php:132 inc/dashboard.class.php:69 inc/profile.class.php:195
+#: inc/webapplication.class.php:49
 msgid "Appliance dashboard"
 msgstr ""
 
 #: front/webapplication.php:52
 msgid "Are you sure you want to do core migration ?"
 msgstr ""
+
+#: inc/appliance.class.php:300
+msgid "Associated contract"
+msgid_plural "Associated contracts"
+msgstr[0] ""
+msgstr[1] ""
 
 #: inc/appliance.class.php:277
 msgid "Associated document"
@@ -173,7 +180,7 @@ msgstr ""
 msgid "Migration was successful"
 msgstr ""
 
-#: inc/appliance.class.php:294
+#: inc/appliance.class.php:294 inc/appliance.class.php:317
 msgid "No associated documents"
 msgstr ""
 
@@ -320,7 +327,6 @@ msgid "Validation of the request by the referring Department"
 msgstr ""
 
 #: inc/appliance.class.php:44 inc/profile.class.php:190
-#: inc/webapplication.class.php:49
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] ""
