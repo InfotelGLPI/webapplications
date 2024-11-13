@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-    <name>Web Applications Inventory</name>
+    <name>Appliances Dashboard</name>
     <key>webapplications</key>
     <state>stable</state>
     <logo>https://raw.githubusercontent.com/InfotelGLPI/webapplications/master/webapplications.png</logo>
     <description>
         <short>
-            <fr><![CDATA[Gestion de vos applications Web. Ce plugin vous permet de lister les applications web de votre réseau et de les associer à des éléments de l’inventaire.]]></fr>
-            <en><![CDATA[Web applications management. This plugin allows you to list your Web applications of your network and associate them with elements of the inventory.]]></en>
-            <cs><![CDATA[Správa webových aplikací. Tento zásuvný modul umožňuje vypsat webové aplikace na síti a přiřadit k nim prvky z inventáře.]]></cs>
+            <fr><![CDATA[Dashboard applicatif. Ce plugin vous permet d'afficher sous forme de dashboard, vos applicatifs métiers avec l'ensemble de leurs caractéristiques]]></fr>
+            <en><![CDATA[Appliance dashboard. This plugin allows you to display your business applications with all their characteristics in the form of a dashboard.]]></en>
         </short>
         <long>
-            <fr><![CDATA[Ce plugin vous permet de lister les applications web de votre réseau et de les associer à des éléments de l’inventaire.<br />- Utilisable depuis le helpdesk,<br />- Utilisable avec le plugin PDF,<br />- Utilisable avec le plugin Environment]]></fr>
-            <en><![CDATA[This plugin allows you to list your Web applications of your network and associate them with elements of the inventory.<br />- Can be used with helpdesk,<br />- Can be used with PDF plugin,<br />- Can be used with Environment plugin]]></en>
-            <cs><![CDATA[Správa webových aplikací. Tento zásuvný modul umožňuje vypsat webové aplikace na síti a přiřadit k nim prvky z inventáře.<br />- Je možné použít se službou podpory,<br />- Je možné použít se zásuvným modulem PDF,<br />- Je možné použít se zásuvným modulem Prostředí]]></cs>
-        </long>
+            <fr><![CDATA[Dashboard applicatif. Ce plugin vous permet d'afficher sous forme de dashboard, vos applicatifs métiers avec l'ensemble de leurs caractéristiques]]></fr>
+            <en><![CDATA[Appliance dashboard. This plugin allows you to display your business applications with all their characteristics in the form of a dashboard.]]></en>
+         </long>
     </description>
     <homepage>https://github.com/InfotelGLPI/webapplications</homepage>
     <download>https://github.com/InfotelGLPI/webapplications/releases</download>
@@ -25,6 +23,11 @@
         <author>Infotel</author>
     </authors>
     <versions>
+        <version>
+            <num>5.0.0</num>
+            <compatibility>10.0.11</compatibility>
+            <download_url>https://github.com/InfotelGLPI/webapplications/releases/download/5.0.0/glpi-metademands-5.0.0.tar.bz2</download_url>
+        </version>
         <version>
             <num>3.0.0</num>
             <compatibility>9.5</compatibility>
@@ -148,18 +151,20 @@
     <tags>
         <fr>
             <tag>Applicatifs</tag>
-            <tag>Internet</tag>
-            <tag>Inventaire</tag>
+            <tag>Dashboard</tag>
         </fr>
         <en>
             <tag>Appliances</tag>
-            <tag>Web</tag>
-            <tag>Inventory</tag>
+            <tag>Dashboard</tag>
         </en>
-        <cs>
-            <tag>Celky</tag>
-            <tag>Web</tag>
-            <tag>Inventář</tag>
-        </cs>
     </tags>
+    <screenshots>
+        <screenshot>https://raw.githubusercontent.com/infotelglpi/webapplications/master/screenshots/appliances.png</screenshot>
+        <screenshot>https://raw.githubusercontent.com/infotelglpi/webapplications/master/screenshots/entities.png</screenshot>
+        <screenshot>https://raw.githubusercontent.com/infotelglpi/webapplications/master/screenshots/processes.png</screenshot>
+        <screenshot>https://raw.githubusercontent.com/infotelglpi/webapplications/master/screenshots/servers.png</screenshot>
+        <screenshot>https://raw.githubusercontent.com/infotelglpi/webapplications/master/screenshots/databaseinstances.png</screenshot>
+        <screenshot>https://raw.githubusercontent.com/infotelglpi/webapplications/master/screenshots/streams.png</screenshot>
+        <screenshot>https://raw.githubusercontent.com/infotelglpi/webapplications/master/screenshots/kbitems.png</screenshot>
+    </screenshots>
 </root>

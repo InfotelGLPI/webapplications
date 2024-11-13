@@ -65,20 +65,20 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
     $webappstypes = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplicationtypes');
     $add_temporary_column_query = "ALTER TABLE `glpi_appliancetypes` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
-    $DB->queryOrDie($add_temporary_column_query);
+    $DB->doQueryOrDie($add_temporary_column_query);
 
     foreach ($webappstypes as $webapptype) {
         $migrate_webapptypes = 'INSERT INTO `glpi_appliancetypes` (`entities_id`, `is_recursive`, `name`, `comment`, `old_id`)
               VALUES("' . $webapptype['entities_id'] . '","' . $webapptype['is_recursive'] . '","' . $webapptype['name']
                           . '", "' . addslashes($webapptype['comment']) . '" ,"' . $webapptype['id']. '" );';
 
-        $DB->query($migrate_webapptypes);
+        $DB->doQuery($migrate_webapptypes);
     }
 
 
     $webapps                    = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplications');
     $add_temporary_column_query = "ALTER TABLE `glpi_appliances` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
-    $DB->queryOrDie($add_temporary_column_query);
+    $DB->doQueryOrDie($add_temporary_column_query);
     foreach ($webapps as $webapp) {
         $migrate_webapps = 'INSERT INTO `glpi_appliances` (`entities_id`, `is_recursive`, `name`, `is_deleted`, `appliancetypes_id`,
                                                `comment`, `locations_id`, `manufacturers_id`, `users_id_tech`,`groups_id_tech`, `old_id`
@@ -88,7 +88,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                                  "' . $webapp['locations_id'] . '", "' . $webapp['manufacturers_id'] . '",
                                     "' . $webapp['users_id_tech'] . '","' . $webapp['groups_id_tech'] . '","' . $webapp['id'] . '")';
 
-        $DB->query($migrate_webapps);
+        $DB->doQuery($migrate_webapps);
 
         $migrate_webapps_additional_fields = 'INSERT INTO `glpi_plugin_webapplications_appliances` (`appliances_id`, 
                                                `webapplicationservertypes_id`, `webapplicationtechnics_id`, `address`, `backoffice`, `webapplicationexternalexpositions_id`, `webapplicationreferringdepartmentvalidation`, `webapplicationciovalidation`, `webapplicationavailabilities`, `webapplicationintegrities`, `webapplicationconfidentialities`, `webapplicationtraceabilities`) VALUES
@@ -102,7 +102,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                                               "' . $webapp['webapplicationavailabilities'] . '", "' . $webapp['webapplicationintegrities'] . '", "' . $webapp['webapplicationconfidentialities'] . '", "' . $webapp['webapplicationtraceabilities'] . '")';
 
 
-        $DB->query($migrate_webapps_additional_fields);
+        $DB->doQuery($migrate_webapps_additional_fields);
     }
 
     $new_appliances = $dbu->getAllDataFromTable('glpi_appliances', ['old_id' => ['>', 0]]);
@@ -111,7 +111,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
         $query = "UPDATE `glpi_plugin_webapplications_appliances`
                             SET `appliances_id`='" . $new_appliance['id'] . "'
                             WHERE `appliances_id`= " . $new_appliance['old_id'] . ";";
-        $DB->query($query);
+        $DB->doQuery($query);
 
         if (Plugin::isPluginActive('accounts')) {
             $queryUpdateAccountsAssociatedItems = "UPDATE `glpi_plugin_accounts_accounts_items` 
@@ -119,7 +119,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                                                             `glpi_plugin_accounts_accounts_items`.`itemtype` = 'Appliance'
                                                             WHERE `glpi_plugin_accounts_accounts_items`.`items_id`= '" . $new_appliance['old_id'] . "'
                                                                AND  `glpi_plugin_accounts_accounts_items`.`itemtype` = 'PluginWebapplicationsWebapplication';";
-            $DB->query($queryUpdateAccountsAssociatedItems);
+            $DB->doQuery($queryUpdateAccountsAssociatedItems);
         }
         if (Plugin::isPluginActive('databases')) {
             $querUpdateDatabasesAssociatedItems ="UPDATE `glpi_plugin_databases_databases_items` 
@@ -128,12 +128,12 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                                                             WHERE `glpi_plugin_databases_databases_items`.`items_id`= '" . $new_appliance['old_id'] . "'
                                                                AND  `glpi_plugin_databases_databases_items`.`itemtype` = 'PluginWebapplicationsWebapplication';";
 
-            $DB->query($querUpdateDatabasesAssociatedItems);
+            $DB->doQuery($querUpdateDatabasesAssociatedItems);
         }
     }
 
     $remove_temporary_column_query = "ALTER TABLE `glpi_appliances` DROP `old_id`;";
-    $DB->queryOrDie($remove_temporary_column_query);
+    $DB->doQueryOrDie($remove_temporary_column_query);
 
     $appliance_types = $dbu->getAllDataFromTable('glpi_appliancetypes', ['old_id' => ['>', 0]]);
 
@@ -141,11 +141,11 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
         $update_appliancetypes = "UPDATE `glpi_appliances`
                                      SET `appliancetypes_id`='" . $appliance_type['id'] . "'
                                      WHERE `appliancetypes_id`= " . $appliance_type['old_id'] . ";";
-        $DB->query($update_appliancetypes);
+        $DB->doQuery($update_appliancetypes);
     }
 
     $remove_temporary_column_query = "ALTER TABLE `glpi_appliancetypes` DROP `old_id`;";
-    $DB->queryOrDie($remove_temporary_column_query);
+    $DB->doQueryOrDie($remove_temporary_column_query);
 
     echo "<br>";
     echo __('Tables purge', 'webapplications');
@@ -154,7 +154,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                "glpi_plugin_webapplications_webapplications_items"];
 
     foreach ($tables as $table) {
-        $DB->query("DROP TABLE IF EXISTS `$table`;");
+        $DB->doQuery("DROP TABLE IF EXISTS `$table`;");
     }
 
     $oldtables = ["glpi_plugin_appweb",
@@ -166,7 +166,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
                   "glpi_plugin_webapplications_profiles"];
 
     foreach ($oldtables as $oldtable) {
-        $DB->query("DROP TABLE IF EXISTS `$oldtable`;");
+        $DB->doQuery("DROP TABLE IF EXISTS `$oldtable`;");
     }
 
     echo "<br>";
@@ -190,7 +190,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
     foreach ($tables as $table) {
         $query = "DELETE FROM `$table` WHERE (`itemtype` " . $in . " ) ";
-        $DB->query($query);
+        $DB->doQuery($query);
     }
 
     echo __('Migration was successful', 'webapplications');

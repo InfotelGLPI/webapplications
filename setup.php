@@ -137,7 +137,7 @@ function plugin_version_webapplications()
         'homepage' => 'https://github.com/InfotelGLPI/webapplications',
         'requirements' => [
             'glpi' => [
-                'min' => '10.0',
+                'min' => '10.0.11',
                 'dev' => false
             ]
         ]
@@ -152,10 +152,10 @@ function plugin_version_webapplications()
  */
 function plugin_webapplications_check_prerequisites()
 {
-    if (version_compare(GLPI_VERSION, '10.0', 'lt')
+    if (version_compare(GLPI_VERSION, '10.0.11', 'lt')
         || version_compare(GLPI_VERSION, '11.0', 'ge')) {
         if (method_exists('Plugin', 'messageIncompatible')) {
-            echo Plugin::messageIncompatible('core', '10.0');
+            echo Plugin::messageIncompatible('core', '10.0.11');
         }
         return false;
     }

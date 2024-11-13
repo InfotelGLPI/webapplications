@@ -77,11 +77,11 @@ function plugin_webapplications_install()
 
             //not same index name depending on installation version for (`FK_appweb`, `FK_device`, `device_type`)
             $query = "ALTER TABLE `glpi_plugin_webapplications_webapplications_items` DROP INDEX `FK_compte`;";
-            $DB->query($query);
+            $DB->doQuery($query);
 
             //index with install version 1.5.0 & 1.5.1
             $query = "ALTER TABLE `glpi_plugin_webapplications_webapplications_items` DROP INDEX `FK_appweb`;";
-            $DB->query($query);
+            $DB->doQuery($query);
         }
 
         //from 1.6 version
@@ -107,10 +107,10 @@ function plugin_webapplications_install()
                              (`itemtype`, `items_id`, `content`, `date`, `date_mod`)
                       VALUES ('" . $dbu->getItemTypeForTable($t) . "', '" . $data['id'] . "',
                               '" . addslashes($data['notepad']) . "', NOW(), NOW())";
-                    $DB->queryOrDie($iq, "0.85 migrate notepad data");
+                    $DB->doQueryOrDie($iq, "0.85 migrate notepad data");
                 }
                 $query = "ALTER TABLE `glpi_plugin_webapplications_webapplications` DROP COLUMN `notepad`;";
-                $DB->query($query);
+                $DB->doQuery($query);
             }
         }
     }
@@ -134,19 +134,19 @@ function plugin_webapplications_install()
     if ($update) {
         $query_  = "SELECT *
                 FROM `glpi_plugin_webapplications_profiles` ";
-        $result_ = $DB->query($query_);
+        $result_ = $DB->doQuery($query_);
         if ($DB->numrows($result_) > 0) {
             while ($data = $DB->fetchArray($result_)) {
                 $query = "UPDATE `glpi_plugin_webapplications_profiles`
                       SET `profiles_id` = '" . $data["id"] . "'
                       WHERE `id` = '" . $data["id"] . "';";
-                $DB->query($query);
+                $DB->doQuery($query);
             }
         }
 
         $query = "ALTER TABLE `glpi_plugin_webapplications_profiles`
                DROP `name` ;";
-        $DB->query($query);
+        $DB->doQuery($query);
 
         Plugin::migrateItemType(
             [1300 => 'PluginWebapplicationsWebapplication'],
@@ -199,7 +199,7 @@ function plugin_webapplications_uninstall()
                "glpi_plugin_webapplications_webapplicationexternalexpositions"];
 
     foreach ($tables as $table) {
-        $DB->query("DROP TABLE IF EXISTS `$table`;");
+        $DB->doQuery("DROP TABLE IF EXISTS `$table`;");
     }
 
     //old versions
@@ -213,7 +213,7 @@ function plugin_webapplications_uninstall()
                "glpi_plugin_webapplications_webapplications_items"];
 
     foreach ($tables as $table) {
-        $DB->query("DROP TABLE IF EXISTS `$table`;");
+        $DB->doQuery("DROP TABLE IF EXISTS `$table`;");
     }
 
     $tables_glpi = ["glpi_displaypreferences",
@@ -225,7 +225,7 @@ function plugin_webapplications_uninstall()
                     "glpi_dropdowntranslations"];
 
     foreach ($tables_glpi as $table_glpi) {
-        $DB->query("DELETE
+        $DB->doQuery("DELETE
                   FROM `$table_glpi`
                   WHERE `itemtype` LIKE 'PluginWebapplications%'");
     }
