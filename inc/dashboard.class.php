@@ -130,7 +130,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
     public function showForm($ID, $options = [])
     {
-
         echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
 
         $options['candel'] = false;
@@ -350,8 +349,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                         echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
 
                         $items = $DB->request([
-                            'FROM'   => Appliance_Item::getTable(),
-                            'WHERE'  => [
+                            'FROM' => Appliance_Item::getTable(),
+                            'WHERE' => [
                                 'items_id' => $app['id'],
                                 'itemtype' => $app['itemtype']
                             ]
@@ -360,8 +359,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
                         foreach ($items as $row) {
                             $iterator = $DB->request([
-                                'FROM'   => Appliance_Item_Relation::getTable(),
-                                'WHERE'  => [
+                                'FROM' => Appliance_Item_Relation::getTable(),
+                                'WHERE' => [
                                     Appliance_Item::getForeignKeyField() => $row['id']
                                 ]
                             ]);
@@ -408,7 +407,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                             }
                         }
                         echo "</a>";
-
                     }
                 }
             }
@@ -483,35 +481,21 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $title = $object->getTypeName(2);
         self::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addObject');
 
-        if ($object->getType() == "DatabaseInstance") {
-            echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
-            echo "<div align='center'><table class='tab_cadre_fixe'>";
-            echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
-
-            echo "<tr class='tab_bg_1'>";
-            echo "<td class='center'>";
-            DatabaseInstance::dropdown(['name' => 'items_id']);
-            echo "</td>";
-            echo "<td class='tab_bg_2 center' colspan='6'>";
-            echo Html::hidden('itemtype', ['value' => 'DatabaseInstance']);
-            echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
-            if ($object->canCreate()) {
-                echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
-            }
-            echo "</td>";
-            echo "</tr>";
-            echo "</table></div>";
-
-            Html::closeForm();
-        } elseif ($object->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+        if ($object->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
             echo "<form name='form' method='post' action='" .
                 PLUGIN_WEBAPPLICATIONS_WEBDIR."/front/dashboard.php"."'>";
-            echo "<div align='center'><table class='tab_cadre_fixe'>";
-            echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
+        } else {
+            echo "<form name='form' method='post' action='" .
+                Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
+        }
 
-            echo "<tr class='tab_bg_1'>";
-            echo "<td class='center'>";
+        echo "<div align='center'><table class='tab_cadre_fixe'>";
+        echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
+
+        echo "<tr class='tab_bg_1'>";
+        echo "<td class='center'>";
+
+        if ($object->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
             Dropdown::showSelectItemFromItemtypes(
                 [
                     'items_id_name' => 'items_id',
@@ -519,18 +503,22 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                     'checkright' => true,
                 ]
             );
-            echo "</td>";
-            echo "<td class='tab_bg_2 center' colspan='6'>";
-            echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
-            if ($object->canCreate()) {
-                echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
-            }
-            echo "</td>";
-            echo "</tr>";
-            echo "</table></div>";
-
-            Html::closeForm();
+        } else {
+            $class = $object->getType();
+            $class::dropdown(['name' => 'items_id']);
+            echo Html::hidden('itemtype', ['value' => $object->getType()]);
         }
+        echo "</td>";
+        echo "<td class='tab_bg_2 center' colspan='6'>";
+        echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
+        if ($object->canCreate()) {
+            echo Html::submit(_sx('button', 'Associate'), ['name' => 'add', 'class' => 'btn btn-primary']);
+        }
+        echo "</td>";
+        echo "</tr>";
+        echo "</table></div>";
+
+        Html::closeForm();
 
         $nb = count($list);
 
@@ -561,7 +549,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             echo "</tbody>";
             echo "</table>";
         } else {
-
             if ($item->getType() == "DatabaseInstance") {
                 PluginWebapplicationsDatabaseInstance::showListObjects($list);
             } else {
