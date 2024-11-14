@@ -262,7 +262,12 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $icon = "";
         if ($item != false && $id > 0) {
-            $icon = "<i class='" . $item->getIcon() . " fa-1x'></i>";
+            if ($item->getType() == "Contract_Item") {
+                $icon = "<i class='" . Contract::getIcon() . " fa-1x'></i>";
+            } else {
+                $icon = "<i class='" . $item->getIcon() . " fa-1x'></i>";
+            }
+
         }
         echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
         echo "&nbsp;<span style='margin-right: auto;'>$title</span>";

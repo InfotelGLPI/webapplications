@@ -314,7 +314,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
 
             echo "</div>";
         } else {
-            echo __("No associated documents", 'webapplications');
+            echo __("No associated contracts", 'webapplications');
         }
 
 
