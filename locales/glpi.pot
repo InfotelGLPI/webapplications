@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-14 09:39+0000\n"
+"POT-Creation-Date: 2024-11-15 08:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,11 +35,11 @@ msgstr ""
 msgid "500 to 1000"
 msgstr ""
 
-#: inc/process_entity.class.php:116
+#: inc/process_entity.class.php:118
 msgid "Add a process"
 msgstr ""
 
-#: inc/process_entity.class.php:179
+#: inc/process_entity.class.php:181
 msgid "Add an entity"
 msgstr ""
 
@@ -47,7 +47,7 @@ msgstr ""
 msgid "All users"
 msgstr ""
 
-#: setup.php:132 inc/dashboard.class.php:69 inc/profile.class.php:195
+#: setup.php:132 inc/dashboard.class.php:70 inc/profile.class.php:195
 #: inc/webapplication.class.php:49
 msgid "Appliance dashboard"
 msgstr ""
@@ -87,6 +87,12 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
+#: inc/dashboard.class.php:571
+msgid "Certificate list"
+msgid_plural "Certificates list"
+msgstr[0] ""
+msgstr[1] ""
+
 #: hook.php:418 hook.php:489 inc/databaseinstance.class.php:382
 #: inc/process.class.php:210 inc/process.class.php:270
 #: templates/webapplication_process_form.html.twig:60
@@ -103,7 +109,7 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: inc/dashboard.class.php:539
+#: inc/dashboard.class.php:569
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
@@ -125,7 +131,7 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: inc/dashboard.class.php:533
+#: inc/dashboard.class.php:563
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
@@ -149,7 +155,7 @@ msgstr ""
 msgid "Integrity"
 msgstr ""
 
-#: inc/dashboard.class.php:537
+#: inc/dashboard.class.php:567
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
@@ -188,7 +194,7 @@ msgstr ""
 msgid "No associated documents"
 msgstr ""
 
-#: inc/dashboard.class.php:551
+#: inc/dashboard.class.php:583
 msgid "No associated objects"
 msgstr ""
 
@@ -214,8 +220,8 @@ msgstr ""
 msgid "Port"
 msgstr ""
 
-#: inc/process.class.php:47 inc/process_entity.class.php:71
-#: inc/process_entity.class.php:139 inc/profile.class.php:205
+#: inc/process.class.php:47 inc/process_entity.class.php:72
+#: inc/process_entity.class.php:141 inc/profile.class.php:205
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] ""
@@ -227,17 +233,17 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:535
+#: inc/dashboard.class.php:565
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:171
+#: inc/dashboard.class.php:172
 msgid "Project leader"
 msgstr ""
 
-#: inc/dashboard.class.php:182
+#: inc/dashboard.class.php:183
 msgid "Project team"
 msgstr ""
 
@@ -276,13 +282,13 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:541
+#: inc/dashboard.class.php:573
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:204
+#: inc/dashboard.class.php:205
 msgid "Summary"
 msgstr ""
 
