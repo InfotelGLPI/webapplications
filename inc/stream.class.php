@@ -380,6 +380,9 @@ class PluginWebapplicationsStream extends CommonDBTM
             echo "<i class='fa-1x fas fa-arrow-right'></i>";
             echo "&nbsp;<i class='fa-1x fas fa-ethernet'></i>&nbsp;" . $linkReceiver . "</h5>";
             echo "<p class='card-text'>";
+            echo $name;
+            echo "</p>";
+            echo "<p class='card-text'>";
             echo $object->fields['protocol']. " - ". $object->fields['port'];
             echo "</p>";
             if ($object->fields['encryption'] == 1) {

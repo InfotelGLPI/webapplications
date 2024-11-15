@@ -499,6 +499,14 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         } else {
             $list = self::getObjects($item, $ApplianceId);
         }
+        $used = [];
+
+        if (count($list) > 0) {
+            foreach ($list as $field) {
+                $used[] = $field['id'];
+            }
+        }
+
         $title = $object->getTypeName(2);
         self::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addObject');
 
@@ -524,16 +532,16 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                 [
                     'items_id_name' => 'items_id',
                     'itemtypes' => $CFG_GLPI['inventory_types'],
-                    'checkright' => true,
+                    'checkright' => true
                 ]
             );
         } else {
             $class = $object->getType();
             if ($object->getType() == "Certificate") {
-                $class::dropdown(['name' => 'certificates_id']);
+                $class::dropdown(['name' => 'certificates_id', 'used' => $used]);
                 echo Html::hidden('itemtype', ['value' => 'Appliance']);
             } else {
-                $class::dropdown(['name' => 'items_id']);
+                $class::dropdown(['name' => 'items_id', 'used' => $used]);
                 echo Html::hidden('itemtype', ['value' => $object->getType()]);
             }
 
