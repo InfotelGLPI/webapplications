@@ -60,12 +60,13 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             case 'PluginWebapplicationsEntity':
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
+                    $nb = $dbu->countElementsInTable(
+                        $this->getTable(),
+                        ["plugin_webapplications_entities_id" => $item->getID()]
+                    );
                     return self::createTabEntry(
-                        PluginWebapplicationsProcess::getTypeName(),
-                        $dbu->countElementsInTable(
-                            $this->getTable(),
-                            ["plugin_webapplications_entities_id" => $item->getID()]
-                        )
+                        PluginWebapplicationsProcess::getTypeName($nb),
+                        $nb
                     );
                 }
                 return _n('Process', 'Processes', 2, 'webapplications');
@@ -73,12 +74,13 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             case 'PluginWebapplicationsProcess':
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
+                    $nb = $dbu->countElementsInTable(
+                        $this->getTable(),
+                        ["plugin_webapplications_processes_id" => $item->getID()]
+                    );
                     return self::createTabEntry(
-                        PluginWebapplicationsEntity::getTypeName(),
-                        $dbu->countElementsInTable(
-                            $this->getTable(),
-                            ["plugin_webapplications_processes_id" => $item->getID()]
-                        )
+                        PluginWebapplicationsEntity::getTypeName($nb),
+                        $nb
                     );
                 }
                 return _n('Entity', 'Entities', 2);

@@ -45,20 +45,21 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $ong = [];
         //add main tab for current object
         $this->addDefaultFormTab($ong);
-        $this->addStandardTab('PluginWebapplicationsEntity', $ong, $options);// Vue Ecosystème
-        $this->addStandardTab('PluginWebapplicationsProcess', $ong, $options);//Vue Metier
+        $this->addStandardTab('PluginWebapplicationsEntity', $ong, $options);
+        $this->addStandardTab('PluginWebapplicationsProcess', $ong, $options);
         $this->addStandardTab(
             'PluginWebapplicationsPhysicalInfrastructure',
             $ong,
             $options
-        );//Vue Infra physiques
+        );
         $this->addStandardTab(
             'PluginWebapplicationsLogicalInfrastructure',
             $ong,
             $options
-        );//Vue Infra physiques
-        $this->addStandardTab('PluginWebapplicationsDatabaseInstance', $ong, $options);//Vue Base de données
-        $this->addStandardTab('PluginWebapplicationsStream', $ong, $options);//Vue Flux
+        );
+        $this->addStandardTab('PluginWebapplicationsDatabaseInstance', $ong, $options);
+        $this->addStandardTab('PluginWebapplicationsCertificate', $ong, $options);
+        $this->addStandardTab('PluginWebapplicationsStream', $ong, $options);
         $this->addStandardTab('PluginWebapplicationsKnowbase', $ong, $options);
 
         return $ong;
@@ -326,10 +327,6 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $ApplianceId = $appliance->getField('id');
 
-        $title = $item->getTypeName(1);
-
-        self::showTitleforDashboard($title, $ApplianceId, $item);
-
         $app_item = new Appliance_Item();
 
         if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
@@ -337,6 +334,10 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         } else {
             $apps = $app_item->find(['appliances_id' => $ApplianceId, 'itemtype' => $item->getType()]);
         }
+
+        $title = $item->getTypeName(count($apps));
+
+        self::showTitleforDashboard($title, $ApplianceId, $item);
 
         $obj = new $item();
 
@@ -425,16 +426,31 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
     public static function getObjects($item, $ApplianceId)
     {
-        $app_item = new Appliance_Item();
 
-        $apps = $app_item->find([
-            'appliances_id' => $ApplianceId,
-            'itemtype' => $item->getType()
-        ]);
+        if ($item->getType() == "Certificate") {
+            $app_item = new Certificate_Item();
+            $apps = $app_item->find([
+                'items_id' => $ApplianceId,
+                'itemtype' => "Appliance"
+            ]);
+        } else {
+            $app_item = new Appliance_Item();
+            $apps = $app_item->find([
+                'appliances_id' => $ApplianceId,
+                'itemtype' => $item->getType()
+            ]);
+        }
 
         $listId = [];
-        foreach ($apps as $app) {
-            array_push($listId, $app['items_id']);
+        if ($item->getType() == "Certificate") {
+            foreach ($apps as $app) {
+                array_push($listId, $app['certificates_id']);
+            }
+        } else {
+
+            foreach ($apps as $app) {
+                array_push($listId, $app['items_id']);
+            }
         }
 
         $list = [];
@@ -489,6 +505,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         if ($object->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
             echo "<form name='form' method='post' action='" .
                 PLUGIN_WEBAPPLICATIONS_WEBDIR."/front/dashboard.php"."'>";
+        } else if ($object->getType() == "Certificate") {
+            echo "<form name='form' method='post' action='" .
+                Toolbox::getItemTypeFormURL('Certificate_Item') . "'>";
         } else {
             echo "<form name='form' method='post' action='" .
                 Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
@@ -510,12 +529,23 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             );
         } else {
             $class = $object->getType();
-            $class::dropdown(['name' => 'items_id']);
-            echo Html::hidden('itemtype', ['value' => $object->getType()]);
+            if ($object->getType() == "Certificate") {
+                $class::dropdown(['name' => 'certificates_id']);
+                echo Html::hidden('itemtype', ['value' => 'Appliance']);
+            } else {
+                $class::dropdown(['name' => 'items_id']);
+                echo Html::hidden('itemtype', ['value' => $object->getType()]);
+            }
+
         }
         echo "</td>";
         echo "<td class='tab_bg_2 center' colspan='6'>";
-        echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
+        if ($object->getType() == "Certificate") {
+            echo Html::hidden('items_id', ['value' => $ApplianceId]);
+        } else {
+            echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
+        }
+
         if ($object->canCreate()) {
             echo Html::submit(_sx('button', 'Associate'), ['name' => 'add', 'class' => 'btn btn-primary']);
         }
@@ -537,6 +567,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                 echo _n("Item list", "Items list", $nb, 'webapplications');
             } elseif ($item->getType() == "DatabaseInstance") {
                 echo _n("Database list", "Databases list", $nb, 'webapplications');
+            } elseif ($item->getType() == "Certificate") {
+                echo _n("Certificate list", "Certificates list", $nb, 'webapplications');
             } elseif ($item->getType() == "PluginWebapplicationsStream") {
                 echo _n("Stream list", "Streams list", $nb, 'webapplications');
             }
@@ -556,6 +588,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         } else {
             if ($item->getType() == "DatabaseInstance") {
                 PluginWebapplicationsDatabaseInstance::showListObjects($list);
+            } else if ($item->getType() == "Certificate") {
+                PluginWebapplicationsCertificate::showListObjects($list);
             } else {
                 $item::showListObjects($list);
             }

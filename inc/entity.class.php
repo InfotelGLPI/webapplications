@@ -77,7 +77,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
             $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
             $self = new self();
             $nb = count(PluginWebapplicationsDashboard::getObjects($self, $ApplianceId));
-            return self::createTabEntry(self::getTypeName(), $nb);
+            return self::createTabEntry(self::getTypeName($nb), $nb);
         }
         return self::getTypeName();
     }

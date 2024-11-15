@@ -42,7 +42,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
 
     public static function getTypeName($nb = 0)
     {
-        return _n("Database", 'Databases', $nb);
+        return _n('Database', 'Databases', $nb);
     }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -51,7 +51,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
             $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
             $self = new DatabaseInstance();
             $nb = count(PluginWebapplicationsDashboard::getObjects($self, $ApplianceId));
-            return self::createTabEntry(self::getTypeName(), $nb);
+            return self::createTabEntry(self::getTypeName($nb), $nb);
         }
         return self::getTypeName();
     }

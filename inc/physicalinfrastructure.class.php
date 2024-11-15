@@ -53,7 +53,7 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
             $nb = count(self::getItems());
-            return self::createTabEntry(self::getTypeName(), $nb);
+            return self::createTabEntry(self::getTypeName($nb), $nb);
         }
         return self::getTypeName();
     }

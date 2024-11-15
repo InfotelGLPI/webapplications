@@ -105,7 +105,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
                 ]
             ]));
         }
-        return self::createTabEntry(self::getTypeName(), $total);
+        return self::createTabEntry(self::getTypeName($total), $total);
     }
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)

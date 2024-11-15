@@ -58,7 +58,7 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
                 'itemtype' => 'Appliance']);
 
             $nbEntities = count($kbApp);
-            return self::createTabEntry(self::getTypeName(), $nbEntities);
+            return self::createTabEntry(self::getTypeName($nbEntities), $nbEntities);
         }
         return self::getTypeName();
     }
