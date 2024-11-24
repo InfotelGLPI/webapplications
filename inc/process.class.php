@@ -72,7 +72,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
             $self = new self();
             $nb = count(PluginWebapplicationsDashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);
@@ -102,7 +102,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
 
     public function post_getEmpty()
     {
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
         if ($ApplianceId > 0) {
             $webs = getAllDataFromTable(
                 PluginWebapplicationsAppliance::getTable(),
@@ -303,10 +303,11 @@ class PluginWebapplicationsProcess extends CommonDBTM
                     ]
                 );
             }
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
             echo "</span>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+
         }
         echo "</div>";
     }

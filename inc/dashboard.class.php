@@ -485,7 +485,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
          };"
         );
 
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
 
         $appliance = new Appliance();
         $appliance->getFromDB($ApplianceId);

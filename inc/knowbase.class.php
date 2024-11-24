@@ -52,7 +52,7 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
             $kbAppDBTM = new KnowbaseItem_Item();
             $kbApp     = $kbAppDBTM->find(['items_id' => $ApplianceId,
                 'itemtype' => 'Appliance']);
@@ -72,7 +72,7 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
     public static function showLists()
     {
 
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
         $item = new Appliance();
         $item->getFromDB($ApplianceId);
 

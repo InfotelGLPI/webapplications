@@ -35,6 +35,9 @@ Ce plugin vous permet d'afficher vos applications métiers de votre réseau sous
 
 ![alt text](https://github.com/InfotelGLPI/webapplications/blob/master/screenshots/kbitems.png?raw=true)
 
+Si besoin de définir l'environnement en GLPI 10 :
+https://github.com/glpi-project/glpi/pull/18288
+
 Ce plugin est sur Transifex - Aidez-nous à le traduire :
 https://www.transifex.com/infotelGLPI/GLPI_webapplications/
 

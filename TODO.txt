@@ -1,5 +1,0 @@
-lier des processus à des entités ?
-
-
-Si besoin de définir l'environnementen GLPI 10 : 
-https://github.com/glpi-project/glpi/pull/18288

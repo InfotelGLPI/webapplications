@@ -54,7 +54,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
     {
         global $DB;
 
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
 
         $item = new Appliance();
         $item->getFromDB($ApplianceId);
@@ -145,7 +145,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
 
     public static function showLists()
     {
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
 
         $item = new Appliance();
         $item->getFromDB($ApplianceId);

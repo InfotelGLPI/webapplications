@@ -68,7 +68,7 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
     public static function getItems()
     {
         global $CFG_GLPI;
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
 
         $itemsAppDBTM = new Appliance_Item();
 
@@ -98,7 +98,7 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
     {
         global $DB;
 
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
         $list_by_itemtypes = [];
         foreach ($list as $item) {
             $list_by_itemtypes[$item['itemtype']][] =  $item['id'];
