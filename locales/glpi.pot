@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-24 08:34+0000\n"
+"POT-Creation-Date: 2024-11-25 10:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,7 +68,7 @@ msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:400 hook.php:473 inc/databaseinstance.class.php:362
+#: hook.php:398 hook.php:471 inc/databaseinstance.class.php:362
 #: inc/process.class.php:196 inc/process.class.php:260
 #: templates/webapplication_process_form.html.twig:27
 #: templates/webapplication_appliance_form.html.twig:115
@@ -76,7 +76,7 @@ msgstr[1] ""
 msgid "Availability"
 msgstr ""
 
-#: hook.php:296 templates/webapplication_form.html.twig:32
+#: hook.php:294 templates/webapplication_form.html.twig:32
 #: templates/webapplication_appliance_form.html.twig:32
 msgid "Backoffice URL"
 msgstr ""
@@ -93,7 +93,7 @@ msgid_plural "Certificates list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:418 hook.php:489 inc/databaseinstance.class.php:382
+#: hook.php:416 hook.php:487 inc/databaseinstance.class.php:382
 #: inc/process.class.php:210 inc/process.class.php:270
 #: templates/webapplication_process_form.html.twig:60
 #: templates/webapplication_appliance_form.html.twig:147
@@ -143,11 +143,11 @@ msgid_plural "External exposition"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:373 templates/webapplication_appliance_form.html.twig:41
+#: hook.php:371 templates/webapplication_appliance_form.html.twig:41
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:409 hook.php:481 inc/databaseinstance.class.php:372
+#: hook.php:407 hook.php:479 inc/databaseinstance.class.php:372
 #: inc/process.class.php:203 inc/process.class.php:265
 #: templates/webapplication_process_form.html.twig:44
 #: templates/webapplication_appliance_form.html.twig:131
@@ -251,7 +251,7 @@ msgstr ""
 msgid "Protocol"
 msgstr ""
 
-#: hook.php:437 templates/webapplication_appliance_form.html.twig:221
+#: hook.php:435 templates/webapplication_appliance_form.html.twig:221
 #: templates/webapplication_dashboard_support.html.twig:15
 msgid "Referent editor"
 msgstr ""
@@ -301,7 +301,7 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: hook.php:427 hook.php:497 inc/databaseinstance.class.php:392
+#: hook.php:425 hook.php:495 inc/databaseinstance.class.php:392
 #: inc/process.class.php:217 inc/process.class.php:275
 #: templates/webapplication_process_form.html.twig:77
 #: templates/webapplication_appliance_form.html.twig:164
@@ -324,7 +324,7 @@ msgstr ""
 msgid "Validation"
 msgstr ""
 
-#: hook.php:391
+#: hook.php:389
 msgid "Validation by CIO"
 msgstr ""
 
@@ -332,7 +332,7 @@ msgstr ""
 msgid "Validation by CISO"
 msgstr ""
 
-#: hook.php:382 templates/webapplication_appliance_form.html.twig:194
+#: hook.php:380 templates/webapplication_appliance_form.html.twig:194
 msgid "Validation of the request by the referring Department"
 msgstr ""
 
