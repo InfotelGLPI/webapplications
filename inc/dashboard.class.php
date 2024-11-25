@@ -227,6 +227,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         self::showFromDashboard($appliance, new DatabaseInstance());
 
+        self::showFromDashboard($appliance, new Certificate());
+
         self::showFromDashboard($appliance, new PluginWebapplicationsStream());
 
         echo "</div>";
@@ -331,10 +333,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
             $apps = PluginWebapplicationsPhysicalInfrastructure::getItems();
+        } else if ($item->getType() == "Certificate") {
+            $apps = self::getObjects($item, $ApplianceId);
         } else {
             $apps = $app_item->find(['appliances_id' => $ApplianceId, 'itemtype' => $item->getType()]);
         }
-
         $title = $item->getTypeName(count($apps));
 
         self::showTitleforDashboard($title, $ApplianceId, $item);
@@ -378,6 +381,14 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                                 echo " - " . $env->getName();
                             }
                         }
+                        echo "</a>";
+                    }
+                } else if ($item->getType() == "Certificate") {
+//                    $itemDBTM = new $app['itemtype'];
+                    if ($item->getFromDB($app['id'])) {
+                        $name = $item->getName();
+                        $link = $item::getFormURLWithID($app['id']);
+                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
                         echo "</a>";
                     }
                 } else {
