@@ -225,9 +225,7 @@ function plugin_webapplications_uninstall()
                     "glpi_dropdowntranslations"];
 
     foreach ($tables_glpi as $table_glpi) {
-        $DB->doQuery("DELETE
-                  FROM `$table_glpi`
-                  WHERE `itemtype` LIKE 'PluginWebapplications%'");
+        $DB->delete($table_glpi, ['itemtype' => ['LIKE' => 'PluginWebapplications%']]);
     }
 
     //Delete rights associated with the plugin
