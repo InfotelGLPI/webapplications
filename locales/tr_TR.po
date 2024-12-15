@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-14 09:05+0000\n"
+"POT-Creation-Date: 2024-11-25 12:52+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2024\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/infotelGLPI/teams/12376/tr_TR/)\n"
@@ -37,11 +37,11 @@ msgstr "1000 ile 5000"
 msgid "500 to 1000"
 msgstr "500 ile 1000"
 
-#: inc/process_entity.class.php:116
+#: inc/process_entity.class.php:118
 msgid "Add a process"
 msgstr "Süreç ekle"
 
-#: inc/process_entity.class.php:179
+#: inc/process_entity.class.php:181
 msgid "Add an entity"
 msgstr "Birim ekle"
 
@@ -49,7 +49,8 @@ msgstr "Birim ekle"
 msgid "All users"
 msgstr "Tüm kullanıcılar"
 
-#: setup.php:128 inc/dashboard.class.php:88 inc/profile.class.php:195
+#: setup.php:132 inc/dashboard.class.php:70 inc/profile.class.php:195
+#: inc/webapplication.class.php:49
 msgid "Appliance dashboard"
 msgstr "Aygıt panosu"
 
@@ -57,20 +58,27 @@ msgstr "Aygıt panosu"
 msgid "Are you sure you want to do core migration ?"
 msgstr "Çekirdek aktarımı yapmak istediğinize emin misiniz?"
 
-#: inc/dashboard.class.php:238
+#: inc/appliance.class.php:300
+msgid "Associated contract"
+msgid_plural "Associated contracts"
+msgstr[0] "İlgili sözleşme"
+msgstr[1] "İlgili sözleşmeler"
+
+#: inc/appliance.class.php:277
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] "İlgili belge"
 msgstr[1] "İlgili belgeler"
 
-#: hook.php:400 hook.php:473 inc/process.class.php:178
+#: hook.php:398 hook.php:471 inc/databaseinstance.class.php:362
+#: inc/process.class.php:196 inc/process.class.php:260
 #: templates/webapplication_process_form.html.twig:27
 #: templates/webapplication_appliance_form.html.twig:115
 #: templates/webapplication_database_form.html.twig:32
 msgid "Availability"
 msgstr "Kullanılabilirlik"
 
-#: hook.php:296 templates/webapplication_form.html.twig:32
+#: hook.php:294 templates/webapplication_form.html.twig:32
 #: templates/webapplication_appliance_form.html.twig:32
 msgid "Backoffice URL"
 msgstr "Arka ofis İnternet adresi"
@@ -81,7 +89,14 @@ msgid_plural "Categories"
 msgstr[0] "Kategori"
 msgstr[1] "Kategoriler"
 
-#: hook.php:418 hook.php:489 inc/process.class.php:192
+#: inc/dashboard.class.php:590
+msgid "Certificate list"
+msgid_plural "Certificates list"
+msgstr[0] "Sertifika listesi"
+msgstr[1] "Sertifikaların listesi"
+
+#: hook.php:416 hook.php:487 inc/databaseinstance.class.php:382
+#: inc/process.class.php:210 inc/process.class.php:270
 #: templates/webapplication_process_form.html.twig:60
 #: templates/webapplication_appliance_form.html.twig:147
 #: templates/webapplication_database_form.html.twig:62
@@ -96,7 +111,7 @@ msgstr "Çekirdek aktarımı"
 msgid "Data migration"
 msgstr "Veri aktarımı"
 
-#: inc/dashboard.class.php:546
+#: inc/dashboard.class.php:588
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] "Veri tabanı listesi"
@@ -115,11 +130,12 @@ msgstr "Ekosistem"
 msgid "Encryption"
 msgstr "Şifreleme"
 
-#: inc/stream.class.php:229 templates/webapplication_stream_form.html.twig:63
+#: inc/stream.class.php:229 inc/stream.class.php:390
+#: templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr "Şifreleme türü"
 
-#: inc/dashboard.class.php:540
+#: inc/dashboard.class.php:582
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] "Birim listesi"
@@ -131,18 +147,19 @@ msgid_plural "External exposition"
 msgstr[0] "Dışa açıklık"
 msgstr[1] "Dışa açıklık"
 
-#: hook.php:373 templates/webapplication_appliance_form.html.twig:41
+#: hook.php:371 templates/webapplication_appliance_form.html.twig:41
 msgid "Installed version"
 msgstr "Kurulu sürüm"
 
-#: hook.php:409 hook.php:481 inc/process.class.php:185
+#: hook.php:407 hook.php:479 inc/databaseinstance.class.php:372
+#: inc/process.class.php:203 inc/process.class.php:265
 #: templates/webapplication_process_form.html.twig:44
 #: templates/webapplication_appliance_form.html.twig:131
 #: templates/webapplication_database_form.html.twig:48
 msgid "Integrity"
 msgstr "Bütünlük"
 
-#: inc/dashboard.class.php:544
+#: inc/dashboard.class.php:586
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] "Öge listesi"
@@ -159,13 +176,13 @@ msgid "Link with core purge"
 msgstr "Çekirdek temizliği ile bağlantı"
 
 #: inc/logicalinfrastructure.class.php:44
-#: inc/logicalinfrastructure.class.php:156
+#: inc/logicalinfrastructure.class.php:158
 msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] "Mantıksal altyapı"
 msgstr[1] "Mantıksal altyapılar"
 
-#: templates/webapplication_dashboard_support.html.twig:18
+#: templates/webapplication_dashboard_support.html.twig:24
 msgid "Mail support"
 msgstr "E-posta desteği"
 
@@ -173,11 +190,15 @@ msgstr "E-posta desteği"
 msgid "Migration was successful"
 msgstr "Aktarım tamamlandı"
 
-#: inc/dashboard.class.php:250
+#: inc/appliance.class.php:317
+msgid "No associated contracts"
+msgstr "İlgili bir sözleşme yok"
+
+#: inc/appliance.class.php:294
 msgid "No associated documents"
 msgstr "İlişkili bir belge yok"
 
-#: inc/dashboard.class.php:558
+#: inc/dashboard.class.php:602
 msgid "No associated objects"
 msgstr "İlişkili bir nesne yok"
 
@@ -185,13 +206,13 @@ msgstr "İlişkili bir nesne yok"
 msgid "Number of users"
 msgstr "Kullanıcı sayısı"
 
-#: inc/entity.class.php:158 inc/process.class.php:170
-#: templates/webapplication_entity_form.html.twig:13
+#: inc/entity.class.php:158 inc/entity.class.php:213 inc/process.class.php:188
+#: inc/process.class.php:255 templates/webapplication_entity_form.html.twig:13
 #: templates/webapplication_process_form.html.twig:12
 msgid "Owner"
 msgstr "Sahip"
 
-#: templates/webapplication_dashboard_support.html.twig:24
+#: templates/webapplication_dashboard_support.html.twig:33
 msgid "Phone support"
 msgstr "Telefon desteği"
 
@@ -203,8 +224,8 @@ msgstr "Fiziksel yapı"
 msgid "Port"
 msgstr "Bağlantı noktası"
 
-#: inc/process.class.php:47 inc/process_entity.class.php:71
-#: inc/process_entity.class.php:139 inc/profile.class.php:205
+#: inc/process.class.php:47 inc/process_entity.class.php:72
+#: inc/process_entity.class.php:141 inc/profile.class.php:205
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] "Süreç"
@@ -216,17 +237,17 @@ msgid_plural "Processes Entity"
 msgstr[0] "Süreç birimi"
 msgstr[1] "Süreçlerin birimi"
 
-#: inc/dashboard.class.php:542
+#: inc/dashboard.class.php:584
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] "Süreç listesi"
 msgstr[1] "Süreçler listesi"
 
-#: inc/dashboard.class.php:205
+#: inc/dashboard.class.php:172
 msgid "Project leader"
 msgstr "Proje lideri"
 
-#: inc/dashboard.class.php:220
+#: inc/dashboard.class.php:183
 msgid "Project team"
 msgstr "Proje ekibi"
 
@@ -234,16 +255,18 @@ msgstr "Proje ekibi"
 msgid "Protocol"
 msgstr "İletişim kuralı"
 
-#: hook.php:437 templates/webapplication_appliance_form.html.twig:221
-#: templates/webapplication_dashboard_support.html.twig:12
+#: hook.php:435 templates/webapplication_appliance_form.html.twig:221
+#: templates/webapplication_dashboard_support.html.twig:15
 msgid "Referent editor"
 msgstr "Referans düzenleyici"
 
-#: inc/entity.class.php:176 templates/webapplication_entity_form.html.twig:37
+#: inc/entity.class.php:176 inc/entity.class.php:225
+#: templates/webapplication_entity_form.html.twig:37
 msgid "Relation nature"
 msgstr "İlişki doğası"
 
-#: inc/entity.class.php:168 templates/webapplication_entity_form.html.twig:25
+#: inc/entity.class.php:168 inc/entity.class.php:218
+#: templates/webapplication_entity_form.html.twig:25
 msgid "Security Contact"
 msgstr "Güvenlik sorumlusu"
 
@@ -264,13 +287,13 @@ msgid_plural "Streams"
 msgstr[0] "Akış"
 msgstr[1] "Akışlar"
 
-#: inc/dashboard.class.php:548
+#: inc/dashboard.class.php:592
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] "Akış listesi"
 msgstr[1] "Akışlar listesi"
 
-#: inc/dashboard.class.php:259
+#: inc/dashboard.class.php:205
 msgid "Summary"
 msgstr "Özet"
 
@@ -283,7 +306,8 @@ msgstr "Destek"
 msgid "Tables purge"
 msgstr "Tablo temizliği"
 
-#: hook.php:427 hook.php:497 inc/process.class.php:199
+#: hook.php:425 hook.php:495 inc/databaseinstance.class.php:392
+#: inc/process.class.php:217 inc/process.class.php:275
 #: templates/webapplication_process_form.html.twig:77
 #: templates/webapplication_appliance_form.html.twig:164
 #: templates/webapplication_database_form.html.twig:77
@@ -305,7 +329,7 @@ msgstr "Adres"
 msgid "Validation"
 msgstr "Onay"
 
-#: hook.php:391
+#: hook.php:389
 msgid "Validation by CIO"
 msgstr "CIO onayı"
 
@@ -313,12 +337,11 @@ msgstr "CIO onayı"
 msgid "Validation by CISO"
 msgstr "CISO onayı"
 
-#: hook.php:382 templates/webapplication_appliance_form.html.twig:194
+#: hook.php:380 templates/webapplication_appliance_form.html.twig:194
 msgid "Validation of the request by the referring Department"
 msgstr "Yönlendiren bölüm tarafından isteğin onaylanması"
 
 #: inc/appliance.class.php:44 inc/profile.class.php:190
-#: inc/webapplication.class.php:49
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "İnternet uygulaması"
