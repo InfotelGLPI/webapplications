@@ -266,6 +266,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             case "receiver_type":
                 $types = $CFG_GLPI['inventory_types'];
                 $types[] = 'DatabaseInstance';
+                $types[] = 'Appliance';
                 $items = [];
                 foreach ($types as $k => $type) {
                     $items[$type] = $type::getTypeName();
@@ -301,6 +302,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             case "receiver_type":
                 $types = $CFG_GLPI['inventory_types'];
                 $types[] = 'DatabaseInstance';
+                $types[] = 'Appliance';
                 $items = [];
                 foreach ($types as $k => $type) {
                     $items[$type] = $type::getTypeName();
@@ -372,7 +374,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             echo "<div class='card w-25' style='margin-right: 10px;margin-top: 10px;'>";
             echo "<div class='card-body'>";
             echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='fa-5x fas ".self::getIcon()."'></i>";
+            echo "<i class='fa-5x fas " . self::getIcon() . "'></i>";
             echo "</div>";
             echo "<div style='display: inline-block;';>";
 
@@ -383,11 +385,11 @@ class PluginWebapplicationsStream extends CommonDBTM
             echo $name;
             echo "</p>";
             echo "<p class='card-text'>";
-            echo $object->fields['protocol']. " - ". $object->fields['port'];
+            echo $object->fields['protocol'] . " - " . $object->fields['port'];
             echo "</p>";
             if ($object->fields['encryption'] == 1) {
                 echo "<p class='card-text'>";
-                echo __('Encryption type', 'webapplications')." : ".$object->fields['encryption_type'];
+                echo __('Encryption type', 'webapplications') . " : " . $object->fields['encryption_type'];
                 echo "</p>";
             }
             $link = $object::getFormURLWithID($id);
@@ -420,7 +422,6 @@ class PluginWebapplicationsStream extends CommonDBTM
             echo "</div>";
             echo "</div>";
             echo "</div>";
-
         }
         echo "</div>";
     }

@@ -106,7 +106,7 @@ function plugin_init_webapplications()
         'PluginWebapplicationsStream',
         'Appliance'
     );
-    $CFG_GLPI['stream_types'] = ['DatabaseInstance', 'Computer', 'NetworkEquipment'];
+    $CFG_GLPI['stream_types'] = ['DatabaseInstance', 'Computer', 'NetworkEquipment', 'Appliance'];
 
 
     if (isset($_SERVER['REQUEST_URI'])
