@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-01 14:51+0000\n"
+"POT-Creation-Date: 2025-03-03 10:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -124,7 +124,7 @@ msgstr ""
 msgid "Encryption"
 msgstr ""
 
-#: inc/stream.class.php:229 inc/stream.class.php:390
+#: inc/stream.class.php:229 inc/stream.class.php:392
 #: templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr ""
