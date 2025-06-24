@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-03 10:39+0000\n"
+"POT-Creation-Date: 2025-06-24 13:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "All users"
 msgstr ""
 
-#: setup.php:132 inc/dashboard.class.php:70 inc/profile.class.php:195
+#: setup.php:138 inc/dashboard.class.php:70 inc/profile.class.php:203
 #: inc/webapplication.class.php:49
 msgid "Appliance dashboard"
 msgstr ""
@@ -67,14 +67,15 @@ msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:398 hook.php:471 inc/databaseinstance.class.php:362
+#: hook.php:407 hook.php:480 inc/databaseinstance.class.php:375
 #: inc/process.class.php:196 inc/process.class.php:260
 #: templates/webapplication_process_form.html.twig:27
-#: templates/webapplication_database_form.html.twig:32 templates/webapplication_appliance_form.html.twig:115
+#: templates/webapplication_appliance_form.html.twig:115 templates/webapplication_database_form.html.twig:32
 msgid "Availability"
 msgstr ""
 
-#: hook.php:294 templates/webapplication_form.html.twig:32 templates/webapplication_appliance_form.html.twig:32
+#: hook.php:303 templates/webapplication_form.html.twig:32
+#: templates/webapplication_appliance_form.html.twig:32
 msgid "Backoffice URL"
 msgstr ""
 
@@ -90,10 +91,10 @@ msgid_plural "Certificates list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:416 hook.php:487 inc/databaseinstance.class.php:382
+#: hook.php:425 hook.php:496 inc/databaseinstance.class.php:395
 #: inc/process.class.php:210 inc/process.class.php:270
 #: templates/webapplication_process_form.html.twig:60
-#: templates/webapplication_database_form.html.twig:62 templates/webapplication_appliance_form.html.twig:147
+#: templates/webapplication_appliance_form.html.twig:147 templates/webapplication_database_form.html.twig:62
 msgid "Confidentiality"
 msgstr ""
 
@@ -141,14 +142,14 @@ msgid_plural "External exposition"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:371 templates/webapplication_appliance_form.html.twig:41
+#: hook.php:380 templates/webapplication_appliance_form.html.twig:41
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:407 hook.php:479 inc/databaseinstance.class.php:372
+#: hook.php:416 hook.php:488 inc/databaseinstance.class.php:385
 #: inc/process.class.php:203 inc/process.class.php:265
 #: templates/webapplication_process_form.html.twig:44
-#: templates/webapplication_database_form.html.twig:48 templates/webapplication_appliance_form.html.twig:131
+#: templates/webapplication_appliance_form.html.twig:131 templates/webapplication_database_form.html.twig:48
 msgid "Integrity"
 msgstr ""
 
@@ -200,8 +201,8 @@ msgid "Number of users"
 msgstr ""
 
 #: inc/entity.class.php:158 inc/entity.class.php:213 inc/process.class.php:188
-#: inc/process.class.php:255 templates/webapplication_entity_form.html.twig:13
-#: templates/webapplication_process_form.html.twig:12
+#: inc/process.class.php:255 templates/webapplication_process_form.html.twig:12
+#: templates/webapplication_entity_form.html.twig:13
 msgid "Owner"
 msgstr ""
 
@@ -218,7 +219,7 @@ msgid "Port"
 msgstr ""
 
 #: inc/process.class.php:47 inc/process_entity.class.php:72
-#: inc/process_entity.class.php:141 inc/profile.class.php:205
+#: inc/process_entity.class.php:141 inc/profile.class.php:213
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] ""
@@ -248,7 +249,7 @@ msgstr ""
 msgid "Protocol"
 msgstr ""
 
-#: hook.php:435 templates/webapplication_dashboard_support.html.twig:15
+#: hook.php:444 templates/webapplication_dashboard_support.html.twig:15
 #: templates/webapplication_appliance_form.html.twig:221
 msgid "Referent editor"
 msgstr ""
@@ -264,7 +265,7 @@ msgid "Security Contact"
 msgstr ""
 
 #: templates/webapplication_process_form.html.twig:18
-#: templates/webapplication_database_form.html.twig:24 templates/webapplication_appliance_form.html.twig:95
+#: templates/webapplication_appliance_form.html.twig:95 templates/webapplication_database_form.html.twig:24
 msgid "Security Needs"
 msgstr ""
 
@@ -273,7 +274,7 @@ msgstr ""
 msgid "Source"
 msgstr ""
 
-#: inc/profile.class.php:200 inc/stream.class.php:45
+#: inc/profile.class.php:208 inc/stream.class.php:45
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] ""
@@ -289,7 +290,8 @@ msgstr[1] ""
 msgid "Summary"
 msgstr ""
 
-#: inc/appliance.class.php:232 templates/webapplication_appliance_form.html.twig:211
+#: inc/appliance.class.php:232
+#: templates/webapplication_appliance_form.html.twig:211
 msgid "Support"
 msgstr ""
 
@@ -297,10 +299,10 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: hook.php:425 hook.php:495 inc/databaseinstance.class.php:392
+#: hook.php:434 hook.php:504 inc/databaseinstance.class.php:405
 #: inc/process.class.php:217 inc/process.class.php:275
 #: templates/webapplication_process_form.html.twig:77
-#: templates/webapplication_database_form.html.twig:77 templates/webapplication_appliance_form.html.twig:164
+#: templates/webapplication_appliance_form.html.twig:164 templates/webapplication_database_form.html.twig:77
 msgid "Traceability"
 msgstr ""
 
@@ -310,7 +312,8 @@ msgid_plural "Types of treatment server"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/webapplication_form.html.twig:23 templates/webapplication_appliance_form.html.twig:23
+#: templates/webapplication_form.html.twig:23
+#: templates/webapplication_appliance_form.html.twig:23
 msgid "URL"
 msgstr ""
 
@@ -318,7 +321,7 @@ msgstr ""
 msgid "Validation"
 msgstr ""
 
-#: hook.php:389
+#: hook.php:398
 msgid "Validation by CIO"
 msgstr ""
 
@@ -326,11 +329,11 @@ msgstr ""
 msgid "Validation by CISO"
 msgstr ""
 
-#: hook.php:380 templates/webapplication_appliance_form.html.twig:194
+#: hook.php:389 templates/webapplication_appliance_form.html.twig:194
 msgid "Validation of the request by the referring Department"
 msgstr ""
 
-#: inc/appliance.class.php:44 inc/profile.class.php:190
+#: inc/appliance.class.php:44 inc/profile.class.php:198
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] ""
