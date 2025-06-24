@@ -174,7 +174,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<i class='fa fa-user-cog fa-3x'></i>";
         echo "<br>";
         echo "<h2>";
-        echo getUserName($userAdminId, 1);
+        echo getUserName($userAdminId);
         echo "</h2>";
         echo "</div>";
 

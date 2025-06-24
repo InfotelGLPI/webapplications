@@ -45,6 +45,11 @@ class PluginWebapplicationsCertificate extends CommonDBTM
         return _n("Certificate", 'Certificates', $nb);
     }
 
+    public static function getIcon()
+    {
+        return "ti ti-certificate";
+    }
+
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {

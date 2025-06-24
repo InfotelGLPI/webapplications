@@ -98,16 +98,25 @@ function plugin_webapplications_install()
         foreach ($notepad_tables as $t) {
             // Migrate data
             if ($DB->fieldExists($t, 'notepad')) {
-                $query = "SELECT id, notepad
-                      FROM `$t`
-                      WHERE notepad IS NOT NULL
-                            AND notepad <>'';";
-                foreach ($DB->request($query) as $data) {
-                    $iq = "INSERT INTO `glpi_notepads`
+                $iterator = $DB->request([
+                    'SELECT' => [
+                        'notepad',
+                        'id'
+                    ],
+                    'FROM' => $t,
+                    'WHERE' => [
+                        'NOT' => ['notepad' => null],
+                        'notepad' => ['<>', '']
+                    ],
+                ]);
+                if (count($iterator) > 0) {
+                    foreach ($iterator as $data) {
+                        $iq = "INSERT INTO `glpi_notepads`
                              (`itemtype`, `items_id`, `content`, `date`, `date_mod`)
                       VALUES ('" . $dbu->getItemTypeForTable($t) . "', '" . $data['id'] . "',
                               '" . addslashes($data['notepad']) . "', NOW(), NOW())";
-                    $DB->doQueryOrDie($iq, "0.85 migrate notepad data");
+                        $DB->doQuery($iq, "0.85 migrate notepad data");
+                    }
                 }
                 $query = "ALTER TABLE `glpi_plugin_webapplications_webapplications` DROP COLUMN `notepad`;";
                 $DB->doQuery($query);

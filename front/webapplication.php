@@ -65,7 +65,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
     $webappstypes = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplicationtypes');
     $add_temporary_column_query = "ALTER TABLE `glpi_appliancetypes` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
-    $DB->doQueryOrDie($add_temporary_column_query);
+    $DB->doQuery($add_temporary_column_query);
 
     foreach ($webappstypes as $webapptype) {
         $migrate_webapptypes = 'INSERT INTO `glpi_appliancetypes` (`entities_id`, `is_recursive`, `name`, `comment`, `old_id`)
@@ -78,7 +78,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
     $webapps                    = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplications');
     $add_temporary_column_query = "ALTER TABLE `glpi_appliances` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
-    $DB->doQueryOrDie($add_temporary_column_query);
+    $DB->doQuery($add_temporary_column_query);
     foreach ($webapps as $webapp) {
         $migrate_webapps = 'INSERT INTO `glpi_appliances` (`entities_id`, `is_recursive`, `name`, `is_deleted`, `appliancetypes_id`,
                                                `comment`, `locations_id`, `manufacturers_id`, `users_id_tech`,`groups_id_tech`, `old_id`
@@ -133,7 +133,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
     }
 
     $remove_temporary_column_query = "ALTER TABLE `glpi_appliances` DROP `old_id`;";
-    $DB->doQueryOrDie($remove_temporary_column_query);
+    $DB->doQuery($remove_temporary_column_query);
 
     $appliance_types = $dbu->getAllDataFromTable('glpi_appliancetypes', ['old_id' => ['>', 0]]);
 
@@ -145,7 +145,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
     }
 
     $remove_temporary_column_query = "ALTER TABLE `glpi_appliancetypes` DROP `old_id`;";
-    $DB->doQueryOrDie($remove_temporary_column_query);
+    $DB->doQuery($remove_temporary_column_query);
 
     echo "<br>";
     echo __('Tables purge', 'webapplications');

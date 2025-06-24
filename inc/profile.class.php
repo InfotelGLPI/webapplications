@@ -48,12 +48,20 @@ class PluginWebapplicationsProfile extends Profile
     {
         if ($item->getType() == 'Profile') {
             if ($item->getField('interface') == 'central') {
-                return PluginWebapplicationsWebapplication::getTypeName(2);
+                return self::createTabEntry(PluginWebapplicationsWebapplication::getTypeName(2));
             }
         }
         return '';
     }
 
+
+    /**
+     * @return string
+     */
+    public static function getIcon()//self::createTabEntry(
+    {
+        return "fas fa-border-all";
+    }
 
     /**
      * @param CommonGLPI $item
@@ -258,10 +266,9 @@ class PluginWebapplicationsProfile extends Profile
         }
 
         foreach (
-            $DB->request(
-                'glpi_plugin_webapplications_profiles',
-                "`profiles_id`='$profiles_id'"
-            ) as $profile_data
+            $DB->request([
+                'FROM' => 'glpi_plugin_webapplications_profiles',
+                'WHERE' => ['profiles_id' => $profiles_id]]) as $profile_data
         ) {
             $matching = [
                 'webapplications' => 'plugin_webapplications'

@@ -379,7 +379,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             echo "<div style='display: inline-block;';>";
 
             echo "<h5 class='card-title'><i class='fa-1x fas fa-ethernet'></i>&nbsp;" . $linkTransmitter . "&nbsp;";
-            echo "<i class='fa-1x fas fa-arrow-right'></i>";
+            echo "<i class='fa-1x ti ti-arrow-narrow-right'></i>";
             echo "&nbsp;<i class='fa-1x fas fa-ethernet'></i>&nbsp;" . $linkReceiver . "</h5>";
             echo "<p class='card-text'>";
             echo $name;

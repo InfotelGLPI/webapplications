@@ -29,10 +29,16 @@
 
 define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.0.2');
 
+global $CFG_GLPI;
+
+use Glpi\Plugin\Hooks;
+
 if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
     define("PLUGIN_WEBAPPLICATIONS_DIR", Plugin::getPhpDir("webapplications"));
     define("PLUGIN_WEBAPPLICATIONS_DIR_NOFULL", Plugin::getPhpDir("webapplications", false));
-    define("PLUGIN_WEBAPPLICATIONS_WEBDIR", Plugin::getWebDir("webapplications"));
+
+    $root = $CFG_GLPI['root_doc'] . '/plugins/webapplications';
+    define("PLUGIN_WEBAPPLICATIONS_WEBDIR", $root);
 }
 
 
@@ -114,10 +120,10 @@ function plugin_init_webapplications()
             || strpos($_SERVER['REQUEST_URI'], "front/databaseinstance.form.php") == true
             || strpos($_SERVER['REQUEST_URI'], "front/process.form.php") == true
             || strpos($_SERVER['REQUEST_URI'], "front/dashboard.php") == true)) {
-        $PLUGIN_HOOKS["add_javascript"]['webapplications'][] = 'scripts/securityneedscolor.js';
+        $PLUGIN_HOOKS[Hooks::ADD_JAVASCRIPT]['webapplications'][] = 'scripts/securityneedscolor.js';
     }
 
-    $PLUGIN_HOOKS['add_css']['webapplications'] = ['css/webapplications.css'];
+    $PLUGIN_HOOKS[Hooks::ADD_CSS]['webapplications'] = ['css/webapplications.css'];
 }
 
 
@@ -137,39 +143,10 @@ function plugin_version_webapplications()
         'homepage' => 'https://github.com/InfotelGLPI/webapplications',
         'requirements' => [
             'glpi' => [
-                'min' => '10.0.11',
+                'min' => '11.0',
+                'max' => '12.0',
                 'dev' => false
             ]
         ]
     ];
-}
-
-
-/**
- * Optional : check prerequisites before install : may print errors or add to message after redirect
- *
- * @return bool
- */
-function plugin_webapplications_check_prerequisites()
-{
-    if (version_compare(GLPI_VERSION, '10.0.11', 'lt')
-        || version_compare(GLPI_VERSION, '11.0', 'ge')) {
-        if (method_exists('Plugin', 'messageIncompatible')) {
-            echo Plugin::messageIncompatible('core', '10.0.11');
-        }
-        return false;
-    }
-
-    return true;
-}
-
-
-/**
- * Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
- *
- * @return bool
- */
-function plugin_webapplications_check_config()
-{
-    return true;
 }

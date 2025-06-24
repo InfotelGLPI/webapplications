@@ -68,7 +68,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
 
     public static function getIcon()
     {
-        return "fas fa-users";
+        return "ti ti-users";
     }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)

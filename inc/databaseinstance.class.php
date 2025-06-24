@@ -45,6 +45,11 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
         return _n('Database', 'Databases', $nb);
     }
 
+    public static function getIcon()
+    {
+        return "ti ti-database-import";
+    }
+
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
@@ -105,11 +110,19 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
         $items_id = $this->input['databaseinstances_id'];
         if (isset($appliance_id) && !empty($appliance_id)) {
             $itemDBTM = new Appliance_Item();
-            $itemDBTM->add([
+            $data = $itemDBTM->find([
                 'appliances_id' => $appliance_id,
                 'items_id' => $items_id,
                 'itemtype' => 'DatabaseInstance'
             ]);
+
+            if (count($data) == 0) {
+                $itemDBTM->add([
+                    'appliances_id' => $appliance_id,
+                    'items_id' => $items_id,
+                    'itemtype' => 'DatabaseInstance'
+                ]);
+            }
         }
     }
 

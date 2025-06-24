@@ -197,12 +197,13 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
                 $iplist = "";
                 $ip     = new IPAddress();
                 // Update IPAddress
-                foreach ($DB->request('glpi_networkports', ['itemtype' => $itemtype,
-                    'items_id' => $items_id]) as $netname) {
-                    foreach ($DB->request('glpi_networknames', ['itemtype' => 'NetworkPort',
-                        'items_id' => $netname['id']]) as $dataname) {
-                        foreach ($DB->request('glpi_ipaddresses', ['itemtype' => 'NetworkName',
-                            'items_id' => $dataname['id']]) as $data) {
+
+                foreach ($DB->request(['FROM' => 'glpi_networkports', 'WHERE' => ['itemtype' => $itemtype,
+                    'items_id' => $items_id]]) as $netname) {
+                    foreach ($DB->request(['FROM' => 'glpi_networknames', 'WHERE' => ['itemtype' => 'NetworkPort',
+                        'items_id' => $netname['id']]]) as $dataname) {
+                        foreach ($DB->request(['FROM' => 'glpi_ipaddresses', 'WHERE' => ['itemtype' => 'NetworkName',
+                            'items_id' => $dataname['id']]]) as $data) {
                             $ip->getFromDB($data['id']);
 
                             if ($ip->getName() != "127.0.0.1" && $ip->fields['version'] != 6) {
