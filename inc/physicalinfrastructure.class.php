@@ -141,7 +141,7 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
                     'reset',
                     __('Delete'),
                     ['items_id' => $id, 'itemtype' => $itemtype],
-                    'fa-times-circle fa-2x'
+                    'ti-circle-x'
                 );
                 echo "</span>";
 
