@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-24 13:43+0000\n"
+"POT-Creation-Date: 2025-06-25 11:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,13 +69,14 @@ msgstr[1] ""
 
 #: hook.php:407 hook.php:480 inc/databaseinstance.class.php:375
 #: inc/process.class.php:196 inc/process.class.php:260
+#: templates/webapplication_appliance_form.html.twig:115
+#: templates/webapplication_database_form.html.twig:32
 #: templates/webapplication_process_form.html.twig:27
-#: templates/webapplication_appliance_form.html.twig:115 templates/webapplication_database_form.html.twig:32
 msgid "Availability"
 msgstr ""
 
-#: hook.php:303 templates/webapplication_form.html.twig:32
-#: templates/webapplication_appliance_form.html.twig:32
+#: hook.php:303 templates/webapplication_appliance_form.html.twig:32
+#: templates/webapplication_form.html.twig:32
 msgid "Backoffice URL"
 msgstr ""
 
@@ -93,8 +94,9 @@ msgstr[1] ""
 
 #: hook.php:425 hook.php:496 inc/databaseinstance.class.php:395
 #: inc/process.class.php:210 inc/process.class.php:270
+#: templates/webapplication_appliance_form.html.twig:147
+#: templates/webapplication_database_form.html.twig:62
 #: templates/webapplication_process_form.html.twig:60
-#: templates/webapplication_appliance_form.html.twig:147 templates/webapplication_database_form.html.twig:62
 msgid "Confidentiality"
 msgstr ""
 
@@ -148,8 +150,9 @@ msgstr ""
 
 #: hook.php:416 hook.php:488 inc/databaseinstance.class.php:385
 #: inc/process.class.php:203 inc/process.class.php:265
+#: templates/webapplication_appliance_form.html.twig:131
+#: templates/webapplication_database_form.html.twig:48
 #: templates/webapplication_process_form.html.twig:44
-#: templates/webapplication_appliance_form.html.twig:131 templates/webapplication_database_form.html.twig:48
 msgid "Integrity"
 msgstr ""
 
@@ -201,8 +204,8 @@ msgid "Number of users"
 msgstr ""
 
 #: inc/entity.class.php:158 inc/entity.class.php:213 inc/process.class.php:188
-#: inc/process.class.php:255 templates/webapplication_process_form.html.twig:12
-#: templates/webapplication_entity_form.html.twig:13
+#: inc/process.class.php:255 templates/webapplication_entity_form.html.twig:13
+#: templates/webapplication_process_form.html.twig:12
 msgid "Owner"
 msgstr ""
 
@@ -249,8 +252,8 @@ msgstr ""
 msgid "Protocol"
 msgstr ""
 
-#: hook.php:444 templates/webapplication_dashboard_support.html.twig:15
-#: templates/webapplication_appliance_form.html.twig:221
+#: hook.php:444 templates/webapplication_appliance_form.html.twig:221
+#: templates/webapplication_dashboard_support.html.twig:15
 msgid "Referent editor"
 msgstr ""
 
@@ -264,8 +267,9 @@ msgstr ""
 msgid "Security Contact"
 msgstr ""
 
+#: templates/webapplication_appliance_form.html.twig:95
+#: templates/webapplication_database_form.html.twig:24
 #: templates/webapplication_process_form.html.twig:18
-#: templates/webapplication_appliance_form.html.twig:95 templates/webapplication_database_form.html.twig:24
 msgid "Security Needs"
 msgstr ""
 
@@ -301,8 +305,9 @@ msgstr ""
 
 #: hook.php:434 hook.php:504 inc/databaseinstance.class.php:405
 #: inc/process.class.php:217 inc/process.class.php:275
+#: templates/webapplication_appliance_form.html.twig:164
+#: templates/webapplication_database_form.html.twig:77
 #: templates/webapplication_process_form.html.twig:77
-#: templates/webapplication_appliance_form.html.twig:164 templates/webapplication_database_form.html.twig:77
 msgid "Traceability"
 msgstr ""
 
@@ -312,8 +317,8 @@ msgid_plural "Types of treatment server"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/webapplication_form.html.twig:23
 #: templates/webapplication_appliance_form.html.twig:23
+#: templates/webapplication_form.html.twig:23
 msgid "URL"
 msgstr ""
 
