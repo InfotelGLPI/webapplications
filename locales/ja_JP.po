@@ -1,0 +1,331 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# INOUE Daisuke, 2025
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-25 11:17+0000\n"
+"PO-Revision-Date: 2020-11-02 16:31+0000\n"
+"Last-Translator: INOUE Daisuke, 2025\n"
+"Language-Team: Japanese (Japan) (https://app.transifex.com/infotelGLPI/teams/12376/ja_JP/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: inc/appliance.class.php:97 inc/appliance.class.php:109
+msgid "1 to 100"
+msgstr "1 ～ 100"
+
+#: inc/appliance.class.php:98 inc/appliance.class.php:110
+msgid "100 to 500"
+msgstr "100 ～ 500"
+
+#: inc/appliance.class.php:100 inc/appliance.class.php:112
+msgid "1000 to 5000"
+msgstr "1000 ～ 5000"
+
+#: inc/appliance.class.php:99 inc/appliance.class.php:111
+msgid "500 to 1000"
+msgstr "500 ～ 1000"
+
+#: inc/process_entity.class.php:118
+msgid "Add a process"
+msgstr "処理を追加"
+
+#: inc/process_entity.class.php:181
+msgid "Add an entity"
+msgstr "エンティティーを追加"
+
+#: inc/appliance.class.php:101 inc/appliance.class.php:113
+msgid "All users"
+msgstr "すべてのユーザー"
+
+#: setup.php:138 inc/dashboard.class.php:70 inc/profile.class.php:203
+#: inc/webapplication.class.php:49
+msgid "Appliance dashboard"
+msgstr "アプライアンス ダッシュボード"
+
+#: front/webapplication.php:52
+msgid "Are you sure you want to do core migration ?"
+msgstr "コア移行を行います。よろしいですか？"
+
+#: inc/appliance.class.php:300
+msgid "Associated contract"
+msgid_plural "Associated contracts"
+msgstr[0] "関連する契約"
+
+#: inc/appliance.class.php:277
+msgid "Associated document"
+msgid_plural "Associated documents"
+msgstr[0] "関連文書"
+
+#: hook.php:407 hook.php:480 inc/databaseinstance.class.php:375
+#: inc/process.class.php:196 inc/process.class.php:260
+#: templates/webapplication_appliance_form.html.twig:115
+#: templates/webapplication_database_form.html.twig:32
+#: templates/webapplication_process_form.html.twig:27
+msgid "Availability"
+msgstr "アベイラビリティー"
+
+#: hook.php:303 templates/webapplication_appliance_form.html.twig:32
+#: templates/webapplication_form.html.twig:32
+msgid "Backoffice URL"
+msgstr "バックオフィス URL"
+
+#: inc/webapplicationtype.class.php:51
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "カテゴリー"
+
+#: inc/dashboard.class.php:590
+msgid "Certificate list"
+msgid_plural "Certificates list"
+msgstr[0] "証明書リスト"
+
+#: hook.php:425 hook.php:496 inc/databaseinstance.class.php:395
+#: inc/process.class.php:210 inc/process.class.php:270
+#: templates/webapplication_appliance_form.html.twig:147
+#: templates/webapplication_database_form.html.twig:62
+#: templates/webapplication_process_form.html.twig:60
+msgid "Confidentiality"
+msgstr "守秘義務"
+
+#: front/webapplication.php:42 front/webapplication.php:48
+msgid "Core migration"
+msgstr "コア移行"
+
+#: front/webapplication.php:64
+msgid "Data migration"
+msgstr "データ移行"
+
+#: inc/dashboard.class.php:588
+msgid "Database list"
+msgid_plural "Databases list"
+msgstr[0] "データベースリスト"
+
+#: inc/stream.class.php:211 templates/webapplication_stream_form.html.twig:37
+#: templates/webapplication_stream_form.html.twig:42
+msgid "Destination"
+msgstr "デスティネーション"
+
+#: inc/entity.class.php:48
+msgid "Ecosystem"
+msgstr "エコシステム"
+
+#: inc/stream.class.php:222 templates/webapplication_stream_form.html.twig:57
+msgid "Encryption"
+msgstr "暗号化"
+
+#: inc/stream.class.php:229 inc/stream.class.php:392
+#: templates/webapplication_stream_form.html.twig:63
+msgid "Encryption type"
+msgstr "暗号化の型"
+
+#: inc/dashboard.class.php:582
+msgid "Entity list"
+msgid_plural "Entities list"
+msgstr[0] "エンティティー リスト"
+
+#: inc/webapplicationexternalexposition.class.php:49
+msgid "External exposition"
+msgid_plural "External exposition"
+msgstr[0] "外部解説"
+
+#: hook.php:380 templates/webapplication_appliance_form.html.twig:41
+msgid "Installed version"
+msgstr "インストール バージョン"
+
+#: hook.php:416 hook.php:488 inc/databaseinstance.class.php:385
+#: inc/process.class.php:203 inc/process.class.php:265
+#: templates/webapplication_appliance_form.html.twig:131
+#: templates/webapplication_database_form.html.twig:48
+#: templates/webapplication_process_form.html.twig:44
+msgid "Integrity"
+msgstr "インテグリティー"
+
+#: inc/dashboard.class.php:586
+msgid "Item list"
+msgid_plural "Items list"
+msgstr[0] "アイテムリスト"
+
+#: inc/webapplicationtechnic.class.php:49
+msgid "Language of treatment"
+msgid_plural "Languages of treatment"
+msgstr[0] "取り扱い言語"
+
+#: front/webapplication.php:175
+msgid "Link with core purge"
+msgstr "コアとのリンクを抹消"
+
+#: inc/logicalinfrastructure.class.php:44
+#: inc/logicalinfrastructure.class.php:158
+msgid "Logical infrastructure"
+msgid_plural "Logical infrastructure"
+msgstr[0] "論理インフラ"
+
+#: templates/webapplication_dashboard_support.html.twig:24
+msgid "Mail support"
+msgstr "メールサポート"
+
+#: front/webapplication.php:196
+msgid "Migration was successful"
+msgstr "移行が成功しました"
+
+#: inc/appliance.class.php:317
+msgid "No associated contracts"
+msgstr "関連する契約なし"
+
+#: inc/appliance.class.php:294
+msgid "No associated documents"
+msgstr "関連文書なし"
+
+#: inc/dashboard.class.php:602
+msgid "No associated objects"
+msgstr "関連オブジェクトなし"
+
+#: templates/webapplication_appliance_form.html.twig:77
+msgid "Number of users"
+msgstr "ユーザー数"
+
+#: inc/entity.class.php:158 inc/entity.class.php:213 inc/process.class.php:188
+#: inc/process.class.php:255 templates/webapplication_entity_form.html.twig:13
+#: templates/webapplication_process_form.html.twig:12
+msgid "Owner"
+msgstr "所有者"
+
+#: templates/webapplication_dashboard_support.html.twig:33
+msgid "Phone support"
+msgstr "電話サポート"
+
+#: inc/physicalinfrastructure.class.php:44
+msgid "Physical Infrastructure"
+msgstr "物理インフラ"
+
+#: inc/stream.class.php:236 templates/webapplication_stream_form.html.twig:70
+msgid "Port"
+msgstr "ポート"
+
+#: inc/process.class.php:47 inc/process_entity.class.php:72
+#: inc/process_entity.class.php:141 inc/profile.class.php:213
+msgid "Process"
+msgid_plural "Processes"
+msgstr[0] "プロセス"
+
+#: inc/process_entity.class.php:47
+msgid "Process Entity"
+msgid_plural "Processes Entity"
+msgstr[0] "プロセスエンティティー"
+
+#: inc/dashboard.class.php:584
+msgid "Process list"
+msgid_plural "Processes list"
+msgstr[0] "プロセスリスト"
+
+#: inc/dashboard.class.php:172
+msgid "Project leader"
+msgstr "プロジェクトリーダー"
+
+#: inc/dashboard.class.php:183
+msgid "Project team"
+msgstr "プロジェクトチーム"
+
+#: inc/stream.class.php:243 templates/webapplication_stream_form.html.twig:77
+msgid "Protocol"
+msgstr "プロトコル"
+
+#: hook.php:444 templates/webapplication_appliance_form.html.twig:221
+#: templates/webapplication_dashboard_support.html.twig:15
+msgid "Referent editor"
+msgstr "リファレンス エディター"
+
+#: inc/entity.class.php:176 inc/entity.class.php:225
+#: templates/webapplication_entity_form.html.twig:37
+msgid "Relation nature"
+msgstr "関連元"
+
+#: inc/entity.class.php:168 inc/entity.class.php:218
+#: templates/webapplication_entity_form.html.twig:25
+msgid "Security Contact"
+msgstr "セキュリティー連絡先"
+
+#: templates/webapplication_appliance_form.html.twig:95
+#: templates/webapplication_database_form.html.twig:24
+#: templates/webapplication_process_form.html.twig:18
+msgid "Security Needs"
+msgstr "セキュリティー要求"
+
+#: inc/stream.class.php:200 templates/webapplication_stream_form.html.twig:16
+#: templates/webapplication_stream_form.html.twig:21
+msgid "Source"
+msgstr "ソース"
+
+#: inc/profile.class.php:208 inc/stream.class.php:45
+msgid "Stream"
+msgid_plural "Streams"
+msgstr[0] "ストリーム"
+
+#: inc/dashboard.class.php:592
+msgid "Stream list"
+msgid_plural "Streams list"
+msgstr[0] "ストリームリスト"
+
+#: inc/dashboard.class.php:205
+msgid "Summary"
+msgstr "概要"
+
+#: inc/appliance.class.php:232
+#: templates/webapplication_appliance_form.html.twig:211
+msgid "Support"
+msgstr "サポート"
+
+#: front/webapplication.php:151
+msgid "Tables purge"
+msgstr "テーブル抹消"
+
+#: hook.php:434 hook.php:504 inc/databaseinstance.class.php:405
+#: inc/process.class.php:217 inc/process.class.php:275
+#: templates/webapplication_appliance_form.html.twig:164
+#: templates/webapplication_database_form.html.twig:77
+#: templates/webapplication_process_form.html.twig:77
+msgid "Traceability"
+msgstr "トレーサビリティ"
+
+#: inc/webapplicationservertype.class.php:49
+msgid "Type of treatment server"
+msgid_plural "Types of treatment server"
+msgstr[0] "取り扱いサーバーの型"
+
+#: templates/webapplication_appliance_form.html.twig:23
+#: templates/webapplication_form.html.twig:23
+msgid "URL"
+msgstr "URL"
+
+#: templates/webapplication_appliance_form.html.twig:185
+msgid "Validation"
+msgstr "検証"
+
+#: hook.php:398
+msgid "Validation by CIO"
+msgstr "CIO による検証"
+
+#: templates/webapplication_appliance_form.html.twig:202
+msgid "Validation by CISO"
+msgstr "CISO による検証"
+
+#: hook.php:389 templates/webapplication_appliance_form.html.twig:194
+msgid "Validation of the request by the referring Department"
+msgstr "照会先部署による要請の検証"
+
+#: inc/appliance.class.php:44 inc/profile.class.php:198
+msgid "Web application"
+msgid_plural "Web applications"
+msgstr[0] "ウェブアプリケーション"
