@@ -225,7 +225,7 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
                         [
                             'name' => 'edit',
                             'class' => 'btn btn-secondary right',
-                            'icon' => 'fas fa-edit',
+                            'icon' => 'ti ti-edit',
                             'form' => '',
                             'data-bs-toggle' => 'modal',
                             'data-bs-target' => '#edit' . $id . $rand

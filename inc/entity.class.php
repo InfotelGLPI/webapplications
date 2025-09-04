@@ -204,7 +204,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
             echo "<div class='card w-33' style='margin-right: 10px;margin-top: 10px;'>";
             echo "<div class='card-body'>";
             echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='fa-5x fas ".self::getIcon()."'></i>";
+            echo "<i class='".self::getIcon()."' style='font-size:5em'></i>";
             echo "</div>";
             echo "<div style='display: inline-block;';>";
             echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
@@ -235,7 +235,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
                     [
                         'name' => 'edit',
                         'class' => 'btn btn-secondary right',
-                        'icon' => 'fas fa-edit',
+                        'icon' => 'ti ti-edit',
                         'form' => '',
                         'data-bs-toggle' => 'modal',
                         'data-bs-target' => '#edit' . $id . $rand

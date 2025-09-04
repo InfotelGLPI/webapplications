@@ -98,7 +98,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
     public static function getIcon()
     {
-        return "fas fa-fw fa-border-all";
+        return "ti ti-border-all";
     }
 
 
@@ -299,7 +299,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
                     [
                         'name' => 'edit',
                         'class' => 'btn btn-secondary',
-                        'icon' => 'fas fa-edit',
+                        'icon' => 'ti ti-edit',
                         'style' => 'float: right',
                         'data-bs-toggle' => 'modal',
                         'data-bs-target' => '#' . $name . $id . $rand

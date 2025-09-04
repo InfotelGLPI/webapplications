@@ -60,7 +60,7 @@ class PluginWebapplicationsProfile extends Profile
      */
     public static function getIcon()//self::createTabEntry(
     {
-        return "fas fa-border-all";
+        return "ti ti-border-all";
     }
 
     /**

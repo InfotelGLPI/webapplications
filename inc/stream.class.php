@@ -65,7 +65,7 @@ class PluginWebapplicationsStream extends CommonDBTM
 
     public static function getIcon()
     {
-        return "fas fa-network-wired";
+        return "ti ti-network";
     }
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
@@ -374,7 +374,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             echo "<div class='card w-25' style='margin-right: 10px;margin-top: 10px;'>";
             echo "<div class='card-body'>";
             echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='fa-5x fas " . self::getIcon() . "'></i>";
+            echo "<i style='font-size:5em' class='" . self::getIcon() . "'></i>";
             echo "</div>";
             echo "<div style='display: inline-block;';>";
 
@@ -402,7 +402,7 @@ class PluginWebapplicationsStream extends CommonDBTM
                     [
                         'name' => 'edit',
                         'class' => 'btn btn-secondary right',
-                        'icon' => 'fas fa-edit',
+                        'icon' => 'ti ti-edit',
                         'form' => '',
                         'data-bs-toggle' => 'modal',
                         'data-bs-target' => '#edit' . $id . $rand

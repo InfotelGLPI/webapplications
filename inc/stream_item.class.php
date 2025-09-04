@@ -134,7 +134,7 @@ class PluginWebapplicationsStream_Item extends CommonDBTM
         $items = iterator_to_array($items);
 
         if (!count($items)) {
-            echo "<table class='tab_cadre_fixe'><tr><th>" . __('No item found') . "</th></tr>";
+            echo "<table class='tab_cadre_fixe'><tr><th>" . __('No results found') . "</th></tr>";
             echo "</table>";
         } else {
             if ($canedit) {
