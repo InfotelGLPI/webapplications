@@ -124,14 +124,14 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         Ajax::updateItemOnSelectEvent(
             'dropdown_applianceDropdown' . $rand,
             'lists-dashboard',
-            $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . '/ajax/getLists.php',
+            $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_WEBDIR . '/ajax/getLists.php',
             $array
         );
     }
 
     public function showForm($ID, $options = [])
     {
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
+        echo Html::css(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/css/webapplications.css");
 
         $options['candel'] = false;
         $options['colspan'] = 1;
@@ -477,9 +477,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
     {
         global $CFG_GLPI;
 
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.css");
-        echo Html::script(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/lib/jquery-ui/jquery-ui.min.js");
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . "/css/webapplications.css");
+        echo Html::css(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/lib/jquery-ui/jquery-ui.min.css");
+        echo Html::script(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/lib/jquery-ui/jquery-ui.min.js");
+        echo Html::css(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/css/webapplications.css");
 
         echo Html::scriptBlock(
             "function accordion(classname) {

@@ -35,7 +35,7 @@ use Glpi\Plugin\Hooks;
 
 if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
     define("PLUGIN_WEBAPPLICATIONS_DIR", Plugin::getPhpDir("webapplications"));
-    define("PLUGIN_WEBAPPLICATIONS_DIR_NOFULL", Plugin::getPhpDir("webapplications", false));
+//    define("PLUGIN_WEBAPPLICATIONS_DIR_NOFULL", Plugin::getPhpDir("webapplications", false));
 
     $root = $CFG_GLPI['root_doc'] . '/plugins/webapplications';
     define("PLUGIN_WEBAPPLICATIONS_WEBDIR", $root);
@@ -67,7 +67,7 @@ function plugin_init_webapplications()
     }
 
     $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsAppliance', 'addFields'];
-    
+
     $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = [
         'PluginWebapplicationsAppliance',
         'cleanRelationToAppliance'

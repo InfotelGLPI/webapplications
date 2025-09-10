@@ -138,7 +138,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
         Ajax::updateItemOnSelectEvent(
             'dropdown_applianceDropdown' . $rand,
             'lists-LogicalInfra',
-            $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_DIR_NOFULL . '/ajax/getLists.php',
+            $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_WEBDIR . '/ajax/getLists.php',
             $array
         );
     }
