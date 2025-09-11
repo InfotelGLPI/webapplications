@@ -157,23 +157,23 @@ function plugin_webapplications_install()
                DROP `name` ;";
         $DB->doQuery($query);
 
-        Plugin::migrateItemType(
-            [1300 => 'PluginWebapplicationsWebapplication'],
-            ["glpi_savedsearches", "glpi_savedsearches_users",
-             "glpi_displaypreferences", "glpi_documents_items",
-             "glpi_infocoms", "glpi_logs", "glpi_items_tickets"],
-            ["glpi_plugin_webapplications_webapplications_items"]
-        );
-
-        Plugin::migrateItemType(
-            [1200 => "PluginAppliancesAppliance"],
-            ["glpi_plugin_webapplications_webapplications_items"]
-        );
-
-        Plugin::migrateItemType(
-            [1400 => "PluginDatabasesDatabase"],
-            ["glpi_plugin_webapplications_webapplications_items"]
-        );
+//        Plugin::migrateItemType(
+//            [1300 => 'PluginWebapplicationsWebapplication'],
+//            ["glpi_savedsearches", "glpi_savedsearches_users",
+//             "glpi_displaypreferences", "glpi_documents_items",
+//             "glpi_infocoms", "glpi_logs", "glpi_items_tickets"],
+//            ["glpi_plugin_webapplications_webapplications_items"]
+//        );
+//
+//        Plugin::migrateItemType(
+//            [1200 => "PluginAppliancesAppliance"],
+//            ["glpi_plugin_webapplications_webapplications_items"]
+//        );
+//
+//        Plugin::migrateItemType(
+//            [1400 => "PluginDatabasesDatabase"],
+//            ["glpi_plugin_webapplications_webapplications_items"]
+//        );
     }
 
     PluginWebapplicationsProfile::initProfile();
