@@ -27,7 +27,9 @@
  --------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
+
+use GlpiPlugin\Webapplications\Dashboard;
+
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
@@ -36,6 +38,6 @@ Session::checkLoginUser();
 if (isset($_POST['value'])
     && $_POST['value'] > 0) {
     $_SESSION['plugin_webapplications_loaded_appliances_id'] = $_POST['value'];
-    $dashboard = new PluginWebapplicationsDashboard();
+    $dashboard = new Dashboard();
     $dashboard->display(['id' => 1, 'appliances_id' => $_SESSION['plugin_webapplications_loaded_appliances_id']]);
 }

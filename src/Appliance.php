@@ -27,16 +27,26 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
+use CommonDBTM;
+use CommonGLPI;
+use Contract;
+use Contract_Item;
+use Document;
+use Document_Item;
+use Dropdown;
 use Glpi\Application\View\TemplateRenderer;
+use Supplier;
 
 /**
- * Class PluginWebapplicationsAppliance
+ * Class Appliance
  */
-class PluginWebapplicationsAppliance extends CommonDBTM
+class Appliance extends CommonDBTM
 {
     public static $rightname = "plugin_webapplications_appliances";
     public static function getTypeName($nb = 0)
@@ -51,7 +61,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
     {
         $item = $params['item'];
         $webapp_appliance = new self();
-        $webapp_database = new PluginWebapplicationsDatabaseInstance();
+        $webapp_database = new DatabaseInstance();
         if ($item->getType() == 'Appliance') {
             if ($item->getID()) {
                 $webapp_appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
@@ -120,7 +130,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
      *
      * @return false
      */
-    public static function applianceAdd(Appliance $item)
+    public static function applianceAdd(\Appliance $item)
     {
         if (!is_array($item->input) || !count($item->input)) {
             // Already cancel by another plugin
@@ -135,7 +145,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
      *
      * @return false
      */
-    public static function applianceUpdate(Appliance $item)
+    public static function applianceUpdate(\Appliance $item)
     {
         if (!is_array($item->input) || !count($item->input)) {
             // Already cancel by another plugin
@@ -147,9 +157,9 @@ class PluginWebapplicationsAppliance extends CommonDBTM
     /**
      * @param \Appliance $item
      */
-    public static function setAppliance(Appliance $item)
+    public static function setAppliance(\Appliance $item)
     {
-        $appliance = new PluginWebApplicationsAppliance();
+        $appliance = new Appliance();
         if (!empty($item->fields)) {
             $appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
             $address = isset($item->input['address']) ? $item->input['address'] : $appliance->fields['address'];
@@ -225,12 +235,12 @@ class PluginWebapplicationsAppliance extends CommonDBTM
 
         $supplier = new Supplier();
 
-        $applianceplugin = new PluginWebapplicationsAppliance();
+        $applianceplugin = new Appliance();
         $is_known = $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 
         $supplier_id = $applianceplugin->fields['editor'] ?? 0;
         $title = __('Support', 'webapplications');
-        PluginWebapplicationsDashboard::showTitleforDashboard($title, $supplier_id, $supplier, 'edit','editAppSupport');
+        Dashboard::showTitleforDashboard($title, $supplier_id, $supplier, 'edit','editAppSupport');
 
         $refEditId = 0;
         $editor = null;
@@ -275,7 +285,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
         $docuItems = $documentItemDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
 
         $title = _n('Associated document', 'Associated documents', count($docuItems), 'webapplications');
-        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId, $documentItemDBTM);
+        Dashboard::showTitleforDashboard($title, $ApplianceId, $documentItemDBTM);
 
         $docuDBTM = new Document();
 
@@ -298,7 +308,7 @@ class PluginWebapplicationsAppliance extends CommonDBTM
         $contractItems = $contractItemDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
 
         $title = _n('Associated contract', 'Associated contracts', count($contractItems), 'webapplications');
-        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId, $contractItemDBTM);
+        Dashboard::showTitleforDashboard($title, $ApplianceId, $contractItemDBTM);
 
         $contractDBTM = new Contract();
 

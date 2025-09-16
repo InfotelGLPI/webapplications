@@ -27,18 +27,26 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use Ajax;
+use Appliance_Item;
+use CommonDBTM;
+use CommonGLPI;
+use Glpi\Application\View\TemplateRenderer;
+use Glpi\Features\Inventoriable;
+use Html;
+use User;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-use Glpi\Application\View\TemplateRenderer;
-
 /**
- * Class PluginWebapplicationsEntity
+ * Class Entity
  */
-class PluginWebapplicationsEntity extends CommonDBTM
+class Entity extends CommonDBTM
 {
-    use Glpi\Features\Inventoriable;
 
     public static $rightname = "plugin_webapplications_entities";
 
@@ -76,7 +84,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
         if ($_SESSION['glpishow_count_on_tabs']) {
             $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
             $self = new self();
-            $nb = count(PluginWebapplicationsDashboard::getObjects($self, $ApplianceId));
+            $nb = count(Dashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);
         }
         return self::getTypeName();
@@ -85,7 +93,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $obj = new self();
-        PluginWebapplicationsDashboard::showList($obj);
+        Dashboard::showList($obj);
         return true;
     }
 
@@ -105,7 +113,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
     {
         if (isset($input['appliances_id'])
             && !empty($input['appliances_id'])) {
-            $item = new Appliance();
+            $item = new \Appliance();
             if ($item->getFromDB($input['appliances_id'])) {
                 $input['entities_id'] = $item->fields['entities_id'];
                 $input['is_recursive'] = $item->fields['is_recursive'];
@@ -123,7 +131,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
                 [
                     'appliances_id' => $appliance_id,
                     'items_id' => $this->getID(),
-                    'itemtype' => 'PluginWebapplicationsEntity'
+                    'itemtype' => Entity::class
                 ]
             );
         }
@@ -185,7 +193,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
         $ong = [];
         //add main tab for current object
         $this->addDefaultFormTab($ong);
-        $this->addStandardTab('PluginWebapplicationsProcess_Entity', $ong, $options);
+        $this->addStandardTab(Process_Entity::class, $ong, $options);
         $this->addStandardTab('Appliance_Item', $ong, $options);
         return $ong;
     }
@@ -206,7 +214,7 @@ class PluginWebapplicationsEntity extends CommonDBTM
             echo "<div style='display: inline-block;margin: 40px;'>";
             echo "<i class='".self::getIcon()."' style='font-size:5em'></i>";
             echo "</div>";
-            echo "<div style='display: inline-block;';>";
+            echo "<div style='display: inline-block;'>";
             echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
             if ($object->fields['owner'] > 0) {
                 echo "<p class='card-text'>";

@@ -27,16 +27,23 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use Ajax;
+use Appliance_Item;
+use CommonDBTM;
+use CommonGLPI;
+use Dropdown;
+use Glpi\Application\View\TemplateRenderer;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-use Glpi\Application\View\TemplateRenderer;
-
 /**
- * Class PluginWebapplicationsStream
+ * Class Stream
  */
-class PluginWebapplicationsStream extends CommonDBTM
+class Stream extends CommonDBTM
 {
     public static $rightname = "plugin_webapplications_streams";
 
@@ -73,7 +80,7 @@ class PluginWebapplicationsStream extends CommonDBTM
         if ($_SESSION['glpishow_count_on_tabs']) {
             $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
             $self = new self();
-            $nb = count(PluginWebapplicationsDashboard::getObjects($self, $ApplianceId));
+            $nb = count(Dashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);
         }
         return self::getTypeName();
@@ -82,7 +89,7 @@ class PluginWebapplicationsStream extends CommonDBTM
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $obj = new self();
-        PluginWebapplicationsDashboard::showList($obj);
+        Dashboard::showList($obj);
         return true;
     }
 
@@ -150,7 +157,7 @@ class PluginWebapplicationsStream extends CommonDBTM
     {
         if (isset($input['appliances_id'])
             && !empty($input['appliances_id'])) {
-            $item = new Appliance();
+            $item = new \Appliance();
             if ($item->getFromDB($input['appliances_id'])) {
                 $input['entities_id'] = $item->fields['entities_id'];
                 $input['is_recursive'] = $item->fields['is_recursive'];
@@ -167,7 +174,7 @@ class PluginWebapplicationsStream extends CommonDBTM
             $itemDBTM->add([
                 'appliances_id' => $appliance_id,
                 'items_id' => $this->getID(),
-                'itemtype' => 'PluginWebapplicationsStream'
+                'itemtype' => Stream::class
             ]);
         }
     }
@@ -252,7 +259,7 @@ class PluginWebapplicationsStream extends CommonDBTM
      *
      * @param $field     String         name of the field
      * @param $values    String / Array with the value to display
-     * @param $options   Array          of option
+     * @param $options   array option
      *
      * @return string
      *

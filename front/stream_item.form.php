@@ -27,12 +27,10 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
-
-
 Session::checkLoginUser();
 
-use Glpi\Event;
+use GlpiPlugin\Webapplications\Stream;
+use GlpiPlugin\Webapplications\Stream_Item;
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -41,8 +39,8 @@ if (!isset($_GET["withtemplate"])) {
     $_GET["withtemplate"] = "";
 }
 
-$stream = new PluginWebapplicationsStream();
-$streamItem = new PluginWebapplicationsStream_Item();
+$stream = new Stream();
+$streamItem = new Stream_Item();
 
 if (isset($_POST["add"])) {
     $stream->check(-1, CREATE, $_POST);

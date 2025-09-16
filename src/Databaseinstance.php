@@ -27,16 +27,26 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use Ajax;
+use Appliance_Item;
+use Appliance_Item_Relation;
+use CommonDBTM;
+use CommonGLPI;
+use Database;
+use Dropdown;
+use Glpi\Application\View\TemplateRenderer;
+use GlpiPlugin\Webapplications\Appliance;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-use Glpi\Application\View\TemplateRenderer;
-
 /**
- * Class PluginWebapplicationsDatabaseInstance
+ * Class DatabaseInstance
  */
-class PluginWebapplicationsDatabaseInstance extends CommonDBTM
+class DatabaseInstance extends CommonDBTM
 {
     public static $rightname = "plugin_webapplications_appliances";
 
@@ -54,8 +64,8 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
             $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
-            $self = new DatabaseInstance();
-            $nb = count(PluginWebapplicationsDashboard::getObjects($self, $ApplianceId));
+            $self = new \DatabaseInstance();
+            $nb = count(Dashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);
         }
         return self::getTypeName();
@@ -63,8 +73,8 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        $obj = new DatabaseInstance();
-        PluginWebapplicationsDashboard::showList($obj);
+        $obj = new \DatabaseInstance();
+        Dashboard::showList($obj);
         return true;
     }
 
@@ -98,7 +108,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
 
     public function showForm($ID, $options = [])
     {
-        $instance = new DatabaseInstance();
+        $instance = new \DatabaseInstance();
         $instance->showForm($ID, $options);
 
         return true;
@@ -131,7 +141,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
      *
      * @return false
      */
-    public static function databaseAdd(DatabaseInstance $item)
+    public static function databaseAdd(\DatabaseInstance $item)
     {
         if (!is_array($item->input) || !count($item->input)) {
             // Already cancel by another plugin
@@ -152,11 +162,11 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
             return false;
         }
         if (!empty($item->input) && $item->input['itemtype'] == 'DatabaseInstance') {
-            $database = new PluginWebapplicationsDatabaseInstance();
+            $database = new DatabaseInstance();
             $database->getFromDBByCrit(['databaseinstances_id' => $item->input['items_id']]);
             if (is_array($database->fields) && count($database->fields) > 0) {
                 $webs = getAllDataFromTable(
-                    PluginWebapplicationsAppliance::getTable(),
+                    \Appliance::getTable(),
                     [
                         'WHERE' => [
                             'appliances_id' => $item->input['appliances_id'],
@@ -181,7 +191,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
                 ]);
             } else {
                 $webs = getAllDataFromTable(
-                    PluginWebapplicationsAppliance::getTable(),
+                    Appliance::getTable(),
                     [
                         'WHERE' => [
                             'appliances_id' => $item->input['appliances_id'],
@@ -214,7 +224,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
      *
      * @return false
      */
-    public static function databaseUpdate(DatabaseInstance $item)
+    public static function databaseUpdate(\DatabaseInstance $item)
     {
         if (!is_array($item->input) || !count($item->input)) {
             // Already cancel by another plugin
@@ -226,9 +236,9 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
     /**
      * @param \Database $item
      */
-    public static function setDatabase(DatabaseInstance $item)
+    public static function setDatabase(\DatabaseInstance $item)
     {
-        $database = new PluginWebapplicationsDatabaseInstance();
+        $database = new DatabaseInstance();
         if (!empty($item->fields)) {
             $database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
             if (is_array($database->fields) && count($database->fields) > 0) {
@@ -285,7 +295,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
     {
         global $DB;
 
-        $object = new DatabaseInstance();
+        $object = new \DatabaseInstance();
 
         echo "<div style='display: flex;flex-wrap: wrap;'>";
 
@@ -368,7 +378,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
             );
 
             foreach ($dicts as $dict) {
-                $background = PluginWebapplicationsAppliance::getColorForDICT(
+                $background = Appliance::getColorForDICT(
                     $dict['webapplicationavailabilities']
                 );
                 echo "<span class='dict-min' style='background-color:$background' title='" . __(
@@ -378,7 +388,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
                 echo $dict['webapplicationavailabilities'];
                 echo "</span>";
 
-                $background = PluginWebapplicationsAppliance::getColorForDICT(
+                $background = Appliance::getColorForDICT(
                     $dict['webapplicationintegrities']
                 );
                 echo "<span class='dict-min' style='background-color:$background' title='" . __(
@@ -388,7 +398,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
                 echo $dict['webapplicationintegrities'];
                 echo "</span>";
 
-                $background = PluginWebapplicationsAppliance::getColorForDICT(
+                $background = Appliance::getColorForDICT(
                     $dict['webapplicationconfidentialities']
                 );
                 echo "<span class='dict-min' style='background-color:$background' title='" . __(
@@ -398,7 +408,7 @@ class PluginWebapplicationsDatabaseInstance extends CommonDBTM
                 echo $dict['webapplicationconfidentialities'];
                 echo "</span>";
 
-                $background = PluginWebapplicationsAppliance::getColorForDICT(
+                $background = Appliance::getColorForDICT(
                     $dict['webapplicationtraceabilities']
                 );
                 echo "<span class='dict-min' style='background-color:$background' title='" . __(

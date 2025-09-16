@@ -27,7 +27,29 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
+namespace GlpiPlugin\Webapplications;
 
-$dropdown = new PluginWebapplicationsWebapplicationServerType();
-include(GLPI_ROOT . "/front/dropdown.common.php");
+use CommonDropdown;
+
+if (!defined('GLPI_ROOT')) {
+    die("Sorry. You can't access directly to this file");
+}
+
+/**
+ * Class Webapplicationservertype
+ */
+class Webapplicationservertype extends CommonDropdown
+{
+    public static $rightname = "plugin_webapplications_appliances";
+    public $can_be_translated = true;
+
+    /**
+     * @param int $nb
+     *
+     * @return string
+     */
+    public static function getTypeName($nb = 0)
+    {
+        return _n('Type of treatment server', 'Types of treatment server', $nb, 'webapplications');
+    }
+}

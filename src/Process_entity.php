@@ -27,18 +27,27 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use CommonDBTM;
+use CommonGLPI;
+use DbUtils;
+use Glpi\Application\View\TemplateRenderer;
+use Glpi\Features\Inventoriable;
+use GlpiPlugin\Webapplications\Entity;
+use Html;
+use Toolbox;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-use Glpi\Application\View\TemplateRenderer;
-
 /**
- * Class PluginWebapplicationsProcess_Entity
+ * Class Process_Entity
  */
-class PluginWebapplicationsProcess_Entity extends CommonDBTM
+class Process_Entity extends CommonDBTM
 {
-    use Glpi\Features\Inventoriable;
+
 
     public static $rightname = "plugin_webapplications_processes";
 
@@ -50,14 +59,14 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
 
     public static function getIcon()
     {
-        return PluginWebapplicationsProcess::getIcon();
+        return Process::getIcon();
     }
 
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         switch ($item::getType()) {
-            case 'PluginWebapplicationsEntity':
+            case Entity::class:
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
                     $nb = $dbu->countElementsInTable(
@@ -65,13 +74,13 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
                         ["plugin_webapplications_entities_id" => $item->getID()]
                     );
                     return self::createTabEntry(
-                        PluginWebapplicationsProcess::getTypeName($nb),
+                        Process::getTypeName($nb),
                         $nb
                     );
                 }
                 return _n('Process', 'Processes', 2, 'webapplications');
                 break;
-            case 'PluginWebapplicationsProcess':
+            case Process::class:
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
                     $nb = $dbu->countElementsInTable(
@@ -79,7 +88,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
                         ["plugin_webapplications_processes_id" => $item->getID()]
                     );
                     return self::createTabEntry(
-                        PluginWebapplicationsEntity::getTypeName($nb),
+                        Entity::getTypeName($nb),
                         $nb
                     );
                 }
@@ -93,10 +102,10 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
     {
         $field = new self();
 
-        if ($item->getType() == 'PluginWebapplicationsEntity') {
+        if ($item->getType() == Entity::class) {
             $field->showForEntity($item);
         }
-        if ($item->getType() == 'PluginWebapplicationsProcess') {
+        if ($item->getType() == Process::class) {
             $field->showForProcess($item);
         }
         return true;
@@ -108,19 +117,19 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             return false;
         }
 
-        $entity = new PluginWebapplicationsEntity();
+        $entity = new Entity();
         $canedit = $entity->can($item->fields['id'], UPDATE);
         if ($canedit) {
             echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL('PluginWebapplicationsProcess_Entity') . "'>";
+                Toolbox::getItemTypeFormURL(Process_Entity::class) . "'>";
 
-            echo "<div align='center'><table class='tab_cadre_fixe'>";
+            echo "<div class='center'><table class='tab_cadre_fixe'>";
             echo "<tr><th colspan='6'>" . __('Add a process', 'webapplications') . "</th></tr>";
 
             echo "<tr class='tab_bg_1'>";
             // Dropdown group
             echo "<td class='center'>";
-            PluginWebapplicationsProcess::dropdown();
+            Process::dropdown();
             echo "</td>";
             echo "<td class='tab_bg_2 center' colspan='6'>";
             echo Html::hidden('plugin_webapplications_entities_id', ['value' => $item->getID()]);
@@ -146,7 +155,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
         echo "<tbody>";
 
         $processes = $this->find(['plugin_webapplications_entities_id' => $item->getID()]);
-        $processDBTM = new PluginWebapplicationsProcess();
+        $processDBTM = new Process();
 
         foreach ($processes as $process) {
             $processDBTM->getFromDB($process['plugin_webapplications_processes_id']);
@@ -154,7 +163,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             echo "<td colspan='3'>";
             echo Html::link(
                 $processDBTM->getName(),
-                PluginWebapplicationsProcess::getFormURLWithID($process['plugin_webapplications_processes_id'])
+                Process::getFormURLWithID($process['plugin_webapplications_processes_id'])
             );
             echo "</td>";
             echo "</tr>";
@@ -171,11 +180,11 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             return false;
         }
 
-        $process = new PluginWebapplicationsProcess();
+        $process = new Process();
         $canedit = $process->can($item->fields['id'], UPDATE);
         if ($canedit) {
             echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL('PluginWebapplicationsProcess_Entity') . "'>";
+                Toolbox::getItemTypeFormURL(Process_Entity::class) . "'>";
 
             echo "<div align='center'><table class='tab_cadre_fixe'>";
             echo "<tr><th colspan='6'>" . __('Add an entity', 'webapplications') . "</th></tr>";
@@ -183,7 +192,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             echo "<tr class='tab_bg_1'>";
             // Dropdown group
             echo "<td class='center'>";
-            PluginWebapplicationsEntity::dropdown();
+            Entity::dropdown();
             echo "</td>";
             echo "<td class='tab_bg_2 center' colspan='6'>";
             echo Html::hidden('plugin_webapplications_processes_id', ['value' => $item->getID()]);
@@ -209,7 +218,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
         echo "<tbody>";
 
         $entities = $this->find(['plugin_webapplications_processes_id' => $item->getID()]);
-        $entityDBTM = new PluginWebapplicationsEntity();
+        $entityDBTM = new Entity();
 
         foreach ($entities as $entity) {
             $entityDBTM->getFromDB($entity['plugin_webapplications_entities_id']);
@@ -217,7 +226,7 @@ class PluginWebapplicationsProcess_Entity extends CommonDBTM
             echo "<td colspan='3'>";
             echo Html::link(
                 $entityDBTM->getName(),
-                PluginWebapplicationsEntity::getFormURLWithID($entity['plugin_webapplications_entities_id'])
+                Entity::getFormURLWithID($entity['plugin_webapplications_entities_id'])
             );
             echo "</td>";
             echo "</tr>";

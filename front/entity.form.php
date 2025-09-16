@@ -27,11 +27,9 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
-
 Session::checkLoginUser();
 
-use Glpi\Event;
+use GlpiPlugin\Webapplications\Entity;
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -41,7 +39,7 @@ if (!isset($_GET["withtemplate"])) {
 }
 
 
-$entity = new PluginWebapplicationsEntity();
+$entity = new Entity();
 
 if (isset($_POST["add"])) {
     $entity->check(-1, CREATE, $_POST);
@@ -68,17 +66,17 @@ if (isset($_POST["add"])) {
     Html::back();
 } elseif (isset($_GET['_in_modal'])) {
     $_SESSION['reload']=true;
-    Html::popHeader(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF']);
+    Html::popHeader(Entity::getTypeName(2), $_SERVER['PHP_SELF']);
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
     if (isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
     $menus = ["appliancedashboard", "entity"];
-    PluginWebapplicationsEntity::displayFullPageForItem($_GET['id'], $menus, $options);
+    Entity::displayFullPageForItem($_GET['id'], $menus, $options);
     Html::popFooter();
 } else {
     if (Session::getCurrentInterface() == "central") {
-        Html::header(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsentity", "config");
+        Html::header(Entity::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", Entity::class, "config");
         $entity->display(['id' => $_GET["id"]]);
     }
     Html::footer();

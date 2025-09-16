@@ -27,14 +27,18 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use CommonDropdown;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
 /**
- * Class PluginWebapplicationsWebapplicationTechnic
+ * Class Webapplicationtechnic
  */
-class PluginWebapplicationsWebapplicationTechnic extends CommonDropdown
+class Webapplicationtechnic extends CommonDropdown
 {
     public static $rightname = "plugin_webapplications_appliances";
     public $can_be_translated = true;
@@ -42,7 +46,7 @@ class PluginWebapplicationsWebapplicationTechnic extends CommonDropdown
     /**
      * @param int $nb
      *
-     * @return translated
+     * @return string
      */
     public static function getTypeName($nb = 0)
     {

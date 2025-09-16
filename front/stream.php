@@ -27,12 +27,13 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
+
+use GlpiPlugin\Webapplications\Stream;
 
 Session::checkRight("plugin_webapplications_streams", READ);
 
-Html::header(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", 'pluginwebapplicationsstream');
+Html::header(Stream::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", Stream::class);
 
-Search::show('PluginWebapplicationsStream');
+Search::show(Stream::class);
 
 Html::footer();

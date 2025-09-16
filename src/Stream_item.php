@@ -27,18 +27,27 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use CommonDBTM;
+use CommonGLPI;
+use DbUtils;
+use Dropdown;
+use Glpi\Application\View\TemplateRenderer;
+use Glpi\Features\Inventoriable;
+use Html;
+use Toolbox;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-use Glpi\Application\View\TemplateRenderer;
-
 /**
- * Class PluginWebapplicationsStream_Item
+ * Class Stream_Item
  */
-class PluginWebapplicationsStream_Item extends CommonDBTM
+class Stream_Item extends CommonDBTM
 {
-    use Glpi\Features\Inventoriable;
+
 
     public static $rightname = "plugin_webapplications_streams";
 
@@ -50,14 +59,14 @@ class PluginWebapplicationsStream_Item extends CommonDBTM
 
     public static function getIcon()
     {
-        return PluginWebapplicationsStream::getIcon();
+        return Stream::getIcon();
     }
 
 
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         switch ($item::getType()) {
-            case 'PluginWebapplicationsStream':
+            case Stream::class:
                 if ($_SESSION['glpishow_count_on_tabs']) {
                     $dbu = new DbUtils();
                     $nbItems = $dbu->countElementsInTable(
@@ -76,7 +85,7 @@ class PluginWebapplicationsStream_Item extends CommonDBTM
     {
         $field = new self();
 
-        if ($item->getType() == 'PluginWebapplicationsStream') {
+        if ($item->getType() == Stream::class) {
             $field->showForStream($item);
         }
         return true;
@@ -102,11 +111,11 @@ class PluginWebapplicationsStream_Item extends CommonDBTM
             ]
         ]);
 
-        $stream = new PluginWebapplicationsStream();
+        $stream = new Stream();
         $canedit = $stream->can($item->fields['id'], UPDATE);
         if ($canedit) {
             echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL('PluginWebapplicationsStream_Item') . "'>";
+                Toolbox::getItemTypeFormURL(Stream_Item::class) . "'>";
 
             echo "<div align='center'><table class='tab_cadre_fixe'>";
             echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";

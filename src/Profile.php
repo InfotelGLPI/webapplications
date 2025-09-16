@@ -1,4 +1,5 @@
 <?php
+
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
@@ -27,14 +28,22 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use CommonGLPI;
+use DbUtils;
+use Html;
+use ProfileRight;
+use Session;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
 /**
- * Class PluginWebapplicationsProfile
+ * Class Profile
  */
-class PluginWebapplicationsProfile extends Profile
+class Profile extends \Profile
 {
     public static $rightname = "profile";
 
@@ -48,7 +57,7 @@ class PluginWebapplicationsProfile extends Profile
     {
         if ($item->getType() == 'Profile') {
             if ($item->getField('interface') == 'central') {
-                return self::createTabEntry(PluginWebapplicationsWebapplication::getTypeName(2));
+                return self::createTabEntry(Webapplication::getTypeName(2));
             }
         }
         return '';
@@ -81,8 +90,9 @@ class PluginWebapplicationsProfile extends Profile
                 [
                     'plugin_webapplications_appliances' => 0,
                     'plugin_webapplications_streams' => 0,
+                    'plugin_webapplications_entities' => 0,
                     'plugin_webapplications_processes' => 0,
-                    'plugin_webapplications_entities' => 0
+                    'plugin_webapplications_entities' => 0,
                 ]
             );
             $prof->showForm($ID);
@@ -103,7 +113,7 @@ class PluginWebapplicationsProfile extends Profile
                 'plugin_webapplications_streams' => READ + CREATE + UPDATE + PURGE,
                 'plugin_webapplications_entities' => READ + CREATE + UPDATE + PURGE,
                 'plugin_webapplications_dashboards' => READ + CREATE + UPDATE + PURGE,
-                'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE
+                'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE,
             ],
             true
         );
@@ -122,9 +132,9 @@ class PluginWebapplicationsProfile extends Profile
         $profileRight = new ProfileRight();
         foreach ($rights as $right => $value) {
             if ($dbu->countElementsInTable(
-                    'glpi_profilerights',
-                    ["profiles_id" => $profiles_id, "name" => $right]
-                ) && $drop_existing) {
+                'glpi_profilerights',
+                ["profiles_id" => $profiles_id, "name" => $right]
+            ) && $drop_existing) {
                 $profileRight->deleteByCriteria(['profiles_id' => $profiles_id, 'name' => $right]);
             }
             if (!$dbu->countElementsInTable(
@@ -159,18 +169,18 @@ class PluginWebapplicationsProfile extends Profile
         echo "<div class='firstbloc'>";
         if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
             && $openform) {
-            $profile = new Profile();
+            $profile = new \Profile();
             echo "<form method='post' action='" . $profile->getFormURL() . "'>";
         }
 
-        $profile = new Profile();
+        $profile = new \Profile();
         $profile->getFromDB($profiles_id);
         if ($profile->getField('interface') == 'central') {
             $rights = $this->getAllRights();
             $profile->displayRightsChoiceMatrix($rights, [
                 'canedit' => $canedit,
                 'default_class' => 'tab_bg_2',
-                'title' => __('General')
+                'title' => __('General'),
             ]);
         }
 
@@ -194,30 +204,30 @@ class PluginWebapplicationsProfile extends Profile
     {
         $rights = [
             [
-                'itemtype' => 'PluginWebapplicationsAppliance',
+                'itemtype' => Appliance::class,
                 'label' => _n('Web application', 'Web applications', 2, 'webapplications'),
-                'field' => 'plugin_webapplications_appliances'
+                'field' => 'plugin_webapplications_appliances',
             ],
             [
-                'itemtype' => 'PluginWebapplicationsDashboard',
-                'label' =>__('Appliance dashboard', 'webapplications'),
-                'field' => 'plugin_webapplications_dashboards'
+                'itemtype' => Dashboard::class,
+                'label' => __('Appliance dashboard', 'webapplications'),
+                'field' => 'plugin_webapplications_dashboards',
             ],
             [
-                'itemtype' => 'PluginWebapplicationsStream',
+                'itemtype' => Stream::class,
                 'label' => _n('Stream', 'Streams', 2, 'webapplications'),
-                'field' => 'plugin_webapplications_streams'
+                'field' => 'plugin_webapplications_streams',
             ],
             [
-                'itemtype' => 'PluginWebapplicationsProcess',
+                'itemtype' => Process::class,
                 'label' => _n('Process', 'Processes', 2, 'webapplications'),
-                'field' => 'plugin_webapplications_processes'
+                'field' => 'plugin_webapplications_processes',
             ],
             [
-                'itemtype' => 'PluginWebapplicationsEntity',
+                'itemtype' => Entity::class,
                 'label' => _n('Entity', 'Entities', 2),
-                'field' => 'plugin_webapplications_entities'
-            ]
+                'field' => 'plugin_webapplications_entities',
+            ],
         ];
 
         return $rights;
@@ -271,14 +281,14 @@ class PluginWebapplicationsProfile extends Profile
                 'WHERE' => ['profiles_id' => $profiles_id]]) as $profile_data
         ) {
             $matching = [
-                'webapplications' => 'plugin_webapplications'
+                'webapplications' => 'plugin_webapplications',
             ];
             $current_rights = ProfileRight::getProfileRights($profiles_id, array_values($matching));
             foreach ($matching as $old => $new) {
                 if (!isset($current_rights[$old])) {
                     $DB->update('glpi_profilerights', ['rights' => self::translateARight($profile_data[$old])], [
                         'name'        => $new,
-                        'profiles_id' => $profiles_id
+                        'profiles_id' => $profiles_id,
                     ]);
                 }
             }
@@ -296,9 +306,9 @@ class PluginWebapplicationsProfile extends Profile
         //Add new rights in glpi_profilerights table
         foreach ($profile->getAllRights(true) as $data) {
             if ($dbu->countElementsInTable(
-                    "glpi_profilerights",
-                    ["name" => $data['field']]
-                ) == 0) {
+                "glpi_profilerights",
+                ["name" => $data['field']]
+            ) == 0) {
                 ProfileRight::addProfileRights([$data['field']]);
             }
         }
@@ -306,7 +316,7 @@ class PluginWebapplicationsProfile extends Profile
         //Migration old rights in new ones
         $it = $DB->request([
             'SELECT' => ['id'],
-            'FROM' => 'glpi_profiles'
+            'FROM' => 'glpi_profiles',
         ]);
         foreach ($it as $prof) {
             self::migrateOneProfile($prof['id']);
@@ -316,8 +326,8 @@ class PluginWebapplicationsProfile extends Profile
             'FROM' => 'glpi_profilerights',
             'WHERE' => [
                 'profiles_id' => $_SESSION['glpiactiveprofile']['id'],
-                'name' => ['LIKE', '%plugin_webapplications%']
-            ]
+                'name' => ['LIKE', '%plugin_webapplications%'],
+            ],
         ]);
         foreach ($it as $prof) {
             if (isset($_SESSION['glpiactiveprofile'])) {

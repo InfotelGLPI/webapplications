@@ -27,15 +27,21 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use CommonDBTM;
+use CommonGLPI;
+use KnowbaseItem;
+use KnowbaseItem_Item;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-
 /**
- * Class PluginWebapplicationsKnowbase
+ * Class Knowbase
  */
-class PluginWebapplicationsKnowbase extends CommonDBTM
+class Knowbase extends CommonDBTM
 {
     public static $rightname = "plugin_webapplications_appliances";
 
@@ -73,10 +79,10 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
     {
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
-        $item = new Appliance();
+        $item = new \Appliance();
         $item->getFromDB($ApplianceId);
 
-        PluginWebapplicationsDashboard::showHeaderDashboard($ApplianceId);
+        Dashboard::showHeaderDashboard($ApplianceId);
 
         $icon = "<i class='" . self::getIcon() . " fa-1x'></i>";
 
@@ -155,7 +161,7 @@ class PluginWebapplicationsKnowbase extends CommonDBTM
         $title = self::getTypeName();
         $know_item = new KnowbaseItem();
 
-        PluginWebapplicationsDashboard::showTitleforDashboard($title, $ApplianceId, $know_item, "");
+        Dashboard::showTitleforDashboard($title, $ApplianceId, $know_item, "");
 
         $number = self::getCountForItem($appliance);
 

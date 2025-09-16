@@ -28,13 +28,13 @@
  */
 
 
-include('../../../inc/includes.php');
+use GlpiPlugin\Webapplications\Entity;
 
 Session::checkRight("plugin_webapplications_entities", READ);
 
-Html::header(PluginWebapplicationsEntity::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", 'pluginwebapplicationsentity');
+Html::header(Entity::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", Entity::class);
 
-Search::show('PluginWebapplicationsEntity');
+Search::show(Entity::class);
 
 Html::footer();
 

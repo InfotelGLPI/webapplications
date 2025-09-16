@@ -27,16 +27,22 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use Ajax;
+use CommonDBTM;
+use CommonGLPI;
+use Glpi\Application\View\TemplateRenderer;
+use Html;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-use Glpi\Application\View\TemplateRenderer;
-
 /**
- * Class PluginWebapplicationsCertificate
+ * Class Certificate
  */
-class PluginWebapplicationsCertificate extends CommonDBTM
+class Certificate extends CommonDBTM
 {
     public static $rightname = "plugin_webapplications_appliances";
 
@@ -54,8 +60,8 @@ class PluginWebapplicationsCertificate extends CommonDBTM
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
             $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
-            $self = new Certificate();
-            $nb = count(PluginWebapplicationsDashboard::getObjects($self, $ApplianceId));
+            $self = new \Certificate();
+            $nb = count(Dashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);
         }
         return self::getTypeName();
@@ -63,15 +69,15 @@ class PluginWebapplicationsCertificate extends CommonDBTM
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        $obj = new Certificate();
-        PluginWebapplicationsDashboard::showList($obj);
+        $obj = new \Certificate();
+        Dashboard::showList($obj);
         return true;
     }
 
 
     public function showForm($ID, $options = [])
     {
-        $instance = new Certificate();
+        $instance = new \Certificate();
         $instance->showForm($ID, $options);
 
         return true;
@@ -79,7 +85,7 @@ class PluginWebapplicationsCertificate extends CommonDBTM
 
     public static function showListObjects($list)
     {
-        $object = new Certificate();
+        $object = new \Certificate();
 
         echo "<div style='display: flex;flex-wrap: wrap;'>";
 

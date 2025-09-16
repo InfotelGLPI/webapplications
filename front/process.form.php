@@ -27,12 +27,10 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
-
-
 Session::checkLoginUser();
 
 use Glpi\Event;
+use GlpiPlugin\Webapplications\Process;
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -42,7 +40,7 @@ if (!isset($_GET["withtemplate"])) {
 }
 
 
-$process = new PluginWebapplicationsProcess();
+$process = new Process();
 
 if (isset($_POST["add"])) {
     $process->check(-1, CREATE, $_POST);
@@ -69,17 +67,17 @@ if (isset($_POST["add"])) {
     Html::back();
 } elseif (isset($_GET['_in_modal'])) {
     $_SESSION['reload']=true;
-    Html::popHeader(PluginWebapplicationsProcess::getTypeName(2), $_SERVER['PHP_SELF']);
+    Html::popHeader(Process::getTypeName(2), $_SERVER['PHP_SELF']);
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
     if (isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
     $menus = ["appliancedashboard", "process"];
-    PluginWebapplicationsProcess::displayFullPageForItem($_GET['id'], $menus, $options);
+    Process::displayFullPageForItem($_GET['id'], $menus, $options);
     Html::popFooter();
 } else {
     if (Session::getCurrentInterface() == "central") {
-        Html::header(PluginWebapplicationsProcess::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsprocess", "config");
+        Html::header(Process::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", Process::class, "config");
         $process->display(['id' => $_GET["id"]]);
     }
     Html::footer();

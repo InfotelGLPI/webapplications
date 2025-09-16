@@ -45,28 +45,28 @@
 
                     {% if item.isField('webapplicationservertypes_id') %}
                         {{ fields.dropdownField(
-                            "PluginWebapplicationsWebapplicationServerType",
+                            "GlpiPlugin\Webapplications\Webapplicationservertype",
                             "webapplicationservertypes_id",
                             item.fields['webapplicationservertypes_id'],
-                            "PluginWebapplicationsWebapplicationServerType"|itemtype_name,
+                            "GlpiPlugin\Webapplications\Webapplicationservertype"|itemtype_name,
                         ) }}
                     {% endif %}
 
                     {% if item.isField('webapplicationtechnics_id') %}
                         {{ fields.dropdownField(
-                            "PluginWebapplicationsWebapplicationTechnic",
+                            "GlpiPlugin\Webapplications\Webapplicationtechnic",
                             "webapplicationtechnics_id",
                             item.fields['webapplicationtechnics_id'],
-                            "PluginWebapplicationsWebapplicationTechnic"|itemtype_name,
+                            "GlpiPlugin\Webapplications\Webapplicationtechnic"|itemtype_name,
                         ) }}
                     {% endif %}
 
                     {% if item.isField('webapplicationexternalexpositions_id') %}
                         {{ fields.dropdownField(
-                            "PluginWebapplicationsWebapplicationExternalExposition",
+                            "GlpiPlugin\Webapplications\Webapplicationexternalexposition",
                             "webapplicationexternalexpositions_id",
                             item.fields['webapplicationexternalexpositions_id'],
-                            "PluginWebapplicationsWebapplicationExternalExposition"|itemtype_name,
+                            "GlpiPlugin\Webapplications\Webapplicationexternalexposition"|itemtype_name,
                         ) }}
                     {% endif %}
 

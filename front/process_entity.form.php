@@ -27,12 +27,10 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
-
-
 Session::checkLoginUser();
 
-use Glpi\Event;
+use GlpiPlugin\Webapplications\Process;
+use GlpiPlugin\Webapplications\Process_Entity;
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -41,8 +39,8 @@ if (!isset($_GET["withtemplate"])) {
     $_GET["withtemplate"] = "";
 }
 
-$process = new PluginWebapplicationsProcess();
-$processEntity = new PluginWebapplicationsProcess_Entity();
+$process = new Process();
+$processEntity = new Process_Entity();
 
 if (isset($_POST["add"])) {
     $process->check(-1, CREATE, $_POST);

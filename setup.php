@@ -32,11 +32,16 @@ define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.0.2');
 global $CFG_GLPI;
 
 use Glpi\Plugin\Hooks;
+use GlpiPlugin\Webapplications\Dashboard;
+use GlpiPlugin\Webapplications\Process;
+use GlpiPlugin\Webapplications\Profile;
+use GlpiPlugin\Webapplications\Entity;
+use GlpiPlugin\Webapplications\DatabaseInstance;
+use GlpiPlugin\Webapplications\Appliance;
+use GlpiPlugin\Webapplications\Stream;
 
 if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
     define("PLUGIN_WEBAPPLICATIONS_DIR", Plugin::getPhpDir("webapplications"));
-//    define("PLUGIN_WEBAPPLICATIONS_DIR_NOFULL", Plugin::getPhpDir("webapplications", false));
-
     $root = $CFG_GLPI['root_doc'] . '/plugins/webapplications';
     define("PLUGIN_WEBAPPLICATIONS_WEBDIR", $root);
 }
@@ -50,56 +55,56 @@ function plugin_init_webapplications()
     $PLUGIN_HOOKS['csrf_compliant']['webapplications'] = true;
 
     $PLUGIN_HOOKS['change_profile']['webapplications'] = [
-        'PluginWebapplicationsProfile',
+        Profile::class,
         'initProfile'
     ];
 
-    Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
+    Plugin::registerClass(Profile::class, ['addtabon' => ['Profile']]);
     if (Session::getLoginUserID()) {
         if (Session::haveRight("plugin_webapplications_appliances", READ)) {
             $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = array(
-                'PluginWebapplicationsDashboard',
-                'PluginWebapplicationsEntity',
-                'PluginWebapplicationsProcess',
-                'PluginWebapplicationsStream'
+                Dashboard::class,
+                Entity::class,
+                Process::class,
+                Stream::class,
             );
         }
     }
 
-    $PLUGIN_HOOKS['post_item_form']['webapplications'] = ['PluginWebapplicationsAppliance', 'addFields'];
+    $PLUGIN_HOOKS['post_item_form']['webapplications'] = [Appliance::class, 'addFields'];
 
     $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = [
-        'PluginWebapplicationsAppliance',
+        Appliance::class,
         'cleanRelationToAppliance'
     ];
     $PLUGIN_HOOKS['item_purge']['webapplications']['DatabaseInstance'] = [
-        'PluginWebapplicationsDatabaseInstance',
+        DatabaseInstance::class,
         'cleanRelationToDatabase'
     ];
 
     // Other fields inherited from webapplications
     $PLUGIN_HOOKS['item_add']['webapplications'] = [
         'Appliance' => [
-            'PluginWebapplicationsAppliance',
+            Appliance::class,
             'applianceAdd'
         ],
         'DatabaseInstance' => [
-            'PluginWebapplicationsDatabaseInstance',
+            DatabaseInstance::class,
             'databaseAdd'
         ],
         'Appliance_Item' => [
-            'PluginWebapplicationsDatabaseInstance',
+            DatabaseInstance::class,
             'databaseLink'
         ],
     ];
 
     $PLUGIN_HOOKS['pre_item_update']['webapplications'] = [
         'Appliance' => [
-            'PluginWebapplicationsAppliance',
+            Appliance::class,
             'applianceUpdate'
         ],
         'DatabaseInstance' => [
-            'PluginWebapplicationsDatabaseInstance',
+            DatabaseInstance::class,
             'databaseUpdate'
         ]
     ];
@@ -107,9 +112,9 @@ function plugin_init_webapplications()
 
     array_push(
         $CFG_GLPI['appliance_types'],
-        'PluginWebapplicationsProcess',
-        'PluginWebapplicationsEntity',
-        'PluginWebapplicationsStream',
+        Process::class,
+        Entity::class,
+        Stream::class,
         'Appliance'
     );
     $CFG_GLPI['stream_types'] = ['DatabaseInstance', 'Computer', 'NetworkEquipment', 'Appliance'];

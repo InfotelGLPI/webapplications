@@ -27,7 +27,31 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
+namespace GlpiPlugin\Webapplications;
 
-$dropdown = new PluginWebapplicationsWebapplicationTechnic();
-include(GLPI_ROOT . "/front/dropdown.common.php");
+use CommonDropdown;
+
+if (!defined('GLPI_ROOT')) {
+    die("Sorry. You can't access directly to this file");
+}
+
+// Class for a Dropdown
+
+/**
+ * Class Type
+ */
+class Type extends CommonDropdown
+{
+    public static $rightname = "plugin_webapplications_appliances";
+    public $can_be_translated = true;
+
+    /**
+     * @param int $nb
+     *
+     * @return string
+     */
+    public static function getTypeName($nb = 0)
+    {
+        return _n('Category', 'Categories', $nb, 'webapplications');
+    }
+}

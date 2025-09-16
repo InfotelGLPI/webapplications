@@ -27,16 +27,34 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use Ajax;
+use Appliance_Item;
+use Appliance_Item_Relation;
+use Certificate_Item;
+use CommonDBTM;
+use Contract;
+use Dropdown;
+use Glpi\Application\View\TemplateRenderer;
+use GlpiPlugin\Webapplications\Entity;
+use GlpiPlugin\Webapplications\DatabaseInstance;
+use GlpiPlugin\Webapplications\Appliance;
+use GlpiPlugin\Webapplications\Certificate;
+use GlpiPlugin\Webapplications\Knowbase;
+use Group_User;
+use Html;
+use Toolbox;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-use Glpi\Application\View\TemplateRenderer;
 
 /**
- * Class PluginWebapplicationsDashboard
+ * Class Dashboard
  */
-class PluginWebapplicationsDashboard extends CommonDBTM
+class Dashboard extends CommonDBTM
 {
     public static $rightname = "plugin_webapplications_dashboards";
 
@@ -45,22 +63,22 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $ong = [];
         //add main tab for current object
         $this->addDefaultFormTab($ong);
-        $this->addStandardTab('PluginWebapplicationsEntity', $ong, $options);
-        $this->addStandardTab('PluginWebapplicationsProcess', $ong, $options);
+        $this->addStandardTab(Entity::class, $ong, $options);
+        $this->addStandardTab(Process::class, $ong, $options);
         $this->addStandardTab(
-            'PluginWebapplicationsPhysicalInfrastructure',
+            PhysicalInfrastructure::class,
             $ong,
             $options
         );
         $this->addStandardTab(
-            'PluginWebapplicationsLogicalInfrastructure',
+            LogicalInfrastructure::class,
             $ong,
             $options
         );
-        $this->addStandardTab('PluginWebapplicationsDatabaseInstance', $ong, $options);
-        $this->addStandardTab('PluginWebapplicationsCertificate', $ong, $options);
-        $this->addStandardTab('PluginWebapplicationsStream', $ong, $options);
-        $this->addStandardTab('PluginWebapplicationsKnowbase', $ong, $options);
+        $this->addStandardTab(DatabaseInstance::class, $ong, $options);
+        $this->addStandardTab(Certificate::class, $ong, $options);
+        $this->addStandardTab(Stream::class, $ong, $options);
+        $this->addStandardTab(Knowbase::class, $ong, $options);
 
         return $ong;
     }
@@ -77,7 +95,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             $_SESSION['plugin_webapplications_loaded_appliances_id'] = 0;
         }
         if ($appId > 0) {
-            $appliance = new Appliance();
+            $appliance = new \Appliance();
             $appliance->getFromDB($appId);
             return $appliance->getName();
         }
@@ -107,7 +125,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         global $CFG_GLPI;
 
         echo "<div class='center' style='margin-top: 10px'>";
-        $rand = Appliance::dropdown(['name' => 'applianceDropdown', 'value' => $id]);
+        $rand = \Appliance::dropdown(['name' => 'applianceDropdown', 'value' => $id]);
         echo "</div>";
 
 
@@ -138,7 +156,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $ApplianceId = $options['appliances_id'];
 
-        $appliance = new Appliance();
+        $appliance = new \Appliance();
         $appliance->getFromDB($ApplianceId);
 
         self::showHeaderDashboard($ApplianceId);
@@ -152,7 +170,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $groupUserAdmin = array_column($groupUserAdminDBTM->find(['groups_id' => $groupAdminId]), 'users_id');
         $numberAdmin = count(array_unique($groupUserAdmin));
 
-        $applianceplugin = new PluginWebapplicationsAppliance();
+        $applianceplugin = new Appliance();
         $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
 
         echo "<div class='card-body child33' style='text-align:center;font-weight: bold'>";
@@ -163,7 +181,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<br>";
         echo "<h1>";
         $number_users = $applianceplugin->fields['number_users'] ?? 0;
-        echo PluginWebapplicationsAppliance::getNbUsersValue($number_users);
+        echo Appliance::getNbUsersValue($number_users);
         echo "</h1>";
         echo "</div>";
 
@@ -193,11 +211,11 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         echo "<div style='display: flex;flex-wrap: wrap;'>";
 
-        PluginWebapplicationsAppliance::showSupportPartFromDashboard($appliance);
+        Appliance::showSupportPartFromDashboard($appliance);
 
-        PluginWebapplicationsAppliance::showDocumentsAndContractsFromDashboard($appliance);
+        Appliance::showDocumentsAndContractsFromDashboard($appliance);
 
-        PluginWebapplicationsKnowbase::showFromDashboard($appliance);
+        Knowbase::showFromDashboard($appliance);
 
         echo "</div>";
 
@@ -219,17 +237,17 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         echo "<div style='display: flex;flex-wrap: wrap;'>";
 
-        self::showFromDashboard($appliance, new PluginWebapplicationsEntity());
+        self::showFromDashboard($appliance, new Entity());
 
-        self::showFromDashboard($appliance, new PluginWebapplicationsProcess());
+        self::showFromDashboard($appliance, new Process());
 
-        self::showFromDashboard($appliance, new PluginWebapplicationsPhysicalInfrastructure());
+        self::showFromDashboard($appliance, new PhysicalInfrastructure());
 
-        self::showFromDashboard($appliance, new DatabaseInstance());
+        self::showFromDashboard($appliance, new \DatabaseInstance());
 
-        self::showFromDashboard($appliance, new Certificate());
+        self::showFromDashboard($appliance, new \Certificate());
 
-        self::showFromDashboard($appliance, new PluginWebapplicationsStream());
+        self::showFromDashboard($appliance, new Stream());
 
         echo "</div>";
     }
@@ -242,14 +260,14 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<h3 class='card-title d-flex align-items-center ps-4'>";
 
         echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
-        $appliance = new Appliance();
+        $appliance = new \Appliance();
         $appliance->getFromDB($ApplianceId);
         $icon = $appliance->getIcon();
         echo "<i class='" . $icon . " fa-2x'></i>";
         echo "</div>";
 
         echo "<h1 style='margin: auto'>";
-        $linkApp = Appliance::getFormURLWithID($appliance->getID());
+        $linkApp = \Appliance::getFormURLWithID($appliance->getID());
         $name = $appliance->getLink();
         echo "<a href='$linkApp'>" . $name . "</a>";
         echo "</h1>";
@@ -291,7 +309,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
             $rand = mt_rand();
             if ($item->getType() != "DatabaseInstance"
-                && $item->getType() != "PluginWebapplicationsPhysicalInfrastructure"
+                && $item->getType() != PhysicalInfrastructure::class
                 && $item->canUpdate()) {
                 echo "<span style='float: right'>";
                 echo Html::submit(
@@ -331,8 +349,8 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $app_item = new Appliance_Item();
 
-        if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
-            $apps = PluginWebapplicationsPhysicalInfrastructure::getItems();
+        if ($item->getType() == PhysicalInfrastructure::class) {
+            $apps = PhysicalInfrastructure::getItems();
         } else if ($item->getType() == "Certificate") {
             $apps = self::getObjects($item, $ApplianceId);
         } else {
@@ -350,7 +368,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<div class='col-xxl-12 field-container list-group'>";
         if (!empty($apps)) {
             foreach ($apps as $app) {
-                if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+                if ($item->getType() == PhysicalInfrastructure::class) {
                     $itemDBTM = new $app['itemtype'];
                     if ($itemDBTM->getFromDB($app['id'])) {
                         $name = $itemDBTM->getName();
@@ -498,15 +516,15 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
 
-        $appliance = new Appliance();
+        $appliance = new \Appliance();
         $appliance->getFromDB($ApplianceId);
 
         self::showHeaderDashboard($ApplianceId);
 
         $object = new $item();
 
-        if ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
-            $list = PluginWebapplicationsPhysicalInfrastructure::getItems();
+        if ($item->getType() == PhysicalInfrastructure::class) {
+            $list = PhysicalInfrastructure::getItems();
         } else {
             $list = self::getObjects($item, $ApplianceId);
         }
@@ -521,7 +539,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $title = $object->getTypeName(2);
         self::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addObject');
 
-        if ($object->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+        if ($object->getType() == PhysicalInfrastructure::class) {
             echo "<form name='form' method='post' action='" .
                 PLUGIN_WEBAPPLICATIONS_WEBDIR."/front/dashboard.php"."'>";
         } else if ($object->getType() == "Certificate") {
@@ -538,7 +556,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         echo "<tr class='tab_bg_1'>";
         echo "<td class='center'>";
 
-        if ($object->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+        if ($object->getType() == PhysicalInfrastructure::class) {
             Dropdown::showSelectItemFromItemtypes(
                 [
                     'items_id_name' => 'items_id',
@@ -578,17 +596,17 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         if ($nb > 0) {
             echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
-            if ($item->getType() == "PluginWebapplicationsEntity") {
+            if ($item->getType() == Entity::class) {
                 echo _n("Entity list", "Entities list", $nb, 'webapplications');
-            } elseif ($item->getType() == "PluginWebapplicationsProcess") {
+            } elseif ($item->getType() == Process::class) {
                 echo _n("Process list", "Processes list", $nb, 'webapplications');
-            } elseif ($item->getType() == "PluginWebapplicationsPhysicalInfrastructure") {
+            } elseif ($item->getType() == PhysicalInfrastructure::class) {
                 echo _n("Item list", "Items list", $nb, 'webapplications');
             } elseif ($item->getType() == "DatabaseInstance") {
                 echo _n("Database list", "Databases list", $nb, 'webapplications');
             } elseif ($item->getType() == "Certificate") {
                 echo _n("Certificate list", "Certificates list", $nb, 'webapplications');
-            } elseif ($item->getType() == "PluginWebapplicationsStream") {
+            } elseif ($item->getType() == Stream::class) {
                 echo _n("Stream list", "Streams list", $nb, 'webapplications');
             }
             echo "</h2>";
@@ -606,9 +624,9 @@ class PluginWebapplicationsDashboard extends CommonDBTM
             echo "</table>";
         } else {
             if ($item->getType() == "DatabaseInstance") {
-                PluginWebapplicationsDatabaseInstance::showListObjects($list);
+                DatabaseInstance::showListObjects($list);
             } else if ($item->getType() == "Certificate") {
-                PluginWebapplicationsCertificate::showListObjects($list);
+                Certificate::showListObjects($list);
             } else {
                 $item::showListObjects($list);
             }

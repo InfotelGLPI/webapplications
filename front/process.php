@@ -27,13 +27,13 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
+use GlpiPlugin\Webapplications\Process;
 
 Session::checkRight("plugin_webapplications_processes", READ);
 
-Html::header(PluginWebapplicationsProcess::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", 'pluginwebapplicationsprocess');
+Html::header(Process::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", Process::class);
 
-Search::show('PluginWebapplicationsProcess');
+Search::show(Process::class);
 
 Html::footer();
 

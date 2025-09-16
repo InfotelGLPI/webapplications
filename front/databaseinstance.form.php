@@ -27,11 +27,8 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
 
 Session::checkLoginUser();
-
-use Glpi\Event;
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -40,17 +37,15 @@ if (!isset($_GET["withtemplate"])) {
     $_GET["withtemplate"] = "";
 }
 
-$instance = new PluginWebapplicationsDatabaseInstance();
-
 if (isset($_GET['_in_modal'])) {
-    Html::popHeader(DatabaseInstance::getTypeName(2), $_SERVER['PHP_SELF']);
+    Html::popHeader(\DatabaseInstance::getTypeName(2), $_SERVER['PHP_SELF']);
     $_SESSION['reload']=true;
 
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
     if(isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
-    DatabaseInstance::displayFullPageForItem($_GET['id'], $options );
+    \DatabaseInstance::displayFullPageForItem($_GET['id'], $options );
 
 
     Html::popFooter();
@@ -58,5 +53,5 @@ if (isset($_GET['_in_modal'])) {
 }
 else {
 
-    DatabaseInstance::displayFullPageForItem($_GET['id']);
+    \DatabaseInstance::displayFullPageForItem($_GET['id']);
 }

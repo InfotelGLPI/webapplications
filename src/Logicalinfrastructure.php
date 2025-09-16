@@ -27,15 +27,24 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use Ajax;
+use CommonDBTM;
+use CommonGLPI;
+use Html;
+use Impact;
+use ImpactRelation;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
 
 /**
- * Class PluginWebapplicationsLogicalInfrastructure
+ * Class LogicalInfrastructure
  */
-class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
+class LogicalInfrastructure extends CommonDBTM
 {
     public static $rightname = "plugin_webapplications_appliances";
 
@@ -56,7 +65,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
 
-        $item = new Appliance();
+        $item = new \Appliance();
         $item->getFromDB($ApplianceId);
         $class = get_class($item);
 
@@ -127,7 +136,7 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
         echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
 
         echo "<td >";
-        $rand = Appliance::dropdown(['name' => 'applianceDropdown']);
+        $rand = \Appliance::dropdown(['name' => 'applianceDropdown']);
         echo "</td>";
         echo "</tr>";
         echo "</table></div>";
@@ -147,10 +156,10 @@ class PluginWebapplicationsLogicalInfrastructure extends CommonDBTM
     {
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
 
-        $item = new Appliance();
+        $item = new \Appliance();
         $item->getFromDB($ApplianceId);
 
-        PluginWebapplicationsDashboard::showHeaderDashboard($ApplianceId);
+        Dashboard::showHeaderDashboard($ApplianceId);
 
         $icon = "<i class='" . self::getIcon() . " fa-1x'></i>";
 

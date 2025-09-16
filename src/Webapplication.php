@@ -27,27 +27,29 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use CommonDBTM;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-// Class for a Dropdown
-
 /**
- * Class PluginWebapplicationsWebapplicationType
+ * Class Webapplication
  */
-class PluginWebapplicationsWebapplicationType extends CommonDropdown
+class Webapplication extends CommonDBTM
 {
+    public $dohistory = true;
     public static $rightname = "plugin_webapplications_appliances";
-    public $can_be_translated = true;
 
     /**
      * @param int $nb
      *
-     * @return translated
+     * @return string
      */
     public static function getTypeName($nb = 0)
     {
-        return _n('Category', 'Categories', $nb, 'webapplications');
+        return __('Appliance dashboard', 'webapplications');
     }
 }

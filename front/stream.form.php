@@ -33,6 +33,7 @@ include('../../../inc/includes.php');
 Session::checkLoginUser();
 
 use Glpi\Event;
+use GlpiPlugin\Webapplications\Stream;
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
@@ -43,7 +44,7 @@ if (!isset($_GET["withtemplate"])) {
 global $CFG_GLPI;
 
 
-$stream = new PluginWebapplicationsStream();
+$stream = new Stream();
 
 if (isset($_POST["add"])) {
     $stream->check(-1, CREATE, $_POST);
@@ -70,19 +71,19 @@ if (isset($_POST["add"])) {
     $stream->update($_POST);
     Html::back();
 } elseif (isset($_GET['_in_modal'])) {
-    Html::popHeader(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF']);
+    Html::popHeader(Stream::getTypeName(2), $_SERVER['PHP_SELF']);
     $_SESSION['reload']=true;
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true", 'stream_types' => $CFG_GLPI['stream_types']];
     if (isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
     $menus = ["appliancedashboard", "stream"];
-    PluginWebapplicationsStream::displayFullPageForItem($_GET['id'], $menus, $options);
+    Stream::displayFullPageForItem($_GET['id'], $menus, $options);
 
     Html::popFooter();
 } else {
     if (Session::getCurrentInterface() == "central") {
-        Html::header(PluginWebapplicationsStream::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsstream", "config");
+        Html::header(Stream::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", "pluginwebapplicationsstream", "config");
         $stream->display(['id' => $_GET["id"], 'stream_types' => $CFG_GLPI['stream_types']]);
     }
     Html::footer();

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
@@ -27,19 +28,25 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use Ajax;
+use Appliance_Item;
+use CommonDBTM;
+use CommonGLPI;
+use Glpi\Application\View\TemplateRenderer;
+use Html;
+use User;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-use Glpi\Application\View\TemplateRenderer;
-
 /**
- * Class PluginWebapplicationsProcess
+ * Class Process
  */
-class PluginWebapplicationsProcess extends CommonDBTM
+class Process extends CommonDBTM
 {
-    use Glpi\Features\Inventoriable;
-
     public static $rightname = "plugin_webapplications_processes";
 
     public static function getTypeName($nb = 0)
@@ -72,9 +79,10 @@ class PluginWebapplicationsProcess extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
+            ;
             $self = new self();
-            $nb = count(PluginWebapplicationsDashboard::getObjects($self, $ApplianceId));
+            $nb = count(Dashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);
         }
         return self::getTypeName();
@@ -83,7 +91,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $obj = new self();
-        PluginWebapplicationsDashboard::showList($obj);
+        Dashboard::showList($obj);
         return true;
     }
 
@@ -102,14 +110,15 @@ class PluginWebapplicationsProcess extends CommonDBTM
 
     public function post_getEmpty()
     {
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
+        ;
         if ($ApplianceId > 0) {
             $webs = getAllDataFromTable(
-                PluginWebapplicationsAppliance::getTable(),
+                Appliance::getTable(),
                 [
                     'WHERE' => [
                         'appliances_id' => $ApplianceId,
-                    ]
+                    ],
                 ]
             );
 
@@ -127,7 +136,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
     {
         if (isset($input['appliances_id'])
             && !empty($input['appliances_id'])) {
-            $item = new Appliance();
+            $item = new \Appliance();
             if ($item->getFromDB($input['appliances_id'])) {
                 $input['entities_id'] = $item->fields['entities_id'];
                 $input['is_recursive'] = $item->fields['is_recursive'];
@@ -145,7 +154,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
                 [
                     'appliances_id' => $appliance_id,
                     'items_id' => $this->getID(),
-                    'itemtype' => 'PluginWebapplicationsProcess'
+                    'itemtype' => Process::class,
                 ]
             );
         }
@@ -160,7 +169,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
 
         $tab[] = [
             'id' => 'common',
-            'name' => self::getTypeName(2)
+            'name' => self::getTypeName(2),
         ];
 
         $tab[] = [
@@ -177,7 +186,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
             'table' => self::getTable(),
             'field' => 'comment',
             'name' => __('Comments'),
-            'datatype' => 'text'
+            'datatype' => 'text',
         ];
 
         $tab[] = [
@@ -186,7 +195,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
             'field' => 'name',
             'linkfield' => 'owner',
             'name' => __('Owner', 'webapplications'),
-            'datatype' => 'dropdown'
+            'datatype' => 'dropdown',
         ];
 
         $tab[] = [
@@ -194,28 +203,28 @@ class PluginWebapplicationsProcess extends CommonDBTM
             'table' => self::getTable(),
             'field' => 'webapplicationavailabilities',
             'name' => __('Availability', 'webapplications'),
-            'datatype' => 'dropdown'
+            'datatype' => 'dropdown',
         ];
         $tab[] = [
             'id' => '5',
             'table' => self::getTable(),
             'field' => 'webapplicationintegrities',
             'name' => __('Integrity', 'webapplications'),
-            'datatype' => 'dropdown'
+            'datatype' => 'dropdown',
         ];
         $tab[] = [
             'id' => '6',
             'table' => self::getTable(),
             'field' => 'webapplicationconfidentialities',
             'name' => __('Confidentiality', 'webapplications'),
-            'datatype' => 'dropdown'
+            'datatype' => 'dropdown',
         ];
         $tab[] = [
             'id' => '7',
             'table' => self::getTable(),
             'field' => 'webapplicationtraceabilities',
             'name' => __('Traceability', 'webapplications'),
-            'datatype' => 'dropdown'
+            'datatype' => 'dropdown',
         ];
 
 
@@ -228,7 +237,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
         //add main tab for current object
         $this->addDefaultFormTab($ong);
         $this->addStandardTab('Appliance_Item', $ong, $options);
-        $this->addStandardTab('PluginWebapplicationsProcess_Entity', $ong, $options);
+        $this->addStandardTab(Process_Entity::class, $ong, $options);
         return $ong;
     }
 
@@ -246,33 +255,33 @@ class PluginWebapplicationsProcess extends CommonDBTM
             echo "<div class='card w-33' style='margin-right: 10px;margin-top: 10px;'>";
             echo "<div class='card-body'>";
             echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='".self::getIcon()."' style='font-size:5em'></i>";
+            echo "<i class='" . self::getIcon() . "' style='font-size:5em'></i>";
             echo "</div>";
-            echo "<div style='display: inline-block;';>";
+            echo "<div style='display: inline-block;'>";
             echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
             if ($object->fields['owner'] > 0) {
                 echo "<p class='card-text'>";
-                echo __('Owner', 'webapplications')." : ".getUserName($object->fields['owner']);
+                echo __('Owner', 'webapplications') . " : " . getUserName($object->fields['owner']);
                 echo "</p>";
             }
             echo "<p class='card-text'>";
-            $background = PluginWebapplicationsAppliance::getColorForDICT($object->fields['webapplicationavailabilities']);
-            echo "<span class='dict-min' style='background-color:$background' title='".__('Availability', 'webapplications')."'>";
+            $background = Appliance::getColorForDICT($object->fields['webapplicationavailabilities']);
+            echo "<span class='dict-min' style='background-color:$background' title='" . __('Availability', 'webapplications') . "'>";
             echo $object->fields['webapplicationavailabilities'];
             echo "</span>";
 
-            $background = PluginWebapplicationsAppliance::getColorForDICT($object->fields['webapplicationintegrities']);
-            echo "<span class='dict-min' style='background-color:$background' title='".__('Integrity', 'webapplications')."'>";
+            $background = Appliance::getColorForDICT($object->fields['webapplicationintegrities']);
+            echo "<span class='dict-min' style='background-color:$background' title='" . __('Integrity', 'webapplications') . "'>";
             echo $object->fields['webapplicationintegrities'];
             echo "</span>";
 
-            $background = PluginWebapplicationsAppliance::getColorForDICT($object->fields['webapplicationconfidentialities']);
-            echo "<span class='dict-min' style='background-color:$background' title='".__('Confidentiality', 'webapplications')."'>";
+            $background = Appliance::getColorForDICT($object->fields['webapplicationconfidentialities']);
+            echo "<span class='dict-min' style='background-color:$background' title='" . __('Confidentiality', 'webapplications') . "'>";
             echo $object->fields['webapplicationconfidentialities'];
             echo "</span>";
 
-            $background = PluginWebapplicationsAppliance::getColorForDICT($object->fields['webapplicationtraceabilities']);
-            echo "<span class='dict-min' style='background-color:$background' title='".__('Traceability', 'webapplications')."'>";
+            $background = Appliance::getColorForDICT($object->fields['webapplicationtraceabilities']);
+            echo "<span class='dict-min' style='background-color:$background' title='" . __('Traceability', 'webapplications') . "'>";
             echo $object->fields['webapplicationtraceabilities'];
             echo "</span>";
             echo "</p>";
@@ -290,7 +299,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
                         'icon' => 'ti ti-edit',
                         'form' => '',
                         'data-bs-toggle' => 'modal',
-                        'data-bs-target' => '#edit' . $id . $rand
+                        'data-bs-target' => '#edit' . $id . $rand,
                     ]
                 );
 
@@ -299,7 +308,7 @@ class PluginWebapplicationsProcess extends CommonDBTM
                     $link,
                     [
                         'display' => false,
-                        'reloadonclose' => true
+                        'reloadonclose' => true,
                     ]
                 );
             }

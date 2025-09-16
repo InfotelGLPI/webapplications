@@ -27,9 +27,11 @@
  --------------------------------------------------------------------------
  */
 
-include('../../../inc/includes.php');
 
-Html::header(PluginWebapplicationsWebapplication::getTypeName(2), "", "appliancedashboard", "");
+use GlpiPlugin\Webapplications\Webapplication;
+use GlpiPlugin\Webapplications\Dashboard;
+
+Html::header(Webapplication::getTypeName(2), "", Dashboard::class, "");
 
 Session::checkRight("plugin_webapplications_appliances", READ);
 
@@ -90,15 +92,15 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
         $DB->doQuery($migrate_webapps);
 
-        $migrate_webapps_additional_fields = 'INSERT INTO `glpi_plugin_webapplications_appliances` (`appliances_id`, 
+        $migrate_webapps_additional_fields = 'INSERT INTO `glpi_plugin_webapplications_appliances` (`appliances_id`,
                                                `webapplicationservertypes_id`, `webapplicationtechnics_id`, `address`, `backoffice`, `webapplicationexternalexpositions_id`, `webapplicationreferringdepartmentvalidation`, `webapplicationciovalidation`, `webapplicationavailabilities`, `webapplicationintegrities`, `webapplicationconfidentialities`, `webapplicationtraceabilities`) VALUES
                                               ("' . $webapp['id'] . '", "' . $webapp['plugin_webapplications_webapplicationservertypes_id'] . '",
                                                       "' . $webapp['plugin_webapplications_webapplicationtechnics_id'] . '",
                                                          "' . $webapp['address'] . '", "' . $webapp['backoffice'] . '", "' . $webapp['webapplicationexternalexpositions_id'] . '", "' . $webapp['webapplicationreferringdepartmentvalidation'] . '", "' . $webapp['webapplicationciovalidation'] . '", "' . $webapp['webapplicationavailabilities'] . '", "' . $webapp['webapplicationintegrities'] . '", "' . $webapp['webapplicationconfidentialities'] . '", "' . $webapp['webapplicationtraceabilities'] . '");
-                                              
-                                              INSERT INTO `glpi_plugin_webapplications_databaseinstances` (`databaseinstances_id`, 
+
+                                              INSERT INTO `glpi_plugin_webapplications_databaseinstances` (`databaseinstances_id`,
                                                `webapplicationexternalexpositions_id`, `webapplicationavailabilities`, `webapplicationintegrities`, `webapplicationconfidentialities`, `webapplicationtraceabilities`) VALUES
-                                              ("' . $webapp['id'] . '", "' . $webapp['webapplicationexternalexpositions_id'] . '", 
+                                              ("' . $webapp['id'] . '", "' . $webapp['webapplicationexternalexpositions_id'] . '",
                                               "' . $webapp['webapplicationavailabilities'] . '", "' . $webapp['webapplicationintegrities'] . '", "' . $webapp['webapplicationconfidentialities'] . '", "' . $webapp['webapplicationtraceabilities'] . '")';
 
 
@@ -114,16 +116,16 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
         $DB->doQuery($query);
 
         if (Plugin::isPluginActive('accounts')) {
-            $queryUpdateAccountsAssociatedItems = "UPDATE `glpi_plugin_accounts_accounts_items` 
-                                                   SET `glpi_plugin_accounts_accounts_items`.`items_id` =  '" . $new_appliance['id'] . "', 
+            $queryUpdateAccountsAssociatedItems = "UPDATE `glpi_plugin_accounts_accounts_items`
+                                                   SET `glpi_plugin_accounts_accounts_items`.`items_id` =  '" . $new_appliance['id'] . "',
                                                             `glpi_plugin_accounts_accounts_items`.`itemtype` = 'Appliance'
                                                             WHERE `glpi_plugin_accounts_accounts_items`.`items_id`= '" . $new_appliance['old_id'] . "'
                                                                AND  `glpi_plugin_accounts_accounts_items`.`itemtype` = 'PluginWebapplicationsWebapplication';";
             $DB->doQuery($queryUpdateAccountsAssociatedItems);
         }
         if (Plugin::isPluginActive('databases')) {
-            $querUpdateDatabasesAssociatedItems ="UPDATE `glpi_plugin_databases_databases_items` 
-                                                   SET `glpi_plugin_databases_databases_items`.`items_id` =  '" . $new_appliance['id'] . "', 
+            $querUpdateDatabasesAssociatedItems ="UPDATE `glpi_plugin_databases_databases_items`
+                                                   SET `glpi_plugin_databases_databases_items`.`items_id` =  '" . $new_appliance['id'] . "',
                                                             `glpi_plugin_databases_databases_items`.`itemtype` = 'Appliance'
                                                             WHERE `glpi_plugin_databases_databases_items`.`items_id`= '" . $new_appliance['old_id'] . "'
                                                                AND  `glpi_plugin_databases_databases_items`.`itemtype` = 'PluginWebapplicationsWebapplication';";
@@ -176,7 +178,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
     echo "<br>";
 
     $in = "IN (" . implode(',', array(
-          "'PluginWebapplicationsWebapplication'"
+          "'GlpiPlugin\Webapplications'"
        )) . ")";
 
     $tables = array(

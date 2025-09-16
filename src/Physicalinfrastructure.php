@@ -27,15 +27,26 @@
  --------------------------------------------------------------------------
  */
 
+namespace GlpiPlugin\Webapplications;
+
+use Ajax;
+use Appliance_Item;
+use Appliance_Item_Relation;
+use CommonDBTM;
+use CommonGLPI;
+use Dropdown;
+use Html;
+use IPAddress;
+use Item_OperatingSystem;
+
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-
 /**
- * Class PluginWebapplicationsPhysicalInfrastructure
+ * Class PhysicalInfrastructure
  */
-class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
+class PhysicalInfrastructure extends CommonDBTM
 {
     public static $rightname = "plugin_webapplications_appliances";
 
@@ -61,7 +72,7 @@ class PluginWebapplicationsPhysicalInfrastructure extends CommonDBTM
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
         $obj = new self();
-        PluginWebapplicationsDashboard::showList($obj);
+        Dashboard::showList($obj);
     }
 
 

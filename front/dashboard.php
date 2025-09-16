@@ -27,6 +27,8 @@
  --------------------------------------------------------------------------
  */
 
+use GlpiPlugin\Webapplications\Dashboard;
+
 include('../../../inc/includes.php');
 
 Session::checkLoginUser();
@@ -45,11 +47,11 @@ if (isset($_POST['add'])) {
     $iapp->add($_POST);
 
     if ($_POST['itemtype'] == 'Computer') {
-        $item = new Appliance();
+        $item = new \Appliance();
         $item->getFromDB($_POST['appliances_id']);
 
         $instances = getAllDataFromTable(
-            DatabaseInstance::getTable(),
+            \DatabaseInstance::getTable(),
             [
                 'WHERE' => [
                     'items_id' => $_POST['items_id'],
@@ -156,13 +158,13 @@ if (isset($_POST['add'])) {
     Html::back();
 }
 
-$dashboard = new PluginWebapplicationsDashboard;
+$dashboard = new Dashboard;
 
 Html::header(
-    PluginWebapplicationsDashboard::getTypeName(2),
+    Dashboard::getTypeName(2),
     $_SERVER['PHP_SELF'],
     "appliancedashboard",
-    "pluginwebapplicationsdashboard"
+    Dashboard::class
 );
 
 $id = 0;
@@ -170,6 +172,6 @@ if (isset($_SESSION['plugin_webapplications_loaded_appliances_id'])) {
     $id = $_SESSION['plugin_webapplications_loaded_appliances_id'];
 }
 
-PluginWebapplicationsDashboard::selectAppliance($id);
+Dashboard::selectAppliance($id);
 
 Html::footer();
