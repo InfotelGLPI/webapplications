@@ -144,7 +144,7 @@ function plugin_version_webapplications()
         'version' => PLUGIN_WEBAPPLICATIONS_VERSION,
         'license' => 'GPLv2+',
         'oldname' => 'appweb',
-        'author' => "<a href='http://blogglpi.infotel.com'>Infotel</a>",
+        'author' => "<a href='https//blogglpi.infotel.com'>Infotel</a>, Xavier CAILLAUD",
         'homepage' => 'https://github.com/InfotelGLPI/webapplications',
         'requirements' => [
             'glpi' => [

@@ -38,6 +38,7 @@ use Database;
 use Dropdown;
 use Glpi\Application\View\TemplateRenderer;
 use GlpiPlugin\Webapplications\Appliance;
+use Html;
 
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
