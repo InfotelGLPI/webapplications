@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-16 13:41+0000\n"
+"POT-Creation-Date: 2025-09-21 14:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:409 hook.php:482 src/Databaseinstance.php:385 src/Process.php:205
+#: hook.php:409 hook.php:482 src/Databaseinstance.php:386 src/Process.php:205
 #: src/Process.php:269 templates/webapplication_appliance_form.html.twig:115
 #: templates/webapplication_database_form.html.twig:32 templates/webapplication_process_form.html.twig:27
 msgid "Availability"
@@ -90,7 +90,7 @@ msgid_plural "Certificates list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:427 hook.php:498 src/Databaseinstance.php:405 src/Process.php:219
+#: hook.php:427 hook.php:498 src/Databaseinstance.php:406 src/Process.php:219
 #: src/Process.php:279 templates/webapplication_appliance_form.html.twig:147
 #: templates/webapplication_database_form.html.twig:62 templates/webapplication_process_form.html.twig:60
 msgid "Confidentiality"
@@ -110,7 +110,7 @@ msgid_plural "Databases list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Stream.php:218 templates/webapplication_stream_form.html.twig:37
+#: src/Stream.php:219 templates/webapplication_stream_form.html.twig:37
 #: templates/webapplication_stream_form.html.twig:42
 msgid "Destination"
 msgstr ""
@@ -119,11 +119,11 @@ msgstr ""
 msgid "Ecosystem"
 msgstr ""
 
-#: src/Stream.php:229 templates/webapplication_stream_form.html.twig:57
+#: src/Stream.php:230 templates/webapplication_stream_form.html.twig:57
 msgid "Encryption"
 msgstr ""
 
-#: src/Stream.php:236 src/Stream.php:399
+#: src/Stream.php:237 src/Stream.php:400
 #: templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr ""
@@ -144,7 +144,7 @@ msgstr[1] ""
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:418 hook.php:490 src/Databaseinstance.php:395 src/Process.php:212
+#: hook.php:418 hook.php:490 src/Databaseinstance.php:396 src/Process.php:212
 #: src/Process.php:274 templates/webapplication_appliance_form.html.twig:131
 #: templates/webapplication_database_form.html.twig:48 templates/webapplication_process_form.html.twig:44
 msgid "Integrity"
@@ -210,7 +210,7 @@ msgstr ""
 msgid "Physical Infrastructure"
 msgstr ""
 
-#: src/Stream.php:243 templates/webapplication_stream_form.html.twig:70
+#: src/Stream.php:244 templates/webapplication_stream_form.html.twig:70
 msgid "Port"
 msgstr ""
 
@@ -241,7 +241,7 @@ msgstr ""
 msgid "Project team"
 msgstr ""
 
-#: src/Stream.php:250 templates/webapplication_stream_form.html.twig:77
+#: src/Stream.php:251 templates/webapplication_stream_form.html.twig:77
 msgid "Protocol"
 msgstr ""
 
@@ -265,12 +265,12 @@ msgstr ""
 msgid "Security Needs"
 msgstr ""
 
-#: src/Stream.php:207 templates/webapplication_stream_form.html.twig:16
+#: src/Stream.php:208 templates/webapplication_stream_form.html.twig:16
 #: templates/webapplication_stream_form.html.twig:21
 msgid "Source"
 msgstr ""
 
-#: src/Profile.php:218 src/Stream.php:52
+#: src/Profile.php:218 src/Stream.php:53
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] ""
@@ -294,7 +294,7 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: hook.php:436 hook.php:506 src/Databaseinstance.php:415 src/Process.php:226
+#: hook.php:436 hook.php:506 src/Databaseinstance.php:416 src/Process.php:226
 #: src/Process.php:284 templates/webapplication_appliance_form.html.twig:164
 #: templates/webapplication_database_form.html.twig:77 templates/webapplication_process_form.html.twig:77
 msgid "Traceability"
