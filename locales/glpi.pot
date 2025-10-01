@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-01 10:33+0000\n"
+"POT-Creation-Date: 2025-10-01 10:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "All users"
 msgstr ""
 
-#: setup.php:143 src/Dashboard.php:88 src/Profile.php:213
+#: setup.php:144 src/Dashboard.php:88 src/Profile.php:213
 #: src/Webapplication.php:53
 msgid "Appliance dashboard"
 msgstr ""
