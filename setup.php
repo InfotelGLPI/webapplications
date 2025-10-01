@@ -1,4 +1,5 @@
 <?php
+
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
@@ -27,17 +28,17 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.0.2');
+define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.1.0');
 
 global $CFG_GLPI;
 
 use Glpi\Plugin\Hooks;
+use GlpiPlugin\Webapplications\Appliance;
 use GlpiPlugin\Webapplications\Dashboard;
+use GlpiPlugin\Webapplications\DatabaseInstance;
+use GlpiPlugin\Webapplications\Entity;
 use GlpiPlugin\Webapplications\Process;
 use GlpiPlugin\Webapplications\Profile;
-use GlpiPlugin\Webapplications\Entity;
-use GlpiPlugin\Webapplications\DatabaseInstance;
-use GlpiPlugin\Webapplications\Appliance;
 use GlpiPlugin\Webapplications\Stream;
 
 if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
@@ -56,18 +57,18 @@ function plugin_init_webapplications()
 
     $PLUGIN_HOOKS['change_profile']['webapplications'] = [
         Profile::class,
-        'initProfile'
+        'initProfile',
     ];
 
     Plugin::registerClass(Profile::class, ['addtabon' => ['Profile']]);
     if (Session::getLoginUserID()) {
         if (Session::haveRight("plugin_webapplications_appliances", READ)) {
-            $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = array(
+            $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = [
                 Dashboard::class,
                 Entity::class,
                 Process::class,
                 Stream::class,
-            );
+            ];
         }
     }
 
@@ -75,38 +76,38 @@ function plugin_init_webapplications()
 
     $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = [
         Appliance::class,
-        'cleanRelationToAppliance'
+        'cleanRelationToAppliance',
     ];
     $PLUGIN_HOOKS['item_purge']['webapplications']['DatabaseInstance'] = [
         DatabaseInstance::class,
-        'cleanRelationToDatabase'
+        'cleanRelationToDatabase',
     ];
 
     // Other fields inherited from webapplications
     $PLUGIN_HOOKS['item_add']['webapplications'] = [
         'Appliance' => [
             Appliance::class,
-            'applianceAdd'
+            'applianceAdd',
         ],
         'DatabaseInstance' => [
             DatabaseInstance::class,
-            'databaseAdd'
+            'databaseAdd',
         ],
         'Appliance_Item' => [
             DatabaseInstance::class,
-            'databaseLink'
+            'databaseLink',
         ],
     ];
 
     $PLUGIN_HOOKS['pre_item_update']['webapplications'] = [
         'Appliance' => [
             Appliance::class,
-            'applianceUpdate'
+            'applianceUpdate',
         ],
         'DatabaseInstance' => [
             DatabaseInstance::class,
-            'databaseUpdate'
-        ]
+            'databaseUpdate',
+        ],
     ];
 
 
@@ -150,8 +151,8 @@ function plugin_version_webapplications()
             'glpi' => [
                 'min' => '11.0',
                 'max' => '12.0',
-                'dev' => false
-            ]
-        ]
+                'dev' => false,
+            ],
+        ],
     ];
 }
