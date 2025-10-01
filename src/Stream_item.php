@@ -117,7 +117,7 @@ class Stream_Item extends CommonDBTM
             echo "<form name='form' method='post' action='" .
                 Toolbox::getItemTypeFormURL(Stream_Item::class) . "'>";
 
-            echo "<div align='center'><table class='tab_cadre_fixe'>";
+            echo "<div class='center'><table class='tab_cadre_fixe'>";
             echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
 
             echo "<tr class='tab_bg_1'>";

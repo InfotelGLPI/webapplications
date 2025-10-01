@@ -186,7 +186,7 @@ class Process_Entity extends CommonDBTM
             echo "<form name='form' method='post' action='" .
                 Toolbox::getItemTypeFormURL(Process_Entity::class) . "'>";
 
-            echo "<div align='center'><table class='tab_cadre_fixe'>";
+            echo "<div class='center'><table class='tab_cadre_fixe'>";
             echo "<tr><th colspan='6'>" . __('Add an entity', 'webapplications') . "</th></tr>";
 
             echo "<tr class='tab_bg_1'>";

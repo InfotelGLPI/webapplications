@@ -550,7 +550,7 @@ class Dashboard extends CommonDBTM
                 Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
         }
 
-        echo "<div align='center'><table class='tab_cadre_fixe'>";
+        echo "<div class='center'><table class='tab_cadre_fixe'>";
         echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
 
         echo "<tr class='tab_bg_1'>";

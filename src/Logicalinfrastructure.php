@@ -131,7 +131,7 @@ class LogicalInfrastructure extends CommonDBTM
         $options['colspan'] = 1;
 
 
-        echo "<div align='center'>
+        echo "<div class='center'>
         <table class='tab_cadre_fixe'>";
         echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
 

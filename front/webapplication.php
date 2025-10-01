@@ -41,9 +41,9 @@ if (!isset($_POST['do_migration'])) {
 
 global $DB;
 
-echo "<div align='center'><h1>" . __('Core migration', 'webapplications') . "</h1><br/>";
+echo "<div class='center'><h1>" . __('Core migration', 'webapplications') . "</h1><br/>";
 
-echo "<table align='center'><tr><td>";
+echo "<table class='center'><tr><td>";
 Html::showSimpleForm(
     $_SERVER['PHP_SELF'],
     'migration',
