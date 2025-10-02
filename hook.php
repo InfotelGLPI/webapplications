@@ -277,7 +277,7 @@ function plugin_webapplications_getDropdown()
 {
     if (Plugin::isPluginActive("webapplications")) {
         return [Webapplicationservertype::class => Webapplicationservertype::getTypeName(2),
-            //              Type::class       => Type::getTypeName(2),
+            //              Webapplicationstype::class       => Webapplicationstype::getTypeName(2),
             Webapplicationtechnic::class    => Webapplicationtechnic::getTypeName(2),
             Webapplicationexternalexposition::class => Webapplicationexternalexposition::getTypeName(2)];
     }
