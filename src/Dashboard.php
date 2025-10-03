@@ -1,4 +1,5 @@
 <?php
+
 /*
  * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
@@ -37,11 +38,6 @@ use CommonDBTM;
 use Contract;
 use Dropdown;
 use Glpi\Application\View\TemplateRenderer;
-use GlpiPlugin\Webapplications\Entity;
-use GlpiPlugin\Webapplications\DatabaseInstance;
-use GlpiPlugin\Webapplications\Appliance;
-use GlpiPlugin\Webapplications\Certificate;
-use GlpiPlugin\Webapplications\Knowbase;
 use Group_User;
 use Html;
 use Toolbox;
@@ -163,12 +159,19 @@ class Dashboard extends CommonDBTM
 
         echo "<div style='display: flex;flex-wrap: wrap;'>";
 
-        $userAdminId = $appliance->getField('users_id_tech');
-        $groupAdminId = $appliance->getField('groups_id_tech');
-
-        $groupUserAdminDBTM = new Group_User();
-        $groupUserAdmin = array_column($groupUserAdminDBTM->find(['groups_id' => $groupAdminId]), 'users_id');
-        $numberAdmin = count(array_unique($groupUserAdmin));
+        $userAdminId = $appliance->fields['users_id_tech'] ?? 0;
+        $groupsAdminId = $appliance->fields['groups_id_tech'] ?? [];
+        $Group_User = new Group_User();
+        $numberAdmin = 0;
+        foreach ($groupsAdminId as $groupId) {
+            if ($groupId > 0) {
+                $groupsAdmin = $Group_User->find(['groups_id' => $groupId]);
+                if (count($groupsAdmin) > 0) {
+                    $groupUserAdmin = array_column($groupsAdmin, 'users_id');
+                    $numberAdmin += count(array_unique($groupUserAdmin));
+                }
+            }
+        }
 
         $applianceplugin = new Appliance();
         $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
@@ -294,9 +297,9 @@ class Dashboard extends CommonDBTM
         echo "&nbsp;<span style='margin-right: auto;'>$title</span>";
 
         if ($item != false && $id > 0 && $name != "") {
-//            echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
-//            echo "<i class='" . $item->getIcon() . " fa-2x'></i>";
-//            echo "</div>";
+            //            echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
+            //            echo "<i class='" . $item->getIcon() . " fa-2x'></i>";
+            //            echo "</div>";
 
             if ($type == "add") {
                 $linkApp = $item::getFormURL();
@@ -320,7 +323,7 @@ class Dashboard extends CommonDBTM
                         'icon' => 'ti ti-edit',
                         'style' => 'float: right',
                         'data-bs-toggle' => 'modal',
-                        'data-bs-target' => '#' . $name . $id . $rand
+                        'data-bs-target' => '#' . $name . $id . $rand,
                     ]
                 );
 
@@ -329,7 +332,7 @@ class Dashboard extends CommonDBTM
                     $linkApp,
                     [
                         'display' => false,
-                        'reloadonclose' => true
+                        'reloadonclose' => true,
                     ]
                 );
                 echo "</span>";
@@ -351,7 +354,7 @@ class Dashboard extends CommonDBTM
 
         if ($item->getType() == PhysicalInfrastructure::class) {
             $apps = PhysicalInfrastructure::getItems();
-        } else if ($item->getType() == "Certificate") {
+        } elseif ($item->getType() == "Certificate") {
             $apps = self::getObjects($item, $ApplianceId);
         } else {
             $apps = $app_item->find(['appliances_id' => $ApplianceId, 'itemtype' => $item->getType()]);
@@ -369,7 +372,7 @@ class Dashboard extends CommonDBTM
         if (!empty($apps)) {
             foreach ($apps as $app) {
                 if ($item->getType() == PhysicalInfrastructure::class) {
-                    $itemDBTM = new $app['itemtype'];
+                    $itemDBTM = new $app['itemtype']();
                     if ($itemDBTM->getFromDB($app['id'])) {
                         $name = $itemDBTM->getName();
                         $link = $itemDBTM::getFormURLWithID($app['id']);
@@ -379,8 +382,8 @@ class Dashboard extends CommonDBTM
                             'FROM' => Appliance_Item::getTable(),
                             'WHERE' => [
                                 'items_id' => $app['id'],
-                                'itemtype' => $app['itemtype']
-                            ]
+                                'itemtype' => $app['itemtype'],
+                            ],
                         ]);
                         $items = iterator_to_array($items);
 
@@ -388,8 +391,8 @@ class Dashboard extends CommonDBTM
                             $iterator = $DB->request([
                                 'FROM' => Appliance_Item_Relation::getTable(),
                                 'WHERE' => [
-                                    Appliance_Item::getForeignKeyField() => $row['id']
-                                ]
+                                    Appliance_Item::getForeignKeyField() => $row['id'],
+                                ],
                             ]);
 
                             foreach ($iterator as $row) {
@@ -401,8 +404,8 @@ class Dashboard extends CommonDBTM
                         }
                         echo "</a>";
                     }
-                } else if ($item->getType() == "Certificate") {
-//                    $itemDBTM = new $app['itemtype'];
+                } elseif ($item->getType() == "Certificate") {
+                    //                    $itemDBTM = new $app['itemtype'];
                     if ($item->getFromDB($app['id'])) {
                         $name = $item->getName();
                         $link = $item::getFormURLWithID($app['id']);
@@ -420,8 +423,8 @@ class Dashboard extends CommonDBTM
                                 'FROM' => Appliance_Item::getTable(),
                                 'WHERE' => [
                                     'items_id' => $app['items_id'],
-                                    'itemtype' => 'DatabaseInstance'
-                                ]
+                                    'itemtype' => 'DatabaseInstance',
+                                ],
                             ]);
                             $items = iterator_to_array($items);
 
@@ -429,8 +432,8 @@ class Dashboard extends CommonDBTM
                                 $iterator = $DB->request([
                                     'FROM' => Appliance_Item_Relation::getTable(),
                                     'WHERE' => [
-                                        Appliance_Item::getForeignKeyField() => $row['id']
-                                    ]
+                                        Appliance_Item::getForeignKeyField() => $row['id'],
+                                    ],
                                 ]);
 
                                 foreach ($iterator as $row) {
@@ -460,13 +463,13 @@ class Dashboard extends CommonDBTM
             $app_item = new Certificate_Item();
             $apps = $app_item->find([
                 'items_id' => $ApplianceId,
-                'itemtype' => "Appliance"
+                'itemtype' => "Appliance",
             ]);
         } else {
             $app_item = new Appliance_Item();
             $apps = $app_item->find([
                 'appliances_id' => $ApplianceId,
-                'itemtype' => $item->getType()
+                'itemtype' => $item->getType(),
             ]);
         }
 
@@ -514,7 +517,8 @@ class Dashboard extends CommonDBTM
          };"
         );
 
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
+        ;
 
         $appliance = new \Appliance();
         $appliance->getFromDB($ApplianceId);
@@ -540,14 +544,14 @@ class Dashboard extends CommonDBTM
         self::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addObject');
 
         if ($object->getType() == PhysicalInfrastructure::class) {
-            echo "<form name='form' method='post' action='" .
-                PLUGIN_WEBAPPLICATIONS_WEBDIR."/front/dashboard.php"."'>";
-        } else if ($object->getType() == "Certificate") {
-            echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL('Certificate_Item') . "'>";
+            echo "<form name='form' method='post' action='"
+                . PLUGIN_WEBAPPLICATIONS_WEBDIR . "/front/dashboard.php" . "'>";
+        } elseif ($object->getType() == "Certificate") {
+            echo "<form name='form' method='post' action='"
+                . Toolbox::getItemTypeFormURL('Certificate_Item') . "'>";
         } else {
-            echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
+            echo "<form name='form' method='post' action='"
+                . Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
         }
 
         echo "<div class='center'><table class='tab_cadre_fixe'>";
@@ -561,7 +565,7 @@ class Dashboard extends CommonDBTM
                 [
                     'items_id_name' => 'items_id',
                     'itemtypes' => $CFG_GLPI['inventory_types'],
-                    'checkright' => true
+                    'checkright' => true,
                 ]
             );
         } else {
@@ -625,7 +629,7 @@ class Dashboard extends CommonDBTM
         } else {
             if ($item->getType() == "DatabaseInstance") {
                 DatabaseInstance::showListObjects($list);
-            } else if ($item->getType() == "Certificate") {
+            } elseif ($item->getType() == "Certificate") {
                 Certificate::showListObjects($list);
             } else {
                 $item::showListObjects($list);
