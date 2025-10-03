@@ -97,7 +97,7 @@ class Certificate extends CommonDBTM
             echo "<div class='card w-33' style='margin-right: 10px;margin-top: 10px;'>";
             echo "<div class='card-body'>";
             echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='ti ti-certificate' style='font-size:5em'></i>";
+            echo "<i class='ti ti-certificate' style='font-size:3em'></i>";
             echo "</div>";
             echo "<div style='display: inline-block;';>";
             echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";

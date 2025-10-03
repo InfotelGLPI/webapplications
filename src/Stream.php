@@ -382,13 +382,13 @@ class Stream extends CommonDBTM
             echo "<div class='card w-25' style='margin-right: 10px;margin-top: 10px;'>";
             echo "<div class='card-body'>";
             echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i style='font-size:5em' class='" . self::getIcon() . "'></i>";
+            echo "<i style='font-size:3em' class='" . self::getIcon() . "'></i>";
             echo "</div>";
             echo "<div style='display: inline-block;';>";
 
-            echo "<h5 class='card-title'><i class='fa-1x fas fa-ethernet'></i>&nbsp;" . $linkTransmitter . "&nbsp;";
+            echo "<h5 class='card-title'><i class='ti ti-network'></i>&nbsp;" . $linkTransmitter . "&nbsp;";
             echo "<i class='fa-1x ti ti-arrow-narrow-right'></i>";
-            echo "&nbsp;<i class='fa-1x fas fa-ethernet'></i>&nbsp;" . $linkReceiver . "</h5>";
+            echo "&nbsp;<i class='ti ti-network'></i>&nbsp;" . $linkReceiver . "</h5>";
             echo "<p class='card-text'>";
             echo $name;
             echo "</p>";

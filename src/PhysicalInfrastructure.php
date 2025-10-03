@@ -135,15 +135,15 @@ class PhysicalInfrastructure extends CommonDBTM
                 echo "<div class='card-body'>";
                 echo "<div style='display: inline-block;margin: 40px;'>";
 
-                $icon = "fa-server";
+                $icon = "ti-server";
                 if ($itemtype == "Phone") {
-                    $icon = "fa-phone";
+                    $icon = "ti-phone";
                 } elseif ($itemtype == "Printer") {
-                    $icon = "fa-print";
+                    $icon = "ti-printer";
                 } elseif ($itemtype == "NetworkEquipment") {
-                    $icon = "fa-network-wired";
+                    $icon = "ti-router";
                 }
-                echo "<i class='fa-5x fas $icon'></i>";
+                echo "<i class='ti $icon' style='font-size:3em'></i>";
                 echo "</div>";
 
                 echo "<span style='float: right'>";
