@@ -188,7 +188,7 @@ msgstr "Aktarım tamamlandı"
 
 #: src/Appliance.php:327
 msgid "No associated contracts"
-msgstr "İlgili bir sözleşme yok"
+msgstr "İlişkili bir sözleşme yok"
 
 #: src/Appliance.php:304
 msgid "No associated documents"
