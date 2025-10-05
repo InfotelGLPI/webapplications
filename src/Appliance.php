@@ -41,6 +41,7 @@ use Document;
 use Document_Item;
 use Dropdown;
 use Glpi\Application\View\TemplateRenderer;
+use ManualLink;
 use Supplier;
 
 /**
@@ -299,9 +300,10 @@ class Appliance extends CommonDBTM
                 echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
             }
 
-            echo "</div>";
+            echo "</div><br>";
         } else {
             echo __("No associated documents", 'webapplications');
+            echo "<br><br>";
         }
 
         $contractItemDBTM = new Contract_Item();
@@ -322,11 +324,40 @@ class Appliance extends CommonDBTM
                 echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
             }
 
-            echo "</div>";
+            echo "</div><br>";
         } else {
             echo __("No associated contracts", 'webapplications');
+            echo "<br><br>";
         }
 
+        $ManualLinkDBTM = new ManualLink();
+        $ManualLinkItems = $ManualLinkDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
+
+        $title = _n('Associated link', 'Associated links', count($ManualLinkItems), 'webapplications');
+        Dashboard::showTitleforDashboard($title, $ApplianceId, $ManualLinkDBTM);
+
+        if (count($ManualLinkItems) > 0) {
+            echo "<div class='list-group' style='margin-top: 10px;'>";
+            foreach ($ManualLinkItems as $ManualLinkItem) {
+                $name = $ManualLinkItem['name'];
+                $url = $ManualLinkItem['url'];
+                $target = $ManualLinkItem['open_window'];
+                $icon = $ManualLinkItem['icon'];
+                if ($target == 1) {
+                    $target = "_blank";
+                } else {
+                    $target = "_self";
+                }
+                if (!empty($icon)) {
+                    $icon = "<i class='ti $icon' aria-hidden='true' style='margin-right: 5px;'></i>";
+                }
+                echo "<a class='list-group-item list-group-item-action' href='$url' target='$target'>".$icon." ".$name."</a>";
+            }
+
+            echo "</div>";
+        } else {
+            echo __("No associated links", 'webapplications');
+        }
 
         echo "</div>";
     }

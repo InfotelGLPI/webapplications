@@ -368,7 +368,7 @@ class Dashboard extends CommonDBTM
         echo "<div class='row flex-row'>";
         echo "<div class='form-field row col-12 col-sm-12 mb-2'>";
 
-        echo "<div class='col-xxl-12 field-container list-group'>";
+        echo "<div class='col-xxl-12 field-container list-group' style='display: grid; grid-template-columns: 1fr 1fr; gap: 10px;'>";
         if (!empty($apps)) {
             foreach ($apps as $app) {
                 if ($item->getType() == PhysicalInfrastructure::class) {
@@ -376,6 +376,8 @@ class Dashboard extends CommonDBTM
                     if ($itemDBTM->getFromDB($app['id'])) {
                         $name = $itemDBTM->getName();
                         $link = $itemDBTM::getFormURLWithID($app['id']);
+
+                        echo "<div style='padding:5px;'>";
                         echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
 
                         $items = $DB->request([
@@ -395,27 +397,32 @@ class Dashboard extends CommonDBTM
                                 ],
                             ]);
 
-                            foreach ($iterator as $row) {
-                                $envtype = $row['itemtype'];
+                            foreach ($iterator as $objrow) {
+                                $envtype = $objrow['itemtype'];
                                 $env = new $envtype();
-                                $env->getFromDB($row['items_id']);
+                                $env->getFromDB($objrow['items_id']);
                                 echo " - " . $env->getName();
                             }
                         }
                         echo "</a>";
+                        echo "</div>";
                     }
                 } elseif ($item->getType() == "Certificate") {
                     //                    $itemDBTM = new $app['itemtype'];
                     if ($item->getFromDB($app['id'])) {
                         $name = $item->getName();
                         $link = $item::getFormURLWithID($app['id']);
+                        echo "<div style='padding:5px;'>";
                         echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
                         echo "</a>";
+                        echo "</div>";
                     }
                 } else {
                     if ($obj->getFromDB($app['items_id'])) {
                         $name = $obj->getName();
                         $link = $item::getFormURLWithID($app['items_id']);
+
+                        echo "<div style='padding:5px;'>";
                         echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
 
                         if ($item->getType() == "DatabaseInstance") {
@@ -436,15 +443,16 @@ class Dashboard extends CommonDBTM
                                     ],
                                 ]);
 
-                                foreach ($iterator as $row) {
-                                    $envtype = $row['itemtype'];
+                                foreach ($iterator as $objrow) {
+                                    $envtype = $objrow['itemtype'];
                                     $env = new $envtype();
-                                    $env->getFromDB($row['items_id']);
+                                    $env->getFromDB($objrow['items_id']);
                                     echo " - " . $env->getName();
                                 }
                             }
                         }
                         echo "</a>";
+                        echo "</div>";
                     }
                 }
             }

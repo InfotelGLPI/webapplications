@@ -120,7 +120,7 @@ class PhysicalInfrastructure extends CommonDBTM
             $object = new $itemtype();
             $nb = 2;
             $icon = "<i class='" . $object->getIcon() . " fa-1x'></i>";
-            echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
+            echo "<br><h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
             echo "&nbsp;<span style='margin-right: auto;'>".$object->getTypeName($nb)."</span></h2>";
 
             echo "<div style='display: flex;flex-wrap: wrap;'>";
@@ -133,7 +133,10 @@ class PhysicalInfrastructure extends CommonDBTM
 
                 echo "<div class='card w-25'>";// style='margin-right: 10px;margin-top: 10px;'
                 echo "<div class='card-body'>";
-                echo "<div style='display: inline-block;margin: 40px;'>";
+
+                echo "<div style='display: block;';>";
+
+//                echo "<div style='display: inline-block;'>";
 
                 $icon = "ti-server";
                 if ($itemtype == "Phone") {
@@ -144,7 +147,7 @@ class PhysicalInfrastructure extends CommonDBTM
                     $icon = "ti-router";
                 }
                 echo "<i class='ti $icon' style='font-size:3em'></i>";
-                echo "</div>";
+//                echo "</div>";
 
                 echo "<span style='float: right'>";
                 echo Html::showSimpleForm(
@@ -156,9 +159,7 @@ class PhysicalInfrastructure extends CommonDBTM
                 );
                 echo "</span>";
 
-                echo "<div style='display: inline-block;';>";
-
-                echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
+                echo "<br><br><h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
 
                 $items = $DB->request([
                     'FROM'   => Appliance_Item::getTable(),
