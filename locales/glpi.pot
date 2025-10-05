@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-02 11:30+0000\n"
+"POT-Creation-Date: 2025-10-03 16:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "All users"
 msgstr ""
 
-#: setup.php:144 src/Dashboard.php:88 src/Profile.php:213
+#: setup.php:144 src/Dashboard.php:84 src/Profile.php:213
 #: src/Webapplication.php:53
 msgid "Appliance dashboard"
 msgstr ""
@@ -85,7 +85,7 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:608
+#: src/Dashboard.php:612
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] ""
@@ -106,7 +106,7 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: src/Dashboard.php:606
+#: src/Dashboard.php:610
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
@@ -130,7 +130,7 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: src/Dashboard.php:600
+#: src/Dashboard.php:604
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
@@ -153,7 +153,7 @@ msgstr ""
 msgid "Integrity"
 msgstr ""
 
-#: src/Dashboard.php:604
+#: src/Dashboard.php:608
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
@@ -191,7 +191,7 @@ msgstr ""
 msgid "No associated documents"
 msgstr ""
 
-#: src/Dashboard.php:620
+#: src/Dashboard.php:624
 msgid "No associated objects"
 msgstr ""
 
@@ -230,17 +230,17 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:602
+#: src/Dashboard.php:606
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:190
+#: src/Dashboard.php:193
 msgid "Project leader"
 msgstr ""
 
-#: src/Dashboard.php:201
+#: src/Dashboard.php:204
 msgid "Project team"
 msgstr ""
 
@@ -280,13 +280,13 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:610
+#: src/Dashboard.php:614
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:223
+#: src/Dashboard.php:226
 msgid "Summary"
 msgstr ""
 
