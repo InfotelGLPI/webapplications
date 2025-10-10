@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 15:25+0200\n"
+"POT-Creation-Date: 2025-10-10 13:58+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2025\n"
 "Language-Team: French (France) (https://app.transifex.com/infotelGLPI/teams/12376/fr_FR/)\n"
@@ -206,8 +206,8 @@ msgstr "Pas de liens trouvés"
 msgid "No associated objects"
 msgstr "Pas d'objets associés"
 
-#: src/Entity.php:166 src/Entity.php:221 src/Process.php:197
-#: src/Process.php:264
+#: src/Process.php:197 src/Process.php:264 src/Entity.php:166
+#: src/Entity.php:221
 msgid "Owner"
 msgstr "Propriétaire"
 
@@ -219,8 +219,8 @@ msgstr "Infrastructure physique"
 msgid "Port"
 msgstr "Port"
 
-#: src/Process.php:54 src/Process_Entity.php:81 src/Process_Entity.php:150
-#: src/Profile.php:223
+#: src/Process_Entity.php:81 src/Process_Entity.php:150 src/Profile.php:223
+#: src/Process.php:54
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] "Processus"
@@ -265,9 +265,9 @@ msgstr "Nature de la relation"
 msgid "Security Contact"
 msgstr "Contact de sécurité"
 
-#: /c/wamp/www/glpi11symfony/marketplace/webapplications/templates/webapplication_appliance_form.html.twig:95
-#: /c/wamp/www/glpi11symfony/marketplace/webapplications/templates/webapplication_database_form.html.twig:24
-#: /c/wamp/www/glpi11symfony/marketplace/webapplications/templates/webapplication_process_form.html.twig:18
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_database_form.html.twig:24
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_appliance_form.html.twig:95
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_process_form.html.twig:18
 msgid "Security Needs"
 msgstr "Besoins de sécurité"
 
@@ -275,7 +275,7 @@ msgstr "Besoins de sécurité"
 msgid "Source"
 msgstr "Source"
 
-#: src/Profile.php:218 src/Stream.php:53
+#: src/Stream.php:53 src/Profile.php:218
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] "Flux"
@@ -294,7 +294,7 @@ msgid "Summary"
 msgstr "Résumé"
 
 #: src/Appliance.php:243
-#: /c/wamp/www/glpi11symfony/marketplace/webapplications/templates/webapplication_appliance_form.html.twig:211
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_appliance_form.html.twig:211
 msgid "Support"
 msgstr "Support"
 
@@ -314,7 +314,7 @@ msgstr[0] "Type de serveur de traitement"
 msgstr[1] "Types de serveur de traitement"
 msgstr[2] "Types de serveur de traitement"
 
-#: /c/wamp/www/glpi11symfony/marketplace/webapplications/templates/webapplication_appliance_form.html.twig:185
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_appliance_form.html.twig:185
 msgid "Validation"
 msgstr "Validation"
 
