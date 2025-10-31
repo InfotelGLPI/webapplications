@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-10 11:03+0000\n"
+"POT-Creation-Date: 2025-10-10 13:58+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: David Stepan <stepand@tiscali.cz>, 2025\n"
 "Language-Team: Czech (Czech Republic) (https://app.transifex.com/infotelGLPI/teams/12376/cs_CZ/)\n"
@@ -22,44 +22,44 @@ msgstr ""
 "Language: cs_CZ\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
-#: inc/appliance.class.php:97 inc/appliance.class.php:109
+#: src/Appliance.php:108 src/Appliance.php:120
 msgid "1 to 100"
 msgstr "1 až 100"
 
-#: inc/appliance.class.php:98 inc/appliance.class.php:110
+#: src/Appliance.php:109 src/Appliance.php:121
 msgid "100 to 500"
 msgstr "100 až 500"
 
-#: inc/appliance.class.php:100 inc/appliance.class.php:112
+#: src/Appliance.php:111 src/Appliance.php:123
 msgid "1000 to 5000"
 msgstr "1000 až 5000"
 
-#: inc/appliance.class.php:99 inc/appliance.class.php:111
+#: src/Appliance.php:110 src/Appliance.php:122
 msgid "500 to 1000"
 msgstr "500 až 1000"
 
-#: inc/process_entity.class.php:118
+#: src/Process_Entity.php:127
 msgid "Add a process"
 msgstr "Přidat proces"
 
-#: inc/process_entity.class.php:181
+#: src/Process_Entity.php:190
 msgid "Add an entity"
 msgstr "Přidat entitu"
 
-#: inc/appliance.class.php:101 inc/appliance.class.php:113
+#: src/Appliance.php:112 src/Appliance.php:124
 msgid "All users"
 msgstr "Všichni uživatelé"
 
-#: setup.php:138 inc/dashboard.class.php:70 inc/profile.class.php:203
-#: inc/webapplication.class.php:49
+#: setup.php:144 src/Dashboard.php:84 src/Profile.php:213
+#: src/Webapplication.php:53
 msgid "Appliance dashboard"
 msgstr "Řídící panel"
 
-#: front/webapplication.php:52
+#: front/webapplication.php:54
 msgid "Are you sure you want to do core migration ?"
 msgstr "Opravdu chcete provést migraci jádra?"
 
-#: inc/appliance.class.php:300
+#: src/Appliance.php:312
 msgid "Associated contract"
 msgid_plural "Associated contracts"
 msgstr[0] "Přiřazená smlouva"
@@ -67,7 +67,7 @@ msgstr[1] "Přiřazených smluv"
 msgstr[2] "Přiřazených smluv"
 msgstr[3] "Přiřazené smlouvy"
 
-#: inc/appliance.class.php:277
+#: src/Appliance.php:288
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] "Přiřazený dokument"
@@ -75,20 +75,24 @@ msgstr[1] "Přiřazených dokumentů"
 msgstr[2] "Přiřazených dokumentů"
 msgstr[3] "Přiřazené dokumenty"
 
-#: hook.php:407 hook.php:480 inc/databaseinstance.class.php:375
-#: inc/process.class.php:196 inc/process.class.php:260
-#: templates/webapplication_appliance_form.html.twig:115
-#: templates/webapplication_database_form.html.twig:32
-#: templates/webapplication_process_form.html.twig:27
+#: src/Appliance.php:336
+msgid "Associated link"
+msgid_plural "Associated links"
+msgstr[0] "Přidružený odkaz"
+msgstr[1] "Přidružené odkazy"
+msgstr[2] "Přidružených odkazů"
+msgstr[3] "Přidružené odkazy"
+
+#: hook.php:409 hook.php:482 src/DatabaseInstance.php:386 src/Process.php:205
+#: src/Process.php:269
 msgid "Availability"
 msgstr "Dostupnost"
 
-#: hook.php:303 templates/webapplication_appliance_form.html.twig:32
-#: templates/webapplication_form.html.twig:32
+#: hook.php:305
 msgid "Backoffice URL"
 msgstr "URL adresa pro správu"
 
-#: inc/webapplicationtype.class.php:51
+#: src/Webapplicationtype.php:55
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Kategorie"
@@ -96,7 +100,7 @@ msgstr[1] "Kategorie"
 msgstr[2] "Kategorií"
 msgstr[3] "Kategorie"
 
-#: inc/dashboard.class.php:590
+#: src/Dashboard.php:620
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] "Seznam certifikátu"
@@ -104,23 +108,20 @@ msgstr[1] "Seznam certifikátů"
 msgstr[2] "Seznam certifikátů"
 msgstr[3] "Seznam certifikátů"
 
-#: hook.php:425 hook.php:496 inc/databaseinstance.class.php:395
-#: inc/process.class.php:210 inc/process.class.php:270
-#: templates/webapplication_appliance_form.html.twig:147
-#: templates/webapplication_database_form.html.twig:62
-#: templates/webapplication_process_form.html.twig:60
+#: hook.php:427 hook.php:498 src/DatabaseInstance.php:406 src/Process.php:219
+#: src/Process.php:279
 msgid "Confidentiality"
 msgstr "Důvěrnost"
 
-#: front/webapplication.php:42 front/webapplication.php:48
+#: front/webapplication.php:44 front/webapplication.php:50
 msgid "Core migration"
 msgstr "Migrace jádra"
 
-#: front/webapplication.php:64
+#: front/webapplication.php:66
 msgid "Data migration"
 msgstr "Migrace dat"
 
-#: inc/dashboard.class.php:588
+#: src/Dashboard.php:618
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] "Seznam databáze"
@@ -128,25 +129,23 @@ msgstr[1] "Seznam databází"
 msgstr[2] "Seznam databází"
 msgstr[3] "Seznam databází"
 
-#: inc/stream.class.php:211 templates/webapplication_stream_form.html.twig:37
-#: templates/webapplication_stream_form.html.twig:42
+#: src/Stream.php:219
 msgid "Destination"
 msgstr "Cíl"
 
-#: inc/entity.class.php:48
+#: src/Entity.php:56
 msgid "Ecosystem"
 msgstr "Ekosystém"
 
-#: inc/stream.class.php:222 templates/webapplication_stream_form.html.twig:57
+#: src/Stream.php:230
 msgid "Encryption"
 msgstr "Šifrování"
 
-#: inc/stream.class.php:229 inc/stream.class.php:392
-#: templates/webapplication_stream_form.html.twig:63
+#: src/Stream.php:237 src/Stream.php:400
 msgid "Encryption type"
 msgstr "Typ šifrování"
 
-#: inc/dashboard.class.php:582
+#: src/Dashboard.php:612
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] "Seznam entity"
@@ -154,7 +153,7 @@ msgstr[1] "Seznam entit"
 msgstr[2] "Seznam entit"
 msgstr[3] "Seznam entit"
 
-#: inc/webapplicationexternalexposition.class.php:49
+#: src/Webapplicationexternalexposition.php:53
 msgid "External exposition"
 msgid_plural "External exposition"
 msgstr[0] "Externí expozice"
@@ -162,19 +161,16 @@ msgstr[1] "Externí expozice"
 msgstr[2] "Externí expozice"
 msgstr[3] "Externí expozice"
 
-#: hook.php:380 templates/webapplication_appliance_form.html.twig:41
+#: hook.php:382
 msgid "Installed version"
 msgstr "Instalovaná verze"
 
-#: hook.php:416 hook.php:488 inc/databaseinstance.class.php:385
-#: inc/process.class.php:203 inc/process.class.php:265
-#: templates/webapplication_appliance_form.html.twig:131
-#: templates/webapplication_database_form.html.twig:48
-#: templates/webapplication_process_form.html.twig:44
+#: hook.php:418 hook.php:490 src/DatabaseInstance.php:396 src/Process.php:212
+#: src/Process.php:274
 msgid "Integrity"
 msgstr "Integrita"
 
-#: inc/dashboard.class.php:586
+#: src/Dashboard.php:616
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] "Seznam položky"
@@ -182,7 +178,7 @@ msgstr[1] "Seznam položek"
 msgstr[2] "Seznam položek"
 msgstr[3] "Seznam položek"
 
-#: inc/webapplicationtechnic.class.php:49
+#: src/Webapplicationtechnic.php:53
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
 msgstr[0] "Zpracovávaný jazyk"
@@ -190,12 +186,11 @@ msgstr[1] "Zpracovávané jazyky"
 msgstr[2] "Zpracovávaných jazyků"
 msgstr[3] "Zpracovávané jazyky"
 
-#: front/webapplication.php:175
+#: front/webapplication.php:177
 msgid "Link with core purge"
 msgstr "Spojit s čištěním jádra"
 
-#: inc/logicalinfrastructure.class.php:44
-#: inc/logicalinfrastructure.class.php:158
+#: src/LogicalInfrastructure.php:53 src/LogicalInfrastructure.php:167
 msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] "Logická infrastruktura"
@@ -203,50 +198,41 @@ msgstr[1] "Logická infrastruktura"
 msgstr[2] "Logická infrastruktura"
 msgstr[3] "Logická infrastruktura"
 
-#: templates/webapplication_dashboard_support.html.twig:24
-msgid "Mail support"
-msgstr "Podpora e-mailu"
-
-#: front/webapplication.php:196
+#: front/webapplication.php:198
 msgid "Migration was successful"
 msgstr "Migrace byla úspěšná"
 
-#: inc/appliance.class.php:317
+#: src/Appliance.php:329
 msgid "No associated contracts"
 msgstr "Nepřipojené smlouvy"
 
-#: inc/appliance.class.php:294
+#: src/Appliance.php:305
 msgid "No associated documents"
 msgstr "Nepřipojené dokumenty"
 
-#: inc/dashboard.class.php:602
+#: src/Appliance.php:359
+msgid "No associated links"
+msgstr "Žádné přidružené odkazy"
+
+#: src/Dashboard.php:632
 msgid "No associated objects"
 msgstr "Nepřipojené objekty"
 
-#: templates/webapplication_appliance_form.html.twig:77
-msgid "Number of users"
-msgstr "Počet uživatelů"
-
-#: inc/entity.class.php:158 inc/entity.class.php:213 inc/process.class.php:188
-#: inc/process.class.php:255 templates/webapplication_entity_form.html.twig:13
-#: templates/webapplication_process_form.html.twig:12
+#: src/Process.php:197 src/Process.php:264 src/Entity.php:166
+#: src/Entity.php:221
 msgid "Owner"
 msgstr "Vlastník"
 
-#: templates/webapplication_dashboard_support.html.twig:33
-msgid "Phone support"
-msgstr "Telefonická podpora"
-
-#: inc/physicalinfrastructure.class.php:44
+#: src/PhysicalInfrastructure.php:55
 msgid "Physical Infrastructure"
 msgstr "Fyzická infrastruktura"
 
-#: inc/stream.class.php:236 templates/webapplication_stream_form.html.twig:70
+#: src/Stream.php:244
 msgid "Port"
 msgstr "Port"
 
-#: inc/process.class.php:47 inc/process_entity.class.php:72
-#: inc/process_entity.class.php:141 inc/profile.class.php:213
+#: src/Process_Entity.php:81 src/Process_Entity.php:150 src/Profile.php:223
+#: src/Process.php:54
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] "Procesy"
@@ -254,7 +240,7 @@ msgstr[1] "Procesů"
 msgstr[2] "Procesů"
 msgstr[3] "Procesy"
 
-#: inc/process_entity.class.php:47
+#: src/Process_Entity.php:56
 msgid "Process Entity"
 msgid_plural "Processes Entity"
 msgstr[0] "Proces entity"
@@ -262,7 +248,7 @@ msgstr[1] "Procesů entity"
 msgstr[2] "Procesů entity"
 msgstr[3] "Procesy entity"
 
-#: inc/dashboard.class.php:584
+#: src/Dashboard.php:614
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] "Seznam procesu"
@@ -270,45 +256,41 @@ msgstr[1] "Seznam procesů"
 msgstr[2] "Seznam procesů"
 msgstr[3] "Seznam procesů"
 
-#: inc/dashboard.class.php:172
+#: src/Dashboard.php:193
 msgid "Project leader"
 msgstr "Vedoucí projektu"
 
-#: inc/dashboard.class.php:183
+#: src/Dashboard.php:204
 msgid "Project team"
 msgstr "Projektový tým"
 
-#: inc/stream.class.php:243 templates/webapplication_stream_form.html.twig:77
+#: src/Stream.php:251
 msgid "Protocol"
 msgstr "Protokol"
 
-#: hook.php:444 templates/webapplication_dashboard_support.html.twig:15
-#: templates/webapplication_appliance_form.html.twig:221
+#: hook.php:446
 msgid "Referent editor"
 msgstr "Editor referentů"
 
-#: inc/entity.class.php:176 inc/entity.class.php:225
-#: templates/webapplication_entity_form.html.twig:37
+#: src/Entity.php:184 src/Entity.php:233
 msgid "Relation nature"
 msgstr "Povaha vztahu"
 
-#: inc/entity.class.php:168 inc/entity.class.php:218
-#: templates/webapplication_entity_form.html.twig:25
+#: src/Entity.php:176 src/Entity.php:226
 msgid "Security Contact"
 msgstr "Bezpečnostní kontakt"
 
-#: templates/webapplication_appliance_form.html.twig:95
-#: templates/webapplication_database_form.html.twig:24
-#: templates/webapplication_process_form.html.twig:18
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_database_form.html.twig:24
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_appliance_form.html.twig:95
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_process_form.html.twig:18
 msgid "Security Needs"
 msgstr "Bezpečnostní potřeby"
 
-#: inc/stream.class.php:200 templates/webapplication_stream_form.html.twig:16
-#: templates/webapplication_stream_form.html.twig:21
+#: src/Stream.php:208
 msgid "Source"
 msgstr "Zdroj"
 
-#: inc/profile.class.php:208 inc/stream.class.php:45
+#: src/Stream.php:53 src/Profile.php:218
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] "Stream"
@@ -316,7 +298,7 @@ msgstr[1] "Streamů"
 msgstr[2] "Streamů"
 msgstr[3] "Streamy"
 
-#: inc/dashboard.class.php:592
+#: src/Dashboard.php:622
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] "Seznam streamu"
@@ -324,28 +306,25 @@ msgstr[1] "Seznam streamů"
 msgstr[2] "Seznam streamů"
 msgstr[3] "Seznam streamů"
 
-#: inc/dashboard.class.php:205
+#: src/Dashboard.php:226
 msgid "Summary"
 msgstr "Shrnutí"
 
-#: inc/appliance.class.php:232
-#: templates/webapplication_appliance_form.html.twig:211
+#: src/Appliance.php:243
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_appliance_form.html.twig:211
 msgid "Support"
 msgstr "Podpora"
 
-#: front/webapplication.php:151
+#: front/webapplication.php:153
 msgid "Tables purge"
 msgstr "Vyčištění tabulek"
 
-#: hook.php:434 hook.php:504 inc/databaseinstance.class.php:405
-#: inc/process.class.php:217 inc/process.class.php:275
-#: templates/webapplication_appliance_form.html.twig:164
-#: templates/webapplication_database_form.html.twig:77
-#: templates/webapplication_process_form.html.twig:77
+#: hook.php:436 hook.php:506 src/DatabaseInstance.php:416 src/Process.php:226
+#: src/Process.php:284
 msgid "Traceability"
 msgstr "Sledovatelnost"
 
-#: inc/webapplicationservertype.class.php:49
+#: src/Webapplicationservertype.php:53
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] "Typ zpracovávajícího serveru"
@@ -353,28 +332,19 @@ msgstr[1] "Typy zpracovávajících serverů"
 msgstr[2] "Typů zpracovávajících serverů"
 msgstr[3] "Typy zpracovávajících serverů"
 
-#: templates/webapplication_appliance_form.html.twig:23
-#: templates/webapplication_form.html.twig:23
-msgid "URL"
-msgstr "URL"
-
-#: templates/webapplication_appliance_form.html.twig:185
+#: /home/runner/work/webapplications/webapplications/templates/webapplication_appliance_form.html.twig:185
 msgid "Validation"
 msgstr "Ověření"
 
-#: hook.php:398
+#: hook.php:400
 msgid "Validation by CIO"
 msgstr "Ověření CIO"
 
-#: templates/webapplication_appliance_form.html.twig:202
-msgid "Validation by CISO"
-msgstr "Ověření CISO"
-
-#: hook.php:389 templates/webapplication_appliance_form.html.twig:194
+#: hook.php:391
 msgid "Validation of the request by the referring Department"
 msgstr "Ověření žádosti předkládajícím oddělením"
 
-#: inc/appliance.class.php:44 inc/profile.class.php:198
+#: src/Appliance.php:55 src/Profile.php:208
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "Webová aplikace"
