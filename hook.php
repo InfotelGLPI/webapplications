@@ -28,6 +28,8 @@
  --------------------------------------------------------------------------
  */
 
+use GlpiPlugin\Webapplications\Process;
+use GlpiPlugin\Webapplications\Stream;
 use GlpiPlugin\Webapplications\Webapplicationexternalexposition;
 use GlpiPlugin\Webapplications\Profile;
 use GlpiPlugin\Webapplications\Webapplicationservertype;
@@ -143,6 +145,79 @@ function plugin_webapplications_install()
         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-5.0.0.sql");
     }
 
+    //DisplayPreferences Migration
+    $classes = ['PluginWebapplicationsStream' => Stream::class,
+        'PluginWebapplicationsProcess' => Process::class,
+        'PluginWebapplicationsEntity' => Entity::class];
+
+    foreach ($classes as $old => $new) {
+        $displayusers = $DB->request([
+            'SELECT' => [
+                'users_id'
+            ],
+            'DISTINCT' => true,
+            'FROM' => 'glpi_displaypreferences',
+            'WHERE' => [
+                'itemtype' => $old,
+            ],
+        ]);
+
+        if (count($displayusers) > 0) {
+            foreach ($displayusers as $displayuser) {
+                $iterator = $DB->request([
+                    'SELECT' => [
+                        'num',
+                        'id'
+                    ],
+                    'FROM' => 'glpi_displaypreferences',
+                    'WHERE' => [
+                        'itemtype' => $old,
+                        'users_id' => $displayuser['users_id'],
+                        'interface' => 'central'
+                    ],
+                ]);
+
+                if (count($iterator) > 0) {
+                    foreach ($iterator as $data) {
+                        $iterator2 = $DB->request([
+                            'SELECT' => [
+                                'id'
+                            ],
+                            'FROM' => 'glpi_displaypreferences',
+                            'WHERE' => [
+                                'itemtype' => $new,
+                                'users_id' => $displayuser['users_id'],
+                                'num' => $data['num'],
+                                'interface' => 'central'
+                            ],
+                        ]);
+                        if (count($iterator2) > 0) {
+                            foreach ($iterator2 as $dataid) {
+                                $query = $DB->buildDelete(
+                                    'glpi_displaypreferences',
+                                    [
+                                        'id' => $dataid['id'],
+                                    ]
+                                );
+                                $DB->doQuery($query);
+                            }
+                        } else {
+                            $query = $DB->buildUpdate(
+                                'glpi_displaypreferences',
+                                [
+                                    'itemtype' => $new,
+                                ],
+                                [
+                                    'id' => $data['id'],
+                                ]
+                            );
+                            $DB->doQuery($query);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     if ($update) {
         $query_  = "SELECT *
