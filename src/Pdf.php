@@ -597,7 +597,7 @@ class Pdf extends Fpdf
             $groups .= Group::getFriendlyNameById($group['groups_id']) . ' ';
         }
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Manufacturer', 'webapplications') . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(Manufacturer::getTypeName(1) . ' : ')), 'L', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($manufacturer->fields['name'] ?? '')), '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
@@ -892,7 +892,7 @@ class Pdf extends Fpdf
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $yligne3 = $this->GetY();
-        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Physical infrastructure', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Physical Infrastructure', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/2) + 1, $yligne3);
         $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(\DatabaseInstance::getTypeName(2))), 'TLRB', 'C', true, 0, '', 'black');
 
@@ -948,9 +948,9 @@ class Pdf extends Fpdf
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $yligne3 = $this->GetY();
-        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Certificates', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n("Certificate", 'Certificates', 2))), 'TLRB', 'C', true, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/2) + 1, $yligne3);
-        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Flow', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Stream', 'Streams', 2, 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
 
         $certificatItem = new Certificate_Item();
         $certificatItemDatas = $certificatItem->find(['items_id'=>$this->id, 'itemtype'=>'Appliance']);

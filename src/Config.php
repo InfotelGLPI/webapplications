@@ -83,7 +83,7 @@ class Config extends CommonDBTM
 
     public static function getTypeName($nb = 0)
     {
-        return __("Setup", "webapplication");
+        return __("Setup", "webapplications");
     }
 
     /**
@@ -134,8 +134,8 @@ class Config extends CommonDBTM
         echo "</tr>";
 
         $array = [
-            'Appliance|name' => __('Appliance') . ' - ' . __('Name', 'webapplications'),
-            'Appliance|comment' => __('Appliance') . ' - ' . __('Comment', 'webapplications'),
+            'Appliance|name' => __('Appliance') . ' - ' . __('Name'),
+            'Appliance|comment' => __('Appliance') . ' - ' . __('Comment'),
         ];
 
         $plugin = new Plugin();
