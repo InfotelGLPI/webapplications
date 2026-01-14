@@ -29,8 +29,6 @@
 
 Session::checkLoginUser();
 
-use GlpiPlugin\Webapplications\Appliance;
-
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
 }
@@ -38,12 +36,9 @@ if (!isset($_GET["withtemplate"])) {
     $_GET["withtemplate"] = "";
 }
 
-$instance = new Appliance();
-
 if (isset($_GET['_in_modal'])) {
     Html::popHeader(Appliance::getTypeName(2), $_SERVER['PHP_SELF']);
     $_SESSION['reload']=true;
-    \Appliance::displayFullPageForItem($_GET['id'] );
+    \Appliance::displayFullPageForItem($_GET['id']);
     Html::popFooter();
-
 }

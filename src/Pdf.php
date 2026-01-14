@@ -694,7 +694,7 @@ class Pdf extends Fpdf
         $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance->fields['version'] ?? '')), '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Type of treatment server', 'Types of treatment server', 1) . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Type of treatment server', 'Types of treatment server', 1, 'webapplications') . ' : ')), '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationServertype->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
@@ -708,11 +708,11 @@ class Pdf extends Fpdf
             $webapplicationexposition->getFromDB($webappAppliance->fields['webapplicationexternalexpositions_id']);
         }
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Language of treatment', 'Languages of treatment', 1) . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Language of treatment', 'Languages of treatment', 1, 'webapplications') . ' : ')), 'L', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationtechnics->fields['name'] ?? '')), '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('External exposition', 'External exposition', 1) . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('External exposition', 'External exposition', 1, 'webapplications') . ' : ')), '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationexposition->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());

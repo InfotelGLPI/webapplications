@@ -225,7 +225,7 @@ class Dashboard extends CommonDBTM
 
         echo "<div class='card-body border-0'>";
         $title = __('Summary', 'webapplications');
-        self::showTitleforDashboard($title, $ApplianceId, $appliance, "edit", "editapp");
+        self::showTitleforDashboard($title, $ApplianceId, $applianceplugin, "edit", "editapp");
 
         echo "</div>";
 
@@ -308,6 +308,7 @@ class Dashboard extends CommonDBTM
             } else {
                 $linkApp = $item::getFormURLWithID($id);
                 $linkApp .= "&forcetab=main";
+                Toolbox::logInfo($linkApp);
                 $title = _sx('button', 'Edit');
             }
 
