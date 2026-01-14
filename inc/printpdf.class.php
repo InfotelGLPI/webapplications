@@ -32,7 +32,7 @@ die("Sorry. You can't access directly to this file");
 }
 
 /**
-* Class PluginFdrpiPdf
+* Class PluginWebapplicationsPrintpdf
 */
 
 class PluginWebapplicationsPrintpdf extends CommonDBTM
@@ -55,7 +55,7 @@ class PluginWebapplicationsPrintpdf extends CommonDBTM
      **/
     public static function getTypeName($nb = 0)
     {
-        return __('Print PDF', 'fdrpi');
+        return __('Print PDF', 'webapplications');
     }
 
     public static function canView()

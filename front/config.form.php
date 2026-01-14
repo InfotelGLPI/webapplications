@@ -47,7 +47,7 @@ if (isset($_POST["add"])) {
     $config->update($_POST);
     Html::back();
 }else {
-    Html::header(__('Configuration', 'webapplications'), $_SERVER['PHP_SELF'], 'config', 'webapplications',);
+    Html::header(__('Configuration', 'webapplications'), $_SERVER['PHP_SELF'], 'config', 'webapplications');
 
     /* showForm() affiche seulement le formulaire */
     $config->showForm(1);
