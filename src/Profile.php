@@ -93,6 +93,7 @@ class Profile extends \Profile
                     'plugin_webapplications_entities' => 0,
                     'plugin_webapplications_processes' => 0,
                     'plugin_webapplications_entities' => 0,
+                    'plugin_webapplications_configs' => 0,
                 ]
             );
             $prof->showForm($ID);
@@ -114,6 +115,7 @@ class Profile extends \Profile
                 'plugin_webapplications_entities' => READ + CREATE + UPDATE + PURGE,
                 'plugin_webapplications_dashboards' => READ + CREATE + UPDATE + PURGE,
                 'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE,
+                'plugin_webapplications_configs' => ALLSTANDARDRIGHT,
             ],
             true
         );
@@ -228,6 +230,12 @@ class Profile extends \Profile
                 'label' => _n('Entity', 'Entities', 2),
                 'field' => 'plugin_webapplications_entities',
             ],
+            [
+                'itemtype' => Config::class,
+                'rights' => [READ => __('Read'), UPDATE => __('Update'), DELETE => __('Delete')],
+                'label' => __('Setup', 'webapplications'),
+                'field' => 'plugin_webapplications_configs'
+            ]
         ];
 
         return $rights;
