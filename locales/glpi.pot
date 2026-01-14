@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-14 17:05+0000\n"
+"POT-Creation-Date: 2026-01-14 17:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,7 +101,7 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:621
+#: src/Dashboard.php:622
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] ""
@@ -123,7 +123,7 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: src/Dashboard.php:619
+#: src/Dashboard.php:620
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
@@ -147,13 +147,13 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: src/Dashboard.php:613
+#: src/Dashboard.php:614
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Webapplicationexternalexposition.php:53
+#: src/Webapplicationexternalexposition.php:53 src/Pdf.php:715
 msgid "External exposition"
 msgid_plural "External exposition"
 msgstr[0] ""
@@ -176,13 +176,13 @@ msgstr ""
 msgid "Integrity"
 msgstr ""
 
-#: src/Dashboard.php:617
+#: src/Dashboard.php:618
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Webapplicationtechnic.php:53
+#: src/Pdf.php:711 src/Webapplicationtechnic.php:53
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
 msgstr[0] ""
@@ -218,7 +218,7 @@ msgstr ""
 msgid "No associated links"
 msgstr ""
 
-#: src/Dashboard.php:633
+#: src/Dashboard.php:634
 msgid "No associated objects"
 msgstr ""
 
@@ -265,7 +265,7 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:615
+#: src/Dashboard.php:616
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
@@ -323,7 +323,7 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:623
+#: src/Dashboard.php:624
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
@@ -350,7 +350,7 @@ msgstr ""
 msgid "Traceability"
 msgstr ""
 
-#: src/Webapplicationservertype.php:53
+#: src/Pdf.php:697 src/Webapplicationservertype.php:53
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] ""
