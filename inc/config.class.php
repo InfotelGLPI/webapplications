@@ -73,7 +73,7 @@ class PluginWebapplicationsConfig extends CommonDBTM
 
     public static function getTypeName($nb = 0)
     {
-        return __("Configuration", "webapplication");
+        return __("Setup", "webapplication");
     }
 
     /**

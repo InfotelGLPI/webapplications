@@ -215,7 +215,7 @@ class PluginWebapplicationsProfile extends Profile
             [
                 'itemtype' => 'PluginWebapplicationsConfig',
                 'rights' => [READ => __('Read'), UPDATE => __('Update'), DELETE => __('Delete')],
-                'label' => __('Configuration', 'webapplications'),
+                'label' => __('Setup', 'webapplications'),
                 'field' => 'plugin_webapplications_configs'
             ]
         ];
