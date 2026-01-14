@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-14 16:54+0000\n"
+"POT-Creation-Date: 2026-01-14 17:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,14 +107,6 @@ msgid_plural "Certificates list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Pdf.php:951
-msgid "Certificates"
-msgstr ""
-
-#: src/Config.php:138
-msgid "Comment"
-msgstr ""
-
 #: hook.php:506 hook.php:577 src/DatabaseInstance.php:406 src/Process.php:219
 #: src/Process.php:279 src/Pdf.php:828
 #: templates/webapplication_database_form.html.twig:62
@@ -167,10 +159,6 @@ msgid_plural "External exposition"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Pdf.php:953
-msgid "Flow"
-msgstr ""
-
 #: src/Printpdf.php:173
 msgid "Generate PDF"
 msgstr ""
@@ -214,16 +202,8 @@ msgstr[1] ""
 msgid "Mail support"
 msgstr ""
 
-#: src/Pdf.php:600
-msgid "Manufacturer"
-msgstr ""
-
 #: front/webapplication.php:198
 msgid "Migration was successful"
-msgstr ""
-
-#: src/Config.php:137
-msgid "Name"
 msgstr ""
 
 #: src/Appliance.php:329
@@ -256,12 +236,8 @@ msgstr ""
 msgid "Phone support"
 msgstr ""
 
-#: src/PhysicalInfrastructure.php:55
+#: src/Pdf.php:895 src/PhysicalInfrastructure.php:55
 msgid "Physical Infrastructure"
-msgstr ""
-
-#: src/Pdf.php:895
-msgid "Physical infrastructure"
 msgstr ""
 
 #: src/Stream.php:244 templates/webapplication_stream_form.html.twig:70
@@ -337,7 +313,7 @@ msgstr ""
 msgid "Source"
 msgstr ""
 
-#: src/Stream.php:53 src/Profile.php:220
+#: src/Stream.php:53 src/Profile.php:220 src/Pdf.php:953
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] ""
