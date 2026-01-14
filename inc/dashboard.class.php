@@ -61,6 +61,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
         $this->addStandardTab('PluginWebapplicationsCertificate', $ong, $options);
         $this->addStandardTab('PluginWebapplicationsStream', $ong, $options);
         $this->addStandardTab('PluginWebapplicationsKnowbase', $ong, $options);
+        $this->addStandardTab('PluginWebapplicationsPrintpdf', $ong, $options);
 
         return $ong;
     }

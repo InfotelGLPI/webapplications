@@ -27,7 +27,7 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.0.2');
+define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.0.3');
 
 if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
     define("PLUGIN_WEBAPPLICATIONS_DIR", Plugin::getPhpDir("webapplications"));
@@ -50,6 +50,10 @@ function plugin_init_webapplications()
 
     Plugin::registerClass('PluginWebapplicationsProfile', ['addtabon' => ['Profile']]);
     if (Session::getLoginUserID()) {
+
+        if (Session::haveRight("plugin_webapplications_configs", UPDATE)) {
+            $PLUGIN_HOOKS['config_page']['webapplications'] = 'front/config.form.php';
+        }
         if (Session::haveRight("plugin_webapplications_appliances", READ)) {
             $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = array(
                 'PluginWebapplicationsDashboard',
@@ -157,6 +161,12 @@ function plugin_webapplications_check_prerequisites()
         if (method_exists('Plugin', 'messageIncompatible')) {
             echo Plugin::messageIncompatible('core', '10.0.11');
         }
+        return false;
+    }
+
+    if (!is_readable(__DIR__ . '/vendor/autoload.php')
+        || !is_file(__DIR__ . '/vendor/autoload.php')) {
+        echo "Run composer install --no-dev in the plugin directory<br>";
         return false;
     }
 

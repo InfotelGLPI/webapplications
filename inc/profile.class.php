@@ -74,7 +74,8 @@ class PluginWebapplicationsProfile extends Profile
                     'plugin_webapplications_appliances' => 0,
                     'plugin_webapplications_streams' => 0,
                     'plugin_webapplications_processes' => 0,
-                    'plugin_webapplications_entities' => 0
+                    'plugin_webapplications_entities' => 0,
+                    'plugin_webapplications_configs' => 0,
                 ]
             );
             $prof->showForm($ID);
@@ -95,7 +96,8 @@ class PluginWebapplicationsProfile extends Profile
                 'plugin_webapplications_streams' => READ + CREATE + UPDATE + PURGE,
                 'plugin_webapplications_entities' => READ + CREATE + UPDATE + PURGE,
                 'plugin_webapplications_dashboards' => READ + CREATE + UPDATE + PURGE,
-                'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE
+                'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE,
+                'plugin_webapplications_configs' => ALLSTANDARDRIGHT,
             ],
             true
         );
@@ -209,6 +211,12 @@ class PluginWebapplicationsProfile extends Profile
                 'itemtype' => 'PluginWebapplicationsEntity',
                 'label' => _n('Entity', 'Entities', 2),
                 'field' => 'plugin_webapplications_entities'
+            ],
+            [
+                'itemtype' => 'PluginWebapplicationsConfig',
+                'rights' => [READ => __('Read'), UPDATE => __('Update'), DELETE => __('Delete')],
+                'label' => __('Configuration', 'webapplications'),
+                'field' => 'plugin_webapplications_configs'
             ]
         ];
 
