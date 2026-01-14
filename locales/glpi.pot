@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-14 17:01+0000\n"
+"POT-Creation-Date: 2026-01-14 17:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -302,6 +302,10 @@ msgstr ""
 #: templates/webapplication_appliance_form.html.twig:95
 #: templates/webapplication_process_form.html.twig:18
 msgid "Security Needs"
+msgstr ""
+
+#: src/Config.php:124
+msgid "Setting up PDF printing"
 msgstr ""
 
 #: front/config.form.php:50 src/Profile.php:236 src/Config.php:86
