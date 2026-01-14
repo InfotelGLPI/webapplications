@@ -169,7 +169,7 @@ class Printpdf extends CommonDBTM
         echo "<tr class='tab_bg_1'><th colspan='2'>" . __('Print PDF', 'webapplications') . "</th></tr>";
 
         echo "<tr class='tab_bg_1'><td colspan='2' class='tab_bg_2 center'>";
-        echo Html::hidden('plugin_webapplications_applicatif_id', ['value' => $item->getID()]);
+        echo Html::hidden('plugin_webapplications_appliance_id', ['value' => $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0]);
         echo Html::submit(_sx('button', __('Generate PDF', 'webapplications')), ['name' => 'PrintPdf', 'class' => 'btn btn-primary']);
         echo "</td></tr>";
         echo "</table></div>";

@@ -36,17 +36,21 @@ global $DB;
 Session::checkRightsOr(Printpdf::$rightname, [READ, UPDATE]);
 
 if (isset($_POST["PrintPdf"])) {
-    $appliance = new Appliance();
-    $appliance->getFromDB($_POST['plugin_webapplications_applicatif_id']);
-    $date = new DateTime($appliance->fields['date_mod']);
-    $datenow = new DateTime();
-    $docPdf = new Pdf(
-        __('Printed on ', 'webapplications') . $datenow->format('Y-m-d H:i:s') .
-        __(' Last update ', 'webapplications') . $date->format('Y-m-d H:i:s')
-        , $appliance->fields['name'], $_POST['plugin_webapplications_applicatif_id']);
+    if (isset($_POST["plugin_webapplications_appliance_id"]) && $_POST["plugin_webapplications_appliance_id"] > 0) {
+        $appliance = new Appliance();
+        $appliance->getFromDB($_POST['plugin_webapplications_appliance_id']);
 
-    $docPdf->drawPdf($appliance);
-//    Html::back();
+        $datenow = new DateTime();
+        $docPdf = new Pdf(
+            __('Printed on ', 'webapplications') . $datenow->format('Y-m-d H:i:s') .
+            __(' Last update ', 'webapplications') . Html::convDateTime($appliance->fields['date_mod'])
+            , $appliance->fields['name'], $_POST['plugin_webapplications_appliance_id']);
+
+        $docPdf->drawPdf();
+    } else {
+        $message = __('An error has occurred','webapplications');
+        Session::addMessageAfterRedirect($message, false, ERROR);
+    }
 }else {
     Html::back();
 }
