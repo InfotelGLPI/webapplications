@@ -255,6 +255,10 @@ function plugin_webapplications_install()
         //        );
     }
 
+    if (!$DB->tableExists("glpi_plugin_webapplications_configs")) {
+        $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-5.0.3.sql");
+    }
+
     Profile::initProfile();
     Profile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
 

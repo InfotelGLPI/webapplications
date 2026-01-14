@@ -28,7 +28,7 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.1.3');
+define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.1.4');
 
 global $CFG_GLPI;
 
@@ -62,6 +62,9 @@ function plugin_init_webapplications()
 
     Plugin::registerClass(Profile::class, ['addtabon' => ['Profile']]);
     if (Session::getLoginUserID()) {
+        if (Session::haveRight("plugin_webapplications_configs", UPDATE)) {
+            $PLUGIN_HOOKS['config_page']['webapplications'] = 'front/config.form.php';
+        }
         if (Session::haveRight("plugin_webapplications_appliances", READ)) {
             $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = [
                 Dashboard::class,
@@ -156,3 +159,18 @@ function plugin_version_webapplications()
         ],
     ];
 }
+
+/**
+ * @return bool
+ */
+function plugin_webapplications_check_prerequisites()
+{
+    if (!is_readable(__DIR__ . '/vendor/autoload.php')
+        || !is_file(__DIR__ . '/vendor/autoload.php')) {
+        echo "Run composer install --no-dev in the plugin directory<br>";
+        return false;
+    }
+
+    return true;
+}
+

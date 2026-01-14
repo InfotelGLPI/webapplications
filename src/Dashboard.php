@@ -75,6 +75,7 @@ class Dashboard extends CommonDBTM
         $this->addStandardTab(Certificate::class, $ong, $options);
         $this->addStandardTab(Stream::class, $ong, $options);
         $this->addStandardTab(Knowbase::class, $ong, $options);
+        $this->addStandardTab(Printpdf::class, $ong, $options);
 
         return $ong;
     }
