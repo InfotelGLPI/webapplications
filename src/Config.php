@@ -40,8 +40,8 @@ $GLPI_TYPES = [];
 
 /* Comme il existe une table dans la base mySQL qui correspond au nom de la classe alors on peut accéder aux champs de la façon suivante :
  $this->fields['nom_du_champ_dans_la_table']
-table : glpi_plugin_fdrpi_configs
-classe: PluginFdrpiConfig
+table : glpi_plugin_webapplications_configs
+classe: Config
 */
 class Config extends CommonDBTM
 {

@@ -40,7 +40,7 @@ if (!defined('GLPI_ROOT')) {
 
 
 /**
- * Class PluginFdrpiPdf
+ * Class Printpdf
  */
 
 class Printpdf extends CommonDBTM
@@ -63,7 +63,7 @@ class Printpdf extends CommonDBTM
      **/
     public static function getTypeName($nb = 0)
     {
-        return __('Print PDF', 'fdrpi');
+        return __('Print PDF', 'webapplications');
     }
 
     public static function getIcon()
