@@ -41,9 +41,14 @@ if (isset($_POST["PrintPdf"])) {
         $appliance->getFromDB($_POST['plugin_webapplications_appliance_id']);
 
         $datenow = new DateTime();
+
+        $title = __('Printed on', 'webapplications')." ".Html::convDateTime($datenow->format('Y-m-d H:i:s'));
+        if ($appliance->fields['date_mod'] != null) {
+            $title .= " - ".__('Last update')." ".Html::convDateTime($appliance->fields['date_mod']);
+        }
+
         $docPdf = new Pdf(
-            __('Printed on ', 'webapplications') . $datenow->format('Y-m-d H:i:s') .
-            __(' Last update ', 'webapplications') . Html::convDateTime($appliance->fields['date_mod'])
+            $title
             , $appliance->fields['name'], $_POST['plugin_webapplications_appliance_id']);
 
         $docPdf->drawPdf();
