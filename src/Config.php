@@ -121,7 +121,7 @@ class Config extends CommonDBTM
         echo "<form name='form' method='post' action='" . $this->getFormURL() . "'>";
 
         echo "<div align='center'><table class='tab_cadre_fixe'>";
-        echo "<tr><th colspan='2'>".self::getTypeName()."</th></tr>";
+        echo "<tr><th colspan='2'>".__('Setting up PDF printing', 'webapplications')."</th></tr>";
 
 
         echo "<tr class='tab_bg_1'>";
