@@ -308,7 +308,6 @@ class Dashboard extends CommonDBTM
             } else {
                 $linkApp = $item::getFormURLWithID($id);
                 $linkApp .= "&forcetab=main";
-                Toolbox::logInfo($linkApp);
                 $title = _sx('button', 'Edit');
             }
 

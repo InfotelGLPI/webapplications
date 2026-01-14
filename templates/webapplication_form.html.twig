@@ -36,19 +36,19 @@
 
                     {% if item.isField('webapplicationservertypes_id') %}
                         {{ fields.dropdownField(
-                            "GlpiPlugin\Webapplications\Webapplicationservertype",
+                            "GlpiPlugin\\Webapplications\\Webapplicationservertype",
                             "webapplicationservertypes_id",
                             item.fields['webapplicationservertypes_id'],
-                            "GlpiPlugin\Webapplications\Webapplicationservertype"|itemtype_name,
+                            "GlpiPlugin\\Webapplications\\Webapplicationservertype"|itemtype_name,
                         ) }}
                     {% endif %}
 
                     {% if item.isField('webapplicationtechnics_id') %}
                         {{ fields.dropdownField(
-                            "GlpiPlugin\Webapplications\Webapplicationtechnic",
+                            "GlpiPlugin\\Webapplications\\Webapplicationtechnic",
                             "webapplicationtechnics_id",
                             item.fields['webapplicationtechnics_id'],
-                            "GlpiPlugin\Webapplications\Webapplicationtechnic"|itemtype_name,
+                            "GlpiPlugin\\Webapplications\\Webapplicationtechnic"|itemtype_name,
                         ) }}
                     {% endif %}
 
