@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Kaya Zeren <kayazeren@gmail.com>, 2025
+# Kaya Zeren <kayazeren@gmail.com>, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 10:16+0000\n"
+"POT-Creation-Date: 2026-01-15 12:07+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
-"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2025\n"
+"Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/infotelGLPI/teams/12376/tr_TR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,7 +51,7 @@ msgstr "Tüm kullanıcılar"
 
 #: front/printpdf.form.php:56
 msgid "An error has occurred"
-msgstr ""
+msgstr "Bir sorun çıktı"
 
 #: setup.php:147 src/Dashboard.php:85 src/Profile.php:215
 #: src/Webapplication.php:53
@@ -60,7 +60,7 @@ msgstr "Aygıt panosu"
 
 #: src/Pdf.php:416
 msgid "Appliance description"
-msgstr ""
+msgstr "Aygıt açıklaması"
 
 #: front/webapplication.php:54
 msgid "Are you sure you want to do core migration ?"
@@ -104,7 +104,7 @@ msgid_plural "Categories"
 msgstr[0] "Kategori"
 msgstr[1] "Kategoriler"
 
-#: src/Dashboard.php:621
+#: src/Dashboard.php:631
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] "Sertifika listesi"
@@ -126,7 +126,7 @@ msgstr "Çekirdek aktarımı"
 msgid "Data migration"
 msgstr "Veri aktarımı"
 
-#: src/Dashboard.php:619
+#: src/Dashboard.php:629
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] "Veri tabanı listesi"
@@ -150,7 +150,7 @@ msgstr "Şifreleme"
 msgid "Encryption type"
 msgstr "Şifreleme türü"
 
-#: src/Dashboard.php:613
+#: src/Dashboard.php:623
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] "Birim listesi"
@@ -164,7 +164,7 @@ msgstr[1] "Dışa açıklık"
 
 #: src/Printpdf.php:173
 msgid "Generate PDF"
-msgstr ""
+msgstr "PDF oluştur"
 
 #: hook.php:461 src/Pdf.php:696
 #: templates/webapplication_appliance_form.html.twig:41
@@ -179,7 +179,7 @@ msgstr "Kurulu sürüm"
 msgid "Integrity"
 msgstr "Bütünlük"
 
-#: src/Dashboard.php:617
+#: src/Dashboard.php:627
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] "Öge listesi"
@@ -221,7 +221,7 @@ msgstr "İlişkili bir belge yok"
 msgid "No associated links"
 msgstr "Herhangi bir ilgili bağlantı yok"
 
-#: src/Dashboard.php:633
+#: src/Dashboard.php:643
 msgid "No associated objects"
 msgstr "İlişkili bir nesne yok"
 
@@ -249,11 +249,11 @@ msgstr "Bağlantı noktası"
 
 #: src/Printpdf.php:66 src/Printpdf.php:169
 msgid "Print PDF"
-msgstr ""
+msgstr "PDF yazdır"
 
 #: front/printpdf.form.php:45
 msgid "Printed on"
-msgstr ""
+msgstr "Şuraya yazdırıldı"
 
 #: src/Process_Entity.php:81 src/Process_Entity.php:150 src/Profile.php:225
 #: src/Process.php:54
@@ -268,7 +268,7 @@ msgid_plural "Processes Entity"
 msgstr[0] "Süreç birimi"
 msgstr[1] "Süreçlerin birimi"
 
-#: src/Dashboard.php:615
+#: src/Dashboard.php:625
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] "Süreç listesi"
@@ -310,11 +310,11 @@ msgstr "Güvenlik gereksinimleri"
 
 #: src/Config.php:124
 msgid "Setting up PDF printing"
-msgstr ""
+msgstr "PDF yazdırma ayarlanıyor"
 
 #: front/config.form.php:50 src/Profile.php:236 src/Config.php:86
 msgid "Setup"
-msgstr ""
+msgstr "Ayarla"
 
 #: src/Stream.php:208 templates/webapplication_stream_form.html.twig:16
 #: templates/webapplication_stream_form.html.twig:21
@@ -327,7 +327,7 @@ msgid_plural "Streams"
 msgstr[0] "Akış"
 msgstr[1] "Akışlar"
 
-#: src/Dashboard.php:623
+#: src/Dashboard.php:633
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] "Akış listesi"
@@ -367,11 +367,11 @@ msgstr "Adres"
 
 #: src/Config.php:129
 msgid "Use description field"
-msgstr ""
+msgstr "Açıklama alanı kullanılsın"
 
 #: src/Config.php:165
 msgid "Use field"
-msgstr ""
+msgstr "Şu alan kullanılsın"
 
 #: src/Pdf.php:861 templates/webapplication_appliance_form.html.twig:185
 msgid "Validation"
@@ -398,4 +398,4 @@ msgstr[1] "İnternet uygulamaları"
 
 #: src/Pdf.php:255
 msgid "page"
-msgstr ""
+msgstr "sayfa"
