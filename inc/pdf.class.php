@@ -510,11 +510,11 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $statut = new State();
         $statut->getFromDB($appliance->fields['states_id']);
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Name', 'webapplications') . ' : ')) , 'L', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Name') . ' : ')) , 'L', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['name'])) , '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Status', 'webapplications') . ' : ')) , '', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Status') . ' : ')) , '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($statut->fields['name'] ?? '')) , 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
@@ -840,7 +840,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $yligne3 = $this->GetY();
         $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Ecosystem', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/2) + 1, $yligne3);
-        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Process', 'Processes', 1))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Process', 'Processes', 1), 'webapplications')), 'TLRB', 'C', true, 0, '', 'black');
 
         $webapplicationentities = new PluginWebapplicationsEntity();
 
@@ -887,7 +887,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $yligne3 = $this->GetY();
         $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Physical Infrastructure', 'webapplications'))) , 'TLRB', 'C', true, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/2) + 1, $yligne3);
-        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Database instance', 'webapplications'))) , 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(\DatabaseInstance::getTypeName(2))) , 'TLRB', 'C', true, 0, '', 'black');
 
 
         $applicationItems = new Appliance_Item();
@@ -941,9 +941,9 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $yligne3 = $this->GetY();
-        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Certificates', 'webapplications'))) , 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n("Certificate", 'Certificates', 2))) , 'TLRB', 'C', true, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/2) + 1, $yligne3);
-        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Flow', 'webapplications'))) , 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Stream', 'Streams', 2, 'webapplications'))) , 'TLRB', 'C', true, 0, '', 'black');
 
         $certificatItem = new Certificate_Item();
         $certificatItemDatas = $certificatItem->find(['items_id'=>$this->id, 'itemtype'=>'Appliance']);
