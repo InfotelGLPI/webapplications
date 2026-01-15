@@ -873,7 +873,7 @@ class Pdf extends Fpdf
         $yligne3 = $this->GetY();
         $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Ecosystem', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/2) + 1, $yligne3);
-        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Process', 'Processes', 1))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Process', 'Processes', 1), 'webapplications')), 'TLRB', 'C', true, 0, '', 'black');
 
 
         $webapplicationentities = new Entity();
