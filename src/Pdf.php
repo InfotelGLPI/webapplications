@@ -479,8 +479,8 @@ class Pdf extends Fpdf
         foreach ($knowbaseItemDatas as $knowbaseItemData) {
             $knowbase->getFromDB($knowbaseItemData['knowbaseitems_id']);
             $docurl = $CFG_GLPI["url_base"] . "/front/knowbaseitem.form.php?id=" . $knowbaseItemData['knowbaseitems_id'];
-            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($knowbase->fields['name'])), 'R', 1, 'C', false, $docurl, 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2), $this->GetY());
+            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($knowbase->fields['name'])), 'RL', 1, 'C', false, $docurl, 'black');
+            $this->setXY($this->margin_left, $this->GetY());
         }
 
         $this->setXY($this->margin_left, $this->GetY());
