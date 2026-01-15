@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 10:16+0000\n"
+"POT-Creation-Date: 2026-01-15 12:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,7 +101,7 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:621
+#: src/Dashboard.php:631
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] ""
@@ -123,7 +123,7 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: src/Dashboard.php:619
+#: src/Dashboard.php:629
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
@@ -147,7 +147,7 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: src/Dashboard.php:613
+#: src/Dashboard.php:623
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Integrity"
 msgstr ""
 
-#: src/Dashboard.php:617
+#: src/Dashboard.php:627
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
@@ -218,7 +218,7 @@ msgstr ""
 msgid "No associated links"
 msgstr ""
 
-#: src/Dashboard.php:633
+#: src/Dashboard.php:643
 msgid "No associated objects"
 msgstr ""
 
@@ -265,7 +265,7 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:615
+#: src/Dashboard.php:625
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
@@ -323,7 +323,7 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:623
+#: src/Dashboard.php:633
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
