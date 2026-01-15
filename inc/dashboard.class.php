@@ -204,7 +204,7 @@ class PluginWebapplicationsDashboard extends CommonDBTM
 
         echo "<div class='card-body border-0'>";
         $title = __('Summary', 'webapplications');
-        self::showTitleforDashboard($title, $ApplianceId, $appliance, "edit", "editapp");
+        self::showTitleforDashboard($title, $ApplianceId, $applianceplugin, "edit", "editapp");
 
         echo "</div>";
 
