@@ -73,7 +73,7 @@ class PluginWebapplicationsConfig extends CommonDBTM
 
     public static function getTypeName($nb = 0)
     {
-        return __("Setup", "webapplication");
+        return __("Setup", "webapplications");
     }
 
     /**
@@ -111,7 +111,7 @@ class PluginWebapplicationsConfig extends CommonDBTM
         echo "<form name='form' method='post' action='" . $this->getFormURL() . "'>";
 
         echo "<div align='center'><table class='tab_cadre_fixe'>";
-        echo "<tr><th colspan='2'>".self::getTypeName()."</th></tr>";
+        echo "<tr><th colspan='2'>".__('Setting up PDF printing', 'webapplications')."</th></tr>";
 
 
         echo "<tr class='tab_bg_1'>";
@@ -124,8 +124,8 @@ class PluginWebapplicationsConfig extends CommonDBTM
         echo "</tr>";
 
         $array = [
-            'Appliance|name' => __('Appliance') . ' - ' . __('Name', 'webapplications'),
-            'Appliance|comment' => __('Appliance') . ' - ' . __('Comment', 'webapplications'),
+            'Appliance|name' => __('Appliance') . ' - ' . __('Name'),
+            'Appliance|comment' => __('Appliance') . ' - ' . __('Comment'),
         ];
 
         $plugin = new Plugin();

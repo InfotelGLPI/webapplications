@@ -34,16 +34,25 @@ global $DB;
 Session::checkRightsOr(PluginWebapplicationsPrintpdf::$rightname, [READ, UPDATE]);
 
 if (isset($_POST["PrintPdf"])) {
-    $appliance = new Appliance();
-    $appliance->getFromDB($_POST['plugin_webapplications_applicatif_id']);
-    $date = new DateTime($appliance->fields['date_mod']);
-    $datenow = new DateTime();
-    $docPdf = new PluginWebapplicationsPdf(
-            __('Printed on ', 'webapplications') . $datenow->format('Y-m-d H:i:s') .
-                 __(' Last update ', 'webapplications') . $date->format('Y-m-d H:i:s')
-        , $appliance->fields['name'], $_POST['plugin_webapplications_applicatif_id']);
+    if (isset($_POST["plugin_webapplications_appliance_id"]) && $_POST["plugin_webapplications_appliance_id"] > 0) {
+        $appliance = new Appliance();
+        $appliance->getFromDB($_POST['plugin_webapplications_appliance_id']);
+        $datenow = new DateTime();
 
-    $docPdf->drawPdf();
+        $title = __('Printed on', 'webapplications')." ".Html::convDateTime($datenow->format('Y-m-d H:i:s'));
+        if ($appliance->fields['date_mod'] != null) {
+            $title .= " - ".__('Last update')." ".Html::convDateTime($appliance->fields['date_mod']);
+        }
+
+        $docPdf = new PluginWebapplicationsPdf(
+            $title
+            , $appliance->fields['name'], $_POST['plugin_webapplications_appliance_id']);
+
+        $docPdf->drawPdf();
+    } else {
+        $message = __('An error has occurred','webapplications');
+        Session::addMessageAfterRedirect($message, false, ERROR);
+    }
     Html::back();
 } else {
     Html::back();
