@@ -53,7 +53,7 @@ if (isset($_POST["PrintPdf"])) {
         $message = __('An error has occurred','webapplications');
         Session::addMessageAfterRedirect($message, false, ERROR);
     }
-//    Html::back();
+    Html::back();
 } else {
     Html::back();
 }
