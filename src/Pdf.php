@@ -457,47 +457,34 @@ class Pdf extends Fpdf
         $this->setY($this->GetY() + 2);
         $this->SetFillColor(230);
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/2, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Associated document', 'Associated documents', 2, 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/2), $yligne3);
-        $this->MultiCell($largeurdispo/2, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Knowledge base'))), 'TLRB', 'C', true, 0, '', 'black');
-
+        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Associated document', 'Associated documents', 2, 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
         $yligne3 = $this->GetY();
 
         $document = new Document();
         foreach ($documentItemDatas as $documentItemData) {
             $document->getFromDB($documentItemData['documents_id']);
             $docurl = $CFG_GLPI["url_base"] . "/front/document.send.php?docid=" . $documentItemData['documents_id'];
-            $this->Cell($largeurdispo/2, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($document->fields['name'])), 'LR', 1, 'C', false, $docurl, 'black');
+            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($document->fields['name'])), 'LR', 1, 'C', false, $docurl, 'black');
             $this->setXY($this->margin_left, $this->GetY());
         }
+        $this->setXY($this->margin_left, $this->GetY());
+        $this->MultiCell($largeurdispo, 1, '', 'LRB', 'C', false, 0, '', 'black');
 
         $yligne4 = $this->GetY();
+        $this->setXY($this->margin_left, $yligne4);
+        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Knowledge base'))), 'TLRB', 'C', true, 0, '', 'black');
 
         $knowbase = new KnowbaseItem();
-        $this->setXY($this->margin_left + ($largeurdispo/2), $yligne3);
+        $this->setXY($this->margin_left, $this->GetY());
         foreach ($knowbaseItemDatas as $knowbaseItemData) {
             $knowbase->getFromDB($knowbaseItemData['knowbaseitems_id']);
             $docurl = $CFG_GLPI["url_base"] . "/front/knowbaseitem.form.php?id=" . $knowbaseItemData['knowbaseitems_id'];
-            $this->Cell($largeurdispo/2, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($knowbase->fields['name'])), 'R', 1, 'C', false, $docurl, 'black');
+            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($knowbase->fields['name'])), 'R', 1, 'C', false, $docurl, 'black');
             $this->setXY($this->margin_left + ($largeurdispo/2), $this->GetY());
         }
-        if ($this->GetY() < $yligne4) {
-            $this->MultiCell($largeurdispo/2, $yligne4 - $this->GetY() +1, '', 'RB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell($largeurdispo/2, 1, '', 'LRB', 'C', false, 0, '', 'black');
-        } elseif ($this->GetY() > $yligne4) {
-            $yligne5 = $this->GetY();
-            $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell($largeurdispo/2, $yligne5 - $yligne4 + 1, '', 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2), $yligne5);
-            $this->MultiCell($largeurdispo/2, 1, '', 'RB', 'C', false, 0, '', 'black');
-        } else {
-            $yligne5 = $this->GetY();
-            $this->setXY($this->margin_left, $this->GetY());
-            $this->MultiCell($largeurdispo/2, 1, '', 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2), $yligne5);
-            $this->MultiCell($largeurdispo/2, 1, '', 'RB', 'C', false, 0, '', 'black');
-        }
+
+        $this->setXY($this->margin_left, $this->GetY());
+        $this->MultiCell($largeurdispo, 1, '', 'LRB', 'C', false, 0, '', 'black');
 
         $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Associated contract', 'Associated contracts', 2, 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
         $yligne3 = $this->GetY();
@@ -618,13 +605,29 @@ class Pdf extends Fpdf
 
         $yligne3 = $this->GetY();
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Alternate username') . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $yligne35 = $this->GetY();
         $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['contact'] ?? '')), '', 'L', false, 0, '', 'black');
+        $yligne4 = $this->GetY();
+        if ($yligne35 != $yligne4) {
+            $this->setXY($this->margin_left, $yligne35);
+            $this->MultiCell(($largeurdispo/4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
+            $this->SetXY($this->margin_left + ($largeurdispo/4)*2, $yligne4);
+        }
         $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Inventory number') . ' : ')), '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['otherserial'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
+
+        $this->setXY($this->margin_left + ($largeurdispo/2), $this->GetY());
+        if ($this->GetY() < $yligne4) {
+            $this->MultiCell(($largeurdispo/2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
+        } elseif ($this->GetY() > $yligne4) {
+            $yligne5 = $this->GetY();
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo/2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
+        }
 
         $user = new User();
         $user->getFromDB($appliance->fields['users_id']);
@@ -691,12 +694,36 @@ class Pdf extends Fpdf
         }
         $yligne3 = $this->GetY();
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Installed version', 'webapplications') . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $yligne35 = $this->GetY();
         $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance->fields['version'] ?? '')), '', 'L', false, 0, '', 'black');
+        $yligne4 = $this->GetY();
+        if ($yligne35 != $yligne4) {
+            $this->setXY($this->margin_left, $yligne35);
+            $this->MultiCell(($largeurdispo/4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
+            $this->SetXY($this->margin_left + ($largeurdispo/4)*2, $yligne4);
+        }
         $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Type of treatment server', 'Types of treatment server', 1, 'webapplications') . ' : ')), '', 'L', false, 0, '', 'black');
+        $yligne45 = $this->GetY();
         $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationServertype->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
+
+        $this->setXY($this->margin_left + ($largeurdispo/2), $this->GetY());
+        if ($this->GetY() < $yligne4) {
+            $this->MultiCell(($largeurdispo/2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
+        } elseif ($this->GetY() > $yligne4) {
+            $yligne5 = $this->GetY();
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo/2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
+        } elseif ($yligne45 > $this->GetY()) {
+            $yligne5 = $this->GetY();
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo/2), $yligne45 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left + (($largeurdispo/4)*3), $yligne5);
+            $this->MultiCell(($largeurdispo/4), $yligne45 - $yligne5, '', 'R', 'C', false, 0, '', 'black');
+        }
+
         $this->setXY($this->margin_left, $this->GetY());
 
         $webapplicationtechnics = new Webapplicationtechnic();
