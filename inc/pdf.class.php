@@ -901,7 +901,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
             foreach ($physicalinfraDatas as $physicalinfraData) {
                 $item = new $physicalinfraData['itemtype']();
                 $item->getFromDB($physicalinfraData['items_id']);
-                $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($item->fields['name'])) , 'LR',  'C', false, $docurl, 'black');
+                $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($item->fields['name'])) , 'LR',  'C', false);
                 $this->setXY($this->margin_left,$this->GetY());
             }
         }
@@ -915,7 +915,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         foreach ($databasesInstanceDatas as $databasesInstanceData) {
             $databaseInstance = new DatabaseInstance();
             $databaseInstance->getFromDB($databasesInstanceData['items_id']);
-            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($databaseInstance->fields['name'])) , 'LR',  'C', false, $docurl, 'black');
+            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($databaseInstance->fields['name'])) , 'LR',  'C', false);
             $this->setXY($this->margin_left + ($largeurdispo/2) +1,$this->GetY());
         }
         if ($this->GetY() < $yligne4) {

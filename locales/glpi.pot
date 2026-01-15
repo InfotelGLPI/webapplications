@@ -3,12 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#: templates/webapplication_stream_form.html.twig:29 templates/webapplication_stream_form.html.twig:50
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-03 10:39+0000\n"
+"POT-Creation-Date: 2026-01-15 12:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: inc/pdf.class.php:496
+msgid " months"
+msgstr ""
 
 #: inc/appliance.class.php:97 inc/appliance.class.php:109
 msgid "1 to 100"
@@ -46,35 +51,50 @@ msgstr ""
 msgid "All users"
 msgstr ""
 
-#: setup.php:132 inc/dashboard.class.php:70 inc/profile.class.php:195
+#: front/printpdf.form.php:53
+msgid "An error has occurred"
+msgstr ""
+
+#: setup.php:136 inc/dashboard.class.php:71 inc/profile.class.php:197
 #: inc/webapplication.class.php:49
 msgid "Appliance dashboard"
+msgstr ""
+
+#: inc/pdf.class.php:390
+msgid "Appliance description"
 msgstr ""
 
 #: front/webapplication.php:52
 msgid "Are you sure you want to do core migration ?"
 msgstr ""
 
-#: inc/appliance.class.php:300
+#: inc/pdf.class.php:527
+msgid "Associable to a ticket"
+msgstr ""
+
+#: inc/appliance.class.php:300 inc/pdf.class.php:460
 msgid "Associated contract"
 msgid_plural "Associated contracts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/appliance.class.php:277
+#: inc/appliance.class.php:277 inc/pdf.class.php:429
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:398 hook.php:471 inc/databaseinstance.class.php:362
-#: inc/process.class.php:196 inc/process.class.php:260
+#: hook.php:402 hook.php:475 inc/databaseinstance.class.php:362
+#: inc/pdf.class.php:816 inc/process.class.php:196 inc/process.class.php:260
+#: templates/webapplication_appliance_form.html.twig:115
+#: templates/webapplication_database_form.html.twig:32
 #: templates/webapplication_process_form.html.twig:27
-#: templates/webapplication_database_form.html.twig:32 templates/webapplication_appliance_form.html.twig:115
 msgid "Availability"
 msgstr ""
 
-#: hook.php:294 templates/webapplication_form.html.twig:32 templates/webapplication_appliance_form.html.twig:32
+#: hook.php:298 inc/pdf.class.php:651
+#: templates/webapplication_appliance_form.html.twig:32
+#: templates/webapplication_form.html.twig:32
 msgid "Backoffice URL"
 msgstr ""
 
@@ -84,16 +104,21 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:590
+#: inc/dashboard.class.php:591
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:416 hook.php:487 inc/databaseinstance.class.php:382
-#: inc/process.class.php:210 inc/process.class.php:270
+#: inc/pdf.class.php:944
+msgid "Certificates"
+msgstr ""
+
+#: hook.php:420 hook.php:491 inc/databaseinstance.class.php:382
+#: inc/pdf.class.php:822 inc/process.class.php:210 inc/process.class.php:270
+#: templates/webapplication_appliance_form.html.twig:147
+#: templates/webapplication_database_form.html.twig:62
 #: templates/webapplication_process_form.html.twig:60
-#: templates/webapplication_database_form.html.twig:62 templates/webapplication_appliance_form.html.twig:147
 msgid "Confidentiality"
 msgstr ""
 
@@ -105,18 +130,21 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: inc/dashboard.class.php:588
+#: inc/pdf.class.php:890
+msgid "Database instance"
+msgstr ""
+
+#: inc/dashboard.class.php:589
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/stream.class.php:211 templates/webapplication_stream_form.html.twig:37
-#: templates/webapplication_stream_form.html.twig:42
+#: inc/stream.class.php:211 templates/webapplication_stream_form.html.twig:37 templates/webapplication_stream_form.html.twig:42
 msgid "Destination"
 msgstr ""
 
-#: inc/entity.class.php:48
+#: inc/entity.class.php:48 inc/pdf.class.php:841
 msgid "Ecosystem"
 msgstr ""
 
@@ -124,41 +152,50 @@ msgstr ""
 msgid "Encryption"
 msgstr ""
 
-#: inc/stream.class.php:229 inc/stream.class.php:392
-#: templates/webapplication_stream_form.html.twig:63
+#: inc/stream.class.php:229 inc/stream.class.php:392 templates/webapplication_stream_form.html.twig:63
 msgid "Encryption type"
 msgstr ""
 
-#: inc/dashboard.class.php:582
+#: inc/dashboard.class.php:583
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/webapplicationexternalexposition.class.php:49
+#: inc/pdf.class.php:707 inc/webapplicationexternalexposition.class.php:49
 msgid "External exposition"
 msgid_plural "External exposition"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:371 templates/webapplication_appliance_form.html.twig:41
+#: inc/pdf.class.php:946
+msgid "Flow"
+msgstr ""
+
+#: inc/printpdf.class.php:151
+msgid "Generate PDF"
+msgstr ""
+
+#: hook.php:375 inc/pdf.class.php:662
+#: templates/webapplication_appliance_form.html.twig:41
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:407 hook.php:479 inc/databaseinstance.class.php:372
-#: inc/process.class.php:203 inc/process.class.php:265
+#: hook.php:411 hook.php:483 inc/databaseinstance.class.php:372
+#: inc/pdf.class.php:819 inc/process.class.php:203 inc/process.class.php:265
+#: templates/webapplication_appliance_form.html.twig:131
+#: templates/webapplication_database_form.html.twig:48
 #: templates/webapplication_process_form.html.twig:44
-#: templates/webapplication_database_form.html.twig:48 templates/webapplication_appliance_form.html.twig:131
 msgid "Integrity"
 msgstr ""
 
-#: inc/dashboard.class.php:586
+#: inc/dashboard.class.php:587
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/webapplicationtechnic.class.php:49
+#: inc/pdf.class.php:703 inc/webapplicationtechnic.class.php:49
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
 msgstr[0] ""
@@ -168,6 +205,10 @@ msgstr[1] ""
 msgid "Link with core purge"
 msgstr ""
 
+#: inc/pdf.class.php:531
+msgid "Location"
+msgstr ""
+
 #: inc/logicalinfrastructure.class.php:44
 #: inc/logicalinfrastructure.class.php:158
 msgid "Logical infrastructure"
@@ -175,12 +216,17 @@ msgid_plural "Logical infrastructure"
 msgstr[0] ""
 msgstr[1] ""
 
+#: inc/pdf.class.php:414
 #: templates/webapplication_dashboard_support.html.twig:24
 msgid "Mail support"
 msgstr ""
 
 #: front/webapplication.php:196
 msgid "Migration was successful"
+msgstr ""
+
+#: inc/pdf.class.php:513
+msgid "Name"
 msgstr ""
 
 #: inc/appliance.class.php:317
@@ -191,7 +237,7 @@ msgstr ""
 msgid "No associated documents"
 msgstr ""
 
-#: inc/dashboard.class.php:602
+#: inc/dashboard.class.php:603
 msgid "No associated objects"
 msgstr ""
 
@@ -205,11 +251,12 @@ msgstr ""
 msgid "Owner"
 msgstr ""
 
+#: inc/pdf.class.php:416
 #: templates/webapplication_dashboard_support.html.twig:33
 msgid "Phone support"
 msgstr ""
 
-#: inc/physicalinfrastructure.class.php:44
+#: inc/pdf.class.php:888 inc/physicalinfrastructure.class.php:44
 msgid "Physical Infrastructure"
 msgstr ""
 
@@ -217,8 +264,16 @@ msgstr ""
 msgid "Port"
 msgstr ""
 
+#: inc/printpdf.class.php:58 inc/printpdf.class.php:147
+msgid "Print PDF"
+msgstr ""
+
+#: front/printpdf.form.php:42
+msgid "Printed on"
+msgstr ""
+
 #: inc/process.class.php:47 inc/process_entity.class.php:72
-#: inc/process_entity.class.php:141 inc/profile.class.php:205
+#: inc/process_entity.class.php:141 inc/profile.class.php:207
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] ""
@@ -230,17 +285,17 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:584
+#: inc/dashboard.class.php:585
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:172
+#: inc/dashboard.class.php:173 inc/pdf.class.php:402
 msgid "Project leader"
 msgstr ""
 
-#: inc/dashboard.class.php:183
+#: inc/dashboard.class.php:184 inc/pdf.class.php:404
 msgid "Project team"
 msgstr ""
 
@@ -248,8 +303,9 @@ msgstr ""
 msgid "Protocol"
 msgstr ""
 
-#: hook.php:435 templates/webapplication_dashboard_support.html.twig:15
+#: hook.php:439 inc/pdf.class.php:412
 #: templates/webapplication_appliance_form.html.twig:221
+#: templates/webapplication_dashboard_support.html.twig:15
 msgid "Referent editor"
 msgstr ""
 
@@ -263,33 +319,46 @@ msgstr ""
 msgid "Security Contact"
 msgstr ""
 
+#: inc/pdf.class.php:812 templates/webapplication_appliance_form.html.twig:95
+#: templates/webapplication_database_form.html.twig:24
 #: templates/webapplication_process_form.html.twig:18
-#: templates/webapplication_database_form.html.twig:24 templates/webapplication_appliance_form.html.twig:95
 msgid "Security Needs"
 msgstr ""
 
-#: inc/stream.class.php:200 templates/webapplication_stream_form.html.twig:16
-#: templates/webapplication_stream_form.html.twig:21
+#: inc/config.class.php:114
+msgid "Setting up PDF printing"
+msgstr ""
+
+#: front/config.form.php:50 inc/config.class.php:76 inc/profile.class.php:218
+msgid "Setup"
+msgstr ""
+
+#: inc/stream.class.php:200 templates/webapplication_stream_form.html.twig:16 templates/webapplication_stream_form.html.twig:21
 msgid "Source"
 msgstr ""
 
-#: inc/profile.class.php:200 inc/stream.class.php:45
+#: inc/pdf.class.php:517
+msgid "Status"
+msgstr ""
+
+#: inc/profile.class.php:202 inc/stream.class.php:45
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:592
+#: inc/dashboard.class.php:593
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/dashboard.class.php:205
+#: inc/dashboard.class.php:206 inc/pdf.class.php:506
 msgid "Summary"
 msgstr ""
 
-#: inc/appliance.class.php:232 templates/webapplication_appliance_form.html.twig:211
+#: inc/appliance.class.php:232 inc/pdf.class.php:409
+#: templates/webapplication_appliance_form.html.twig:211
 msgid "Support"
 msgstr ""
 
@@ -297,41 +366,56 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: hook.php:425 hook.php:495 inc/databaseinstance.class.php:392
-#: inc/process.class.php:217 inc/process.class.php:275
+#: hook.php:429 hook.php:499 inc/databaseinstance.class.php:392
+#: inc/pdf.class.php:825 inc/process.class.php:217 inc/process.class.php:275
+#: templates/webapplication_appliance_form.html.twig:164
+#: templates/webapplication_database_form.html.twig:77
 #: templates/webapplication_process_form.html.twig:77
-#: templates/webapplication_database_form.html.twig:77 templates/webapplication_appliance_form.html.twig:164
 msgid "Traceability"
 msgstr ""
 
-#: inc/webapplicationservertype.class.php:49
+#: inc/pdf.class.php:673 inc/webapplicationservertype.class.php:49
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/webapplication_form.html.twig:23 templates/webapplication_appliance_form.html.twig:23
+#: inc/pdf.class.php:647 templates/webapplication_appliance_form.html.twig:23
+#: templates/webapplication_form.html.twig:23
 msgid "URL"
 msgstr ""
 
-#: templates/webapplication_appliance_form.html.twig:185
+#: inc/config.class.php:119
+msgid "Use description field"
+msgstr ""
+
+#: inc/config.class.php:155
+msgid "Use field"
+msgstr ""
+
+#: inc/pdf.class.php:828 templates/webapplication_appliance_form.html.twig:185
 msgid "Validation"
 msgstr ""
 
-#: hook.php:389
+#: hook.php:393
 msgid "Validation by CIO"
 msgstr ""
 
-#: templates/webapplication_appliance_form.html.twig:202
+#: inc/pdf.class.php:835 templates/webapplication_appliance_form.html.twig:202
 msgid "Validation by CISO"
 msgstr ""
 
-#: hook.php:380 templates/webapplication_appliance_form.html.twig:194
+#: hook.php:384 inc/pdf.class.php:832
+#: templates/webapplication_appliance_form.html.twig:194
 msgid "Validation of the request by the referring Department"
 msgstr ""
 
-#: inc/appliance.class.php:44 inc/profile.class.php:190
+#: inc/appliance.class.php:44 inc/profile.class.php:192
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] ""
 msgstr[1] ""
+
+#: inc/pdf.class.php:228
+msgid "page"
+msgstr ""
