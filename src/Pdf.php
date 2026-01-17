@@ -988,7 +988,7 @@ class Pdf extends Fpdf
         $yligne3 = $this->GetY();
 
         foreach ($certificatItemDatas as $certificatItemData) {
-            $certificat = new Certificate();
+            $certificat = new \Certificate();
             $certificat->getFromDB($certificatItemData['certificates_id']);
             $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($certificat->fields['name'])), 'LR', 'C', false);
             $this->setXY($this->margin_left, $this->GetY());
