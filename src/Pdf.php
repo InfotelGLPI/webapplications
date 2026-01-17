@@ -425,7 +425,7 @@ class Pdf extends Fpdf
         $this->MultiCell($largeurdispo /4, 10, User::getTypeName(2) . PHP_EOL . Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance::getNbUsersValue($number_users))), 'LRBT', 'C', '', 0, '', 'black');
         $yligne2 = $this->GetY();
         $this->setXY($this->margin_left + ($largeurdispo /4), $yligne);
-        $this->MultiCell($largeurdispo - ($largeurdispo/4), ($yligne2 - $yligne) /2, __('Project leader', 'webapplications') . ' : ' . User::getFriendlyNameById($appliance->fields['users_id_tech']), 'BRT', 'C', '', 0, '', 'black');
+        $this->MultiCell($largeurdispo - ($largeurdispo/4), ($yligne2 - $yligne) /2, __('Project leader', 'webapplications') . ' : ' . Toolbox::decodeFromUtf8(User::getFriendlyNameById($appliance->fields['users_id_tech'])), 'BRT', 'C', '', 0, '', 'black');
         $this->setX($this->margin_left + ($largeurdispo /4));
         $groupsitem = new Group_Item();
         $groups = '';
@@ -873,7 +873,7 @@ class Pdf extends Fpdf
         $yligne3 = $this->GetY();
         $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Ecosystem', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/2) + 1, $yligne3);
-        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Process', 'Processes', 1), 'webapplications')), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Process', 'Processes', 1, 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
 
 
         $webapplicationentities = new Entity();
@@ -886,7 +886,7 @@ class Pdf extends Fpdf
         $yligne3 = $this->GetY();
 
         foreach ($webapplicationentitiesDatas as $webapplicationentitiesData) {
-            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationentitiesData['name'])), 'LR', 'C', false, $docurl, 'black');
+            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationentitiesData['name'])), 'LR', 'C', false);
             $this->setXY($this->margin_left, $this->GetY());
         }
 
@@ -894,7 +894,7 @@ class Pdf extends Fpdf
 
         $this->setXY($this->margin_left + ($largeurdispo/2) +1, $yligne3);
         foreach ($webapplicationprocessesDatas as $webapplicationprocessesData) {
-            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationprocessesData['name'])), 'LR', 'C', false, $docurl, 'black');
+            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationprocessesData['name'])), 'LR', 'C', false);
             $this->setXY($this->margin_left + ($largeurdispo/2) +1, $this->GetY());
         }
         if ($this->GetY() < $yligne4) {
@@ -935,7 +935,7 @@ class Pdf extends Fpdf
             foreach ($physicalinfraDatas as $physicalinfraData) {
                 $item = new $physicalinfraData['itemtype']();
                 $item->getFromDB($physicalinfraData['items_id']);
-                $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($item->fields['name'])), 'LR', 'C', false, $docurl, 'black');
+                $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($item->fields['name'])), 'LR', 'C', false);
                 $this->setXY($this->margin_left, $this->GetY());
             }
         }
@@ -949,7 +949,7 @@ class Pdf extends Fpdf
         foreach ($databasesInstanceDatas as $databasesInstanceData) {
             $databaseInstance = new DatabaseInstance();
             $databaseInstance->getFromDB($databasesInstanceData['items_id']);
-            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($databaseInstance->fields['name'])), 'LR', 'C', false, $docurl, 'black');
+            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($databaseInstance->fields['name'])), 'LR', 'C', false);
             $this->setXY($this->margin_left + ($largeurdispo/2) +1, $this->GetY());
         }
         if ($this->GetY() < $yligne4) {
@@ -990,7 +990,7 @@ class Pdf extends Fpdf
         foreach ($certificatItemDatas as $certificatItemData) {
             $certificat = new Certificate();
             $certificat->getFromDB($certificatItemData['certificates_id']);
-            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($certificat->fields['name'])), 'LR', 'C', false, $docurl, 'black');
+            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($certificat->fields['name'])), 'LR', 'C', false);
             $this->setXY($this->margin_left, $this->GetY());
         }
 
@@ -998,7 +998,7 @@ class Pdf extends Fpdf
 
         $this->setXY($this->margin_left + ($largeurdispo/2) +1, $yligne3);
         foreach ($webapplicationstreamDatas as $webapplicationstreamData) {
-            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationstreamData['name'])), 'LR', 'C', false, $docurl, 'black');
+            $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationstreamData['name'])), 'LR', 'C', false);
             $this->setXY($this->margin_left + ($largeurdispo/2) +1, $this->GetY());
         }
         if ($this->GetY() < $yligne4) {
