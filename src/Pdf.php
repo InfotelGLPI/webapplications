@@ -59,6 +59,7 @@ use User;
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
+require '../vendor/autoload.php';
 
 /**
  * Class Pdf
@@ -479,8 +480,8 @@ class Pdf extends Fpdf
         foreach ($knowbaseItemDatas as $knowbaseItemData) {
             $knowbase->getFromDB($knowbaseItemData['knowbaseitems_id']);
             $docurl = $CFG_GLPI["url_base"] . "/front/knowbaseitem.form.php?id=" . $knowbaseItemData['knowbaseitems_id'];
-            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($knowbase->fields['name'])), 'R', 1, 'C', false, $docurl, 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2), $this->GetY());
+            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($knowbase->fields['name'])), 'LR', 1, 'C', false, $docurl, 'black');
+            $this->setXY($this->margin_left, $this->GetY());
         }
 
         $this->setXY($this->margin_left, $this->GetY());
@@ -545,7 +546,7 @@ class Pdf extends Fpdf
         $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Status') . ' : ')), '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(isset($statut->fields['name']) ? $statut->fields['name'] : '')), 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($statut->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
 
@@ -559,7 +560,7 @@ class Pdf extends Fpdf
         $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
         $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Location') . ' : ')), '', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(isset($location->fields['name']) ? $location->fields['name'] : '')), 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($location->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
         $applianceType = new ApplianceType();
