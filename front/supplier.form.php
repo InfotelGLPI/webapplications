@@ -38,8 +38,8 @@ if (!isset($_GET["withtemplate"])) {
 }
 
 if (isset($_GET['_in_modal'])) {
-    Html::popHeader(Appliance::getTypeName(2), $_SERVER['PHP_SELF']);
+    Html::popHeader(Supplier::getTypeName(2), $_SERVER['PHP_SELF']);
     $_SESSION['reload'] = true;
-    Appliance::displayFullPageForItem($_GET['id']);
+    Supplier::displayFullPageForItem($_GET['id']);
     Html::popFooter();
 }
