@@ -30,6 +30,7 @@
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
+require '../vendor/autoload.php';
 
 /**
  * Class PluginWebapplicationsPdf
@@ -37,7 +38,6 @@ if (!defined('GLPI_ROOT')) {
 #[AllowDynamicProperties]
 class PluginWebapplicationsPdf extends Fpdf\Fpdf
 {
-
     /* Constantes pour paramétrer certaines données. */
     public $line_height = 6;     // Hauteur d'une ligne simple.
     public $multiline_height = 6;     // Hauteur d'un textarea
@@ -203,7 +203,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
     public function Header()
     {
 
-        $this->SetXY($this->margin_left, $this->margin_top-5);
+        $this->SetXY($this->margin_left, $this->margin_top - 5);
 
         $largeurdispo = $this->big_width_cell - ($this->margin_left * 2);
         $largeurCoteTitre = round($largeurdispo / 3, 1);
@@ -321,9 +321,9 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $this->SetAutoPageBreak(true, $this->margin_bottom);
         $largeurdispo = $this->big_width_cell - ($this->margin_left * 2);
 
-//
-//        $this->SetFont('Arial', 'B', 16);
-//        $this->Cell(40, 10, 'Hello FPDF!');
+        //
+        //        $this->SetFont('Arial', 'B', 16);
+        //        $this->Cell(40, 10, 'Hello FPDF!');
 
         $appliance = new Appliance();
         $appliance->getFromDB($this->id);
@@ -350,9 +350,9 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $contractItemDatas = $contractItem->find(['itemtype' => 'Appliance', 'items_id' => $this->id]);
 
         $this->SetX($this->margin_left);
-//        $this->SetFontNormal('black', 1, 10);
-        $this->CellTitleValue($largeurdispo, '15', Toolbox::decodeFromUtf8($appliance->fields['name']) , 'TLR', 'C', 'hardgrey', 1, '20', 'black');
-        $this->SetXY($this->margin_left, $this->GetY()+15);
+        //        $this->SetFontNormal('black', 1, 10);
+        $this->CellTitleValue($largeurdispo, '15', Toolbox::decodeFromUtf8($appliance->fields['name']), 'TLR', 'C', 'hardgrey', 1, '20', 'black');
+        $this->SetXY($this->margin_left, $this->GetY() + 15);
         $this->SetFontNormal('black', false, 10);
 
         $config = new PluginWebapplicationsConfig();
@@ -385,18 +385,18 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
 
                 }
             }
-            $this->MultiCell($largeurdispo, '3', '' , 'TLR', 'C', '', 0, '', 'black');
+            $this->MultiCell($largeurdispo, '3', '', 'TLR', 'C', '', 0, '', 'black');
             $this->SetFontNormal('black', false, 12);
-            $this->MultiCell($largeurdispo, '5', __('Appliance description', 'webapplications') , 'LR', 'C', '', 0, '', 'black');
-            $this->MultiCell($largeurdispo, '3', '' , 'LR', 'C', '', 0, '', 'black');
+            $this->MultiCell($largeurdispo, '5', __('Appliance description', 'webapplications'), 'LR', 'C', '', 0, '', 'black');
+            $this->MultiCell($largeurdispo, '3', '', 'LR', 'C', '', 0, '', 'black');
             $this->SetFontNormal('black', false, 10);
-            $this->MultiCell($largeurdispo, '5', Toolbox::decodeFromUtf8($description) , 'LR', 'C', '', 0, '', 'black');
+            $this->MultiCell($largeurdispo, '5', Toolbox::decodeFromUtf8($description), 'LR', 'C', '', 0, '', 'black');
             $this->SetFontNormal('black', false, 10);
-            $this->MultiCell($largeurdispo, '3', '' , 'LR', 'C', '', 0, '', 'black');
+            $this->MultiCell($largeurdispo, '3', '', 'LR', 'C', '', 0, '', 'black');
         }
         $yligne = $this->GetY();
         $number_users = $webappAppliance->fields['number_users'] ?? 0;
-        $this->MultiCell($largeurdispo /4, 10, User::getTypeName(2) . PHP_EOL . Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance::getNbUsersValue($number_users))), 'LRBT', 'C', '', 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 10, User::getTypeName(2) . PHP_EOL . Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance::getNbUsersValue($number_users))), 'LRBT', 'C', '', 0, '', 'black');
         $yligne2 = $this->GetY();
         $this->setXY($this->margin_left + ($largeurdispo /4), $yligne);
         $this->MultiCell($largeurdispo - ($largeurdispo/4), ($yligne2 - $yligne) /2, __('Project leader', 'webapplications') . ' : ' .  Toolbox::decodeFromUtf8(User::getFriendlyNameById($appliance->fields['users_id_tech'])) , 'BRT', 'C', '', 0, '', 'black');
@@ -406,42 +406,42 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         if (!empty($webappAppliance->fields['editor']) && $webappAppliance->fields['editor'] > 0) {
             $this->setY($this->GetY() + 2);
             $this->SetFillColor(230);
-            $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, __('Support', 'webapplications') , 'TLRB', 'C', true, 0, '', 'black');
+            $this->MultiCell($largeurdispo, ($yligne2 - $yligne) / 2, __('Support', 'webapplications'), 'TLRB', 'C', true, 0, '', 'black');
 
             $yligne3 = $this->GetY();
-            $this->MultiCell($largeurdispo/3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Referent editor', 'webapplications'))) , 'LRB', 'C', '', 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/3),$yligne3);
-            $this->MultiCell($largeurdispo/3, 7, __('Mail support', 'webapplications'), 'RB', 'C', '', 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/3)*2,$yligne3);
-            $this->MultiCell($largeurdispo/3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Phone support', 'webapplications'))) , 'RB', 'C', '', 0, '', 'black');
+            $this->MultiCell($largeurdispo / 3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Referent editor', 'webapplications'))), 'LRB', 'C', '', 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 3), $yligne3);
+            $this->MultiCell($largeurdispo / 3, 7, __('Mail support', 'webapplications'), 'RB', 'C', '', 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 3) * 2, $yligne3);
+            $this->MultiCell($largeurdispo / 3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Phone support', 'webapplications'))), 'RB', 'C', '', 0, '', 'black');
 
             $yligne3 = $this->GetY();
-            $this->MultiCell($largeurdispo/3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($supplier->fields['name'])) , 'LRB', 'C', '', 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/3),$yligne3);
-            $this->MultiCell($largeurdispo/3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($supplier->fields['email'])) , 'RB', 'C', '', 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/3)*2,$yligne3);
-            $this->MultiCell($largeurdispo/3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($supplier->fields['phonenumber'])) , 'RB', 'C', '', 0, '', 'black');
+            $this->MultiCell($largeurdispo / 3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($supplier->fields['name'])), 'LRB', 'C', '', 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 3), $yligne3);
+            $this->MultiCell($largeurdispo / 3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($supplier->fields['email'])), 'RB', 'C', '', 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 3) * 2, $yligne3);
+            $this->MultiCell($largeurdispo / 3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($supplier->fields['phonenumber'])), 'RB', 'C', '', 0, '', 'black');
         }
 
         $this->setY($this->GetY() + 2);
         $this->SetFillColor(230);
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Associated document', 'Associated documents', 2, 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) / 2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Associated document', 'Associated documents', 2, 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
         $yligne3 = $this->GetY();
 
         $document = new Document();
         foreach ($documentItemDatas as $documentItemData) {
             $document->getFromDB($documentItemData['documents_id']);
             $docurl = $CFG_GLPI["url_base"] . "/front/document.send.php?docid=" . $documentItemData['documents_id'];
-            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($document->fields['name'])) , 'LR', 1, 'C', false, $docurl, 'black');
-            $this->setXY($this->margin_left,$this->GetY());
+            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($document->fields['name'])), 'LR', 1, 'C', false, $docurl, 'black');
+            $this->setXY($this->margin_left, $this->GetY());
         }
         $this->setXY($this->margin_left, $this->GetY());
         $this->MultiCell($largeurdispo, 1, '', 'LRB', 'C', false, 0, '', 'black');
 
         $yligne4 = $this->GetY();
         $this->setXY($this->margin_left, $yligne4);
-        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Knowledge base'))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) / 2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Knowledge base'))), 'TLRB', 'C', true, 0, '', 'black');
 
 
         $knowbase = new KnowbaseItem();
@@ -449,24 +449,24 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         foreach ($knowbaseItemDatas as $knowbaseItemData) {
             $knowbase->getFromDB($knowbaseItemData['knowbaseitems_id']);
             $docurl = $CFG_GLPI["url_base"] . "/front/knowbaseitem.form.php?id=" . $knowbaseItemData['knowbaseitems_id'];
-            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($knowbase->fields['name'])) , 'LR', 1, 'C', false, $docurl, 'black');
-            $this->setXY($this->margin_left,$this->GetY());
+            $this->Cell($largeurdispo, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($knowbase->fields['name'])), 'LR', 1, 'C', false, $docurl, 'black');
+            $this->setXY($this->margin_left, $this->GetY());
         }
 
 
         $this->setXY($this->margin_left, $this->GetY());
         $this->MultiCell($largeurdispo, 1, '', 'LRB', 'C', false, 0, '', 'black');
 
-        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Associated contract', 'Associated contracts', 2, 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) / 2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Associated contract', 'Associated contracts', 2, 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
         $yligne3 = $this->GetY();
 
         $contract = new Contract();
         foreach ($contractItemDatas as $contractItemData) {
             $contract->getFromDB($contractItemData['contracts_id']);
             $docurl = $CFG_GLPI["url_base"] . "/front/contract.form.php?id=" . $contractItemData['contracts_id'];
-            $this->Cell(($largeurdispo/9)*2, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($contract->fields['name'])) , 'L', 1, 'L', false, $docurl, 'black');
+            $this->Cell(($largeurdispo / 9) * 2, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($contract->fields['name'])), 'L', 1, 'L', false, $docurl, 'black');
             $yligne4 = $this->GetY();
-            $this->setXY($this->margin_left + (($largeurdispo/9)*2),$yligne3);
+            $this->setXY($this->margin_left + (($largeurdispo / 9) * 2), $yligne3);
             $contractType = new ContractType();
             $contractType->getFromDB($contract->fields['contracttypes_id']);
             $typename = '';
@@ -480,30 +480,30 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
             foreach ($contratCost->find(['contracts_id' => $contractItemData['contracts_id']]) as $cost) {
                 $begindate = new DateTime($cost['begin_date']);
                 $enddate = new DateTime($cost['end_date']);
-                if($begindate < $datenow && $enddate >= $datenow){
+                if ($begindate < $datenow && $enddate >= $datenow) {
                     $costcontract += $cost['cost'];
                 }
             }
 
-            $this->Cell(($largeurdispo/9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode($typename)) , '', 1, 'C', false);
-            $this->setXY($this->margin_left + (($largeurdispo/9)*4),$yligne3);
-            $this->Cell(($largeurdispo/9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode($contract->fields['num'])) , '', 1, 'C', false);
-            $this->setXY($this->margin_left + (($largeurdispo/9)*6),$yligne3);
+            $this->Cell(($largeurdispo / 9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode($typename)), '', 1, 'C', false);
+            $this->setXY($this->margin_left + (($largeurdispo / 9) * 4), $yligne3);
+            $this->Cell(($largeurdispo / 9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode($contract->fields['num'])), '', 1, 'C', false);
+            $this->setXY($this->margin_left + (($largeurdispo / 9) * 6), $yligne3);
 
             $datebegin = isset($contract->fields['begin_date']) ? new DateTime($contract->fields['begin_date']) : '';
-            $this->Cell(($largeurdispo/9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode(isset($contract->fields['begin_date']) ? $datebegin->format('Y-m-d') : '')) , '', 1, 'C', false);
-            $this->setXY($this->margin_left + (($largeurdispo/9)*7),$yligne3);
-            $this->Cell(($largeurdispo/9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode($contract->fields['duration'] . __(' months', 'webapplications'))) , '', 1, 'C', false);
-            $this->setXY($this->margin_left + (($largeurdispo/9)*8),$yligne3);
-            $this->Cell(($largeurdispo/9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode($costcontract) . ' EUR') , 'R', 1, 'C', false);
+            $this->Cell(($largeurdispo / 9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode(isset($contract->fields['begin_date']) ? $datebegin->format('Y-m-d') : '')), '', 1, 'C', false);
+            $this->setXY($this->margin_left + (($largeurdispo / 9) * 7), $yligne3);
+            $this->Cell(($largeurdispo / 9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode($contract->fields['duration'] . __(' months', 'webapplications'))), '', 1, 'C', false);
+            $this->setXY($this->margin_left + (($largeurdispo / 9) * 8), $yligne3);
+            $this->Cell(($largeurdispo / 9), $yligne4 - $yligne3, Toolbox::decodeFromUtf8(htmlspecialchars_decode($costcontract) . ' EUR'), 'R', 1, 'C', false);
             $yligne3 = $this->GetY();
         }
-        $this->MultiCell($largeurdispo,  1, '' , 'RBL', 'C', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo, 1, '', 'RBL', 'C', false, 0, '', 'black');
 
         $this->AddPage("P");
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
-        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Summary', 'webapplications'))) , 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) / 2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Summary', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
 
 
         //inclure ici le résumé des champs
@@ -524,13 +524,13 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $location = new Location();
         $location->getFromDB($appliance->fields['locations_id']);
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Associable to a ticket', 'webapplications') . ' : ')) , 'L', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['is_helpdesk_visible'] ? __('Yes') : __('No'))) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Location', 'webapplications') . ' : ')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($location->fields['name'] ?? '')) , 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Associable to a ticket', 'webapplications') . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['is_helpdesk_visible'] ? __('Yes') : __('No'))), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Location', 'webapplications') . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($location->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
         $applianceType = new ApplianceType();
@@ -538,13 +538,13 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $user = new User();
         $user->getFromDB($appliance->fields['users_id_tech']);
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Type', 'Types', 1)  . ' : ')) , 'L', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($applianceType->fields['name'] ?? '')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Technician in charge') . ' : ')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($user->fields['name'] ?? '')) , 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Type', 'Types', 1) . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($applianceType->fields['name'] ?? '')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Technician in charge') . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($user->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
         $manufacturer = new Manufacturer();
@@ -552,49 +552,49 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $group = new Group();
         $group->getFromDB($appliance->fields['groups_id_tech']);
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(Manufacturer::getTypeName(1) . ' : ')) , 'L', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($manufacturer->fields['name'] ?? '')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Group in charge') . ' : ')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($group->fields['name'] ?? '')) , 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(Manufacturer::getTypeName(1) . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($manufacturer->fields['name'] ?? '')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Group in charge') . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($group->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Alternate username number') . ' : ')) , 'L', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['contact_num'] ?? '')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Serial number') . ' : ')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['serial'] ?? '')) , 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Alternate username number') . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['contact_num'] ?? '')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Serial number') . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['serial'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Alternate username') . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Alternate username') . ' : ')), 'L', 'L', false, 0, '', 'black');
         $yligne35 = $this->GetY();
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['contact'] ?? '')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['contact'] ?? '')), '', 'L', false, 0, '', 'black');
         $yligne4 = $this->GetY();
         if ($yligne35 != $yligne4) {
             $this->setXY($this->margin_left, $yligne35);
-            $this->MultiCell(($largeurdispo/4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
-            $this->SetXY($this->margin_left + ($largeurdispo/4)*2, $yligne4);
+            $this->MultiCell(($largeurdispo / 4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
+            $this->SetXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne4);
         }
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Inventory number') . ' : ')), '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['otherserial'] ?? '')), 'R', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Inventory number') . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['otherserial'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
-        $this->setXY($this->margin_left + ($largeurdispo/2), $this->GetY());
+        $this->setXY($this->margin_left + ($largeurdispo / 2), $this->GetY());
         if ($this->GetY() < $yligne4) {
-            $this->MultiCell(($largeurdispo/2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
+            $this->MultiCell(($largeurdispo / 2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
         } elseif ($this->GetY() > $yligne4) {
             $yligne5 = $this->GetY();
             $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell(($largeurdispo/2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
+            $this->MultiCell(($largeurdispo / 2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
         }
 
         $user = new User();
@@ -603,13 +603,13 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $group->getFromDB($appliance->fields['groups_id']);
         $this->setXY($this->margin_left, $this->GetY());
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(User::getTypeName(1) . ' : ')) , 'L', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($user->fields['name'] ?? '')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(Group::getTypeName(1) . ' : ')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($group->fields['name'] ?? '')) , 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(User::getTypeName(1) . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($user->fields['name'] ?? '')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(Group::getTypeName(1) . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($group->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
 
@@ -620,16 +620,16 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
             $config->fields['fields_description_table'] != 'Appliance' ||
             $config->fields['fields_description_name'] != 'comment') {
             $yligne3 = $this->GetY();
-            $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Comment', 'Comments', 2) . ' : ')) , 'L', 'L', false, 0, '', 'black');
+            $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Comment', 'Comments', 2) . ' : ')), 'L', 'L', false, 0, '', 'black');
             $yligne35 = $this->GetY();
-            $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-            $this->MultiCell(($largeurdispo/4)*3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['comment'] ?? '')) , 'R', 'L', false, 0, '', 'black');
-            $this->setXY($this->margin_left , $this->GetY());
+            $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+            $this->MultiCell(($largeurdispo / 4) * 3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($appliance->fields['comment'] ?? '')), 'R', 'L', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $this->GetY());
 
             $yligne4 = $this->GetY();
             if ($yligne35 != $yligne4) {
                 $this->setXY($this->margin_left, $yligne35);
-                $this->MultiCell(($largeurdispo/4), $yligne4 - $yligne35 , '' , 'L', 'C', false, 0, '', 'black');
+                $this->MultiCell(($largeurdispo / 4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
                 $this->SetXY($this->margin_left, $yligne4);
             }
         }
@@ -638,19 +638,19 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $applianceenvironnement = new ApplianceEnvironment();
         $applianceenvironnement->getFromDB($appliance->fields['applianceenvironments_id']);
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Environment', 'Environments', 1) . ' : ')) , 'L', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell(($largeurdispo/4)*3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($applianceenvironnement->fields['name'] ?? '')) , 'R', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left , $this->GetY());
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Environment', 'Environments', 1) . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell(($largeurdispo / 4) * 3, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($applianceenvironnement->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left, $this->GetY());
 
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('URL', 'webapplications') . ' : ')) , 'L', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance->fields['address'] ?? '')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Backoffice URL', 'webapplications')  . ' : ')) , '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance->fields['backoffice'] ?? '')) , 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('URL', 'webapplications') . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance->fields['address'] ?? '')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Backoffice URL', 'webapplications') . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance->fields['backoffice'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
 
@@ -659,35 +659,35 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
             $webapplicationServertype->getFromDB($webappAppliance->fields['webapplicationservertypes_id']);
         }
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Installed version', 'webapplications') . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Installed version', 'webapplications') . ' : ')), 'L', 'L', false, 0, '', 'black');
         $yligne35 = $this->GetY();
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance->fields['version'] ?? '')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webappAppliance->fields['version'] ?? '')), '', 'L', false, 0, '', 'black');
         $yligne4 = $this->GetY();
         if ($yligne35 != $yligne4) {
             $this->setXY($this->margin_left, $yligne35);
-            $this->MultiCell(($largeurdispo/4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
-            $this->SetXY($this->margin_left + ($largeurdispo/4)*2, $yligne4);
+            $this->MultiCell(($largeurdispo / 4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
+            $this->SetXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne4);
         }
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Type of treatment server', 'Types of treatment server', 1, 'webapplications') . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Type of treatment server', 'Types of treatment server', 1, 'webapplications') . ' : ')), '', 'L', false, 0, '', 'black');
         $yligne45 = $this->GetY();
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationServertype->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationServertype->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
 
-        $this->setXY($this->margin_left + ($largeurdispo/2), $this->GetY());
+        $this->setXY($this->margin_left + ($largeurdispo / 2), $this->GetY());
         if ($this->GetY() < $yligne4) {
-            $this->MultiCell(($largeurdispo/2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
+            $this->MultiCell(($largeurdispo / 2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
         } elseif ($this->GetY() > $yligne4) {
             $yligne5 = $this->GetY();
             $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell(($largeurdispo/2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
+            $this->MultiCell(($largeurdispo / 2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
         } elseif ($yligne45 > $this->GetY()) {
             $yligne5 = $this->GetY();
             $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell(($largeurdispo/2), $yligne45 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left + (($largeurdispo/4)*3), $yligne5);
-            $this->MultiCell(($largeurdispo/4), $yligne45 - $yligne5, '', 'R', 'C', false, 0, '', 'black');
+            $this->MultiCell(($largeurdispo / 2), $yligne45 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left + (($largeurdispo / 4) * 3), $yligne5);
+            $this->MultiCell(($largeurdispo / 4), $yligne45 - $yligne5, '', 'R', 'C', false, 0, '', 'black');
         }
         $this->setXY($this->margin_left, $this->GetY());
 
@@ -700,13 +700,13 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
             $webapplicationexposition->getFromDB($webappAppliance->fields['webapplicationexternalexpositions_id']);
         }
         $yligne3 = $this->GetY();
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Language of treatment', 'Languages of treatment', 1, 'webapplications') . ' : ')), 'L', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationtechnics->fields['name'] ?? '')), '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('External exposition', 'External exposition', 1, 'webapplications') . ' : ')), '', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationexposition->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Language of treatment', 'Languages of treatment', 1, 'webapplications') . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationtechnics->fields['name'] ?? '')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('External exposition', 'External exposition', 1, 'webapplications') . ' : ')), '', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationexposition->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
         //mettre les champs sup
@@ -746,43 +746,44 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
                                     } else {
                                         $fieldsData[$rowfield['name']] = '';
                                     }
+                                    // no break
                                 default:
                                     break;
                             }
-                            if (!str_starts_with($rowfield['type'], 'dropdown-') && (!$config->fields['use_fields_description'] || $config->fields['fields_description_table'] != 'Fields' || $config->fields['fields_description_name'] != $rowfield['id'] )) {
-                                if ($compteurfields == 0 || $compteurfields%2 == 0) {
+                            if (!str_starts_with($rowfield['type'], 'dropdown-') && (!$config->fields['use_fields_description'] || $config->fields['fields_description_table'] != 'Fields' || $config->fields['fields_description_name'] != $rowfield['id'])) {
+                                if ($compteurfields == 0 || $compteurfields % 2 == 0) {
                                     //impair (a gauche)
                                     $this->SetX($this->margin_left);
                                     $yligne3 = $this->GetY();
-                                    $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($rowfield['label'] . ' : ')) , 'L', 'L', false, 0, '', 'black');
+                                    $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($rowfield['label'] . ' : ')), 'L', 'L', false, 0, '', 'black');
                                     $yligne35 = $this->GetY();
-                                    $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
-                                    $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($fieldsData[$rowfield['name']])) , '', 'L', false, 0, '', 'black');
+                                    $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
+                                    $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($fieldsData[$rowfield['name']])), '', 'L', false, 0, '', 'black');
 
-                                    $compteurfields ++;
+                                    $compteurfields++;
                                     $yligne4 = $this->GetY();
                                     if ($yligne35 != $yligne4) {
                                         $this->setXY($this->margin_left, $yligne35);
-                                        $this->MultiCell(($largeurdispo/4), $yligne4 - $yligne35 , '' , 'L', 'C', false, 0, '', 'black');
-                                        $this->SetXY($this->margin_left + ($largeurdispo/4)*2, $yligne4);
+                                        $this->MultiCell(($largeurdispo / 4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
+                                        $this->SetXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne4);
                                     }
                                 } else {
                                     //pair à droite
-                                    $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
-                                    $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($rowfield['label'] . ' : ')) , '', 'L', false, 0, '', 'black');
-                                    $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
-                                    $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($fieldsData[$rowfield['name']])) , 'R', 'L', false, 0, '', 'black');
-                                    $compteurfields ++;
+                                    $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
+                                    $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($rowfield['label'] . ' : ')), '', 'L', false, 0, '', 'black');
+                                    $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
+                                    $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($fieldsData[$rowfield['name']])), 'R', 'L', false, 0, '', 'black');
+                                    $compteurfields++;
 
                                     // Ajuster le tableau
 
-                                    $this->setXY($this->margin_left + ($largeurdispo/2),$this->GetY());
+                                    $this->setXY($this->margin_left + ($largeurdispo / 2), $this->GetY());
                                     if ($this->GetY() < $yligne4) {
-                                        $this->MultiCell(($largeurdispo/2), $yligne4 - $this->GetY() , '' , 'R', 'C', false, 0, '', 'black');
+                                        $this->MultiCell(($largeurdispo / 2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
                                     } elseif ($this->GetY() > $yligne4) {
                                         $yligne5 = $this->GetY();
-                                        $this->setXY($this->margin_left,$yligne4);
-                                        $this->MultiCell(($largeurdispo/2), $yligne5 - $yligne4, '' , 'L', 'C', false, 0, '', 'black');
+                                        $this->setXY($this->margin_left, $yligne4);
+                                        $this->MultiCell(($largeurdispo / 2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
 
                                     }
 
@@ -790,9 +791,9 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
                             }
                         }
                     }
-                    if ($compteurfields %2 == 1) {
-                        $this->setXY($this->margin_left + ($largeurdispo/2),$yligne3);
-                        $this->MultiCell(($largeurdispo/2), $yligne4 - $yligne3 , '' , 'R', 'C', false, 0, '', 'black');
+                    if ($compteurfields % 2 == 1) {
+                        $this->setXY($this->margin_left + ($largeurdispo / 2), $yligne3);
+                        $this->MultiCell(($largeurdispo / 2), $yligne4 - $yligne3, '', 'R', 'C', false, 0, '', 'black');
                     }
                 }
             }
@@ -803,36 +804,36 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
 
 
         $this->setXY($this->margin_left, $this->GetY());
-        $this->MultiCell($largeurdispo, 1, '' , 'LRB', 'L', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo, 1, '', 'LRB', 'L', false, 0, '', 'black');
 
 
 
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
-        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Security Needs', 'webapplications'))) , 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) / 2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Security Needs', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
 
         $yligne3 = $this->GetY();
         $value = $webappAppliance->fields['webapplicationavailabilities'] ?? '';
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Availability', 'webapplications') . ' : ' . $value)), 'LRB', 'C', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4), $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Availability', 'webapplications') . ' : ' . $value)), 'LRB', 'C', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4), $yligne3);
         $value = $webappAppliance->fields['webapplicationintegrities'] ?? '';
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Integrity', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*2, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Integrity', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 2, $yligne3);
         $value = $webappAppliance->fields['webapplicationconfidentialities'] ?? '';
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Confidentiality', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/4)*3, $yligne3);
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Confidentiality', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 4) * 3, $yligne3);
         $value = $webappAppliance->fields['webapplicationtraceabilities'] ?? '';
-        $this->MultiCell($largeurdispo/4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Traceability', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 4, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Traceability', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
-        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Validation', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell($largeurdispo, ($yligne2 - $yligne) / 2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Validation', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
 
         $yligne3 = $this->GetY();
         $answer = isset($webappAppliance->fields['webapplicationreferringdepartmentvalidation']) && $webappAppliance->fields['webapplicationreferringdepartmentvalidation'] == 0 ? __('No') : __('Yes');
-        $this->MultiCell($largeurdispo/2, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Validation of the request by the referring Department', 'webapplications') . ' : ')) . $answer, 'LRB', 'C', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($largeurdispo/2), $yligne3);
+        $this->MultiCell($largeurdispo / 2, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Validation of the request by the referring Department', 'webapplications') . ' : ')) . $answer, 'LRB', 'C', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($largeurdispo / 2), $yligne3);
         $answer = isset($webappAppliance->fields['webapplicationciovalidation']) && $webappAppliance->fields['webapplicationciovalidation'] == 0 ? __('No') : __('Yes');
-        $this->MultiCell($largeurdispo/2, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Validation by CISO', 'webapplications') . ' : ')) . $answer, 'RB', 'C', false, 0, '', 'black');
+        $this->MultiCell($largeurdispo / 2, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode(__('Validation by CISO', 'webapplications') . ' : ')) . $answer, 'RB', 'C', false, 0, '', 'black');
 
         $this->AddPage("P");
 
@@ -858,27 +859,27 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
 
         $yligne4 = $this->GetY();
 
-        $this->setXY($this->margin_left + ($largeurdispo/2) +1,$yligne3);
+        $this->setXY($this->margin_left + ($largeurdispo / 2) + 1, $yligne3);
         foreach ($webapplicationprocessesDatas as $webapplicationprocessesData) {
             $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationprocessesData['name'])) , 'LR',  'C', false);
             $this->setXY($this->margin_left + ($largeurdispo/2) +1,$this->GetY());
         }
         if ($this->GetY() < $yligne4) {
-            $this->MultiCell(($largeurdispo/2)-1, $yligne4 - $this->GetY() +1 , '' , 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left,$yligne4);
-            $this->MultiCell(($largeurdispo/2) -1, 1 , '' , 'LRB', 'C', false, 0, '', 'black');
+            $this->MultiCell(($largeurdispo / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
         } elseif ($this->GetY() > $yligne4) {
             $yligne5 = $this->GetY();
-            $this->setXY($this->margin_left,$yligne4);
-            $this->MultiCell(($largeurdispo/2) -1, $yligne5 - $yligne4 + 1, '' , 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2) + 1,$yligne5);
-            $this->MultiCell(($largeurdispo/2) -1,  1, '' , 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo / 2) - 1, $yligne5 - $yligne4 + 1, '', 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 2) + 1, $yligne5);
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
         } else {
             $yligne5 = $this->GetY();
-            $this->setXY($this->margin_left ,$this->GetY());
-            $this->MultiCell(($largeurdispo/2) -1,  1, '' , 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2) +1,$yligne5);
-            $this->MultiCell(($largeurdispo/2) -1,  1, '' , 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $this->GetY());
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 2) + 1, $yligne5);
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
         }
 
 
@@ -896,7 +897,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
 
         $yligne3 = $this->GetY();
 
-        foreach (array("Computer", "Printer", "Phone", "NetworkEquipment") as $itemtype) {
+        foreach (["Computer", "Printer", "Phone", "NetworkEquipment"] as $itemtype) {
             $physicalinfraDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => $itemtype]);
             foreach ($physicalinfraDatas as $physicalinfraData) {
                 $item = new $physicalinfraData['itemtype']();
@@ -909,7 +910,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
 
         $yligne4 = $this->GetY();
 
-        $this->setXY($this->margin_left + ($largeurdispo/2) +1,$yligne3);
+        $this->setXY($this->margin_left + ($largeurdispo / 2) + 1, $yligne3);
 
         $databasesInstanceDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'DatabaseInstance']);
         foreach ($databasesInstanceDatas as $databasesInstanceData) {
@@ -919,21 +920,21 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
             $this->setXY($this->margin_left + ($largeurdispo/2) +1,$this->GetY());
         }
         if ($this->GetY() < $yligne4) {
-            $this->MultiCell(($largeurdispo/2)-1, $yligne4 - $this->GetY() +1 , '' , 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left,$yligne4);
-            $this->MultiCell(($largeurdispo/2) -1, 1 , '' , 'LRB', 'C', false, 0, '', 'black');
+            $this->MultiCell(($largeurdispo / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
         } elseif ($this->GetY() > $yligne4) {
             $yligne5 = $this->GetY();
-            $this->setXY($this->margin_left,$yligne4);
-            $this->MultiCell(($largeurdispo/2) -1, $yligne5 - $yligne4 + 1, '' , 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2) + 1,$yligne5);
-            $this->MultiCell(($largeurdispo/2) -1,  1, '' , 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo / 2) - 1, $yligne5 - $yligne4 + 1, '', 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 2) + 1, $yligne5);
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
         } else {
             $yligne5 = $this->GetY();
-            $this->setXY($this->margin_left ,$this->GetY());
-            $this->MultiCell(($largeurdispo/2) -1,  1, '' , 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2) +1,$yligne5);
-            $this->MultiCell(($largeurdispo/2) -1,  1, '' , 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $this->GetY());
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 2) + 1, $yligne5);
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
         }
 
 
@@ -946,7 +947,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $this->MultiCell(($largeurdispo/2) -1, ($yligne2 - $yligne) /2, Toolbox::decodeFromUtf8(htmlspecialchars_decode(_n('Stream', 'Streams', 2, 'webapplications'))) , 'TLRB', 'C', true, 0, '', 'black');
 
         $certificatItem = new Certificate_Item();
-        $certificatItemDatas = $certificatItem->find(['items_id'=>$this->id, 'itemtype'=>'Appliance']);
+        $certificatItemDatas = $certificatItem->find(['items_id' => $this->id, 'itemtype' => 'Appliance']);
 
         $webapplicationstream = new PluginWebapplicationsStream();
         $webapplicationstreamDatas = $webapplicationstream->find();
@@ -962,27 +963,27 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
 
         $yligne4 = $this->GetY();
 
-        $this->setXY($this->margin_left + ($largeurdispo/2) +1,$yligne3);
+        $this->setXY($this->margin_left + ($largeurdispo / 2) + 1, $yligne3);
         foreach ($webapplicationstreamDatas as $webapplicationstreamData) {
             $this->MultiCell(($largeurdispo/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationstreamData['name'])) , 'LR',  'C', false);
             $this->setXY($this->margin_left + ($largeurdispo/2) +1,$this->GetY());
         }
         if ($this->GetY() < $yligne4) {
-            $this->MultiCell(($largeurdispo/2)-1, $yligne4 - $this->GetY() +1 , '' , 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left,$yligne4);
-            $this->MultiCell(($largeurdispo/2) -1, 1 , '' , 'LRB', 'C', false, 0, '', 'black');
+            $this->MultiCell(($largeurdispo / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
         } elseif ($this->GetY() > $yligne4) {
             $yligne5 = $this->GetY();
-            $this->setXY($this->margin_left,$yligne4);
-            $this->MultiCell(($largeurdispo/2) -1, $yligne5 - $yligne4 + 1, '' , 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2) + 1,$yligne5);
-            $this->MultiCell(($largeurdispo/2) -1,  1, '' , 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo / 2) - 1, $yligne5 - $yligne4 + 1, '', 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 2) + 1, $yligne5);
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
         } else {
             $yligne5 = $this->GetY();
-            $this->setXY($this->margin_left ,$this->GetY());
-            $this->MultiCell(($largeurdispo/2) -1,  1, '' , 'LRB', 'C', false, 0, '', 'black');
-            $this->setXY($this->margin_left + ($largeurdispo/2) +1,$yligne5);
-            $this->MultiCell(($largeurdispo/2) -1,  1, '' , 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left, $this->GetY());
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
+            $this->setXY($this->margin_left + ($largeurdispo / 2) + 1, $yligne5);
+            $this->MultiCell(($largeurdispo / 2) - 1, 1, '', 'LRB', 'C', false, 0, '', 'black');
         }
 
 
