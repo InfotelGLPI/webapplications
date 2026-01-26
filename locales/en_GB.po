@@ -1,74 +1,431 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Webapplications Development Team
 # This file is distributed under the same license as the GLPI - Webapplications plugin package.
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: GLPI Project - webapplications plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-23 08:39+0200\n"
-"PO-Revision-Date: 2020-07-23 06:48+0000\n"
+"POT-Creation-Date: 2026-01-15 12:51+0100\n"
+"PO-Revision-Date: 2026-01-15 12:51+0100\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>\n"
-"Language-Team: English (United Kingdom) (http://www.transifex.com/infotelGLPI/GLPI_webapplications/language/en_GB/)\n"
+"Language-Team: English (United Kingdom) (http://www.transifex.com/"
+"infotelGLPI/GLPI_webapplications/language/en_GB/)\n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
 
-#: hook.php:281 inc/appliance.class.php:57
+#: inc/pdf.class.php:496
+msgid " months"
+msgstr " months"
+
+#: inc/appliance.class.php:97 inc/appliance.class.php:109
+msgid "1 to 100"
+msgstr "1 to 100"
+
+#: inc/appliance.class.php:98 inc/appliance.class.php:110
+msgid "100 to 500"
+msgstr "100 to 500"
+
+#: inc/appliance.class.php:100 inc/appliance.class.php:112
+msgid "1000 to 5000"
+msgstr "1000 to 5000"
+
+#: inc/appliance.class.php:99 inc/appliance.class.php:111
+msgid "500 to 1000"
+msgstr "500 to 1000"
+
+#: inc/process_entity.class.php:118
+msgid "Add a process"
+msgstr "Add a process"
+
+#: inc/process_entity.class.php:181
+msgid "Add an entity"
+msgstr "Add an entity"
+
+#: inc/appliance.class.php:101 inc/appliance.class.php:113
+msgid "All users"
+msgstr "All users"
+
+#: front/printpdf.form.php:53
+msgid "An error has occurred"
+msgstr "An error has occurred"
+
+#: setup.php:136 inc/dashboard.class.php:71 inc/profile.class.php:197
+#: inc/webapplication.class.php:49
+msgid "Appliance dashboard"
+msgstr "Appliance dashboard"
+
+#: inc/pdf.class.php:390
+msgid "Appliance description"
+msgstr "Appliance description"
+
+#: front/webapplication.php:52
+#| msgid "Are you sure you want to do core migration ??"
+msgid "Are you sure you want to do core migration ?"
+msgstr "Are you sure you want to do core migration ?"
+
+#: inc/pdf.class.php:527
+msgid "Associable to a ticket"
+msgstr "Associable to a ticket"
+
+#: inc/appliance.class.php:300 inc/pdf.class.php:460
+msgid "Associated contract"
+msgid_plural "Associated contracts"
+msgstr[0] "Associated contract"
+msgstr[1] "Associated contracts"
+
+#: inc/appliance.class.php:277 inc/pdf.class.php:429
+msgid "Associated document"
+msgid_plural "Associated documents"
+msgstr[0] "Associated document"
+msgstr[1] "Associated documents"
+
+#: hook.php:402 hook.php:475 inc/databaseinstance.class.php:362
+#: inc/pdf.class.php:816 inc/process.class.php:196 inc/process.class.php:260
+#: templates/webapplication_appliance_form.html.twig:115
+#: templates/webapplication_database_form.html.twig:32
+#: templates/webapplication_process_form.html.twig:27
+msgid "Availability"
+msgstr "Availability"
+
+#: hook.php:298 inc/pdf.class.php:651
+#: templates/webapplication_appliance_form.html.twig:32
+#: templates/webapplication_form.html.twig:32
 msgid "Backoffice URL"
 msgstr "Backoffice URL"
 
-#: setup.php:72 inc/profile.class.php:175 inc/webapplication.class.php:48
-msgid "Web application"
-msgid_plural "Web applications"
-msgstr[0] "Web application"
-msgstr[1] "Web applications"
+#: inc/webapplicationtype.class.php:51
+msgid "Category"
+msgid_plural "Categories"
+msgstr[0] "Category"
+msgstr[1] "Categories"
 
-#: front/webapplication.php:42 front/webapplication.php:45
+#: inc/dashboard.class.php:591
+msgid "Certificate list"
+msgid_plural "Certificates list"
+msgstr[0] "Certificate list"
+msgstr[1] "Certificates list"
+
+#: inc/pdf.class.php:944
+msgid "Certificates"
+msgstr "Certificates"
+
+#: hook.php:420 hook.php:491 inc/databaseinstance.class.php:382
+#: inc/pdf.class.php:822 inc/process.class.php:210 inc/process.class.php:270
+#: templates/webapplication_appliance_form.html.twig:147
+#: templates/webapplication_database_form.html.twig:62
+#: templates/webapplication_process_form.html.twig:60
+msgid "Confidentiality"
+msgstr "Confidentiality"
+
+#: front/webapplication.php:42 front/webapplication.php:48
 msgid "Core migration"
 msgstr "Core migration"
 
-#: front/webapplication.php:47
-msgid "Are you sure you want to do core migration ??"
-msgstr "Are you sure you want to do core migration ??"
-
-#: front/webapplication.php:58
+#: front/webapplication.php:64
 msgid "Data migration"
 msgstr "Data migration"
 
-#: front/webapplication.php:100
-msgid "Tables purge"
-msgstr "Tables purge"
+#: inc/pdf.class.php:890
+msgid "Database instance"
+msgstr "Database instance"
 
-#: front/webapplication.php:122
-msgid "Link with core purge"
-msgstr "Link with core purge"
+#: inc/dashboard.class.php:589
+msgid "Database list"
+msgid_plural "Databases list"
+msgstr[0] "Database list"
+msgstr[1] "Databases list"
 
-#: front/webapplication.php:143
-msgid "Migration was successful"
-msgstr "Migration was successful"
+#: inc/stream.class.php:211 templates/webapplication_stream_form.html.twig:37
+#: templates/webapplication_stream_form.html.twig:42
+#| msgid "Data migration"
+msgid "Destination"
+msgstr "Destination"
 
-#: inc/appliance.class.php:81
-msgid "Editor"
-msgstr "Editor"
+#: inc/entity.class.php:48 inc/pdf.class.php:841
+msgid "Ecosystem"
+msgstr "Ecosystem"
 
-#: inc/webapplicationservertype.class.php:49
-msgid "Type of treatment server"
-msgid_plural "Types of treatment server"
-msgstr[0] "Type of treatment server"
-msgstr[1] "Types of treatment server"
+#: inc/stream.class.php:222 templates/webapplication_stream_form.html.twig:57
+msgid "Encryption"
+msgstr "Encryption"
 
-#: inc/webapplicationtechnic.class.php:49
+#: inc/stream.class.php:229 inc/stream.class.php:392
+#: templates/webapplication_stream_form.html.twig:63
+msgid "Encryption type"
+msgstr "Encryption type"
+
+#: inc/dashboard.class.php:583
+msgid "Entity list"
+msgid_plural "Entities list"
+msgstr[0] "Entity list"
+msgstr[1] "Entities list"
+
+#: inc/pdf.class.php:707 inc/webapplicationexternalexposition.class.php:49
+msgid "External exposition"
+msgid_plural "External exposition"
+msgstr[0] "External exposition"
+msgstr[1] "External exposition"
+
+#: inc/pdf.class.php:946
+msgid "Flow"
+msgstr "Flow"
+
+#: inc/printpdf.class.php:151
+msgid "Generate PDF"
+msgstr "Generate PDF"
+
+#: hook.php:375 inc/pdf.class.php:662
+#: templates/webapplication_appliance_form.html.twig:41
+msgid "Installed version"
+msgstr "Installed version"
+
+#: hook.php:411 hook.php:483 inc/databaseinstance.class.php:372
+#: inc/pdf.class.php:819 inc/process.class.php:203 inc/process.class.php:265
+#: templates/webapplication_appliance_form.html.twig:131
+#: templates/webapplication_database_form.html.twig:48
+#: templates/webapplication_process_form.html.twig:44
+msgid "Integrity"
+msgstr "Integrity"
+
+#: inc/dashboard.class.php:587
+msgid "Item list"
+msgid_plural "Items list"
+msgstr[0] "Item list"
+msgstr[1] "Items list"
+
+#: inc/pdf.class.php:703 inc/webapplicationtechnic.class.php:49
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
 msgstr[0] "Language of treatment"
 msgstr[1] "Languages of treatment"
 
-#: inc/webapplicationtype.class.php:50
-msgid "Category"
-msgid_plural "Categories"
-msgstr[0] "Category"
-msgstr[1] "Categories"
+#: front/webapplication.php:175
+msgid "Link with core purge"
+msgstr "Link with core purge"
+
+#: inc/pdf.class.php:531
+msgid "Location"
+msgstr "Location"
+
+#: inc/logicalinfrastructure.class.php:44
+#: inc/logicalinfrastructure.class.php:158
+msgid "Logical infrastructure"
+msgid_plural "Logical infrastructure"
+msgstr[0] "Logical infrastructure"
+msgstr[1] "Logical infrastructure"
+
+#: inc/pdf.class.php:414
+#: templates/webapplication_dashboard_support.html.twig:24
+msgid "Mail support"
+msgstr "Mail support"
+
+#: front/webapplication.php:196
+msgid "Migration was successful"
+msgstr "Migration was successful"
+
+#: inc/pdf.class.php:513
+msgid "Name"
+msgstr "Name"
+
+#: inc/appliance.class.php:317
+msgid "No associated contracts"
+msgstr "No associated contracts"
+
+#: inc/appliance.class.php:294
+msgid "No associated documents"
+msgstr "No associated documents"
+
+#: inc/dashboard.class.php:603
+msgid "No associated objects"
+msgstr "No associated objects"
+
+#: templates/webapplication_appliance_form.html.twig:77
+msgid "Number of users"
+msgstr "Number of users"
+
+#: inc/entity.class.php:158 inc/entity.class.php:213 inc/process.class.php:188
+#: inc/process.class.php:255 templates/webapplication_entity_form.html.twig:13
+#: templates/webapplication_process_form.html.twig:12
+msgid "Owner"
+msgstr "Owner"
+
+#: inc/pdf.class.php:416
+#: templates/webapplication_dashboard_support.html.twig:33
+msgid "Phone support"
+msgstr "Phone support"
+
+#: inc/pdf.class.php:888 inc/physicalinfrastructure.class.php:44
+msgid "Physical Infrastructure"
+msgstr "Physical Infrastructure"
+
+#: inc/stream.class.php:236 templates/webapplication_stream_form.html.twig:70
+msgid "Port"
+msgstr "Port"
+
+#: inc/printpdf.class.php:58 inc/printpdf.class.php:147
+msgid "Print PDF"
+msgstr "Print PDF"
+
+#: front/printpdf.form.php:42
+msgid "Printed on"
+msgstr "Printed on"
+
+#: inc/process.class.php:47 inc/process_entity.class.php:72
+#: inc/process_entity.class.php:141 inc/profile.class.php:207
+msgid "Process"
+msgid_plural "Processes"
+msgstr[0] "Process"
+msgstr[1] "Processes"
+
+#: inc/process_entity.class.php:47
+msgid "Process Entity"
+msgid_plural "Processes Entity"
+msgstr[0] "Process Entity"
+msgstr[1] "Processes Entity"
+
+#: inc/dashboard.class.php:585
+msgid "Process list"
+msgid_plural "Processes list"
+msgstr[0] "Process list"
+msgstr[1] "Processes list"
+
+#: inc/dashboard.class.php:173 inc/pdf.class.php:402
+msgid "Project leader"
+msgstr "Project leader"
+
+#: inc/dashboard.class.php:184 inc/pdf.class.php:404
+msgid "Project team"
+msgstr "Project team"
+
+#: inc/stream.class.php:243 templates/webapplication_stream_form.html.twig:77
+msgid "Protocol"
+msgstr "Protocol"
+
+#: hook.php:439 inc/pdf.class.php:412
+#: templates/webapplication_appliance_form.html.twig:221
+#: templates/webapplication_dashboard_support.html.twig:15
+msgid "Referent editor"
+msgstr "Referent editor"
+
+#: inc/entity.class.php:176 inc/entity.class.php:225
+#: templates/webapplication_entity_form.html.twig:37
+msgid "Relation nature"
+msgstr "Relation nature"
+
+#: inc/entity.class.php:168 inc/entity.class.php:218
+#: templates/webapplication_entity_form.html.twig:25
+msgid "Security Contact"
+msgstr "Security Contact"
+
+#: inc/pdf.class.php:812 templates/webapplication_appliance_form.html.twig:95
+#: templates/webapplication_database_form.html.twig:24
+#: templates/webapplication_process_form.html.twig:18
+msgid "Security Needs"
+msgstr "Security Needs"
+
+#: inc/config.class.php:114
+msgid "Setting up PDF printing"
+msgstr "Setting up PDF printing"
+
+#: front/config.form.php:50 inc/config.class.php:76 inc/profile.class.php:218
+msgid "Setup"
+msgstr "Setup"
+
+#: inc/stream.class.php:200 templates/webapplication_stream_form.html.twig:16
+#: templates/webapplication_stream_form.html.twig:21
+msgid "Source"
+msgstr "Source"
+
+#: inc/pdf.class.php:517
+msgid "Status"
+msgstr "Status"
+
+#: inc/profile.class.php:202 inc/stream.class.php:45
+msgid "Stream"
+msgid_plural "Streams"
+msgstr[0] "Stream"
+msgstr[1] "Streams"
+
+#: inc/dashboard.class.php:593
+msgid "Stream list"
+msgid_plural "Streams list"
+msgstr[0] "Stream list"
+msgstr[1] "Streams list"
+
+#: inc/dashboard.class.php:206 inc/pdf.class.php:506
+msgid "Summary"
+msgstr "Summary"
+
+#: inc/appliance.class.php:232 inc/pdf.class.php:409
+#: templates/webapplication_appliance_form.html.twig:211
+msgid "Support"
+msgstr "Support"
+
+#: front/webapplication.php:151
+msgid "Tables purge"
+msgstr "Tables purge"
+
+#: hook.php:429 hook.php:499 inc/databaseinstance.class.php:392
+#: inc/pdf.class.php:825 inc/process.class.php:217 inc/process.class.php:275
+#: templates/webapplication_appliance_form.html.twig:164
+#: templates/webapplication_database_form.html.twig:77
+#: templates/webapplication_process_form.html.twig:77
+msgid "Traceability"
+msgstr "Traceability"
+
+#: inc/pdf.class.php:673 inc/webapplicationservertype.class.php:49
+msgid "Type of treatment server"
+msgid_plural "Types of treatment server"
+msgstr[0] "Type of treatment server"
+msgstr[1] "Types of treatment server"
+
+#: inc/pdf.class.php:647 templates/webapplication_appliance_form.html.twig:23
+#: templates/webapplication_form.html.twig:23
+msgid "URL"
+msgstr "URL"
+
+#: inc/config.class.php:119
+msgid "Use description field"
+msgstr "Use description field"
+
+#: inc/config.class.php:155
+msgid "Use field"
+msgstr "Use field"
+
+#: inc/pdf.class.php:828 templates/webapplication_appliance_form.html.twig:185
+#| msgid "Web application"
+#| msgid_plural "Web applications"
+msgid "Validation"
+msgstr "Validation"
+
+#: hook.php:393
+msgid "Validation by CIO"
+msgstr "Validation by CIO"
+
+#: inc/pdf.class.php:835 templates/webapplication_appliance_form.html.twig:202
+msgid "Validation by CISO"
+msgstr "Validation by CISO"
+
+#: hook.php:384 inc/pdf.class.php:832
+#: templates/webapplication_appliance_form.html.twig:194
+msgid "Validation of the request by the referring Department"
+msgstr "Validation of the request by the referring Department"
+
+#: inc/appliance.class.php:44 inc/profile.class.php:192
+msgid "Web application"
+msgid_plural "Web applications"
+msgstr[0] "Web application"
+msgstr[1] "Web applications"
+
+#: inc/pdf.class.php:228
+msgid "page"
+msgstr "page"
+
+#~ msgid "Editor"
+#~ msgstr "Editor"
