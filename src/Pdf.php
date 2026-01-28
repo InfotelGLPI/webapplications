@@ -570,6 +570,15 @@ class Pdf extends Fpdf
 
         $this->adddataonfourcolomn(__('Alternate username'), $this->appliance->fields['contact'] ?? '', __('Inventory number'), $this->appliance->fields['otherserial'] ?? '');
 
+        $this->setXY($this->margin_left + ($largeurdispo/2), $this->GetY());
+        if ($this->GetY() < $yligne4) {
+            $this->MultiCell(($largeurdispo/2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
+        } elseif ($this->GetY() > $yligne4) {
+            $yligne5 = $this->GetY();
+            $this->setXY($this->margin_left, $yligne4);
+            $this->MultiCell(($largeurdispo/2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
+        }
+
         $user = new User();
         $user->getFromDB($this->appliance->fields['users_id']);
         $groupsitem = new Group_Item();
@@ -911,7 +920,7 @@ class Pdf extends Fpdf
         $yligne3 = $this->GetY();
 
         foreach ($certificatItemDatas as $certificatItemData) {
-            $certificat = new Certificate();
+            $certificat = new \Certificate();
             $certificat->getFromDB($certificatItemData['certificates_id']);
             $this->MultiCell(($this->page_width/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($certificat->fields['name'])), 'LR', 'C');
             $this->setXY($this->margin_left, $this->GetY());

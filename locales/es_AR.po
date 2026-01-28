@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Webapplications Development Team
-# This file is distributed under the same license as the GLPI - Webapplications plugin package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
@@ -10,70 +10,411 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GLPI - Webapplications plugin\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-03 13:03+0000\n"
+"POT-Creation-Date: 2026-01-15 10:16+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Luis Angel Uriarte <luisuriarte@gmail.com>, 2020\n"
-"Language-Team: Spanish (Argentina) (https://www.transifex.com/infotelGLPI/teams/12376/es_AR/)\n"
+"Language-Team: Spanish (Argentina) (https://app.transifex.com/infotelGLPI/teams/12376/es_AR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es_AR\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: hook.php:279 inc/appliance.class.php:57
+#: src/Appliance.php:108 src/Appliance.php:120
+msgid "1 to 100"
+msgstr ""
+
+#: src/Appliance.php:109 src/Appliance.php:121
+msgid "100 to 500"
+msgstr ""
+
+#: src/Appliance.php:111 src/Appliance.php:123
+msgid "1000 to 5000"
+msgstr ""
+
+#: src/Appliance.php:110 src/Appliance.php:122
+msgid "500 to 1000"
+msgstr ""
+
+#: src/Process_Entity.php:127
+msgid "Add a process"
+msgstr ""
+
+#: src/Process_Entity.php:190
+msgid "Add an entity"
+msgstr ""
+
+#: src/Appliance.php:112 src/Appliance.php:124
+msgid "All users"
+msgstr ""
+
+#: front/printpdf.form.php:56
+msgid "An error has occurred"
+msgstr ""
+
+#: setup.php:147 src/Dashboard.php:85 src/Profile.php:215
+#: src/Webapplication.php:53
+msgid "Appliance dashboard"
+msgstr ""
+
+#: src/Pdf.php:416
+msgid "Appliance description"
+msgstr ""
+
+#: front/webapplication.php:54
+msgid "Are you sure you want to do core migration ?"
+msgstr ""
+
+#: src/Appliance.php:312 src/Pdf.php:489
+msgid "Associated contract"
+msgid_plural "Associated contracts"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Appliance.php:288 src/Pdf.php:460
+msgid "Associated document"
+msgid_plural "Associated documents"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Appliance.php:336
+msgid "Associated link"
+msgid_plural "Associated links"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: hook.php:488 hook.php:561 src/DatabaseInstance.php:386 src/Process.php:205
+#: src/Process.php:269 src/Pdf.php:849
+#: templates/webapplication_database_form.html.twig:32
+#: templates/webapplication_appliance_form.html.twig:115
+#: templates/webapplication_process_form.html.twig:27
+msgid "Availability"
+msgstr ""
+
+#: hook.php:384 src/Pdf.php:685
+#: templates/webapplication_appliance_form.html.twig:32
+#: templates/webapplication_form.html.twig:32
 msgid "Backoffice URL"
 msgstr "URL de ingreso"
 
-#: setup.php:72 inc/profile.class.php:175 inc/webapplication.class.php:48
-msgid "Web application"
-msgid_plural "Web applications"
-msgstr[0] "Aplicación Web"
-msgstr[1] "Aplicaciones Web"
-
-#: front/webapplication.php:42 front/webapplication.php:45
-msgid "Core migration"
-msgstr "Migración de núcleo"
-
-#: front/webapplication.php:47
-msgid "Are you sure you want to do core migration ??"
-msgstr "¿Está seguro que desea seguir con migración de núcleo?"
-
-#: front/webapplication.php:58
-msgid "Data migration"
-msgstr "Migración de dato"
-
-#: front/webapplication.php:100
-msgid "Tables purge"
-msgstr "Purga de tablas"
-
-#: front/webapplication.php:122
-msgid "Link with core purge"
-msgstr "Vínculo con purga de núcleo"
-
-#: front/webapplication.php:143
-msgid "Migration was successful"
-msgstr "La migración fue exitosa"
-
-#: inc/appliance.class.php:81
-msgid "Editor"
-msgstr "Editor"
-
-#: inc/webapplicationservertype.class.php:49
-msgid "Type of treatment server"
-msgid_plural "Types of treatment server"
-msgstr[0] "Tipo de servicio"
-msgstr[1] "Tipos de servicios"
-
-#: inc/webapplicationtechnic.class.php:49
-msgid "Language of treatment"
-msgid_plural "Languages of treatment"
-msgstr[0] "Lenguaje de programación"
-msgstr[1] "Lenguajes de programación"
-
-#: inc/webapplicationtype.class.php:50
+#: src/Webapplicationtype.php:55
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Categoría"
 msgstr[1] "Categorías"
+msgstr[2] "Categorías"
+
+#: src/Dashboard.php:621
+msgid "Certificate list"
+msgid_plural "Certificates list"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: hook.php:506 hook.php:577 src/DatabaseInstance.php:406 src/Process.php:219
+#: src/Process.php:279 src/Pdf.php:855
+#: templates/webapplication_database_form.html.twig:62
+#: templates/webapplication_appliance_form.html.twig:147
+#: templates/webapplication_process_form.html.twig:60
+msgid "Confidentiality"
+msgstr ""
+
+#: front/webapplication.php:44 front/webapplication.php:50
+msgid "Core migration"
+msgstr "Migración de núcleo"
+
+#: front/webapplication.php:66
+msgid "Data migration"
+msgstr "Migración de dato"
+
+#: src/Dashboard.php:619
+msgid "Database list"
+msgid_plural "Databases list"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Stream.php:219 templates/webapplication_stream_form.html.twig:37
+#: templates/webapplication_stream_form.html.twig:42
+msgid "Destination"
+msgstr ""
+
+#: src/Entity.php:56 src/Pdf.php:874
+msgid "Ecosystem"
+msgstr ""
+
+#: src/Stream.php:230 templates/webapplication_stream_form.html.twig:57
+msgid "Encryption"
+msgstr ""
+
+#: src/Stream.php:237 src/Stream.php:400
+#: templates/webapplication_stream_form.html.twig:63
+msgid "Encryption type"
+msgstr ""
+
+#: src/Dashboard.php:613
+msgid "Entity list"
+msgid_plural "Entities list"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Webapplicationexternalexposition.php:53 src/Pdf.php:742
+msgid "External exposition"
+msgid_plural "External exposition"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Printpdf.php:173
+msgid "Generate PDF"
+msgstr ""
+
+#: hook.php:461 src/Pdf.php:696
+#: templates/webapplication_appliance_form.html.twig:41
+msgid "Installed version"
+msgstr ""
+
+#: hook.php:497 hook.php:569 src/DatabaseInstance.php:396 src/Process.php:212
+#: src/Process.php:274 src/Pdf.php:852
+#: templates/webapplication_database_form.html.twig:48
+#: templates/webapplication_appliance_form.html.twig:131
+#: templates/webapplication_process_form.html.twig:44
+msgid "Integrity"
+msgstr ""
+
+#: src/Dashboard.php:617
+msgid "Item list"
+msgid_plural "Items list"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Pdf.php:738 src/Webapplicationtechnic.php:53
+msgid "Language of treatment"
+msgid_plural "Languages of treatment"
+msgstr[0] "Lenguaje de programación"
+msgstr[1] "Lenguajes de programación"
+msgstr[2] "Lenguajes de programación"
+
+#: front/webapplication.php:177
+msgid "Link with core purge"
+msgstr "Vínculo con purga de núcleo"
+
+#: src/LogicalInfrastructure.php:53 src/LogicalInfrastructure.php:167
+msgid "Logical infrastructure"
+msgid_plural "Logical infrastructure"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Pdf.php:445 templates/webapplication_dashboard_support.html.twig:24
+msgid "Mail support"
+msgstr ""
+
+#: front/webapplication.php:198
+msgid "Migration was successful"
+msgstr "La migración fue exitosa"
+
+#: src/Appliance.php:329
+msgid "No associated contracts"
+msgstr ""
+
+#: src/Appliance.php:305
+msgid "No associated documents"
+msgstr ""
+
+#: src/Appliance.php:359
+msgid "No associated links"
+msgstr ""
+
+#: src/Dashboard.php:633
+msgid "No associated objects"
+msgstr ""
+
+#: templates/webapplication_appliance_form.html.twig:77
+msgid "Number of users"
+msgstr ""
+
+#: src/Process.php:197 src/Process.php:264 src/Entity.php:166
+#: src/Entity.php:221 templates/webapplication_entity_form.html.twig:13
+#: templates/webapplication_process_form.html.twig:12
+msgid "Owner"
+msgstr ""
+
+#: src/Pdf.php:447 templates/webapplication_dashboard_support.html.twig:33
+msgid "Phone support"
+msgstr ""
+
+#: src/Pdf.php:922 src/PhysicalInfrastructure.php:55
+msgid "Physical Infrastructure"
+msgstr ""
+
+#: src/Stream.php:244 templates/webapplication_stream_form.html.twig:70
+msgid "Port"
+msgstr ""
+
+#: src/Printpdf.php:66 src/Printpdf.php:169
+msgid "Print PDF"
+msgstr ""
+
+#: front/printpdf.form.php:45
+msgid "Printed on"
+msgstr ""
+
+#: src/Process_Entity.php:81 src/Process_Entity.php:150 src/Profile.php:225
+#: src/Process.php:54
+msgid "Process"
+msgid_plural "Processes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Process_Entity.php:56
+msgid "Process Entity"
+msgid_plural "Processes Entity"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Dashboard.php:615
+msgid "Process list"
+msgid_plural "Processes list"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Dashboard.php:194 src/Pdf.php:428
+msgid "Project leader"
+msgstr ""
+
+#: src/Dashboard.php:205 src/Pdf.php:435
+msgid "Project team"
+msgstr ""
+
+#: src/Stream.php:251 templates/webapplication_stream_form.html.twig:77
+msgid "Protocol"
+msgstr ""
+
+#: hook.php:525 src/Pdf.php:443
+#: templates/webapplication_appliance_form.html.twig:221
+#: templates/webapplication_dashboard_support.html.twig:15
+msgid "Referent editor"
+msgstr ""
+
+#: src/Entity.php:184 src/Entity.php:233
+#: templates/webapplication_entity_form.html.twig:37
+msgid "Relation nature"
+msgstr ""
+
+#: src/Entity.php:176 src/Entity.php:226
+#: templates/webapplication_entity_form.html.twig:25
+msgid "Security Contact"
+msgstr ""
+
+#: src/Pdf.php:845 templates/webapplication_database_form.html.twig:24
+#: templates/webapplication_appliance_form.html.twig:95
+#: templates/webapplication_process_form.html.twig:18
+msgid "Security Needs"
+msgstr ""
+
+#: src/Config.php:124
+msgid "Setting up PDF printing"
+msgstr ""
+
+#: front/config.form.php:50 src/Profile.php:236 src/Config.php:86
+msgid "Setup"
+msgstr ""
+
+#: src/Stream.php:208 templates/webapplication_stream_form.html.twig:16
+#: templates/webapplication_stream_form.html.twig:21
+msgid "Source"
+msgstr ""
+
+#: src/Stream.php:53 src/Profile.php:220 src/Pdf.php:980
+msgid "Stream"
+msgid_plural "Streams"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Dashboard.php:623
+msgid "Stream list"
+msgid_plural "Streams list"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Dashboard.php:227 src/Pdf.php:535
+msgid "Summary"
+msgstr ""
+
+#: src/Appliance.php:243 src/Pdf.php:440
+#: templates/webapplication_appliance_form.html.twig:211
+msgid "Support"
+msgstr ""
+
+#: front/webapplication.php:153
+msgid "Tables purge"
+msgstr "Purga de tablas"
+
+#: hook.php:515 hook.php:585 src/DatabaseInstance.php:416 src/Process.php:226
+#: src/Process.php:284 src/Pdf.php:858
+#: templates/webapplication_database_form.html.twig:77
+#: templates/webapplication_appliance_form.html.twig:164
+#: templates/webapplication_process_form.html.twig:77
+msgid "Traceability"
+msgstr ""
+
+#: src/Pdf.php:707 src/Webapplicationservertype.php:53
+msgid "Type of treatment server"
+msgid_plural "Types of treatment server"
+msgstr[0] "Tipo de servicio"
+msgstr[1] "Tipos de servicios"
+msgstr[2] "Tipos de servicios"
+
+#: src/Pdf.php:681 templates/webapplication_appliance_form.html.twig:23
+#: templates/webapplication_form.html.twig:23
+msgid "URL"
+msgstr ""
+
+#: src/Config.php:129
+msgid "Use description field"
+msgstr ""
+
+#: src/Config.php:165
+msgid "Use field"
+msgstr ""
+
+#: src/Pdf.php:861 templates/webapplication_appliance_form.html.twig:185
+msgid "Validation"
+msgstr ""
+
+#: hook.php:479
+msgid "Validation by CIO"
+msgstr ""
+
+#: src/Pdf.php:868 templates/webapplication_appliance_form.html.twig:202
+msgid "Validation by CISO"
+msgstr ""
+
+#: hook.php:470 src/Pdf.php:865
+#: templates/webapplication_appliance_form.html.twig:194
+msgid "Validation of the request by the referring Department"
+msgstr ""
+
+#: src/Appliance.php:55 src/Profile.php:210
+msgid "Web application"
+msgid_plural "Web applications"
+msgstr[0] "Aplicación Web"
+msgstr[1] "Aplicaciones Web"
+msgstr[2] "Aplicaciones Web"
+
+#: src/Pdf.php:255
+msgid "page"
+msgstr ""

@@ -303,10 +303,20 @@ class Dashboard extends CommonDBTM
             //            echo "</div>";
 
             if ($type == "add") {
-                $linkApp = $item::getFormURL();
+                if ($item->getType() == "Supplier") {
+                    $linkApp = PLUGIN_WEBAPPLICATIONS_WEBDIR.'/front/supplier.form.php';
+                } else {
+                    $linkApp = $item::getFormURL();
+                }
+
                 $title = _sx('button', 'Add');
             } else {
-                $linkApp = $item::getFormURLWithID($id);
+                if ($item->getType() == "Supplier") {
+                    $linkApp = PLUGIN_WEBAPPLICATIONS_WEBDIR.'/front/supplier.form.php?id='.$id;
+                } else {
+                    $linkApp = $item::getFormURLWithID($id);
+                }
+
                 $linkApp .= "&forcetab=main";
                 $title = _sx('button', 'Edit');
             }

@@ -2,24 +2,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
-# Translators:
-# Xavier CAILLAUD <thetsmr@gmail.com>, 2020
-# 
-#, fuzzy
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 10:16+0000\n"
-"PO-Revision-Date: 2020-11-02 16:31+0000\n"
-"Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2020\n"
-"Language-Team: Finnish (Finland) (https://app.transifex.com/infotelGLPI/teams/12376/fi_FI/)\n"
+"POT-Creation-Date: 2026-01-15 12:07+0000\n"
+"PO-Revision-Date: 2026-01-15 15:30+0100\n"
+"Language-Team: Spanish (Mexico) (https://app.transifex.com/infotelGLPI/teams/12376/es_MX/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fi_FI\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es_MX\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 3.0\n"
 
 #: src/Appliance.php:108 src/Appliance.php:120
 msgid "1 to 100"
@@ -71,18 +68,21 @@ msgid "Associated contract"
 msgid_plural "Associated contracts"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Appliance.php:288 src/Pdf.php:460
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Appliance.php:336
 msgid "Associated link"
 msgid_plural "Associated links"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: hook.php:488 hook.php:561 src/DatabaseInstance.php:386 src/Process.php:205
 #: src/Process.php:269 src/Pdf.php:849
@@ -96,19 +96,21 @@ msgstr ""
 #: templates/webapplication_appliance_form.html.twig:32
 #: templates/webapplication_form.html.twig:32
 msgid "Backoffice URL"
-msgstr "Tuki URL"
+msgstr ""
 
 #: src/Webapplicationtype.php:55
 msgid "Category"
 msgid_plural "Categories"
-msgstr[0] "Luokka"
-msgstr[1] "Luokat"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
-#: src/Dashboard.php:621
+#: src/Dashboard.php:631
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: hook.php:506 hook.php:577 src/DatabaseInstance.php:406 src/Process.php:219
 #: src/Process.php:279 src/Pdf.php:855
@@ -126,11 +128,12 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: src/Dashboard.php:619
+#: src/Dashboard.php:629
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Stream.php:219 templates/webapplication_stream_form.html.twig:37
 #: templates/webapplication_stream_form.html.twig:42
@@ -150,17 +153,19 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: src/Dashboard.php:613
+#: src/Dashboard.php:623
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Webapplicationexternalexposition.php:53 src/Pdf.php:742
 msgid "External exposition"
 msgid_plural "External exposition"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Printpdf.php:173
 msgid "Generate PDF"
@@ -179,17 +184,19 @@ msgstr ""
 msgid "Integrity"
 msgstr ""
 
-#: src/Dashboard.php:617
+#: src/Dashboard.php:627
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Pdf.php:738 src/Webapplicationtechnic.php:53
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
-msgstr[0] "Palvelun kielet"
-msgstr[1] "Palvelun kielet"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: front/webapplication.php:177
 msgid "Link with core purge"
@@ -200,6 +207,7 @@ msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Pdf.php:445 templates/webapplication_dashboard_support.html.twig:24
 msgid "Mail support"
@@ -221,7 +229,7 @@ msgstr ""
 msgid "No associated links"
 msgstr ""
 
-#: src/Dashboard.php:633
+#: src/Dashboard.php:643
 msgid "No associated objects"
 msgstr ""
 
@@ -261,18 +269,21 @@ msgid "Process"
 msgid_plural "Processes"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Process_Entity.php:56
 msgid "Process Entity"
 msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
-#: src/Dashboard.php:615
+#: src/Dashboard.php:625
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Dashboard.php:194 src/Pdf.php:428
 msgid "Project leader"
@@ -326,12 +337,14 @@ msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
-#: src/Dashboard.php:623
+#: src/Dashboard.php:633
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/Dashboard.php:227 src/Pdf.php:535
 msgid "Summary"
@@ -357,8 +370,9 @@ msgstr ""
 #: src/Pdf.php:707 src/Webapplicationservertype.php:53
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
-msgstr[0] "Käsittelypalvelimen tyyppi"
-msgstr[1] "Käsittelypalvelimen tyypit"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: src/Pdf.php:681 templates/webapplication_appliance_form.html.twig:23
 #: templates/webapplication_form.html.twig:23
@@ -393,8 +407,9 @@ msgstr ""
 #: src/Appliance.php:55 src/Profile.php:210
 msgid "Web application"
 msgid_plural "Web applications"
-msgstr[0] "Web-sovellus"
-msgstr[1] "Web-sovellukset"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: src/Pdf.php:255
 msgid "page"
