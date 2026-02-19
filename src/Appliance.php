@@ -161,14 +161,109 @@ class Appliance extends CommonDBTM
     public static function setAppliance(\Appliance $item)
     {
         $appliance = new Appliance();
-        if (!empty($item->fields)) {
+        if (!empty($item->fields) && $item->getType() == 'Appliance') {
             $appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
-            $address = isset($item->input['address']) ? $item->input['address'] : $appliance->fields['address'];
-            $backoffice = isset($item->input['backoffice']) ? $item->input['backoffice'] : $appliance->fields['backoffice'];
-            $number_users = isset($item->input['number_users']) ? $item->input['number_users'] : $appliance->fields['number_users'];
-            $version = isset($item->input['version']) ? $item->input['version'] : $appliance->fields['version'];
-            $editor = isset($item->input['editor']) ? $item->input['editor'] : $appliance->fields['editor'];
+
             if (is_array($appliance->fields) && count($appliance->fields) > 0) {
+
+                $address = "";
+                if (isset($item->input['address'])) {
+                    $address = $item->input['address'];
+                } else if (isset($appliance->fields['address'])) {
+                    $address = $appliance->fields['address'];
+                }
+
+                $backoffice = "";
+                if (isset($item->input['backoffice'])) {
+                    $backoffice = $item->input['backoffice'];
+                } else if (isset($appliance->fields['backoffice'])) {
+                    $backoffice = $appliance->fields['backoffice'];
+                }
+
+                $number_users = 0;
+                if (isset($item->input['number_users'])) {
+                    $number_users = $item->input['number_users'];
+                } else if (isset($appliance->fields['number_users'])) {
+                    $number_users = $appliance->fields['number_users'];
+                }
+
+                $version = "";
+                if (isset($item->input['version'])) {
+                    $version = $item->input['version'];
+                } else if (isset($appliance->fields['version'])) {
+                    $version = $appliance->fields['version'];
+                }
+
+                $editor = 0;
+                if (isset($item->input['editor'])) {
+                    $editor = $item->input['editor'];
+                } else if (isset($appliance->fields['editor'])) {
+                    $editor = $appliance->fields['editor'];
+                }
+
+                $webapplicationservertypes_id = 0;
+                if (isset($item->input['webapplicationservertypes_id'])) {
+                    $webapplicationservertypes_id = $item->input['webapplicationservertypes_id'];
+                } else if (isset($appliance->fields['webapplicationservertypes_id'])) {
+                    $webapplicationservertypes_id = $appliance->fields['webapplicationservertypes_id'];
+                }
+
+                $webapplicationtechnics_id = 0;
+                if (isset($item->input['webapplicationtechnics_id'])) {
+                    $webapplicationtechnics_id = $item->input['webapplicationtechnics_id'];
+                } else if (isset($appliance->fields['webapplicationtechnics_id'])) {
+                    $webapplicationtechnics_id = $appliance->fields['webapplicationtechnics_id'];
+                }
+
+                $webapplicationexternalexpositions_id = 0;
+                if (isset($item->input['webapplicationexternalexpositions_id'])) {
+                    $webapplicationexternalexpositions_id = $item->input['webapplicationexternalexpositions_id'];
+                } else if (isset($appliance->fields['webapplicationexternalexpositions_id'])) {
+                    $webapplicationexternalexpositions_id = $appliance->fields['webapplicationexternalexpositions_id'];
+                }
+
+                $webapplicationreferringdepartmentvalidation = 0;
+                if (isset($item->input['webapplicationreferringdepartmentvalidation'])) {
+                    $webapplicationreferringdepartmentvalidation = $item->input['webapplicationreferringdepartmentvalidation'];
+                } else if (isset($appliance->fields['webapplicationreferringdepartmentvalidation'])) {
+                    $webapplicationreferringdepartmentvalidation = $appliance->fields['webapplicationreferringdepartmentvalidation'];
+                }
+
+                $webapplicationciovalidation = 0;
+                if (isset($item->input['webapplicationciovalidation'])) {
+                    $webapplicationciovalidation = $item->input['webapplicationciovalidation'];
+                } else if (isset($appliance->fields['webapplicationciovalidation'])) {
+                    $webapplicationciovalidation = $appliance->fields['webapplicationciovalidation'];
+                }
+
+                $webapplicationavailabilities = 0;
+                if (isset($item->input['webapplicationavailabilities'])) {
+                    $webapplicationavailabilities = $item->input['webapplicationavailabilities'];
+                } else if (isset($appliance->fields['webapplicationavailabilities'])) {
+                    $webapplicationavailabilities = $appliance->fields['webapplicationavailabilities'];
+                }
+
+                $webapplicationintegrities = 0;
+                if (isset($item->input['webapplicationintegrities'])) {
+                    $webapplicationintegrities = $item->input['webapplicationintegrities'];
+                } else if (isset($appliance->fields['webapplicationintegrities'])) {
+                    $webapplicationintegrities = $appliance->fields['webapplicationintegrities'];
+                }
+
+                $webapplicationconfidentialities = 0;
+                if (isset($item->input['webapplicationconfidentialities'])) {
+                    $webapplicationconfidentialities = $item->input['webapplicationconfidentialities'];
+                } else if (isset($appliance->fields['webapplicationconfidentialities'])) {
+                    $webapplicationconfidentialities = $appliance->fields['webapplicationconfidentialities'];
+                }
+
+                $webapplicationtraceabilities = 0;
+                if (isset($item->input['webapplicationtraceabilities'])) {
+                    $webapplicationtraceabilities = $item->input['webapplicationtraceabilities'];
+                } else if (isset($appliance->fields['webapplicationtraceabilities'])) {
+                    $webapplicationtraceabilities = $appliance->fields['webapplicationtraceabilities'];
+                }
+
                 $appliance->update([
                     'id' => $appliance->fields['id'],
                     'address' => $address,
@@ -176,27 +271,98 @@ class Appliance extends CommonDBTM
                     'editor' => $editor,
                     'backoffice' => $backoffice,
                     'number_users' => $number_users,
-                    'webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : $appliance->fields['webapplicationservertypes_id'],
-                    'webapplicationtechnics_id' => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : $appliance->fields['webapplicationtechnics_id'],
-                    'webapplicationexternalexpositions_id' => isset($item->input['webapplicationexternalexpositions_id']) ? $item->input['webapplicationexternalexpositions_id'] : $appliance->fields['webapplicationexternalexpositions_id'],
-                    'webapplicationreferringdepartmentvalidation' => isset($item->input['webapplicationreferringdepartmentvalidation']) ? $item->input['webapplicationreferringdepartmentvalidation'] : $appliance->fields['webapplicationreferringdepartmentvalidation'],
-                    'webapplicationciovalidation' => isset($item->input['webapplicationciovalidation']) ? $item->input['webapplicationciovalidation'] : $appliance->fields['webapplicationciovalidation'],
-                    'webapplicationavailabilities' => isset($item->input['webapplicationavailabilities']) ? $item->input['webapplicationavailabilities'] : $appliance->fields['webapplicationavailabilities'],
-                    'webapplicationintegrities' => isset($item->input['webapplicationintegrities']) ? $item->input['webapplicationintegrities'] : $appliance->fields['webapplicationintegrities'],
-                    'webapplicationconfidentialities' => isset($item->input['webapplicationconfidentialities']) ? $item->input['webapplicationconfidentialities'] : $appliance->fields['webapplicationconfidentialities'],
-                    'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : $appliance->fields['webapplicationtraceabilities']
+                    'webapplicationservertypes_id' => $webapplicationservertypes_id,
+                    'webapplicationtechnics_id' => $webapplicationtechnics_id,
+                    'webapplicationexternalexpositions_id' => $webapplicationexternalexpositions_id,
+                    'webapplicationreferringdepartmentvalidation' => $webapplicationreferringdepartmentvalidation,
+                    'webapplicationciovalidation' => $webapplicationciovalidation,
+                    'webapplicationavailabilities' => $webapplicationavailabilities,
+                    'webapplicationintegrities' => $webapplicationintegrities,
+                    'webapplicationconfidentialities' => $webapplicationconfidentialities,
+                    'webapplicationtraceabilities' => $webapplicationtraceabilities
                 ]);
             } else {
+
+                $address = "";
+                if (isset($item->input['address'])) {
+                    $address = $item->input['address'];
+                }
+
+                $backoffice = "";
+                if (isset($item->input['backoffice'])) {
+                    $backoffice = $item->input['backoffice'];
+                }
+
+                $number_users = 0;
+                if (isset($item->input['number_users'])) {
+                    $number_users = $item->input['number_users'];
+                }
+
+                $version = "";
+                if (isset($item->input['version'])) {
+                    $version = $item->input['version'];
+                }
+
+                $editor = 0;
+                if (isset($item->input['editor'])) {
+                    $editor = $item->input['editor'];
+                }
+
+                $webapplicationservertypes_id = 0;
+                if (isset($item->input['webapplicationservertypes_id'])) {
+                    $webapplicationservertypes_id = $item->input['webapplicationservertypes_id'];
+                }
+
+                $webapplicationtechnics_id = 0;
+                if (isset($item->input['webapplicationtechnics_id'])) {
+                    $webapplicationtechnics_id = $item->input['webapplicationtechnics_id'];
+                }
+
+                $webapplicationexternalexpositions_id = 0;
+                if (isset($item->input['webapplicationexternalexpositions_id'])) {
+                    $webapplicationexternalexpositions_id = $item->input['webapplicationexternalexpositions_id'];
+                }
+
+                $webapplicationreferringdepartmentvalidation = 0;
+                if (isset($item->input['webapplicationreferringdepartmentvalidation'])) {
+                    $webapplicationreferringdepartmentvalidation = $item->input['webapplicationreferringdepartmentvalidation'];
+                }
+
+                $webapplicationciovalidation = 0;
+                if (isset($item->input['webapplicationciovalidation'])) {
+                    $webapplicationciovalidation = $item->input['webapplicationciovalidation'];
+                }
+
+                $webapplicationavailabilities = 0;
+                if (isset($item->input['webapplicationavailabilities'])) {
+                    $webapplicationavailabilities = $item->input['webapplicationavailabilities'];
+                }
+
+                $webapplicationintegrities = 0;
+                if (isset($item->input['webapplicationintegrities'])) {
+                    $webapplicationintegrities = $item->input['webapplicationintegrities'];
+                }
+
+                $webapplicationconfidentialities = 0;
+                if (isset($item->input['webapplicationconfidentialities'])) {
+                    $webapplicationconfidentialities = $item->input['webapplicationconfidentialities'];
+                }
+
+                $webapplicationtraceabilities = 0;
+                if (isset($item->input['webapplicationtraceabilities'])) {
+                    $webapplicationtraceabilities = $item->input['webapplicationtraceabilities'];
+                }
+
                 $appliance->add([
-                    'webapplicationservertypes_id' => isset($item->input['webapplicationservertypes_id']) ? $item->input['webapplicationservertypes_id'] : 0,
-                    'webapplicationtechnics_id' => isset($item->input['webapplicationtechnics_id']) ? $item->input['webapplicationtechnics_id'] : 0,
-                    'webapplicationexternalexpositions_id' => isset($item->input['webapplicationexternalexpositions_id']) ? $item->input['webapplicationexternalexpositions_id'] : 0,
-                    'webapplicationreferringdepartmentvalidation' => isset($item->input['webapplicationreferringdepartmentvalidation']) ? $item->input['webapplicationreferringdepartmentvalidation'] : 0,
-                    'webapplicationciovalidation' => isset($item->input['webapplicationciovalidation']) ? $item->input['webapplicationciovalidation'] : 0,
-                    'webapplicationavailabilities' => isset($item->input['webapplicationavailabilities']) ? $item->input['webapplicationavailabilities'] : 0,
-                    'webapplicationintegrities' => isset($item->input['webapplicationintegrities']) ? $item->input['webapplicationintegrities'] : 0,
-                    'webapplicationconfidentialities' => isset($item->input['webapplicationconfidentialities']) ? $item->input['webapplicationconfidentialities'] : 0,
-                    'webapplicationtraceabilities' => isset($item->input['webapplicationtraceabilities']) ? $item->input['webapplicationtraceabilities'] : 0,
+                    'webapplicationservertypes_id' => $webapplicationservertypes_id,
+                    'webapplicationtechnics_id' => $webapplicationtechnics_id,
+                    'webapplicationexternalexpositions_id' => $webapplicationexternalexpositions_id,
+                    'webapplicationreferringdepartmentvalidation' => $webapplicationreferringdepartmentvalidation,
+                    'webapplicationciovalidation' => $webapplicationciovalidation,
+                    'webapplicationavailabilities' => $webapplicationavailabilities,
+                    'webapplicationintegrities' => $webapplicationintegrities,
+                    'webapplicationconfidentialities' => $webapplicationconfidentialities,
+                    'webapplicationtraceabilities' => $webapplicationtraceabilities,
                     'address' => $address,
                     'version' => $version,
                     'editor' => $editor,
