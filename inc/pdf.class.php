@@ -30,7 +30,12 @@
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
-require '../vendor/autoload.php';
+
+$plugin = new Plugin();
+if (!$plugin->isActivated('metademands')) {
+    require '../vendor/autoload.php';
+}
+
 
 /**
  * Class PluginWebapplicationsPdf
@@ -774,22 +779,33 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
 
         $webapplicationprocesses = new PluginWebapplicationsProcess();
 
-        $webapplicationentitiesDatas = $webapplicationentities->find();
+        $applicationItems = new Appliance_Item();
+
+        $applicationItemsDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'PluginWebapplicationsEntity']);
+
         $webapplicationprocessesDatas = $webapplicationprocesses->find();
 
         $yligne3 = $this->GetY();
-
-        foreach ($webapplicationentitiesDatas as $webapplicationentitiesData) {
-            $this->MultiCell(($this->page_width/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationentitiesData['name'])) , 'LR',  'C', false);
-            $this->setXY($this->margin_left,$this->GetY());
+        foreach ($applicationItemsDatas as $applicationItemsData) {
+            $webapplicationentitiesDatas = $webapplicationentities->find(['id' => $applicationItemsData['items_id']]);
+            foreach ($webapplicationentitiesDatas as $webapplicationentitiesData) {
+                $this->MultiCell(($this->page_width/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationentitiesData['name'])) , 'LR',  'C', false);
+                $this->setXY($this->margin_left,$this->GetY());
+            }
         }
+
 
         $yligne4 = $this->GetY();
 
         $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
-        foreach ($webapplicationprocessesDatas as $webapplicationprocessesData) {
-            $this->MultiCell(($this->page_width/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationprocessesData['name'])) , 'LR',  'C', false);
-            $this->setXY($this->margin_left + ($this->page_width/2) +1,$this->GetY());
+
+        $applicationItemsDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'PluginWebapplicationsProcess']);
+        foreach ($applicationItemsDatas as $applicationItemsData) {
+            $webapplicationprocessesDatas = $webapplicationprocesses->find(['id' => $applicationItemsData['items_id']]);
+            foreach ($webapplicationprocessesDatas as $webapplicationprocessesData) {
+                $this->MultiCell(($this->page_width / 2) - 1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationprocessesData['name'])), 'LR', 'C', false);
+                $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $this->GetY());
+            }
         }
         if ($this->GetY() < $yligne4) {
             $this->MultiCell(($this->page_width / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C', false, 0, '', 'black');
@@ -818,7 +834,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $this->MultiCell(($this->page_width/2) -1, $this->title_height, Toolbox::decodeFromUtf8(htmlspecialchars_decode(\DatabaseInstance::getTypeName(2))) , 'TLRB', 'C', true, 0, '', 'black');
 
 
-        $applicationItems = new Appliance_Item();
+
 
 
 
@@ -877,7 +893,7 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $certificatItemDatas = $certificatItem->find(['items_id' => $this->id, 'itemtype' => 'Appliance']);
 
         $webapplicationstream = new PluginWebapplicationsStream();
-        $webapplicationstreamDatas = $webapplicationstream->find();
+
 
         $yligne3 = $this->GetY();
 
@@ -891,9 +907,13 @@ class PluginWebapplicationsPdf extends Fpdf\Fpdf
         $yligne4 = $this->GetY();
 
         $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
-        foreach ($webapplicationstreamDatas as $webapplicationstreamData) {
-            $this->MultiCell(($this->page_width/2) -1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationstreamData['name'])) , 'LR',  'C', false);
-            $this->setXY($this->margin_left + ($this->page_width/2) +1,$this->GetY());
+        $applicationItemsDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'PluginWebapplicationsStream']);
+        foreach ($applicationItemsDatas as $applicationItemsData) {
+            $webapplicationstreamDatas = $webapplicationstream->find(['id' => $applicationItemsData['items_id']]);
+            foreach ($webapplicationstreamDatas as $webapplicationstreamData) {
+                $this->MultiCell(($this->page_width / 2) - 1, 7, Toolbox::decodeFromUtf8(htmlspecialchars_decode($webapplicationstreamData['name'])), 'LR', 'C', false);
+                $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $this->GetY());
+            }
         }
         if ($this->GetY() < $yligne4) {
             $this->MultiCell(($this->page_width / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C', false, 0, '', 'black');
