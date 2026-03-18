@@ -31,11 +31,6 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-$plugin = new Plugin();
-if (!$plugin->isActivated('metademands')) {
-    require '../vendor/autoload.php';
-}
-
 
 /**
  * Class PluginWebapplicationsPdf
