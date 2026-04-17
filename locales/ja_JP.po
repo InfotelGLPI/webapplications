@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# INOUE Daisuke, 2025
+# INOUE Daisuke, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-15 12:07+0000\n"
+"POT-Creation-Date: 2026-03-19 08:17+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
-"Last-Translator: INOUE Daisuke, 2025\n"
+"Last-Translator: INOUE Daisuke, 2026\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/infotelGLPI/teams/12376/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,27 +51,27 @@ msgstr "すべてのユーザー"
 
 #: front/printpdf.form.php:56
 msgid "An error has occurred"
-msgstr ""
+msgstr "エラーが発生しました"
 
-#: setup.php:147 src/Dashboard.php:85 src/Profile.php:215
-#: src/Webapplication.php:53
+#: src/Dashboard.php:85 src/Webapplication.php:53 src/Profile.php:215
+#: setup.php:149
 msgid "Appliance dashboard"
 msgstr "アプライアンス ダッシュボード"
 
-#: src/Pdf.php:416
+#: src/Pdf.php:419
 msgid "Appliance description"
-msgstr ""
+msgstr "アプライアンスの説明"
 
 #: front/webapplication.php:54
 msgid "Are you sure you want to do core migration ?"
 msgstr "コア移行を行います。よろしいですか？"
 
-#: src/Appliance.php:312 src/Pdf.php:489
+#: src/Pdf.php:493 src/Appliance.php:312
 msgid "Associated contract"
 msgid_plural "Associated contracts"
 msgstr[0] "関連する契約"
 
-#: src/Appliance.php:288 src/Pdf.php:460
+#: src/Pdf.php:464 src/Appliance.php:288
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] "関連文書"
@@ -79,19 +79,18 @@ msgstr[0] "関連文書"
 #: src/Appliance.php:336
 msgid "Associated link"
 msgid_plural "Associated links"
-msgstr[0] ""
+msgstr[0] "関連リンク"
 
-#: hook.php:488 hook.php:561 src/DatabaseInstance.php:386 src/Process.php:205
-#: src/Process.php:269 src/Pdf.php:849
+#: hook.php:488 hook.php:561 src/DatabaseInstance.php:499 src/Pdf.php:736
+#: src/Process.php:205 src/Process.php:269
 #: templates/webapplication_database_form.html.twig:32
 #: templates/webapplication_appliance_form.html.twig:115
 #: templates/webapplication_process_form.html.twig:27
 msgid "Availability"
 msgstr "アベイラビリティー"
 
-#: hook.php:384 src/Pdf.php:685
+#: hook.php:384 src/Pdf.php:614 templates/webapplication_form.html.twig:32
 #: templates/webapplication_appliance_form.html.twig:32
-#: templates/webapplication_form.html.twig:32
 msgid "Backoffice URL"
 msgstr "バックオフィス URL"
 
@@ -105,8 +104,8 @@ msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] "証明書リスト"
 
-#: hook.php:506 hook.php:577 src/DatabaseInstance.php:406 src/Process.php:219
-#: src/Process.php:279 src/Pdf.php:855
+#: hook.php:506 hook.php:577 src/DatabaseInstance.php:519 src/Pdf.php:742
+#: src/Process.php:219 src/Process.php:279
 #: templates/webapplication_database_form.html.twig:62
 #: templates/webapplication_appliance_form.html.twig:147
 #: templates/webapplication_process_form.html.twig:60
@@ -131,7 +130,7 @@ msgstr[0] "データベースリスト"
 msgid "Destination"
 msgstr "デスティネーション"
 
-#: src/Entity.php:56 src/Pdf.php:874
+#: src/Entity.php:56 src/Pdf.php:798
 msgid "Ecosystem"
 msgstr "エコシステム"
 
@@ -149,22 +148,22 @@ msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] "エンティティー リスト"
 
-#: src/Webapplicationexternalexposition.php:53 src/Pdf.php:742
+#: src/Pdf.php:632 src/Webapplicationexternalexposition.php:53
 msgid "External exposition"
 msgid_plural "External exposition"
 msgstr[0] "外部解説"
 
 #: src/Printpdf.php:173
 msgid "Generate PDF"
-msgstr ""
+msgstr "PDF 生成"
 
-#: hook.php:461 src/Pdf.php:696
+#: hook.php:461 src/Pdf.php:621
 #: templates/webapplication_appliance_form.html.twig:41
 msgid "Installed version"
 msgstr "インストール バージョン"
 
-#: hook.php:497 hook.php:569 src/DatabaseInstance.php:396 src/Process.php:212
-#: src/Process.php:274 src/Pdf.php:852
+#: hook.php:497 hook.php:569 src/DatabaseInstance.php:509 src/Pdf.php:739
+#: src/Process.php:212 src/Process.php:274
 #: templates/webapplication_database_form.html.twig:48
 #: templates/webapplication_appliance_form.html.twig:131
 #: templates/webapplication_process_form.html.twig:44
@@ -176,7 +175,7 @@ msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] "アイテムリスト"
 
-#: src/Pdf.php:738 src/Webapplicationtechnic.php:53
+#: src/Pdf.php:632 src/Webapplicationtechnic.php:53
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
 msgstr[0] "取り扱い言語"
@@ -190,9 +189,9 @@ msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] "論理インフラ"
 
-#: src/Pdf.php:445 templates/webapplication_dashboard_support.html.twig:24
+#: src/Pdf.php:449 templates/webapplication_dashboard_support.html.twig:24
 msgid "Mail support"
-msgstr ""
+msgstr "メールサポート"
 
 #: front/webapplication.php:198
 msgid "Migration was successful"
@@ -208,7 +207,7 @@ msgstr "関連文書なし"
 
 #: src/Appliance.php:359
 msgid "No associated links"
-msgstr ""
+msgstr "関連リンクなし"
 
 #: src/Dashboard.php:643
 msgid "No associated objects"
@@ -216,19 +215,19 @@ msgstr "関連オブジェクトなし"
 
 #: templates/webapplication_appliance_form.html.twig:77
 msgid "Number of users"
-msgstr ""
+msgstr "ユーザー数"
 
-#: src/Process.php:197 src/Process.php:264 src/Entity.php:166
-#: src/Entity.php:221 templates/webapplication_entity_form.html.twig:13
+#: src/Entity.php:166 src/Entity.php:221 src/Process.php:197
+#: src/Process.php:264 templates/webapplication_entity_form.html.twig:13
 #: templates/webapplication_process_form.html.twig:12
 msgid "Owner"
 msgstr "所有者"
 
-#: src/Pdf.php:447 templates/webapplication_dashboard_support.html.twig:33
+#: src/Pdf.php:451 templates/webapplication_dashboard_support.html.twig:33
 msgid "Phone support"
-msgstr ""
+msgstr "電話サポート"
 
-#: src/Pdf.php:922 src/PhysicalInfrastructure.php:55
+#: src/PhysicalInfrastructure.php:55 src/Pdf.php:857
 msgid "Physical Infrastructure"
 msgstr "物理インフラ"
 
@@ -238,14 +237,14 @@ msgstr "ポート"
 
 #: src/Printpdf.php:66 src/Printpdf.php:169
 msgid "Print PDF"
-msgstr ""
+msgstr "PDF 印刷"
 
 #: front/printpdf.form.php:45
 msgid "Printed on"
-msgstr ""
+msgstr "印刷日 : "
 
-#: src/Process_Entity.php:81 src/Process_Entity.php:150 src/Profile.php:225
-#: src/Process.php:54
+#: src/Process_Entity.php:81 src/Process_Entity.php:150 src/Process.php:54
+#: src/Profile.php:225
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] "プロセス"
@@ -260,11 +259,11 @@ msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] "プロセスリスト"
 
-#: src/Dashboard.php:194 src/Pdf.php:428
+#: src/Dashboard.php:194 src/Pdf.php:432
 msgid "Project leader"
 msgstr "プロジェクトリーダー"
 
-#: src/Dashboard.php:205 src/Pdf.php:435
+#: src/Dashboard.php:205 src/Pdf.php:439
 msgid "Project team"
 msgstr "プロジェクトチーム"
 
@@ -272,7 +271,7 @@ msgstr "プロジェクトチーム"
 msgid "Protocol"
 msgstr "プロトコル"
 
-#: hook.php:525 src/Pdf.php:443
+#: hook.php:525 src/Pdf.php:447
 #: templates/webapplication_appliance_form.html.twig:221
 #: templates/webapplication_dashboard_support.html.twig:15
 msgid "Referent editor"
@@ -288,7 +287,7 @@ msgstr "関連元"
 msgid "Security Contact"
 msgstr "セキュリティー連絡先"
 
-#: src/Pdf.php:845 templates/webapplication_database_form.html.twig:24
+#: src/Pdf.php:732 templates/webapplication_database_form.html.twig:24
 #: templates/webapplication_appliance_form.html.twig:95
 #: templates/webapplication_process_form.html.twig:18
 msgid "Security Needs"
@@ -296,18 +295,18 @@ msgstr "セキュリティー要求"
 
 #: src/Config.php:124
 msgid "Setting up PDF printing"
-msgstr ""
+msgstr "PDF 印刷設定"
 
-#: front/config.form.php:50 src/Profile.php:236 src/Config.php:86
+#: src/Config.php:86 src/Profile.php:236 front/config.form.php:50
 msgid "Setup"
-msgstr ""
+msgstr "設定"
 
 #: src/Stream.php:208 templates/webapplication_stream_form.html.twig:16
 #: templates/webapplication_stream_form.html.twig:21
 msgid "Source"
 msgstr "ソース"
 
-#: src/Stream.php:53 src/Profile.php:220 src/Pdf.php:980
+#: src/Pdf.php:915 src/Stream.php:53 src/Profile.php:220
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] "ストリーム"
@@ -317,11 +316,11 @@ msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] "ストリームリスト"
 
-#: src/Dashboard.php:227 src/Pdf.php:535
+#: src/Dashboard.php:227 src/Pdf.php:541
 msgid "Summary"
 msgstr "概要"
 
-#: src/Appliance.php:243 src/Pdf.php:440
+#: src/Pdf.php:444 src/Appliance.php:243
 #: templates/webapplication_appliance_form.html.twig:211
 msgid "Support"
 msgstr "サポート"
@@ -330,33 +329,33 @@ msgstr "サポート"
 msgid "Tables purge"
 msgstr "テーブル抹消"
 
-#: hook.php:515 hook.php:585 src/DatabaseInstance.php:416 src/Process.php:226
-#: src/Process.php:284 src/Pdf.php:858
+#: hook.php:515 hook.php:585 src/DatabaseInstance.php:529 src/Pdf.php:745
+#: src/Process.php:226 src/Process.php:284
 #: templates/webapplication_database_form.html.twig:77
 #: templates/webapplication_appliance_form.html.twig:164
 #: templates/webapplication_process_form.html.twig:77
 msgid "Traceability"
 msgstr "トレーサビリティ"
 
-#: src/Pdf.php:707 src/Webapplicationservertype.php:53
+#: src/Webapplicationservertype.php:53 src/Pdf.php:621
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] "取り扱いサーバーの型"
 
-#: src/Pdf.php:681 templates/webapplication_appliance_form.html.twig:23
-#: templates/webapplication_form.html.twig:23
+#: src/Pdf.php:614 templates/webapplication_form.html.twig:23
+#: templates/webapplication_appliance_form.html.twig:23
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: src/Config.php:129
 msgid "Use description field"
-msgstr ""
+msgstr "説明フィールドを使う"
 
 #: src/Config.php:165
 msgid "Use field"
-msgstr ""
+msgstr "フィールドを使う"
 
-#: src/Pdf.php:861 templates/webapplication_appliance_form.html.twig:185
+#: src/Pdf.php:748 templates/webapplication_appliance_form.html.twig:185
 msgid "Validation"
 msgstr "検証"
 
@@ -364,11 +363,11 @@ msgstr "検証"
 msgid "Validation by CIO"
 msgstr "CIO による検証"
 
-#: src/Pdf.php:868 templates/webapplication_appliance_form.html.twig:202
+#: src/Pdf.php:755 templates/webapplication_appliance_form.html.twig:202
 msgid "Validation by CISO"
-msgstr ""
+msgstr "CISO 認証"
 
-#: hook.php:470 src/Pdf.php:865
+#: hook.php:470 src/Pdf.php:752
 #: templates/webapplication_appliance_form.html.twig:194
 msgid "Validation of the request by the referring Department"
 msgstr "照会先部署による要請の検証"
@@ -378,6 +377,6 @@ msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "ウェブアプリケーション"
 
-#: src/Pdf.php:255
+#: src/Pdf.php:264
 msgid "page"
-msgstr ""
+msgstr "ページ"
