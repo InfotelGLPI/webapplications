@@ -91,6 +91,19 @@ class Stream_Item extends CommonDBTM
         return true;
     }
 
+    public function prepareInputForAdd($input)
+    {
+        $allowed = ['id', 'plugin_webapplications_streams_id', 'items_id', 'itemtype'];
+        return array_intersect_key($input, array_flip($allowed));
+    }
+
+    public function prepareInputForUpdate($input)
+    {
+        $allowed = ['id', 'plugin_webapplications_streams_id', 'items_id', 'itemtype'];
+        $input = array_intersect_key($input, array_flip($allowed));
+        return parent::prepareInputForUpdate($input);
+    }
+
     public function showForStream($item)
     {
         global $DB;

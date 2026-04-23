@@ -111,6 +111,19 @@ class Process_Entity extends CommonDBTM
         return true;
     }
 
+    public function prepareInputForAdd($input)
+    {
+        $allowed = ['id', 'plugin_webapplications_entities_id', 'plugin_webapplications_processes_id'];
+        return array_intersect_key($input, array_flip($allowed));
+    }
+
+    public function prepareInputForUpdate($input)
+    {
+        $allowed = ['id', 'plugin_webapplications_entities_id', 'plugin_webapplications_processes_id'];
+        $input = array_intersect_key($input, array_flip($allowed));
+        return parent::prepareInputForUpdate($input);
+    }
+
     public function showForEntity($item)
     {
         if (!$this->canView()) {

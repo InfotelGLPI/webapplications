@@ -156,8 +156,11 @@ class Stream extends CommonDBTM
 
     public function prepareInputForAdd($input)
     {
-        if (isset($input['appliances_id'])
-            && !empty($input['appliances_id'])) {
+        $allowed = ['id', 'entities_id', 'is_recursive', 'name', 'appliances_id',
+                    'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
+                    'encryption', 'encryption_type', 'port', 'protocol'];
+        $input = array_intersect_key($input, array_flip($allowed));
+        if (isset($input['appliances_id']) && !empty($input['appliances_id'])) {
             $item = new \Appliance();
             if ($item->getFromDB($input['appliances_id'])) {
                 $input['entities_id'] = $item->fields['entities_id'];
@@ -165,6 +168,15 @@ class Stream extends CommonDBTM
             }
         }
         return $input;
+    }
+
+    public function prepareInputForUpdate($input)
+    {
+        $allowed = ['id', 'entities_id', 'is_recursive', 'name',
+                    'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
+                    'encryption', 'encryption_type', 'port', 'protocol'];
+        $input = array_intersect_key($input, array_flip($allowed));
+        return parent::prepareInputForUpdate($input);
     }
 
     public function post_addItem()

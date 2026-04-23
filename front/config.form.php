@@ -27,9 +27,6 @@
  --------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
-
-global $DB;
 use GlpiPlugin\Webapplications\Config;
 $config = new Config();
 Session::checkRightsOr(Config::$rightname, [READ, UPDATE]);

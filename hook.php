@@ -219,6 +219,77 @@ function plugin_webapplications_install()
         }
     }
 
+    //DisplayPreferences Migration
+    $classes = ['PluginWebapplicationsStream' => Stream::class,
+        'PluginWebapplicationsProcess' => Process::class,
+        'PluginWebapplicationsEntity' => Entity::class];
+
+    foreach ($classes as $old => $new) {
+        $displayitems = $DB->request([
+            'SELECT' => [
+                'items_id'
+            ],
+            'DISTINCT' => true,
+            'FROM' => 'glpi_appliances_items',
+            'WHERE' => [
+                'itemtype' => $old,
+            ],
+        ]);
+
+        if (count($displayitems) > 0) {
+            foreach ($displayitems as $displayitem) {
+                $iterator = $DB->request([
+                    'SELECT' => [
+                        'id'
+                    ],
+                    'FROM' => 'glpi_appliances_items',
+                    'WHERE' => [
+                        'itemtype' => $old,
+                        'users_id' => $displayitem['items_id'],
+                    ],
+                ]);
+
+                if (count($iterator) > 0) {
+                    foreach ($iterator as $data) {
+                        $iterator2 = $DB->request([
+                            'SELECT' => [
+                                'id'
+                            ],
+                            'FROM' => 'glpi_appliances_items',
+                            'WHERE' => [
+                                'itemtype' => $new,
+                                'users_id' => $displayitem['items_id'],
+                            ],
+                        ]);
+                        if (count($iterator2) > 0) {
+                            foreach ($iterator2 as $dataid) {
+                                $query = $DB->buildDelete(
+                                    'glpi_appliances_items',
+                                    [
+                                        'id' => $dataid['id'],
+                                    ]
+                                );
+                                $DB->doQuery($query);
+                            }
+                        } else {
+                            $query = $DB->buildUpdate(
+                                'glpi_appliances_items',
+                                [
+                                    'itemtype' => $new,
+                                ],
+                                [
+                                    'id' => $data['id'],
+                                ]
+                            );
+                            $DB->doQuery($query);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     if ($update) {
         $query_  = "SELECT *
                 FROM `glpi_plugin_webapplications_profiles` ";

@@ -27,7 +27,6 @@
  --------------------------------------------------------------------------
  */
 
-include("../../../inc/includes.php");
 use GlpiPlugin\Webapplications\Printpdf;
 use GlpiPlugin\Webapplications\Pdf;
 

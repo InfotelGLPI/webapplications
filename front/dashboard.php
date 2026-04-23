@@ -29,8 +29,6 @@
 
 use GlpiPlugin\Webapplications\Dashboard;
 
-include('../../../inc/includes.php');
-
 Session::checkLoginUser();
 
 if (!isset($_GET["id"])) {

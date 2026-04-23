@@ -108,6 +108,20 @@ class Config extends CommonDBTM
         return false;
     }
 
+    public function prepareInputForAdd($input)
+    {
+        $allowed = ['id', 'use_fields_description', 'fields_description_table', 'fields_description_name'];
+        $input = array_intersect_key($input, array_flip($allowed));
+        return parent::prepareInputForAdd($input);
+    }
+
+    public function prepareInputForUpdate($input)
+    {
+        $allowed = ['id', 'use_fields_description', 'fields_description_table', 'fields_description_name'];
+        $input = array_intersect_key($input, array_flip($allowed));
+        return parent::prepareInputForUpdate($input);
+    }
+
     public function showForm($ID, array $options = [])
     {
         $this->getFromDB($ID);
