@@ -47,6 +47,8 @@ if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
     define("PLUGIN_WEBAPPLICATIONS_WEBDIR", $root);
 }
 
+include_once PLUGIN_WEBAPPLICATIONS_DIR . "/vendor/autoload.php";
+
 
 // Init the hooks of the plugins -Needed
 function plugin_init_webapplications()
