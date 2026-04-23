@@ -28,7 +28,7 @@
  --------------------------------------------------------------------------
  */
 
-define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.1.6');
+define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.1.7');
 
 global $CFG_GLPI;
 
@@ -55,9 +55,7 @@ function plugin_init_webapplications()
 {
     global $PLUGIN_HOOKS, $CFG_GLPI;
 
-    $PLUGIN_HOOKS['csrf_compliant']['webapplications'] = true;
-
-    $PLUGIN_HOOKS['change_profile']['webapplications'] = [
+    $PLUGIN_HOOKS[Hooks::CHANGE_PROFILE]['webapplications'] = [
         Profile::class,
         'initProfile',
     ];
@@ -65,10 +63,10 @@ function plugin_init_webapplications()
     Plugin::registerClass(Profile::class, ['addtabon' => ['Profile']]);
     if (Session::getLoginUserID()) {
         if (Session::haveRight("plugin_webapplications_configs", UPDATE)) {
-            $PLUGIN_HOOKS['config_page']['webapplications'] = 'front/config.form.php';
+            $PLUGIN_HOOKS[Hooks::CONFIG_PAGE]['webapplications'] = 'front/config.form.php';
         }
         if (Session::haveRight("plugin_webapplications_appliances", READ)) {
-            $PLUGIN_HOOKS['menu_toadd']['webapplications']['appliancedashboard'] = [
+            $PLUGIN_HOOKS[Hooks::MENU_TOADD]['webapplications']['appliancedashboard'] = [
                 Dashboard::class,
                 Entity::class,
                 Process::class,
@@ -77,19 +75,19 @@ function plugin_init_webapplications()
         }
     }
 
-    $PLUGIN_HOOKS['post_item_form']['webapplications'] = [Appliance::class, 'addFields'];
+    $PLUGIN_HOOKS[Hooks::POST_ITEM_FORM]['webapplications'] = [Appliance::class, 'addFields'];
 
-    $PLUGIN_HOOKS['item_purge']['webapplications']['Appliance'] = [
+    $PLUGIN_HOOKS[Hooks::ITEM_PURGE]['webapplications']['Appliance'] = [
         Appliance::class,
         'cleanRelationToAppliance',
     ];
-    $PLUGIN_HOOKS['item_purge']['webapplications']['DatabaseInstance'] = [
+    $PLUGIN_HOOKS[Hooks::ITEM_PURGE]['webapplications']['DatabaseInstance'] = [
         DatabaseInstance::class,
         'cleanRelationToDatabase',
     ];
 
     // Other fields inherited from webapplications
-    $PLUGIN_HOOKS['item_add']['webapplications'] = [
+    $PLUGIN_HOOKS[Hooks::ITEM_ADD]['webapplications'] = [
         'Appliance' => [
             Appliance::class,
             'applianceAdd',
@@ -104,7 +102,7 @@ function plugin_init_webapplications()
         ],
     ];
 
-    $PLUGIN_HOOKS['pre_item_update']['webapplications'] = [
+    $PLUGIN_HOOKS[Hooks::PRE_ITEM_UPDATE]['webapplications'] = [
         'Appliance' => [
             Appliance::class,
             'applianceUpdate',
