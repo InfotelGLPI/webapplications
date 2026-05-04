@@ -245,7 +245,7 @@ function plugin_webapplications_install()
                     'FROM' => 'glpi_appliances_items',
                     'WHERE' => [
                         'itemtype' => $old,
-                        'users_id' => $displayitem['items_id'],
+                        'items_id' => $displayitem['items_id'],
                     ],
                 ]);
 
@@ -258,7 +258,7 @@ function plugin_webapplications_install()
                             'FROM' => 'glpi_appliances_items',
                             'WHERE' => [
                                 'itemtype' => $new,
-                                'users_id' => $displayitem['items_id'],
+                                'items_id' => $displayitem['items_id'],
                             ],
                         ]);
                         if (count($iterator2) > 0) {
