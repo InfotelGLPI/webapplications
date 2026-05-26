@@ -1,9 +1,9 @@
 <?php
+
 /*
- * @version $Id: HEADER 15930 2011-10-30 15:47:55Z tsmr $
  -------------------------------------------------------------------------
  webapplications plugin for GLPI
- Copyright (C) 2009-2023 by the webapplications Development Team.
+ Copyright (C) 2015-2026 by the webapplications Development Team.
 
  https://github.com/InfotelGLPI/webapplications
  -------------------------------------------------------------------------
@@ -26,7 +26,6 @@
  along with webapplications. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
-
 
 use GlpiPlugin\Webapplications\Stream;
 

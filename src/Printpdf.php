@@ -1,31 +1,32 @@
 <?php
+
 /*
-* @version $Id: HEADER 15930 2011-10-30 15:47:55Z
--------------------------------------------------------------------------
-Webapplications plugin for GLPI
-Copyright (C) 2009-2025 by the Webapplications Development Team.
+ -------------------------------------------------------------------------
+ webapplications plugin for GLPI
+ Copyright (C) 2015-2026 by the webapplications Development Team.
 
-https://github.com/InfotelGLPI/webapplications
--------------------------------------------------------------------------
+ https://github.com/InfotelGLPI/webapplications
+ -------------------------------------------------------------------------
 
-LICENSE
+ LICENSE
 
-This file is part of Webapplications.
+ This file is part of webapplications.
 
-Webapplications is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+ webapplications is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
 
-Webapplications is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ webapplications is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with Webapplications. If not, see <http://www.gnu.org/licenses/>.
---------------------------------------------------------------------------
-*/
+ You should have received a copy of the GNU General Public License
+ along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ --------------------------------------------------------------------------
+ */
+
 namespace GlpiPlugin\Webapplications;
 use CommonDBTM;
 use DbUtils;
