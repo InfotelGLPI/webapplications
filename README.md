@@ -1,5 +1,10 @@
-# webapplications
-Plugin webapplications pour GLPI
+## Webapplications plugin for GLPI
+
+[![License](https://img.shields.io/badge/License-GNU%20v2-blue.svg?style=flat-square)](https://github.com/infotelGLPI/webapplications/blob/master/LICENSE)
+[![Web](https://img.shields.io/badge/Web-Infotel-blue.svg?style=flat-square)](https://blogglpi.infotel.com)
+[![Translate](https://img.shields.io/badge/Translate-Transifex-cyan)](https://explore.transifex.com/infotelGLPI/GLPI_webapplications/)
+
+### French
 
 Ce plugin vous permet d'afficher vos applications métiers de votre réseau sous forme de dashboard.
 
@@ -38,10 +43,7 @@ Ce plugin vous permet d'afficher vos applications métiers de votre réseau sous
 Si besoin de définir l'environnement en GLPI 10 :
 https://github.com/glpi-project/glpi/pull/18288
 
-Ce plugin est sur Transifex - Aidez-nous à le traduire :
-https://www.transifex.com/infotelGLPI/GLPI_webapplications/
-
-***********************
+### English
 
 This plugin allows you to display your business applications of your network in the form of a dashboard.
 
@@ -54,7 +56,6 @@ This plugin allows you to display your business applications of your network in 
 > * Flows
 > * Associated knowledge base
 
-This plugin is on Transifex - Help us to translate :
-https://www.transifex.com/infotelGLPI/GLPI_webapplications/
+
 
 
