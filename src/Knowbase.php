@@ -173,7 +173,7 @@ class Knowbase extends CommonDBTM
             $start = 0;
             foreach (KnowbaseItem_Item::getItems($appliance, $start, $_SESSION['glpilist_limit']) as $data) {
                 $know_item->getFromDB($data['knowbaseitems_id']);
-                $name = $know_item->getName();
+                $name = htmlescape($know_item->getName());
                 $open = $CFG_GLPI["root_doc"] . "/front/knowbaseitem.form.php";
                 $open .= (strpos($open, '?') ? '&' : '?') . 'id=' . $data['knowbaseitems_id'];
                 echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";

@@ -272,28 +272,28 @@ class Process extends CommonDBTM
             echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
             if ($object->fields['owner'] > 0) {
                 echo "<p class='card-text'>";
-                echo __('Owner', 'webapplications') . " : " . getUserName($object->fields['owner']);
+                echo __('Owner', 'webapplications') . " : " . htmlescape(getUserName($object->fields['owner']));
                 echo "</p>";
             }
             echo "<p class='card-text'>";
             $background = Appliance::getColorForDICT($object->fields['webapplicationavailabilities']);
             echo "<span class='dict-min' style='background-color:$background' title='" . __('Availability', 'webapplications') . "'>";
-            echo $object->fields['webapplicationavailabilities'];
+            echo htmlescape($object->fields['webapplicationavailabilities']);
             echo "</span>";
 
             $background = Appliance::getColorForDICT($object->fields['webapplicationintegrities']);
             echo "<span class='dict-min' style='background-color:$background' title='" . __('Integrity', 'webapplications') . "'>";
-            echo $object->fields['webapplicationintegrities'];
+            echo htmlescape($object->fields['webapplicationintegrities']);
             echo "</span>";
 
             $background = Appliance::getColorForDICT($object->fields['webapplicationconfidentialities']);
             echo "<span class='dict-min' style='background-color:$background' title='" . __('Confidentiality', 'webapplications') . "'>";
-            echo $object->fields['webapplicationconfidentialities'];
+            echo htmlescape($object->fields['webapplicationconfidentialities']);
             echo "</span>";
 
             $background = Appliance::getColorForDICT($object->fields['webapplicationtraceabilities']);
             echo "<span class='dict-min' style='background-color:$background' title='" . __('Traceability', 'webapplications') . "'>";
-            echo $object->fields['webapplicationtraceabilities'];
+            echo htmlescape($object->fields['webapplicationtraceabilities']);
             echo "</span>";
             echo "</p>";
 

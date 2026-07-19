@@ -228,19 +228,19 @@ class Entity extends CommonDBTM
             echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
             if ($object->fields['owner'] > 0) {
                 echo "<p class='card-text'>";
-                echo __('Owner', 'webapplications')." : ".getUserName($object->fields['owner']);
+                echo __('Owner', 'webapplications')." : ".htmlescape(getUserName($object->fields['owner']));
                 echo "</p>";
             }
             if ($object->fields['security_contact'] > 0) {
                 echo "<p class='card-text'>";
-                echo __('Security Contact', 'webapplications') . " : " . getUserName(
+                echo __('Security Contact', 'webapplications') . " : " . htmlescape(getUserName(
                         $object->fields['security_contact']
-                    );
+                    ));
                 echo "</p>";
             }
             if (!empty($object->fields['relation_nature'])) {
                 echo "<p class='card-text'>";
-                echo __('Relation nature', 'webapplications') . " : " . $object->fields['relation_nature'];
+                echo __('Relation nature', 'webapplications') . " : " . htmlescape($object->fields['relation_nature']);
                 echo "</p>";
             }
             $link = $object::getFormURLWithID($id);

@@ -91,7 +91,6 @@ class Profile extends \Profile
                     'plugin_webapplications_streams' => 0,
                     'plugin_webapplications_entities' => 0,
                     'plugin_webapplications_processes' => 0,
-                    'plugin_webapplications_entities' => 0,
                     'plugin_webapplications_configs' => 0,
                 ]
             );

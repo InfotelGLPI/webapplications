@@ -375,7 +375,7 @@ class Stream extends CommonDBTM
                 $receiver = new $receiverType;
                 $receiver->getFromDB($receiverid);
                 $linkR = $receiverType::getFormURLWithID($receiverid);
-                $receiverName = $receiver->getName();
+                $receiverName = htmlescape($receiver->getName());
                 $linkReceiver = "<a href='$linkR'>" . $receiverName . "</a>";
             }
 
@@ -386,7 +386,7 @@ class Stream extends CommonDBTM
                 $transmitter = new $transmitterType;
                 $transmitter->getFromDB($transmitterid);
                 $linkT = $transmitterType::getFormURLWithID($transmitterid);
-                $transmitterName = $transmitter->getName();
+                $transmitterName = htmlescape($transmitter->getName());
                 $linkTransmitter = "<a href='$linkT'>" . $transmitterName . "</a>";
             }
 
@@ -402,14 +402,14 @@ class Stream extends CommonDBTM
             echo "<i class='fa-1x ti ti-arrow-narrow-right'></i>";
             echo "&nbsp;<i class='ti ti-network'></i>&nbsp;" . $linkReceiver . "</h5>";
             echo "<p class='card-text'>";
-            echo $name;
+            echo htmlescape($name);
             echo "</p>";
             echo "<p class='card-text'>";
-            echo $object->fields['protocol'] . " - " . $object->fields['port'];
+            echo htmlescape($object->fields['protocol']) . " - " . htmlescape($object->fields['port']);
             echo "</p>";
             if ($object->fields['encryption'] == 1) {
                 echo "<p class='card-text'>";
-                echo __('Encryption type', 'webapplications') . " : " . $object->fields['encryption_type'];
+                echo __('Encryption type', 'webapplications') . " : " . htmlescape($object->fields['encryption_type']);
                 echo "</p>";
             }
             $link = $object::getFormURLWithID($id);

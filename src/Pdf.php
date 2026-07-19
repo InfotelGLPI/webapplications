@@ -42,7 +42,7 @@ use ContractType;
 use DateTime;
 use Document;
 use Document_Item;
-use Fpdf\Fpdf;
+use FPDF;
 use Group;
 use Group_Item;
 use KnowbaseItem;
@@ -66,7 +66,7 @@ if (!defined('GLPI_ROOT')) {
  * Class Pdf
  */
 #[AllowDynamicProperties]
-class Pdf extends Fpdf
+class Pdf extends FPDF
 {
 
     /* Constantes pour paramétrer certaines données. */

@@ -31,6 +31,8 @@ use GlpiPlugin\Webapplications\Dashboard;
 
 Session::checkLoginUser();
 
+Session::checkRight(Dashboard::$rightname,READ);
+
 if (!isset($_GET["id"])) {
     $_GET["id"] = "1";
 }
@@ -124,12 +126,18 @@ if (isset($_POST['add'])) {
     $itemsAppDBTM = new Appliance_Item();
 
     $appliances_id = 0;
-    if ($itemsAppDBTM->getFromDBByCrit([
+    if (!$itemsAppDBTM->getFromDBByCrit([
         'items_id' => $_POST['items_id'],
         'itemtype' => $_POST['itemtype']
     ])) {
-        $appliances_id = $itemsAppDBTM->fields['appliances_id'];
+        // Nothing to delete for these unchecked identifiers.
+        Html::back();
     }
+    // Enforce authorization (global right + entity access on both linked items)
+    // before running any destructive delete driven by raw $_POST identifiers.
+    $itemsAppDBTM->check($itemsAppDBTM->getID(), PURGE);
+    $appliances_id = $itemsAppDBTM->fields['appliances_id'];
+
     $itemsAppDBTM->deleteByCriteria([
         'items_id' => $_POST['items_id'],
         'itemtype' => $_POST['itemtype']

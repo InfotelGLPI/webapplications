@@ -34,6 +34,8 @@ Html::header_nocache();
 
 Session::checkLoginUser();
 
+Session::checkRight(Dashboard::$rightname,READ);
+
 if (isset($_POST['value'])
     && $_POST['value'] > 0) {
     $_SESSION['plugin_webapplications_loaded_appliances_id'] = $_POST['value'];

@@ -460,7 +460,7 @@ class Appliance extends CommonDBTM
             echo "<div class='list-group' style='margin-top: 10px;'>";
             foreach ($docuItems as $docuItem) {
                 $docuDBTM->getFromDB($docuItem['documents_id']);
-                $name = $docuDBTM->getName();
+                $name = htmlescape($docuDBTM->getName());
                 $open = $CFG_GLPI["root_doc"] . "/front/document.send.php";
                 $open .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
                 echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
@@ -484,7 +484,7 @@ class Appliance extends CommonDBTM
             echo "<div class='list-group' style='margin-top: 10px;'>";
             foreach ($contractItems as $contractItem) {
                 $contractDBTM->getFromDB($contractItem['contracts_id']);
-                $name = $contractDBTM->getName();
+                $name = htmlescape($contractDBTM->getName());
                 $open = $CFG_GLPI["root_doc"] . "/front/contract.form.php";
                 $open .= (strpos($open, '?') ? '&' : '?') . 'id=' . $contractItem['contracts_id'];
                 echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
@@ -505,8 +505,13 @@ class Appliance extends CommonDBTM
         if (count($ManualLinkItems) > 0) {
             echo "<div class='list-group' style='margin-top: 10px;'>";
             foreach ($ManualLinkItems as $ManualLinkItem) {
-                $name = $ManualLinkItem['name'];
-                $url = $ManualLinkItem['url'];
+                $name = htmlescape($ManualLinkItem['name']);
+                $url = (string) $ManualLinkItem['url'];
+                // Only allow http(s) or relative URLs; reject javascript:/data:/vbscript: schemes.
+                if (preg_match('/^\s*(javascript|data|vbscript):/i', $url)) {
+                    $url = '';
+                }
+                $url = htmlescape($url);
                 $target = $ManualLinkItem['open_window'];
                 $icon = $ManualLinkItem['icon'];
                 if ($target == 1) {
@@ -515,7 +520,7 @@ class Appliance extends CommonDBTM
                     $target = "_self";
                 }
                 if (!empty($icon)) {
-                    $icon = "<i class='ti $icon' aria-hidden='true' style='margin-right: 5px;'></i>";
+                    $icon = "<i class='ti " . htmlescape($icon) . "' aria-hidden='true' style='margin-right: 5px;'></i>";
                 }
                 echo "<a class='list-group-item list-group-item-action' href='$url' target='$target'>".$icon." ".$name."</a>";
             }

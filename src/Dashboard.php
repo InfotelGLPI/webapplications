@@ -150,10 +150,14 @@ class Dashboard extends CommonDBTM
         $options['candel'] = false;
         $options['colspan'] = 1;
 
-        $ApplianceId = $options['appliances_id'];
+        $ApplianceId = (int) $options['appliances_id'];
 
         $appliance = new \Appliance();
-        $appliance->getFromDB($ApplianceId);
+        // The appliance id comes from user-controlled input ($_POST['value']); enforce
+        // object-level right + entity access instead of loading it blindly.
+        if (!$appliance->can($ApplianceId, READ)) {
+            Html::displayRightError();
+        }
 
         self::showHeaderDashboard($ApplianceId);
 
@@ -195,7 +199,7 @@ class Dashboard extends CommonDBTM
         echo "<i class='fa fa-user-cog fa-3x'></i>";
         echo "<br>";
         echo "<h2>";
-        echo getUserName($userAdminId);
+        echo htmlescape(getUserName($userAdminId));
         echo "</h2>";
         echo "</div>";
 
@@ -384,7 +388,7 @@ class Dashboard extends CommonDBTM
                 if ($item->getType() == PhysicalInfrastructure::class) {
                     $itemDBTM = new $app['itemtype']();
                     if ($itemDBTM->getFromDB($app['id'])) {
-                        $name = $itemDBTM->getName();
+                        $name = htmlescape($itemDBTM->getName());
                         $link = $itemDBTM::getFormURLWithID($app['id']);
 
                         echo "<div style='padding:5px;'>";
@@ -411,7 +415,7 @@ class Dashboard extends CommonDBTM
                                 $envtype = $objrow['itemtype'];
                                 $env = new $envtype();
                                 $env->getFromDB($objrow['items_id']);
-                                echo " - " . $env->getName();
+                                echo " - " . htmlescape($env->getName());
                             }
                         }
                         echo "</a>";
@@ -420,7 +424,7 @@ class Dashboard extends CommonDBTM
                 } elseif ($item->getType() == "Certificate") {
                     //                    $itemDBTM = new $app['itemtype'];
                     if ($item->getFromDB($app['id'])) {
-                        $name = $item->getName();
+                        $name = htmlescape($item->getName());
                         $link = $item::getFormURLWithID($app['id']);
                         echo "<div style='padding:5px;'>";
                         echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
@@ -429,7 +433,7 @@ class Dashboard extends CommonDBTM
                     }
                 } else {
                     if ($obj->getFromDB($app['items_id'])) {
-                        $name = $obj->getName();
+                        $name = htmlescape($obj->getName());
                         $link = $item::getFormURLWithID($app['items_id']);
 
                         echo "<div style='padding:5px;'>";
@@ -457,7 +461,7 @@ class Dashboard extends CommonDBTM
                                     $envtype = $objrow['itemtype'];
                                     $env = new $envtype();
                                     $env->getFromDB($objrow['items_id']);
-                                    echo " - " . $env->getName();
+                                    echo " - " . htmlescape($env->getName());
                                 }
                             }
                         }

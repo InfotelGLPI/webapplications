@@ -30,7 +30,10 @@
 use GlpiPlugin\Webapplications\Webapplication;
 use GlpiPlugin\Webapplications\Dashboard;
 
-Session::checkRight("plugin_webapplications_appliances", READ);
+// This page runs an irreversible migration that alters and deletes rows in core
+// tables. A READ capability must never authorize schema changes and mass deletion,
+// so require a global configuration UPDATE right.
+Session::checkRight("config", UPDATE);
 
 Html::header(Webapplication::getTypeName(2), "", Dashboard::class, "");
 
@@ -65,8 +68,10 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
     echo __('Data migration', 'webapplications');
 
     $webappstypes = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplicationtypes');
-    $add_temporary_column_query = "ALTER TABLE `glpi_appliancetypes` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
-    $DB->doQuery($add_temporary_column_query);
+    if (!$DB->fieldExists('glpi_appliancetypes', 'old_id')) {
+        $add_temporary_column_query = "ALTER TABLE `glpi_appliancetypes` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
+        $DB->doQuery($add_temporary_column_query);
+    }
 
     foreach ($webappstypes as $webapptype) {
         $DB->insert('glpi_appliancetypes', [
@@ -80,8 +85,10 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
 
     $webapps                    = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplications');
-    $add_temporary_column_query = "ALTER TABLE `glpi_appliances` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
-    $DB->doQuery($add_temporary_column_query);
+    if (!$DB->fieldExists('glpi_appliances', 'old_id')) {
+        $add_temporary_column_query = "ALTER TABLE `glpi_appliances` ADD `old_id` int(11) NOT NULL DEFAULT 0;";
+        $DB->doQuery($add_temporary_column_query);
+    }
     foreach ($webapps as $webapp) {
         $DB->insert('glpi_appliances', [
             'entities_id'       => (int) $webapp['entities_id'],

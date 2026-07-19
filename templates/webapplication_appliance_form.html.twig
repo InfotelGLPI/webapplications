@@ -215,7 +215,7 @@ Traceability (T): Identify the impact on the IT asset's processes related to dat
                         <div class="card-body row flex-row">
 
                             {% if item.isField('webapplicationreferringdepartmentvalidation') %}
-                                {{ fields.dropdownYesNo(
+                                {{ fields.sliderField(
                                     "webapplicationreferringdepartmentvalidation",
                                     item.fields['webapplicationreferringdepartmentvalidation'],
                                     __('Validation of the request by the referring Department', 'webapplications'),
@@ -223,7 +223,7 @@ Traceability (T): Identify the impact on the IT asset's processes related to dat
                             {% endif %}
 
                             {% if item.isField('webapplicationciovalidation') %}
-                                {{ fields.dropdownYesNo(
+                                {{ fields.sliderField(
                                     "webapplicationciovalidation",
                                     item.fields['webapplicationciovalidation'],
                                     __('Validation by CISO', 'webapplications'),

@@ -36,8 +36,13 @@ Session::checkRightsOr(Printpdf::$rightname, [READ, UPDATE]);
 
 if (isset($_POST["PrintPdf"])) {
     if (isset($_POST["plugin_webapplications_appliance_id"]) && $_POST["plugin_webapplications_appliance_id"] > 0) {
+        $appliance_id = (int) $_POST['plugin_webapplications_appliance_id'];
         $appliance = new Appliance();
-        $appliance->getFromDB($_POST['plugin_webapplications_appliance_id']);
+        // Enforce object-level right + entity access before exporting: the appliance id
+        // is user-controlled and the Printpdf right is not scoped to the caller's entities.
+        if (!$appliance->can($appliance_id, READ)) {
+            Html::displayRightError();
+        }
 
         $datenow = new DateTime();
 
@@ -48,7 +53,7 @@ if (isset($_POST["PrintPdf"])) {
 
         $docPdf = new Pdf(
             $title
-            , $appliance->fields['name'], $_POST['plugin_webapplications_appliance_id']);
+            , $appliance->fields['name'], $appliance_id);
 
         $docPdf->drawPdf();
     } else {

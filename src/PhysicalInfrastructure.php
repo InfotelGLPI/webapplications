@@ -189,9 +189,9 @@ class PhysicalInfrastructure extends CommonDBTM
 
                 echo "<p class='card-text'>";
                 if ($itemtype == "Computer") {
-                    echo Dropdown::getDropdownName("glpi_computertypes", $object->fields['computertypes_id']);
+                    echo htmlescape(Dropdown::getDropdownName("glpi_computertypes", $object->fields['computertypes_id']));
                 } else if ($itemtype == "NetworkEquipment") {
-                    echo Dropdown::getDropdownName("glpi_networkequipmenttypes", $object->fields['networkequipmenttypes_id']);
+                    echo htmlescape(Dropdown::getDropdownName("glpi_networkequipmenttypes", $object->fields['networkequipmenttypes_id']));
                 }
                 echo "</p>";
                 echo "<p class='card-text'>";
@@ -199,9 +199,9 @@ class PhysicalInfrastructure extends CommonDBTM
                     $iterator = Item_OperatingSystem::getFromItem($object);
 
                     foreach ($iterator as $row) {
-                        echo $row['name'] . " - " . $row['version'];
+                        echo htmlescape($row['name']) . " - " . htmlescape($row['version']);
                         echo "</br>";
-                        echo $row['architecture'];
+                        echo htmlescape($row['architecture']);
                     }
                 }
                 echo "</p>";

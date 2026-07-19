@@ -32,12 +32,14 @@ $config = new Config();
 Session::checkRightsOr(Config::$rightname, [READ, UPDATE]);
 
 if (isset($_POST["add"])) {
+    Session::checkRight(Config::$rightname,CREATE);
     $fields = explode('|', $_POST["fields"]);
     $_POST['fields_description_table'] = $fields[0];
     $_POST['fields_description_name'] = $fields[1];
     $config->add($_POST);
     Html::back();
 } elseif (isset($_POST["update"])) {
+    Session::checkRight(Config::$rightname,UPDATE);
     $fields = explode('|', $_POST["fields"]);
     $_POST['fields_description_table'] = $fields[0];
     $_POST['fields_description_name'] = $fields[1];
