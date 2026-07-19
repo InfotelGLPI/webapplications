@@ -37,6 +37,7 @@ use CommonDBTM;
 use Contract;
 use Dropdown;
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\Exception\Http\AccessDeniedHttpException;
 use Group_User;
 use Html;
 use Toolbox;
@@ -156,7 +157,7 @@ class Dashboard extends CommonDBTM
         // The appliance id comes from user-controlled input ($_POST['value']); enforce
         // object-level right + entity access instead of loading it blindly.
         if (!$appliance->can($ApplianceId, READ)) {
-            Html::displayRightError();
+            throw new AccessDeniedHttpException();
         }
 
         self::showHeaderDashboard($ApplianceId);
@@ -520,24 +521,7 @@ class Dashboard extends CommonDBTM
     {
         global $CFG_GLPI;
 
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/lib/jquery-ui/jquery-ui.min.css");
-        echo Html::script(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/lib/jquery-ui/jquery-ui.min.js");
         echo Html::css(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/css/webapplications.css");
-
-        echo Html::scriptBlock(
-            "function accordion(classname) {
-             if(classname == undefined){
-                 classname  = 'accordion';
-             }
-             jQuery(document).ready(function () {
-                 $('.'+classname).accordion({
-                     collapsible: true,
-                     heightStyle: 'content',
-                     active: false
-                 });
-             });
-         };"
-        );
 
         $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
         ;

@@ -27,6 +27,7 @@
  --------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
 use GlpiPlugin\Webapplications\Printpdf;
 use GlpiPlugin\Webapplications\Pdf;
 
@@ -41,7 +42,7 @@ if (isset($_POST["PrintPdf"])) {
         // Enforce object-level right + entity access before exporting: the appliance id
         // is user-controlled and the Printpdf right is not scoped to the caller's entities.
         if (!$appliance->can($appliance_id, READ)) {
-            Html::displayRightError();
+            throw new AccessDeniedHttpException();
         }
 
         $datenow = new DateTime();
