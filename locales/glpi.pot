@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 11:23+0000\n"
+"POT-Creation-Date: 2026-07-19 22:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,11 +46,11 @@ msgstr ""
 msgid "All users"
 msgstr ""
 
-#: front/printpdf.form.php:60
+#: front/printpdf.form.php:61
 msgid "An error has occurred"
 msgstr ""
 
-#: src/Dashboard.php:84 src/Profile.php:213 src/Webapplication.php:53
+#: src/Dashboard.php:85 src/Profile.php:213 src/Webapplication.php:53
 #: setup.php:146
 msgid "Appliance dashboard"
 msgstr ""
@@ -100,7 +100,7 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:634
+#: src/Dashboard.php:618
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] ""
@@ -122,7 +122,7 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: src/Dashboard.php:632
+#: src/Dashboard.php:616
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
@@ -146,7 +146,7 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: src/Dashboard.php:626
+#: src/Dashboard.php:610
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
@@ -175,7 +175,7 @@ msgstr ""
 msgid "Integrity"
 msgstr ""
 
-#: src/Dashboard.php:630
+#: src/Dashboard.php:614
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
@@ -217,7 +217,7 @@ msgstr ""
 msgid "No associated links"
 msgstr ""
 
-#: src/Dashboard.php:646
+#: src/Dashboard.php:630
 msgid "No associated objects"
 msgstr ""
 
@@ -247,7 +247,7 @@ msgstr ""
 msgid "Print PDF"
 msgstr ""
 
-#: front/printpdf.form.php:49
+#: front/printpdf.form.php:50
 msgid "Printed on"
 msgstr ""
 
@@ -264,17 +264,17 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:628
+#: src/Dashboard.php:612
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Pdf.php:433 src/Dashboard.php:197
+#: src/Pdf.php:433 src/Dashboard.php:198
 msgid "Project leader"
 msgstr ""
 
-#: src/Pdf.php:440 src/Dashboard.php:208
+#: src/Pdf.php:440 src/Dashboard.php:209
 msgid "Project team"
 msgstr ""
 
@@ -323,13 +323,13 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:636
+#: src/Dashboard.php:620
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Pdf.php:542 src/Dashboard.php:230
+#: src/Pdf.php:542 src/Dashboard.php:231
 msgid "Summary"
 msgstr ""
 
