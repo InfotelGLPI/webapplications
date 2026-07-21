@@ -289,63 +289,27 @@ parameters:
 			path: src/Pdf.php
 
 		-
-			message: '#^Method FPDF\:\:Cell\(\) invoked with 9 parameters, 1\-8 required\.$#'
-			identifier: arguments.count
-			count: 3
-			path: src/Pdf.php
-
-		-
-			message: '#^Method FPDF\:\:MultiCell\(\) invoked with 9 parameters, 3\-6 required\.$#'
-			identifier: arguments.count
-			count: 46
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \#1 \$color of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) expects GlpiPlugin\\Webapplications\\type, string given\.$#'
-			identifier: argument.type
-			count: 5
-			path: src/Pdf.php
-
-		-
 			message: '#^Parameter \#1 \$string of function htmlspecialchars_decode expects string, \(float\|int\) given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/Pdf.php
 
 		-
-			message: '#^Parameter \#2 \$bold of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) expects GlpiPlugin\\Webapplications\\type, bool given\.$#'
+			message: '#^Parameter \#2 \$h of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects float, string given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/Pdf.php
 
 		-
-			message: '#^Parameter \#2 \$bold of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) expects GlpiPlugin\\Webapplications\\type, false given\.$#'
+			message: '#^Parameter \#2 \$h of method GlpiPlugin\\Webapplications\\Pdf\:\:MultiCell\(\) expects float, string given\.$#'
 			identifier: argument.type
-			count: 4
+			count: 5
 			path: src/Pdf.php
 
 		-
-			message: '#^Parameter \#2 \$h of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects GlpiPlugin\\Webapplications\\type, int given\.$#'
+			message: '#^Parameter \#6 \$fill of method GlpiPlugin\\Webapplications\\Pdf\:\:MultiCell\(\) expects bool, string given\.$#'
 			identifier: argument.type
-			count: 2
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \#2 \$h of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects GlpiPlugin\\Webapplications\\type, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \#3 \$size of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) expects GlpiPlugin\\Webapplications\\type, int given\.$#'
-			identifier: argument.type
-			count: 4
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \#3 \$value of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects GlpiPlugin\\Webapplications\\type, string given\.$#'
-			identifier: argument.type
-			count: 3
+			count: 14
 			path: src/Pdf.php
 
 		-
@@ -355,44 +319,14 @@ parameters:
 			path: src/Pdf.php
 
 		-
-			message: '#^Parameter \#8 \$size of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects int, string given\.$#'
+			message: '#^Parameter \#7 \$fill of method GlpiPlugin\\Webapplications\\Pdf\:\:Cell\(\) expects bool, int given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/Pdf.php
 
 		-
-			message: '#^Parameter \$bold of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \$color of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \$h of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \$size of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \$value of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \$w of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
-			identifier: class.notFound
+			message: '#^Parameter \#8 \$size of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects int, string given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Pdf.php
 
