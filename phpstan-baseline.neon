@@ -1,0 +1,595 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#2 \$force of method CommonDBTM\:\:delete\(\) expects bool, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: front/entity.form.php
+
+		-
+			message: '#^Parameter \#2 \$force of method CommonDBTM\:\:delete\(\) expects bool, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: front/process.form.php
+
+		-
+			message: '#^Parameter \#2 \$force of method CommonDBTM\:\:delete\(\) expects bool, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: front/stream.form.php
+
+		-
+			message: '#^Method DBmysql\:\:doQuery\(\) invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: hook.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Appliance\:\:applianceAdd\(\) should return false but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Appliance.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Appliance\:\:applianceUpdate\(\) should return false but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Appliance.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Appliance.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Certificate.php
+
+		-
+			message: '#^Call to method find\(\) on an unknown class PluginFieldsContainer\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Config.php
+
+		-
+			message: '#^Call to method find\(\) on an unknown class PluginFieldsField\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Config.php
+
+		-
+			message: '#^Instantiated class PluginFieldsContainer not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Config.php
+
+		-
+			message: '#^Instantiated class PluginFieldsField not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Config.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Config\:\:showForm\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Config.php
+
+		-
+			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
+			identifier: glpi.forbidDynamicInstantiation
+			count: 6
+			path: src/Dashboard.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Dashboard\:\:getHeaderName\(\) overrides @final method CommonGLPI\:\:getHeaderName\(\)\.$#'
+			identifier: method.parentMethodFinalByPhpDoc
+			count: 1
+			path: src/Dashboard.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Dashboard\:\:showForm\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Dashboard.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Dashboard.php
+
+		-
+			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
+			identifier: glpi.forbidDynamicInstantiation
+			count: 1
+			path: src/DatabaseInstance.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\DatabaseInstance\:\:databaseAdd\(\) should return false but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/DatabaseInstance.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\DatabaseInstance\:\:databaseLink\(\) should return false but return statement is missing\.$#'
+			identifier: return.missing
+			count: 2
+			path: src/DatabaseInstance.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\DatabaseInstance\:\:databaseUpdate\(\) should return false but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/DatabaseInstance.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$item with type Database is incompatible with native type Appliance_Item\.$#'
+			identifier: parameter.phpDocType
+			count: 1
+			path: src/DatabaseInstance.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$item with type Database is incompatible with native type DatabaseInstance\.$#'
+			identifier: parameter.phpDocType
+			count: 3
+			path: src/DatabaseInstance.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/DatabaseInstance.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Entity.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Knowbase.php
+
+		-
+			message: '#^Call to an undefined static method GlpiPlugin\\Webapplications\\LogicalInfrastructure\:\:isEnabled\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^Call to function is_a\(\) with Appliance and ''CommonDBTM'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^Call to function is_a\(\) with Appliance and ''CommonITILObject'' will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^Call to function is_a\(\) with arguments Appliance, ''CommonDBTM'' and true will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^Call to function is_a\(\) with arguments Appliance, ''CommonITILObject'' and true will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
+			identifier: glpi.forbidDynamicInstantiation
+			count: 1
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\LogicalInfrastructure\:\:showForm\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^Static method Impact\:\:buildGraph\(\) invoked with 2 parameters, 1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^Variable \$total might not be defined\.$#'
+			identifier: variable.undefined
+			count: 2
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/LogicalInfrastructure.php
+
+		-
+			message: '#^Access to an undefined property GlpiPlugin\\Webapplications\\Pdf\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 16
+			path: src/Pdf.php
+
+		-
+			message: '#^Access to an undefined property GlpiPlugin\\Webapplications\\Pdf\:\:\$label_width\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Access to an undefined property GlpiPlugin\\Webapplications\\Pdf\:\:\$title_width\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Access to property \$fields on an unknown class PluginFieldsContainer\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Pdf.php
+
+		-
+			message: '#^Access to property \$fields on an unknown class PluginFieldsField\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Pdf.php
+
+		-
+			message: '#^Call to method find\(\) on an unknown class PluginFieldsContainer\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Call to method find\(\) on an unknown class PluginFieldsField\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Call to method getFromDB\(\) on an unknown class PluginFieldsContainer\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Call to method getFromDB\(\) on an unknown class PluginFieldsField\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Instantiated class PluginFieldsContainer not found\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Pdf.php
+
+		-
+			message: '#^Instantiated class PluginFieldsField not found\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Pdf.php
+
+		-
+			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
+			identifier: glpi.forbidDynamicInstantiation
+			count: 2
+			path: src/Pdf.php
+
+		-
+			message: '#^Method FPDF\:\:Cell\(\) invoked with 9 parameters, 1\-8 required\.$#'
+			identifier: arguments.count
+			count: 3
+			path: src/Pdf.php
+
+		-
+			message: '#^Method FPDF\:\:MultiCell\(\) invoked with 9 parameters, 3\-6 required\.$#'
+			identifier: arguments.count
+			count: 46
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#1 \$color of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) expects GlpiPlugin\\Webapplications\\type, string given\.$#'
+			identifier: argument.type
+			count: 5
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#1 \$string of function htmlspecialchars_decode expects string, \(float\|int\) given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#2 \$bold of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) expects GlpiPlugin\\Webapplications\\type, bool given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#2 \$bold of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) expects GlpiPlugin\\Webapplications\\type, false given\.$#'
+			identifier: argument.type
+			count: 4
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#2 \$h of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects GlpiPlugin\\Webapplications\\type, int given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#2 \$h of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects GlpiPlugin\\Webapplications\\type, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#3 \$size of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) expects GlpiPlugin\\Webapplications\\type, int given\.$#'
+			identifier: argument.type
+			count: 4
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#3 \$value of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects GlpiPlugin\\Webapplications\\type, string given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#7 \$bold of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects bool, int given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \#8 \$size of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects int, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \$bold of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \$color of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \$h of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \$size of method GlpiPlugin\\Webapplications\\Pdf\:\:SetFontNormal\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \$value of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Parameter \$w of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) has invalid type GlpiPlugin\\Webapplications\\type\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Variable \$groups on left side of \?\? always exists and is not nullable\.$#'
+			identifier: nullCoalesce.variable
+			count: 2
+			path: src/Pdf.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Pdf.php
+
+		-
+			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
+			identifier: glpi.forbidDynamicInstantiation
+			count: 3
+			path: src/PhysicalInfrastructure.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\PhysicalInfrastructure\:\:displayTabContentForItem\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/PhysicalInfrastructure.php
+
+		-
+			message: '#^Result of static method Html\:\:showSimpleForm\(\) \(void\) is used\.$#'
+			identifier: staticMethod.void
+			count: 1
+			path: src/PhysicalInfrastructure.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/PhysicalInfrastructure.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Printpdf\:\:getNumberOfOptionsForItem\(\) should return int but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Printpdf.php
+
+		-
+			message: '#^PHPDoc tag @param has invalid value \(item\)\: Unexpected token "\\r\\n     \*", expected variable at offset 85 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: src/Printpdf.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Printpdf.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Process.php
+
+		-
+			message: '#^Call to an undefined method CommonGLPI\:\:getID\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Process_Entity.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 2
+			path: src/Process_Entity.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Process_Entity.php
+
+		-
+			message: '#^Call to an undefined method CommonGLPI\:\:getField\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Profile.php
+
+		-
+			message: '#^Call to an undefined method CommonGLPI\:\:getID\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Profile.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Profile\:\:getTabNameForItem\(\) has invalid return type GlpiPlugin\\Webapplications\\translated\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Profile.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Profile\:\:migrateOneProfile\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Profile.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Profile\:\:showForm\(\) has invalid return type GlpiPlugin\\Webapplications\\nothing\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Profile.php
+
+		-
+			message: '#^Method GlpiPlugin\\Webapplications\\Profile\:\:showForm\(\) should return GlpiPlugin\\Webapplications\\nothing but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: src/Profile.php
+
+		-
+			message: '#^Parameter \#2 \$openform \(bool\) of method GlpiPlugin\\Webapplications\\Profile\:\:showForm\(\) should be compatible with parameter \$options \(array\<string, mixed\>\) of method Profile\:\:showForm\(\)$#'
+			identifier: method.childParameterType
+			count: 1
+			path: src/Profile.php
+
+		-
+			message: '#^Return type \(GlpiPlugin\\Webapplications\\nothing\) of method GlpiPlugin\\Webapplications\\Profile\:\:showForm\(\) should be compatible with return type \(bool\) of method Profile\:\:showForm\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: src/Profile.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Profile.php
+
+		-
+			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
+			identifier: glpi.forbidDynamicInstantiation
+			count: 4
+			path: src/Stream.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Stream.php
+
+		-
+			message: '#^Call to an undefined method CommonGLPI\:\:getID\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Stream_Item.php
+
+		-
+			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
+			identifier: glpi.forbidDynamicInstantiation
+			count: 1
+			path: src/Stream_Item.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: src/Stream_Item.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Stream_Item.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Webapplication.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Webapplicationexternalexposition.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Webapplicationservertype.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Webapplicationtechnic.php
+
+		-
+			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
+			identifier: glpi.forbidExit
+			count: 1
+			path: src/Webapplicationtype.php
