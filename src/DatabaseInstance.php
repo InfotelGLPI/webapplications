@@ -410,21 +410,13 @@ class DatabaseInstance extends CommonDBTM
         global $DB;
 
         $object = new \DatabaseInstance();
-
-        echo "<div style='display: flex;flex-wrap: wrap;'>";
+        $cards = [];
 
         foreach ($list as $field) {
-            $name = $field['name'];
             $id = $field['id'];
             $object->getFromDB($id);
 
-            echo "<div class='card w-33' style='margin-right: 10px;margin-top: 10px;'>";
-            echo "<div class='card-body'>";
-            echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='ti ti-database' style='font-size:3em'></i>";
-            echo "</div>";
-            echo "<div style='display: inline-block;';>";
-            echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
+            $blocks = [];
 
             $items = $DB->request([
                 'FROM' => Appliance_Item::getTable(),
@@ -435,6 +427,7 @@ class DatabaseInstance extends CommonDBTM
             ]);
             $items = iterator_to_array($items);
 
+            $env_html = "";
             foreach ($items as $row) {
                 $iterator = $DB->request([
                     'FROM' => Appliance_Item_Relation::getTable(),
@@ -447,21 +440,28 @@ class DatabaseInstance extends CommonDBTM
                     $envtype = $row['itemtype'];
                     $env = new $envtype();
                     $env->getFromDB($row['items_id']);
-                    echo "<i class='" . $env->getIcon() . "'></i>" .
+                    $env_html .= "<i class='" . htmlescape($env->getIcon()) . "'></i>" .
                         "&nbsp;" . $env->getLink();
                 }
             }
-
-            if ($object->fields['databaseinstancetypes_id'] > 0) {
-                echo "<p class='card-text'>";
-                echo __('Type') . " " . Dropdown::getDropdownName(
-                        "glpi_databaseinstancetypes",
-                        $object->fields['databaseinstancetypes_id']
-                    );
-                echo "</p>";
+            if (!empty($env_html)) {
+                $blocks[] = [
+                    'kind' => 'raw',
+                    'html' => $env_html,
+                ];
             }
 
-            echo "<p class='card-text'>";
+            if ($object->fields['databaseinstancetypes_id'] > 0) {
+                $blocks[] = [
+                    'kind'  => 'info',
+                    'label' => __('Type'),
+                    'value' => Dropdown::getDropdownName(
+                        "glpi_databaseinstancetypes",
+                        $object->fields['databaseinstancetypes_id']
+                    ),
+                ];
+            }
+
             $databases = getAllDataFromTable(
                 Database::getTable(),
                 [
@@ -472,16 +472,21 @@ class DatabaseInstance extends CommonDBTM
                 ]
             );
             $db = new Database();
+            $sizes_html = "";
             foreach ($databases as $row) {
                 $db->getFromDB($row['id']);
                 if ($row['size'] > 0) {
-                    echo $db->getLink() . " - ";
-                    echo sprintf(__('%s Mio'), $row['size']);
-                    echo "</br>";
+                    $sizes_html .= $db->getLink() . " - "
+                        . htmlescape(sprintf(__('%s Mio'), $row['size'])) . "</br>";
                 }
             }
-            echo "</p>";
-            echo "<p class='card-text'>";
+            if (!empty($sizes_html)) {
+                $blocks[] = [
+                    'kind' => 'raw',
+                    'html' => $sizes_html,
+                ];
+            }
+
             $dicts = getAllDataFromTable(
                 "glpi_plugin_webapplications_databaseinstances",
                 [
@@ -492,80 +497,45 @@ class DatabaseInstance extends CommonDBTM
             );
 
             foreach ($dicts as $dict) {
-                $background = Appliance::getColorForDICT(
-                    $dict['webapplicationavailabilities']
-                );
-                echo "<span class='dict-min' style='background-color:$background' title='" . __(
-                        'Availability',
-                        'webapplications'
-                    ) . "'>";
-                echo $dict['webapplicationavailabilities'];
-                echo "</span>";
-
-                $background = Appliance::getColorForDICT(
-                    $dict['webapplicationintegrities']
-                );
-                echo "<span class='dict-min' style='background-color:$background' title='" . __(
-                        'Integrity',
-                        'webapplications'
-                    ) . "'>";
-                echo $dict['webapplicationintegrities'];
-                echo "</span>";
-
-                $background = Appliance::getColorForDICT(
-                    $dict['webapplicationconfidentialities']
-                );
-                echo "<span class='dict-min' style='background-color:$background' title='" . __(
-                        'Confidentiality',
-                        'webapplications'
-                    ) . "'>";
-                echo $dict['webapplicationconfidentialities'];
-                echo "</span>";
-
-                $background = Appliance::getColorForDICT(
-                    $dict['webapplicationtraceabilities']
-                );
-                echo "<span class='dict-min' style='background-color:$background' title='" . __(
-                        'Traceability',
-                        'webapplications'
-                    ) . "'>";
-                echo $dict['webapplicationtraceabilities'];
-                echo "</span>";
+                $blocks[] = [
+                    'kind'   => 'badges',
+                    'badges' => [
+                        [
+                            'value' => $dict['webapplicationavailabilities'],
+                            'color' => Appliance::getColorForDICT($dict['webapplicationavailabilities']),
+                            'title' => __('Availability', 'webapplications'),
+                        ],
+                        [
+                            'value' => $dict['webapplicationintegrities'],
+                            'color' => Appliance::getColorForDICT($dict['webapplicationintegrities']),
+                            'title' => __('Integrity', 'webapplications'),
+                        ],
+                        [
+                            'value' => $dict['webapplicationconfidentialities'],
+                            'color' => Appliance::getColorForDICT($dict['webapplicationconfidentialities']),
+                            'title' => __('Confidentiality', 'webapplications'),
+                        ],
+                        [
+                            'value' => $dict['webapplicationtraceabilities'],
+                            'color' => Appliance::getColorForDICT($dict['webapplicationtraceabilities']),
+                            'title' => __('Traceability', 'webapplications'),
+                        ],
+                    ],
+                ];
             }
-            echo "</p>";
 
-            $link = $object::getFormURLWithID($id);
-            $link .= "&forcetab=main";
-            $rand = mt_rand();
-            echo "<span style='float: right'>";
-            if ($object->canUpdate()) {
-                echo Html::submit(
-                    _sx('button', 'Edit'),
-                    [
-                        'name' => 'edit',
-                        'class' => 'btn btn-secondary right',
-                        'icon' => 'ti ti-edit',
-                        'form' => '',
-                        'data-bs-toggle' => 'modal',
-                        'data-bs-target' => '#edit' . $id . $rand
-                    ]
-                );
-
-                echo Ajax::createIframeModalWindow(
-                    'edit' . $id . $rand,
-                    $link,
-                    [
-                        'display' => false,
-                        'reloadonclose' => true
-                    ]
-                );
-            }
-            echo "</span>";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
-
+            $cards[] = [
+                'width_class' => 'w-33',
+                'icon'        => 'ti ti-database',
+                'icon_size'   => '3em',
+                'title_html'  => $object->getLink(),
+                'blocks'      => $blocks,
+                'edit_html'   => Dashboard::getCardEditHtml($object, (int) $id),
+            ];
         }
-        echo "</div>";
+
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_object_cards.html.twig', [
+            'cards' => $cards,
+        ]);
     }
 }

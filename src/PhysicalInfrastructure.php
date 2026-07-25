@@ -29,12 +29,12 @@
 
 namespace GlpiPlugin\Webapplications;
 
-use Ajax;
 use Appliance_Item;
 use Appliance_Item_Relation;
 use CommonDBTM;
 use CommonGLPI;
 use Dropdown;
+use Glpi\Application\View\TemplateRenderer;
 use Html;
 use IPAddress;
 use Item_OperatingSystem;
@@ -109,7 +109,6 @@ class PhysicalInfrastructure extends CommonDBTM
     {
         global $DB;
 
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
         $list_by_itemtypes = [];
         foreach ($list as $item) {
             $list_by_itemtypes[$item['itemtype']][] =  $item['id'];
@@ -118,59 +117,43 @@ class PhysicalInfrastructure extends CommonDBTM
         foreach ($list_by_itemtypes as $itemtype => $items) {
 
             $object = new $itemtype();
-            $nb = 2;
-            $icon = "<i class='" . $object->getIcon() . " fa-1x'></i>";
-            echo "<br><h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
-            echo "&nbsp;<span style='margin-right: auto;'>".$object->getTypeName($nb)."</span></h2>";
+            $cards = [];
 
-            echo "<div style='display: flex;flex-wrap: wrap;'>";
+            $card_icon = "ti-server";
+            if ($itemtype == "Phone") {
+                $card_icon = "ti-phone";
+            } elseif ($itemtype == "Printer") {
+                $card_icon = "ti-printer";
+            } elseif ($itemtype == "NetworkEquipment") {
+                $card_icon = "ti-router";
+            }
 
             foreach ($items as $items_id) {
 
                 $object->getFromDB($items_id);
                 $id = $items_id;
-                $name = $object->fields['name'];
 
-                echo "<div class='card w-25'>";// style='margin-right: 10px;margin-top: 10px;'
-                echo "<div class='card-body'>";
-
-                echo "<div style='display: block;';>";
-
-//                echo "<div style='display: inline-block;'>";
-
-                $icon = "ti-server";
-                if ($itemtype == "Phone") {
-                    $icon = "ti-phone";
-                } elseif ($itemtype == "Printer") {
-                    $icon = "ti-printer";
-                } elseif ($itemtype == "NetworkEquipment") {
-                    $icon = "ti-router";
-                }
-                echo "<i class='ti $icon' style='font-size:3em'></i>";
-//                echo "</div>";
-
-                echo "<span style='float: right'>";
-                echo Html::showSimpleForm(
-                    PLUGIN_WEBAPPLICATIONS_WEBDIR."/front/dashboard.php",
+                $delete_html = Html::getSimpleForm(
+                    PLUGIN_WEBAPPLICATIONS_WEBDIR . "/front/dashboard.php",
                     'reset',
                     __('Delete'),
                     ['items_id' => $id, 'itemtype' => $itemtype],
                     'ti-circle-x'
                 );
-                echo "</span>";
 
-                echo "<br><br><h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
+                $blocks = [];
 
-                $items = $DB->request([
+                $relations = $DB->request([
                     'FROM'   => Appliance_Item::getTable(),
                     'WHERE'  => [
                         'items_id' => $items_id,
                         'itemtype' => $itemtype
                     ]
                 ]);
-                $items = iterator_to_array($items);
+                $relations = iterator_to_array($relations);
 
-                foreach ($items as $row) {
+                $env_html = "";
+                foreach ($relations as $row) {
                     $iterator = $DB->request([
                         'FROM'   => Appliance_Item_Relation::getTable(),
                         'WHERE'  => [
@@ -182,34 +165,46 @@ class PhysicalInfrastructure extends CommonDBTM
                         $envtype = $row['itemtype'];
                         $env = new $envtype();
                         $env->getFromDB($row['items_id']);
-                        echo "<i class='" . $env->getIcon() . "'></i>" .
+                        $env_html .= "<i class='" . htmlescape($env->getIcon()) . "'></i>" .
                             "&nbsp;" . $env->getLink();
                     }
                 }
-
-                echo "<p class='card-text'>";
-                if ($itemtype == "Computer") {
-                    echo htmlescape(Dropdown::getDropdownName("glpi_computertypes", $object->fields['computertypes_id']));
-                } else if ($itemtype == "NetworkEquipment") {
-                    echo htmlescape(Dropdown::getDropdownName("glpi_networkequipmenttypes", $object->fields['networkequipmenttypes_id']));
+                if (!empty($env_html)) {
+                    $blocks[] = [
+                        'kind' => 'raw',
+                        'html' => $env_html,
+                    ];
                 }
-                echo "</p>";
-                echo "<p class='card-text'>";
+
+                if ($itemtype == "Computer") {
+                    $blocks[] = [
+                        'kind'  => 'text',
+                        'value' => Dropdown::getDropdownName("glpi_computertypes", $object->fields['computertypes_id']),
+                    ];
+                } elseif ($itemtype == "NetworkEquipment") {
+                    $blocks[] = [
+                        'kind'  => 'text',
+                        'value' => Dropdown::getDropdownName("glpi_networkequipmenttypes", $object->fields['networkequipmenttypes_id']),
+                    ];
+                }
+
                 if ($itemtype == "Computer") {
                     $iterator = Item_OperatingSystem::getFromItem($object);
-
+                    $os_html = "";
                     foreach ($iterator as $row) {
-                        echo htmlescape($row['name']) . " - " . htmlescape($row['version']);
-                        echo "</br>";
-                        echo htmlescape($row['architecture']);
+                        $os_html .= htmlescape($row['name']) . " - " . htmlescape($row['version'])
+                            . "</br>" . htmlescape($row['architecture']);
+                    }
+                    if (!empty($os_html)) {
+                        $blocks[] = [
+                            'kind' => 'raw',
+                            'html' => $os_html,
+                        ];
                     }
                 }
-                echo "</p>";
-                echo "<p class='card-text'>";
+
                 $iplist = "";
                 $ip     = new IPAddress();
-                // Update IPAddress
-
                 foreach ($DB->request(['FROM' => 'glpi_networkports', 'WHERE' => ['itemtype' => $itemtype,
                     'items_id' => $items_id]]) as $netname) {
                     foreach ($DB->request(['FROM' => 'glpi_networknames', 'WHERE' => ['itemtype' => 'NetworkPort',
@@ -219,46 +214,35 @@ class PhysicalInfrastructure extends CommonDBTM
                             $ip->getFromDB($data['id']);
 
                             if ($ip->getName() != "127.0.0.1" && $ip->fields['version'] != 6) {
-                                $iplist .= $ip->getName() . "<br>";
+                                $iplist .= htmlescape($ip->getName()) . "<br>";
                             }
-
                         }
                     }
                 }
-                echo $iplist."</p>";
-
-                $link = $object::getFormURLWithID($id);
-                $link .= "&forcetab=main";
-                $rand = mt_rand();
-                echo "<span style='float: right'>";
-                if ($object->canUpdate()) {
-                    echo Html::submit(
-                        _sx('button', 'Edit'),
-                        [
-                            'name' => 'edit',
-                            'class' => 'btn btn-secondary right',
-                            'icon' => 'ti ti-edit',
-                            'form' => '',
-                            'data-bs-toggle' => 'modal',
-                            'data-bs-target' => '#edit' . $id . $rand
-                        ]
-                    );
-
-                    echo Ajax::createIframeModalWindow(
-                        'edit' . $id . $rand,
-                        $link,
-                        [
-                            'display' => false,
-                            'reloadonclose' => true
-                        ]
-                    );
+                if (!empty($iplist)) {
+                    $blocks[] = [
+                        'kind' => 'raw',
+                        'html' => $iplist,
+                    ];
                 }
-                echo "</span>";
-                echo "</div>";
-                echo "</div>";
-                echo "</div>";
+
+                $cards[] = [
+                    'width_class'   => 'w-25',
+                    'icon'          => 'ti ' . $card_icon,
+                    'icon_size'     => '3em',
+                    'top_right_html' => $delete_html,
+                    'title_html'    => $object->getLink(),
+                    'blocks'        => $blocks,
+                    'edit_html'     => Dashboard::getCardEditHtml($object, (int) $id),
+                ];
             }
-            echo "</div>";
+
+            TemplateRenderer::getInstance()->display('@webapplications/webapplication_object_cards.html.twig', [
+                'group_header' => true,
+                'group_icon'   => $object->getIcon(),
+                'group_title'  => $object->getTypeName(2),
+                'cards'        => $cards,
+            ]);
         }
     }
 }

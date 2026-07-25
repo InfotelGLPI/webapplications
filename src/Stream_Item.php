@@ -117,92 +117,64 @@ class Stream_Item extends CommonDBTM
             return false;
         }
 
-        $items = $DB->request([
-            'FROM' => self::getTable(),
-            'WHERE' => [
-                'plugin_webapplications_streams_id' => $ID
-            ]
-        ]);
-
         $stream = new Stream();
         $canedit = $stream->can($item->fields['id'], UPDATE);
-        if ($canedit) {
-            echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL(Stream_Item::class) . "'>";
 
-            echo "<div class='center'><table class='tab_cadre_fixe'>";
-            echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
+        $items = iterator_to_array($DB->request([
+            'FROM' => self::getTable(),
+            'WHERE' => [
+                'plugin_webapplications_streams_id' => $ID,
+            ],
+        ]));
 
-            echo "<tr class='tab_bg_1'>";
-            echo "<td class='center'>";
-            Dropdown::showSelectItemFromItemtypes(
-                [
-                    'items_id_name' => 'items_id',
-                    'itemtypes' => 'Assets',
-                    'checkright' => true,
-                ]
-            );
-            echo "</td>";
-            echo "<td class='tab_bg_2 center' colspan='6'>";
-            echo Html::hidden('plugin_webapplications_streams_id', ['value' => $item->getID()]);
-            echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
-            echo "</td>";
-            echo "</tr>";
-            echo "</table></div>";
-            Html::closeForm();
+        $entries = [];
+        foreach ($items as $row) {
+            if (!class_exists($row['itemtype'])) {
+                continue;
+            }
+            $it = new $row['itemtype']();
+            $it->getFromDB($row['items_id']);
+            $entries[] = [
+                'itemtype' => self::class,
+                'id'       => $row['id'],
+                'type'     => $it->getTypeName(1),
+                'name'     => $it->getLink(),
+            ];
         }
 
+        // Capture the GLPI itemtypes selector to inject it in the Twig template.
+        $items_dropdown = Dropdown::showSelectItemFromItemtypes([
+            'items_id_name' => 'items_id',
+            'itemtypes'     => 'Assets',
+            'checkright'    => true,
+            'display'       => false,
+        ]);
 
-        $items = iterator_to_array($items);
-
-        if (!count($items)) {
-            echo "<table class='tab_cadre_fixe'><tr><th>" . __('No results found') . "</th></tr>";
-            echo "</table>";
-        } else {
-            if ($canedit) {
-                Html::openMassiveActionsForm('mass' . __CLASS__ . $rand);
-                $massiveactionparams = [
-                    'num_displayed' => min($_SESSION['glpilist_limit'], count($items)),
-                    'container' => 'mass' . __CLASS__ . $rand
-                ];
-                Html::showMassiveActions($massiveactionparams);
-            }
-
-            echo "<table class='tab_cadre_fixehov'>";
-            $header = "<tr>";
-            if ($canedit) {
-                $header .= "<th width='10'>";
-                $header .= Html::getCheckAllAsCheckbox('mass' . __CLASS__ . $rand);
-                $header .= "</th>";
-            }
-            $header .= "<th>" . __('Itemtype') . "</th>";
-            $header .= "<th>" . _n('Item', 'Items', 1) . "</th>";
-            $header .= "</tr>";
-            echo $header;
-
-            foreach ($items as $row) {
-                $it = new $row['itemtype']();
-                $it->getFromDB($row['items_id']);
-                echo "<tr lass='tab_bg_1'>";
-                if ($canedit) {
-                    echo "<td>";
-                    Html::showMassiveActionCheckBox(__CLASS__, $row["id"]);
-                    echo "</td>";
-                }
-                echo "<td>" . $it->getTypeName(1) . "</td>";
-                echo "<td>" . $it->getLink() . "</td>";
-                echo "</tr>";
-            }
-            echo $header;
-            echo "</table>";
-
-            if ($canedit && count($items)) {
-                $massiveactionparams['ontop'] = false;
-                Html::showMassiveActions($massiveactionparams);
-            }
-            if ($canedit) {
-                Html::closeForm();
-            }
-        }
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_stream_item.html.twig', [
+            'canedit'        => $canedit,
+            'form_url'       => Toolbox::getItemTypeFormURL(Stream_Item::class),
+            'items_dropdown' => $items_dropdown,
+            'stream_id'      => (int) $item->getID(),
+            'datatable_params' => [
+                'is_tab'          => true,
+                'nofilter'        => true,
+                'nosort'          => true,
+                'columns'         => [
+                    'type' => __('Itemtype'),
+                    'name' => _n('Item', 'Items', 1),
+                ],
+                'formatters'      => [
+                    'name' => 'raw_html',
+                ],
+                'entries'         => $entries,
+                'total_number'    => count($entries),
+                'filtered_number' => count($entries),
+                'showmassiveactions' => $canedit,
+                'massiveactionparams' => [
+                    'container' => 'mass' . str_replace('\\', '', self::class) . $rand,
+                    'itemtype'  => self::class,
+                ],
+            ],
+        ]);
     }
 }

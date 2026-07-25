@@ -39,18 +39,21 @@ if (!isset($_GET["withtemplate"])) {
     $_GET["withtemplate"] = "";
 }
 
-$process = new Process();
 $processEntity = new Process_Entity();
 
 if (isset($_POST["add"])) {
-    $process->check(-1, CREATE, $_POST);
+    // Check the right on the record actually being written (the relation),
+    // not on an unrelated Process instance.
+    $processEntity->check(-1, CREATE, $_POST);
     $newID = $processEntity->add($_POST);
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($processEntity->getFormURL() . "?id=" . $newID);
     }
     Html::back();
 } elseif (isset($_POST["update"])) {
-    $process->check($_POST['id'], UPDATE);
+    // $_POST['id'] is a Process_Entity id: reload and check that record so the
+    // authorization is evaluated on the object that update() will modify.
+    $processEntity->check($_POST['id'], UPDATE);
     $processEntity->update($_POST);
     Html::back();
 }

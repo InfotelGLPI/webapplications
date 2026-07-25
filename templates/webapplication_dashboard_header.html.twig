@@ -1,6 +1,4 @@
-<?php
-
-/*
+{#
  -------------------------------------------------------------------------
  webapplications plugin for GLPI
  Copyright (C) 2015-2026 by the webapplications Development Team.
@@ -25,35 +23,15 @@
  You should have received a copy of the GNU General Public License
  along with webapplications. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
- */
+ #}
 
-Session::checkLoginUser();
-
-use GlpiPlugin\Webapplications\Stream;
-use GlpiPlugin\Webapplications\Stream_Item;
-
-if (!isset($_GET["id"])) {
-    $_GET["id"] = "";
-}
-if (!isset($_GET["withtemplate"])) {
-    $_GET["withtemplate"] = "";
-}
-
-$streamItem = new Stream_Item();
-
-if (isset($_POST["add"])) {
-    // Check the right on the record actually being written (the relation),
-    // not on an unrelated Stream instance.
-    $streamItem->check(-1, CREATE, $_POST);
-    $newID = $streamItem->add($_POST);
-    if ($_SESSION['glpibackcreated']) {
-        Html::redirect($streamItem->getFormURL() . "?id=" . $newID);
-    }
-    Html::back();
-} elseif (isset($_POST["update"])) {
-    // $_POST['id'] is a Stream_Item id: reload and check that record so the
-    // authorization is evaluated on the object that update() will modify.
-    $streamItem->check($_POST['id'], UPDATE);
-    $streamItem->update($_POST);
-    Html::back();
-}
+<div class="card-header card-web-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
+   <h3 class="card-title d-flex align-items-center ps-4">
+      <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
+         <i class="{{ icon }} fa-2x"></i>
+      </div>
+      <h1 style="margin: auto">
+         <a href="{{ link_url }}">{{ link_html|raw }}</a>
+      </h1>
+   </h3>
+</div>

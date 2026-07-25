@@ -30,7 +30,7 @@
 namespace GlpiPlugin\Webapplications;
 use CommonDBTM;
 use DbUtils;
-use Html;
+use Glpi\Application\View\TemplateRenderer;
 use Session;
 use CommonGLPI;
 
@@ -155,26 +155,9 @@ class Printpdf extends CommonDBTM
 
     public function showPrintpdfForm(CommonGLPI $item)
     {
-
-//        if (!$this->canView()) {
-//            return false;
-//        }
-//
-//        $canedit = $this->canCreate();
-
-
-//        if ($canedit) {
-        echo "<form name='form' method='post' action=\"" . PLUGIN_WEBAPPLICATIONS_WEBDIR. "/front/printpdf.form.php\">";
-
-        echo "<div align='center'><table class='tab_cadre_fixe'>";
-        echo "<tr class='tab_bg_1'><th colspan='2'>" . __('Print PDF', 'webapplications') . "</th></tr>";
-
-        echo "<tr class='tab_bg_1'><td colspan='2' class='tab_bg_2 center'>";
-        echo Html::hidden('plugin_webapplications_appliance_id', ['value' => $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0]);
-        echo Html::submit(_sx('button', __('Generate PDF', 'webapplications')), ['name' => 'PrintPdf', 'class' => 'btn btn-primary']);
-        echo "</td></tr>";
-        echo "</table></div>";
-        Html::closeForm();
-//        }
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_printpdf_form.html.twig', [
+            'item_form_url' => PLUGIN_WEBAPPLICATIONS_WEBDIR . "/front/printpdf.form.php",
+            'appliance_id'  => (int) ($_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0),
+        ]);
     }
 }

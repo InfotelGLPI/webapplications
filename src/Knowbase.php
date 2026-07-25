@@ -31,6 +31,7 @@ namespace GlpiPlugin\Webapplications;
 
 use CommonDBTM;
 use CommonGLPI;
+use Glpi\Application\View\TemplateRenderer;
 use KnowbaseItem;
 use KnowbaseItem_Item;
 
@@ -84,20 +85,19 @@ class Knowbase extends CommonDBTM
 
         Dashboard::showHeaderDashboard($ApplianceId);
 
-        $icon = "<i class='" . self::getIcon() . " fa-1x'></i>";
-
-        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
-        echo "&nbsp;<span style='margin-right: auto;'>".__(
-                'Knowledge base'
-            )."</span>";
-        echo "</h2>";
-
-        echo "<div class='card-body'>";
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_title.html.twig', [
+            'icon'  => self::getIcon(),
+            'title' => __('Knowledge base'),
+        ]);
 
         $withtemplate = 0;
+        ob_start();
         KnowbaseItem_Item::showForItem($item, $withtemplate);
+        $content = ob_get_clean();
 
-        echo "</div>";
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_cardbody.html.twig', [
+            'content' => $content,
+        ]);
     }
 
     private static function getCountForItem(CommonDBTM $item): int
@@ -154,36 +154,38 @@ class Knowbase extends CommonDBTM
     {
         global $CFG_GLPI;
 
-        echo "<div class='card-body child33'>";
-
         $ApplianceId = $appliance->getField('id');
 
         $title = self::getTypeName();
         $know_item = new KnowbaseItem();
 
-        Dashboard::showTitleforDashboard($title, $ApplianceId, $know_item, "");
-
         $number = self::getCountForItem($appliance);
 
-
-
+        $entries = [];
         if ($number > 0) {
-
-            echo "<div class='list-group'  style='margin-top: 10px;'>";
             $start = 0;
             foreach (KnowbaseItem_Item::getItems($appliance, $start, $_SESSION['glpilist_limit']) as $data) {
                 $know_item->getFromDB($data['knowbaseitems_id']);
-                $name = htmlescape($know_item->getName());
                 $open = $CFG_GLPI["root_doc"] . "/front/knowbaseitem.form.php";
                 $open .= (strpos($open, '?') ? '&' : '?') . 'id=' . $data['knowbaseitems_id'];
-                echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
+                $entries[] = ['url' => $open, 'label' => $know_item->getName()];
             }
-
-            echo "</div>";
-
         }
 
+        ob_start();
+        Dashboard::showTitleforDashboard($title, $ApplianceId, $know_item, "");
+        $title_html = ob_get_clean();
 
-        echo "</div>";
+        ob_start();
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_linklist.html.twig', [
+            'title_html'    => $title_html,
+            'entries'       => $entries,
+            'empty_message' => '',
+        ]);
+        $content = ob_get_clean();
+
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_child33.html.twig', [
+            'content' => $content,
+        ]);
     }
 }

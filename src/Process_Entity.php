@@ -132,59 +132,30 @@ class Process_Entity extends CommonDBTM
 
         $entity = new Entity();
         $canedit = $entity->can($item->fields['id'], UPDATE);
-        if ($canedit) {
-            echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL(Process_Entity::class) . "'>";
 
-            echo "<div class='center'><table class='tab_cadre_fixe'>";
-            echo "<tr><th colspan='6'>" . __('Add a process', 'webapplications') . "</th></tr>";
+        $dropdown_html = Process::dropdown(['display' => false]);
 
-            echo "<tr class='tab_bg_1'>";
-            // Dropdown group
-            echo "<td class='center'>";
-            Process::dropdown();
-            echo "</td>";
-            echo "<td class='tab_bg_2 center' colspan='6'>";
-            echo Html::hidden('plugin_webapplications_entities_id', ['value' => $item->getID()]);
-            echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
-            echo "</td>";
-            echo "</tr>";
-            echo "</table></div>";
-            Html::closeForm();
-        }
-
-        echo "<div class='spaced' id='tabsbody'>";
-        echo "<table class='tab_cadre_fixe'>";
-
-
-        echo "<thead>";
-        echo "<tr class='tab_bg_2'>";
-
-        echo "<th colspan='3'>" . _n('Process', 'Processes', 2, 'webapplications') . "</th>";
-
-        echo "</tr>";
-        echo "</thead>";
-
-        echo "<tbody>";
-
+        $rows = [];
         $processes = $this->find(['plugin_webapplications_entities_id' => $item->getID()]);
         $processDBTM = new Process();
-
         foreach ($processes as $process) {
             $processDBTM->getFromDB($process['plugin_webapplications_processes_id']);
-            echo "<tr class='tab_bg_2'>";
-            echo "<td colspan='3'>";
-            echo Html::link(
-                $processDBTM->getName(),
-                Process::getFormURLWithID($process['plugin_webapplications_processes_id'])
-            );
-            echo "</td>";
-            echo "</tr>";
+            $rows[] = [
+                'name' => $processDBTM->getName(),
+                'url'  => Process::getFormURLWithID($process['plugin_webapplications_processes_id']),
+            ];
         }
-        echo "</tbody>";
-        echo "</table></div>";
 
-        Html::closeForm();
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_process_entity.html.twig', [
+            'canedit'       => $canedit,
+            'form_url'      => Toolbox::getItemTypeFormURL(Process_Entity::class),
+            'add_title'     => __('Add a process', 'webapplications'),
+            'dropdown_html' => $dropdown_html,
+            'hidden_name'   => 'plugin_webapplications_entities_id',
+            'hidden_value'  => (int) $item->getID(),
+            'list_title'    => _n('Process', 'Processes', 2, 'webapplications'),
+            'rows'          => $rows,
+        ]);
     }
 
     public function showForProcess($item)
@@ -195,58 +166,29 @@ class Process_Entity extends CommonDBTM
 
         $process = new Process();
         $canedit = $process->can($item->fields['id'], UPDATE);
-        if ($canedit) {
-            echo "<form name='form' method='post' action='" .
-                Toolbox::getItemTypeFormURL(Process_Entity::class) . "'>";
 
-            echo "<div class='center'><table class='tab_cadre_fixe'>";
-            echo "<tr><th colspan='6'>" . __('Add an entity', 'webapplications') . "</th></tr>";
+        $dropdown_html = Entity::dropdown(['display' => false]);
 
-            echo "<tr class='tab_bg_1'>";
-            // Dropdown group
-            echo "<td class='center'>";
-            Entity::dropdown();
-            echo "</td>";
-            echo "<td class='tab_bg_2 center' colspan='6'>";
-            echo Html::hidden('plugin_webapplications_processes_id', ['value' => $item->getID()]);
-            echo Html::submit(_sx('button', 'Add'), ['name' => 'add', 'class' => 'btn btn-primary']);
-            echo "</td>";
-            echo "</tr>";
-            echo "</table></div>";
-            Html::closeForm();
-        }
-
-        echo "<div class='spaced' id='tabsbody'>";
-        echo "<table class='tab_cadre_fixe'>";
-
-
-        echo "<thead>";
-        echo "<tr class='tab_bg_2'>";
-
-        echo "<th colspan='3'>" . _n('Entity', 'Entities', 2) . "</th>";
-
-        echo "</tr>";
-        echo "</thead>";
-
-        echo "<tbody>";
-
+        $rows = [];
         $entities = $this->find(['plugin_webapplications_processes_id' => $item->getID()]);
         $entityDBTM = new Entity();
-
         foreach ($entities as $entity) {
             $entityDBTM->getFromDB($entity['plugin_webapplications_entities_id']);
-            echo "<tr class='tab_bg_2'>";
-            echo "<td colspan='3'>";
-            echo Html::link(
-                $entityDBTM->getName(),
-                Entity::getFormURLWithID($entity['plugin_webapplications_entities_id'])
-            );
-            echo "</td>";
-            echo "</tr>";
+            $rows[] = [
+                'name' => $entityDBTM->getName(),
+                'url'  => Entity::getFormURLWithID($entity['plugin_webapplications_entities_id']),
+            ];
         }
-        echo "</tbody>";
-        echo "</table></div>";
 
-        Html::closeForm();
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_process_entity.html.twig', [
+            'canedit'       => $canedit,
+            'form_url'      => Toolbox::getItemTypeFormURL(Process_Entity::class),
+            'add_title'     => __('Add an entity', 'webapplications'),
+            'dropdown_html' => $dropdown_html,
+            'hidden_name'   => 'plugin_webapplications_processes_id',
+            'hidden_value'  => (int) $item->getID(),
+            'list_title'    => _n('Entity', 'Entities', 2),
+            'rows'          => $rows,
+        ]);
     }
 }

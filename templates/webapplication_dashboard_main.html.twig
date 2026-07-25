@@ -1,6 +1,4 @@
-<?php
-
-/*
+{#
  -------------------------------------------------------------------------
  webapplications plugin for GLPI
  Copyright (C) 2015-2026 by the webapplications Development Team.
@@ -25,35 +23,41 @@
  You should have received a copy of the GNU General Public License
  along with webapplications. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
- */
+ #}
 
-Session::checkLoginUser();
+<div style="display: flex;flex-wrap: wrap;">
+   <div class="card-body child33" style="text-align:center;font-weight: bold">
+      <h2>{{ users_label }}</h2>
+      <i class="fa fa-users fa-3x"></i>
+      <br>
+      <h1>{{ users_value }}</h1>
+   </div>
 
-use GlpiPlugin\Webapplications\Stream;
-use GlpiPlugin\Webapplications\Stream_Item;
+   <div class="card-body child33" style="text-align:center;font-weight: bold">
+      <h2>{{ leader_label }}</h2>
+      <i class="fa fa-user-cog fa-3x"></i>
+      <br>
+      <h2>{{ leader_name }}</h2>
+   </div>
 
-if (!isset($_GET["id"])) {
-    $_GET["id"] = "";
-}
-if (!isset($_GET["withtemplate"])) {
-    $_GET["withtemplate"] = "";
-}
+   <div class="card-body child33" style="text-align:center;font-weight: bold">
+      <h2>{{ team_label }}</h2>
+      <i class="fa fa-users-cog fa-3x"></i>
+      <br>
+      <h1>{{ team_number }}</h1>
+   </div>
+</div>
 
-$streamItem = new Stream_Item();
+<div style="display: flex;flex-wrap: wrap;">
+   {{ support_html|raw }}
+</div>
 
-if (isset($_POST["add"])) {
-    // Check the right on the record actually being written (the relation),
-    // not on an unrelated Stream instance.
-    $streamItem->check(-1, CREATE, $_POST);
-    $newID = $streamItem->add($_POST);
-    if ($_SESSION['glpibackcreated']) {
-        Html::redirect($streamItem->getFormURL() . "?id=" . $newID);
-    }
-    Html::back();
-} elseif (isset($_POST["update"])) {
-    // $_POST['id'] is a Stream_Item id: reload and check that record so the
-    // authorization is evaluated on the object that update() will modify.
-    $streamItem->check($_POST['id'], UPDATE);
-    $streamItem->update($_POST);
-    Html::back();
-}
+<div class="card-body border-0">
+   {{ summary_title_html|raw }}
+</div>
+
+{{ summary_html|raw }}
+
+<div style="display: flex;flex-wrap: wrap;">
+   {{ objects_html|raw }}
+</div>

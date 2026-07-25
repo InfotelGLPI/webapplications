@@ -31,7 +31,7 @@ namespace GlpiPlugin\Webapplications;
 
 use CommonGLPI;
 use DbUtils;
-use Html;
+use Glpi\Application\View\TemplateRenderer;
 use ProfileRight;
 use Session;
 
@@ -166,33 +166,31 @@ class Profile extends \Profile
      */
     public function showForm($profiles_id = 0, $openform = true, $closeform = true)
     {
-        echo "<div class='firstbloc'>";
-        if (($canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]))
-            && $openform) {
-            $profile = new \Profile();
-            echo "<form method='post' action='" . $profile->getFormURL() . "'>";
-        }
+        $canedit = Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, PURGE]);
 
         $profile = new \Profile();
         $profile->getFromDB($profiles_id);
+
+        $matrix_html = "";
         if ($profile->getField('interface') == 'central') {
             $rights = $this->getAllRights();
+            ob_start();
             $profile->displayRightsChoiceMatrix($rights, [
                 'canedit' => $canedit,
                 'default_class' => 'tab_bg_2',
                 'title' => __('General'),
             ]);
+            $matrix_html = ob_get_clean();
         }
 
-        if ($canedit
-            && $closeform) {
-            echo "<div class='center'>";
-            echo Html::hidden('id', ['value' => $profiles_id]);
-            echo Html::submit(_sx('button', 'Save'), ['name' => 'update']);
-            echo "</div>\n";
-            Html::closeForm();
-        }
-        echo "</div>";
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_profile_form.html.twig', [
+            'canedit'     => $canedit,
+            'openform'    => $openform,
+            'closeform'   => $closeform,
+            'form_action' => \Profile::getFormURL(),
+            'matrix_html' => $matrix_html,
+            'profiles_id' => $profiles_id,
+        ]);
     }
 
     /**

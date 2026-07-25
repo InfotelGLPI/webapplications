@@ -1,6 +1,4 @@
-<?php
-
-/*
+{#
  -------------------------------------------------------------------------
  webapplications plugin for GLPI
  Copyright (C) 2015-2026 by the webapplications Development Team.
@@ -25,35 +23,26 @@
  You should have received a copy of the GNU General Public License
  along with webapplications. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
- */
+ #}
 
-Session::checkLoginUser();
+{% import 'components/form/basic_inputs_macros.html.twig' as inputs %}
 
-use GlpiPlugin\Webapplications\Stream;
-use GlpiPlugin\Webapplications\Stream_Item;
+{% if canedit %}
+   <form name="form" method="post" action="{{ form_url }}">
+      <div class="center">
+         <table class="tab_cadre_fixe">
+            <tr><th colspan="6">{{ __('Add an item') }}</th></tr>
+            <tr class="tab_bg_1">
+               <td class="center">{{ items_dropdown|raw }}</td>
+               <td class="tab_bg_2 center" colspan="6">
+                  {{ inputs.hidden('_glpi_csrf_token', csrf_token()) }}
+                  {{ inputs.hidden('plugin_webapplications_streams_id', stream_id) }}
+                  <button type="submit" name="add" class="btn btn-primary">{{ _x('button', 'Add') }}</button>
+               </td>
+            </tr>
+         </table>
+      </div>
+   </form>
+{% endif %}
 
-if (!isset($_GET["id"])) {
-    $_GET["id"] = "";
-}
-if (!isset($_GET["withtemplate"])) {
-    $_GET["withtemplate"] = "";
-}
-
-$streamItem = new Stream_Item();
-
-if (isset($_POST["add"])) {
-    // Check the right on the record actually being written (the relation),
-    // not on an unrelated Stream instance.
-    $streamItem->check(-1, CREATE, $_POST);
-    $newID = $streamItem->add($_POST);
-    if ($_SESSION['glpibackcreated']) {
-        Html::redirect($streamItem->getFormURL() . "?id=" . $newID);
-    }
-    Html::back();
-} elseif (isset($_POST["update"])) {
-    // $_POST['id'] is a Stream_Item id: reload and check that record so the
-    // authorization is evaluated on the object that update() will modify.
-    $streamItem->check($_POST['id'], UPDATE);
-    $streamItem->update($_POST);
-    Html::back();
-}
+{{ include('components/datatable.html.twig', datatable_params, with_context = false) }}

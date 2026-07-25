@@ -255,80 +255,58 @@ class Process extends CommonDBTM
     public static function showListObjects($list)
     {
         $object = new self();
-
-        echo "<div style='display: flex;flex-wrap: wrap;'>";
+        $cards = [];
 
         foreach ($list as $field) {
-            $name = $field['name'];
             $id = $field['id'];
             $object->getFromDB($id);
 
-            echo "<div class='card w-33' style='margin-right: 10px;margin-top: 10px;'>";
-            echo "<div class='card-body'>";
-            echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='" . self::getIcon() . "' style='font-size:5em'></i>";
-            echo "</div>";
-            echo "<div style='display: inline-block;'>";
-            echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
+            $blocks = [];
             if ($object->fields['owner'] > 0) {
-                echo "<p class='card-text'>";
-                echo __('Owner', 'webapplications') . " : " . htmlescape(getUserName($object->fields['owner']));
-                echo "</p>";
+                $blocks[] = [
+                    'kind'  => 'info',
+                    'label' => __('Owner', 'webapplications'),
+                    'value' => getUserName($object->fields['owner']),
+                ];
             }
-            echo "<p class='card-text'>";
-            $background = Appliance::getColorForDICT($object->fields['webapplicationavailabilities']);
-            echo "<span class='dict-min' style='background-color:$background' title='" . __('Availability', 'webapplications') . "'>";
-            echo htmlescape($object->fields['webapplicationavailabilities']);
-            echo "</span>";
-
-            $background = Appliance::getColorForDICT($object->fields['webapplicationintegrities']);
-            echo "<span class='dict-min' style='background-color:$background' title='" . __('Integrity', 'webapplications') . "'>";
-            echo htmlescape($object->fields['webapplicationintegrities']);
-            echo "</span>";
-
-            $background = Appliance::getColorForDICT($object->fields['webapplicationconfidentialities']);
-            echo "<span class='dict-min' style='background-color:$background' title='" . __('Confidentiality', 'webapplications') . "'>";
-            echo htmlescape($object->fields['webapplicationconfidentialities']);
-            echo "</span>";
-
-            $background = Appliance::getColorForDICT($object->fields['webapplicationtraceabilities']);
-            echo "<span class='dict-min' style='background-color:$background' title='" . __('Traceability', 'webapplications') . "'>";
-            echo htmlescape($object->fields['webapplicationtraceabilities']);
-            echo "</span>";
-            echo "</p>";
-
-            $link = $object::getFormURLWithID($id);
-            $link .= "&forcetab=main";
-            $rand = mt_rand();
-            echo "<span style='float: right'>";
-            if ($object->canUpdate()) {
-                echo Html::submit(
-                    _sx('button', 'Edit'),
+            $blocks[] = [
+                'kind'   => 'badges',
+                'badges' => [
                     [
-                        'name' => 'edit',
-                        'class' => 'btn btn-secondary right',
-                        'icon' => 'ti ti-edit',
-                        'form' => '',
-                        'data-bs-toggle' => 'modal',
-                        'data-bs-target' => '#edit' . $id . $rand,
-                    ]
-                );
-
-                echo Ajax::createIframeModalWindow(
-                    'edit' . $id . $rand,
-                    $link,
+                        'value' => $object->fields['webapplicationavailabilities'],
+                        'color' => Appliance::getColorForDICT($object->fields['webapplicationavailabilities']),
+                        'title' => __('Availability', 'webapplications'),
+                    ],
                     [
-                        'display' => false,
-                        'reloadonclose' => true,
-                    ]
-                );
-            }
-            echo "</span>";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
+                        'value' => $object->fields['webapplicationintegrities'],
+                        'color' => Appliance::getColorForDICT($object->fields['webapplicationintegrities']),
+                        'title' => __('Integrity', 'webapplications'),
+                    ],
+                    [
+                        'value' => $object->fields['webapplicationconfidentialities'],
+                        'color' => Appliance::getColorForDICT($object->fields['webapplicationconfidentialities']),
+                        'title' => __('Confidentiality', 'webapplications'),
+                    ],
+                    [
+                        'value' => $object->fields['webapplicationtraceabilities'],
+                        'color' => Appliance::getColorForDICT($object->fields['webapplicationtraceabilities']),
+                        'title' => __('Traceability', 'webapplications'),
+                    ],
+                ],
+            ];
 
+            $cards[] = [
+                'width_class' => 'w-33',
+                'icon'        => self::getIcon(),
+                'icon_size'   => '5em',
+                'title_html'  => $object->getLink(),
+                'blocks'      => $blocks,
+                'edit_html'   => Dashboard::getCardEditHtml($object, (int) $id),
+            ];
         }
-        echo "</div>";
+
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_object_cards.html.twig', [
+            'cards' => $cards,
+        ]);
     }
 }

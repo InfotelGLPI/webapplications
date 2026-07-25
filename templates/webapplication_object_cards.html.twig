@@ -1,0 +1,77 @@
+{#
+ -------------------------------------------------------------------------
+ webapplications plugin for GLPI
+ Copyright (C) 2015-2026 by the webapplications Development Team.
+
+ https://github.com/InfotelGLPI/webapplications
+ -------------------------------------------------------------------------
+
+ LICENSE
+
+ This file is part of webapplications.
+
+ webapplications is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+
+ webapplications is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ --------------------------------------------------------------------------
+ #}
+
+{#
+ Generic card grid used by the plugin dashboard object lists.
+ Each card exposes an ordered list of "blocks" so that every value can be
+ escaped by Twig, while genuine HTML fragments (item links, GLPI helpers)
+ are passed explicitly through 'raw' blocks.
+ #}
+
+{% if group_header is defined and group_header %}
+   <br>
+   <h2 class="card-header card-web-header d-flex justify-content-between align-items-center">
+      <i class="{{ group_icon }} fa-1x"></i>
+      &nbsp;<span style="margin-right: auto;">{{ group_title }}</span>
+   </h2>
+{% endif %}
+
+<div style="display: flex;flex-wrap: wrap;">
+   {% for card in cards %}
+      <div class="card {{ card.width_class|default('w-33') }}" style="margin-right: 10px;margin-top: 10px;">
+         <div class="card-body">
+            <div style="display: inline-block;margin: 40px;">
+               <i class="{{ card.icon }}" style="font-size:{{ card.icon_size|default('3em') }}"></i>
+            </div>
+            <div style="display: inline-block;">
+               {% if card.top_right_html is defined %}
+                  <span style="float: right">{{ card.top_right_html|raw }}</span>
+               {% endif %}
+               <h5 class="card-title" style="font-size: 14px;">{{ card.title_html|raw }}</h5>
+               {% for block in card.blocks %}
+                  {% if block.kind == 'text' %}
+                     <p class="card-text">{{ block.value }}</p>
+                  {% elseif block.kind == 'info' %}
+                     <p class="card-text">{{ block.label }} : {{ block.value }}</p>
+                  {% elseif block.kind == 'badges' %}
+                     <p class="card-text">
+                        {% for badge in block.badges %}
+                           <span class="dict-min" style="background-color:{{ badge.color }}" title="{{ badge.title }}">{{ badge.value }}</span>
+                        {% endfor %}
+                     </p>
+                  {% elseif block.kind == 'raw' %}
+                     {{ block.html|raw }}
+                  {% endif %}
+               {% endfor %}
+               {% if card.edit_html is defined %}
+                  <span style="float: right">{{ card.edit_html|raw }}</span>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+   {% endfor %}
+</div>

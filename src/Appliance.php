@@ -396,8 +396,6 @@ class Appliance extends CommonDBTM
 
     public static function showSupportPartFromDashboard($appliance)
     {
-        echo "<div class='card-body child33'>";
-
         $ApplianceId = $appliance->getField('id');
 
         $supplier = new Supplier();
@@ -407,15 +405,12 @@ class Appliance extends CommonDBTM
 
         $supplier_id = $applianceplugin->fields['editor'] ?? 0;
         $title = __('Support', 'webapplications');
-        Dashboard::showTitleforDashboard($title, $supplier_id, $supplier, 'edit','editAppSupport');
 
         $refEditId = 0;
-        $editor = null;
         $editorName = null;
         $editoremail = null;
         $editorephonenumber = null;
 
-        $linkEdit = "";
         if ($is_known) {
             $refEditId = $applianceplugin->fields['editor'];
 
@@ -432,105 +427,119 @@ class Appliance extends CommonDBTM
         $options['editoremail'] = $editoremail ?? NOT_AVAILABLE;
         $options['editorephonenumber'] = $editorephonenumber ?? NOT_AVAILABLE;
 
+        ob_start();
+        Dashboard::showTitleforDashboard($title, $supplier_id, $supplier, 'edit', 'editAppSupport');
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_support.html.twig', [
             'item' => $appliance,
             'params' => $options,
         ]);
+        $content = ob_get_clean();
 
-        echo "</div>";
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_child33.html.twig', [
+            'content' => $content,
+        ]);
     }
 
     public static function showDocumentsAndContractsFromDashboard($appliance)
     {
         global $CFG_GLPI;
 
-        echo "<div class='card-body child33'>";
-
         $ApplianceId = $appliance->getField('id');
 
         $documentItemDBTM = new Document_Item();
         $docuItems = $documentItemDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
-
-        $title = _n('Associated document', 'Associated documents', count($docuItems), 'webapplications');
-        Dashboard::showTitleforDashboard($title, $ApplianceId, $documentItemDBTM);
-
         $docuDBTM = new Document();
-
-        if (count($docuItems) > 0) {
-            echo "<div class='list-group' style='margin-top: 10px;'>";
-            foreach ($docuItems as $docuItem) {
-                $docuDBTM->getFromDB($docuItem['documents_id']);
-                $name = htmlescape($docuDBTM->getName());
-                $open = $CFG_GLPI["root_doc"] . "/front/document.send.php";
-                $open .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
-                echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
-            }
-
-            echo "</div><br>";
-        } else {
-            echo __("No associated documents", 'webapplications');
-            echo "<br><br>";
+        $doc_entries = [];
+        foreach ($docuItems as $docuItem) {
+            $docuDBTM->getFromDB($docuItem['documents_id']);
+            $open = $CFG_GLPI["root_doc"] . "/front/document.send.php";
+            $open .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
+            $doc_entries[] = ['url' => $open, 'label' => $docuDBTM->getName()];
         }
 
         $contractItemDBTM = new Contract_Item();
         $contractItems = $contractItemDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
-
-        $title = _n('Associated contract', 'Associated contracts', count($contractItems), 'webapplications');
-        Dashboard::showTitleforDashboard($title, $ApplianceId, $contractItemDBTM);
-
         $contractDBTM = new Contract();
-
-        if (count($contractItems) > 0) {
-            echo "<div class='list-group' style='margin-top: 10px;'>";
-            foreach ($contractItems as $contractItem) {
-                $contractDBTM->getFromDB($contractItem['contracts_id']);
-                $name = htmlescape($contractDBTM->getName());
-                $open = $CFG_GLPI["root_doc"] . "/front/contract.form.php";
-                $open .= (strpos($open, '?') ? '&' : '?') . 'id=' . $contractItem['contracts_id'];
-                echo "<a class='list-group-item list-group-item-action' href='$open'>$name</a>";
-            }
-
-            echo "</div><br>";
-        } else {
-            echo __("No associated contracts", 'webapplications');
-            echo "<br><br>";
+        $contract_entries = [];
+        foreach ($contractItems as $contractItem) {
+            $contractDBTM->getFromDB($contractItem['contracts_id']);
+            $open = $CFG_GLPI["root_doc"] . "/front/contract.form.php";
+            $open .= (strpos($open, '?') ? '&' : '?') . 'id=' . $contractItem['contracts_id'];
+            $contract_entries[] = ['url' => $open, 'label' => $contractDBTM->getName()];
         }
 
         $ManualLinkDBTM = new ManualLink();
         $ManualLinkItems = $ManualLinkDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
-
-        $title = _n('Associated link', 'Associated links', count($ManualLinkItems), 'webapplications');
-        Dashboard::showTitleforDashboard($title, $ApplianceId, $ManualLinkDBTM);
-
-        if (count($ManualLinkItems) > 0) {
-            echo "<div class='list-group' style='margin-top: 10px;'>";
-            foreach ($ManualLinkItems as $ManualLinkItem) {
-                $name = htmlescape($ManualLinkItem['name']);
-                $url = (string) $ManualLinkItem['url'];
-                // Only allow http(s) or relative URLs; reject javascript:/data:/vbscript: schemes.
-                if (preg_match('/^\s*(javascript|data|vbscript):/i', $url)) {
-                    $url = '';
-                }
-                $url = htmlescape($url);
-                $target = $ManualLinkItem['open_window'];
-                $icon = $ManualLinkItem['icon'];
-                if ($target == 1) {
-                    $target = "_blank";
-                } else {
-                    $target = "_self";
-                }
-                if (!empty($icon)) {
-                    $icon = "<i class='ti " . htmlescape($icon) . "' aria-hidden='true' style='margin-right: 5px;'></i>";
-                }
-                echo "<a class='list-group-item list-group-item-action' href='$url' target='$target'>".$icon." ".$name."</a>";
+        $link_entries = [];
+        foreach ($ManualLinkItems as $ManualLinkItem) {
+            $url = (string) $ManualLinkItem['url'];
+            // Only allow http(s) or relative URLs; reject javascript:/data:/vbscript: schemes.
+            if (preg_match('/^\s*(javascript|data|vbscript):/i', $url)) {
+                $url = '';
             }
-
-            echo "</div>";
-        } else {
-            echo __("No associated links", 'webapplications');
+            $target = ($ManualLinkItem['open_window'] == 1) ? "_blank" : "_self";
+            $icon_html = "";
+            if (!empty($ManualLinkItem['icon'])) {
+                $icon_html = "<i class='ti " . htmlescape($ManualLinkItem['icon'])
+                    . "' aria-hidden='true' style='margin-right: 5px;'></i>";
+            }
+            $link_entries[] = [
+                'url'       => $url,
+                'target'    => $target,
+                'icon_html' => $icon_html,
+                'label'     => $ManualLinkItem['name'],
+            ];
         }
 
-        echo "</div>";
+        ob_start();
+        Dashboard::showTitleforDashboard(
+            _n('Associated document', 'Associated documents', count($docuItems), 'webapplications'),
+            $ApplianceId,
+            $documentItemDBTM
+        );
+        $doc_title = ob_get_clean();
+
+        ob_start();
+        Dashboard::showTitleforDashboard(
+            _n('Associated contract', 'Associated contracts', count($contractItems), 'webapplications'),
+            $ApplianceId,
+            $contractItemDBTM
+        );
+        $contract_title = ob_get_clean();
+
+        ob_start();
+        Dashboard::showTitleforDashboard(
+            _n('Associated link', 'Associated links', count($ManualLinkItems), 'webapplications'),
+            $ApplianceId,
+            $ManualLinkDBTM
+        );
+        $link_title = ob_get_clean();
+
+        ob_start();
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_linklist.html.twig', [
+            'title_html'        => $doc_title,
+            'entries'           => $doc_entries,
+            'empty_message'     => __("No associated documents", 'webapplications'),
+            'break_after_list'  => '<br>',
+            'break_after_empty' => '<br><br>',
+        ]);
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_linklist.html.twig', [
+            'title_html'        => $contract_title,
+            'entries'           => $contract_entries,
+            'empty_message'     => __("No associated contracts", 'webapplications'),
+            'break_after_list'  => '<br>',
+            'break_after_empty' => '<br><br>',
+        ]);
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_linklist.html.twig', [
+            'title_html'    => $link_title,
+            'entries'       => $link_entries,
+            'empty_message' => __("No associated links", 'webapplications'),
+        ]);
+        $content = ob_get_clean();
+
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_child33.html.twig', [
+            'content' => $content,
+        ]);
     }
 
 

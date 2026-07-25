@@ -121,17 +121,26 @@ class Dashboard extends CommonDBTM
     {
         global $CFG_GLPI;
 
-        echo "<div class='center' style='margin-top: 10px'>";
-        $rand = \Appliance::dropdown(['name' => 'applianceDropdown', 'value' => $id]);
-        echo "</div>";
+        $rand = mt_rand();
+        $dropdown_html = \Appliance::dropdown([
+            'name'    => 'applianceDropdown',
+            'value'   => $id,
+            'rand'    => $rand,
+            'display' => false,
+        ]);
 
-
-        echo "<div id='lists-dashboard'>";
+        $list_html = "";
         if ($id > 0) {
             $dashboard = new self();
+            ob_start();
             $dashboard->display(['id' => 1, 'appliances_id' => $id]);
+            $list_html = ob_get_clean();
         }
-        echo "</div>";
+
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_select.html.twig', [
+            'dropdown_html' => $dropdown_html,
+            'list_html'     => $list_html,
+        ]);
 
         $array['value'] = '__VALUE__';
         $array['type'] = self::getType();
@@ -162,8 +171,6 @@ class Dashboard extends CommonDBTM
 
         self::showHeaderDashboard($ApplianceId);
 
-        echo "<div style='display: flex;flex-wrap: wrap;'>";
-
         $userAdminId = $appliance->fields['users_id_tech'] ?? 0;
         $groupsAdminId = $appliance->fields['groups_id_tech'] ?? [];
         $Group_User = new Group_User();
@@ -180,158 +187,106 @@ class Dashboard extends CommonDBTM
 
         $applianceplugin = new Appliance();
         $applianceplugin->getFromDBByCrit(['appliances_id' => $ApplianceId]);
-
-        echo "<div class='card-body child33' style='text-align:center;font-weight: bold'>";
-        echo "<h2>";
-        echo _n('User', 'Users', 2);
-        echo "</h2>";
-        echo "<i class='fa fa-users fa-3x'></i>";
-        echo "<br>";
-        echo "<h1>";
         $number_users = $applianceplugin->fields['number_users'] ?? 0;
-        echo Appliance::getNbUsersValue($number_users);
-        echo "</h1>";
-        echo "</div>";
 
-        echo "<div class='card-body child33' style='text-align:center;font-weight: bold'>";
-        echo "<h2>";
-        echo __('Project leader', 'webapplications');
-        echo "</h2>";
-        echo "<i class='fa fa-user-cog fa-3x'></i>";
-        echo "<br>";
-        echo "<h2>";
-        echo htmlescape(getUserName($userAdminId));
-        echo "</h2>";
-        echo "</div>";
-
-        echo "<div class='card-body child33' style='text-align:center;font-weight: bold'>";
-        echo "<h2>";
-        echo __('Project team', 'webapplications');
-        echo "</h2>";
-        echo "<i class='fa fa-users-cog fa-3x'></i>";
-        echo "<br>";
-        echo "<h1>";
-        echo $numberAdmin;
-        echo "</h1>";
-        echo "</div>";
-
-        echo "</div>";
-
-        echo "<div style='display: flex;flex-wrap: wrap;'>";
-
+        // Capture the sub-renderers (GLPI helpers / already-migrated methods) so the
+        // page structure lives in the Twig template instead of raw echoes.
+        ob_start();
         Appliance::showSupportPartFromDashboard($appliance);
-
         Appliance::showDocumentsAndContractsFromDashboard($appliance);
-
         Knowbase::showFromDashboard($appliance);
+        $support_html = ob_get_clean();
 
-        echo "</div>";
+        ob_start();
+        self::showTitleforDashboard(__('Summary', 'webapplications'), $ApplianceId, $applianceplugin, "edit", "editapp");
+        $summary_title_html = ob_get_clean();
 
-        echo "<div class='card-body border-0'>";
-        $title = __('Summary', 'webapplications');
-        self::showTitleforDashboard($title, $ApplianceId, $applianceplugin, "edit", "editapp");
-
-        echo "</div>";
-
-        $options = [];
-        $options['canedit'] = false;
-        $options['candel'] = false;
-
+        $summaryOptions = [];
+        $summaryOptions['canedit'] = false;
+        $summaryOptions['candel'] = false;
+        ob_start();
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_summary.html.twig', [
             'item' => $appliance,
-            'params' => $options,
+            'params' => $summaryOptions,
             'no_header' => true,
         ]);
+        $summary_html = ob_get_clean();
 
-        echo "<div style='display: flex;flex-wrap: wrap;'>";
-
+        ob_start();
         self::showFromDashboard($appliance, new Entity());
-
         self::showFromDashboard($appliance, new Process());
-
         self::showFromDashboard($appliance, new PhysicalInfrastructure());
-
         self::showFromDashboard($appliance, new \DatabaseInstance());
-
         self::showFromDashboard($appliance, new \Certificate());
-
         self::showFromDashboard($appliance, new Stream());
+        $objects_html = ob_get_clean();
 
-        echo "</div>";
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_main.html.twig', [
+            'users_label'        => _n('User', 'Users', 2),
+            'users_value'        => Appliance::getNbUsersValue($number_users),
+            'leader_label'       => __('Project leader', 'webapplications'),
+            'leader_name'        => getUserName($userAdminId),
+            'team_label'         => __('Project team', 'webapplications'),
+            'team_number'        => $numberAdmin,
+            'support_html'       => $support_html,
+            'summary_title_html' => $summary_title_html,
+            'summary_html'       => $summary_html,
+            'objects_html'       => $objects_html,
+        ]);
     }
 
     //0296333734
 
     public static function showHeaderDashboard($ApplianceId)
     {
-        echo "<div class='card-header card-web-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch'>";
-        echo "<h3 class='card-title d-flex align-items-center ps-4'>";
-
-        echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
         $appliance = new \Appliance();
         $appliance->getFromDB($ApplianceId);
-        $icon = $appliance->getIcon();
-        echo "<i class='" . $icon . " fa-2x'></i>";
-        echo "</div>";
 
-        echo "<h1 style='margin: auto'>";
-        $linkApp = \Appliance::getFormURLWithID($appliance->getID());
-        $name = $appliance->getLink();
-        echo "<a href='$linkApp'>" . $name . "</a>";
-        echo "</h1>";
-        echo "</h3>";
-
-        echo "</div>";
-        echo "</div>";
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_header.html.twig', [
+            'icon'      => $appliance->getIcon(),
+            'link_url'  => \Appliance::getFormURLWithID($appliance->getID()),
+            'link_html' => $appliance->getLink(),
+        ]);
     }
 
     public static function showTitleforDashboard($title, $id, $item = false, $type = "add", $name = "")
     {
-        // <i class='fas fa-1x fa-caret-right'></i>
-
         $icon = "";
         if ($item != false && $id > 0) {
             if ($item->getType() == "Contract_Item") {
-                $icon = "<i class='" . Contract::getIcon() . " fa-1x'></i>";
+                $icon = Contract::getIcon();
             } else {
-                $icon = "<i class='" . $item->getIcon() . " fa-1x'></i>";
+                $icon = $item->getIcon();
             }
-
         }
-        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
-        echo "&nbsp;<span style='margin-right: auto;'>$title</span>";
 
+        $action_html = "";
         if ($item != false && $id > 0 && $name != "") {
-            //            echo "<div class='ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1'>";
-            //            echo "<i class='" . $item->getIcon() . " fa-2x'></i>";
-            //            echo "</div>";
-
             if ($type == "add") {
                 if ($item->getType() == "Supplier") {
-                    $linkApp = PLUGIN_WEBAPPLICATIONS_WEBDIR.'/front/supplier.form.php';
+                    $linkApp = PLUGIN_WEBAPPLICATIONS_WEBDIR . '/front/supplier.form.php';
                 } else {
                     $linkApp = $item::getFormURL();
                 }
 
-                $title = _sx('button', 'Add');
+                $btntitle = _sx('button', 'Add');
             } else {
                 if ($item->getType() == "Supplier") {
-                    $linkApp = PLUGIN_WEBAPPLICATIONS_WEBDIR.'/front/supplier.form.php?id='.$id;
+                    $linkApp = PLUGIN_WEBAPPLICATIONS_WEBDIR . '/front/supplier.form.php?id=' . $id;
                 } else {
                     $linkApp = $item::getFormURLWithID($id);
                 }
 
                 $linkApp .= "&forcetab=main";
-                $title = _sx('button', 'Edit');
+                $btntitle = _sx('button', 'Edit');
             }
 
             $rand = mt_rand();
             if ($item->getType() != "DatabaseInstance"
                 && $item->getType() != PhysicalInfrastructure::class
                 && $item->canUpdate()) {
-                echo "<span style='float: right'>";
-                echo Html::submit(
-                    $title,
+                $action_html = Html::submit(
+                    $btntitle,
                     [
                         'name' => 'edit',
                         'class' => 'btn btn-secondary',
@@ -342,7 +297,7 @@ class Dashboard extends CommonDBTM
                     ]
                 );
 
-                echo Ajax::createIframeModalWindow(
+                $action_html .= Ajax::createIframeModalWindow(
                     $name . $id . $rand,
                     $linkApp,
                     [
@@ -350,18 +305,20 @@ class Dashboard extends CommonDBTM
                         'reloadonclose' => true,
                     ]
                 );
-                echo "</span>";
             }
         }
-        echo "</h2>";
+
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_title.html.twig', [
+            'icon'        => $icon,
+            'title'       => $title,
+            'action_html' => $action_html,
+        ]);
     }
 
 
     public static function showFromDashboard($appliance, $item)
     {
         global $DB;
-
-        echo "<div class='card-body child50'>";
 
         $ApplianceId = $appliance->getField('id');
 
@@ -376,107 +333,127 @@ class Dashboard extends CommonDBTM
         }
         $title = $item->getTypeName(count($apps));
 
+        ob_start();
         self::showTitleforDashboard($title, $ApplianceId, $item);
+        $title_html = ob_get_clean();
 
         $obj = new $item();
 
-        echo "<div class='row flex-row'>";
-        echo "<div class='form-field row col-12 col-sm-12 mb-2'>";
-
-        echo "<div class='col-xxl-12 field-container list-group' style='display: grid; grid-template-columns: 1fr 1fr; gap: 10px;'>";
+        $entries = [];
         if (!empty($apps)) {
             foreach ($apps as $app) {
                 if ($item->getType() == PhysicalInfrastructure::class) {
                     $itemDBTM = new $app['itemtype']();
                     if ($itemDBTM->getFromDB($app['id'])) {
-                        $name = htmlescape($itemDBTM->getName());
-                        $link = $itemDBTM::getFormURLWithID($app['id']);
-
-                        echo "<div style='padding:5px;'>";
-                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
-
-                        $items = $DB->request([
-                            'FROM' => Appliance_Item::getTable(),
-                            'WHERE' => [
-                                'items_id' => $app['id'],
-                                'itemtype' => $app['itemtype'],
-                            ],
-                        ]);
-                        $items = iterator_to_array($items);
-
-                        foreach ($items as $row) {
-                            $iterator = $DB->request([
-                                'FROM' => Appliance_Item_Relation::getTable(),
-                                'WHERE' => [
-                                    Appliance_Item::getForeignKeyField() => $row['id'],
-                                ],
-                            ]);
-
-                            foreach ($iterator as $objrow) {
-                                $envtype = $objrow['itemtype'];
-                                $env = new $envtype();
-                                $env->getFromDB($objrow['items_id']);
-                                echo " - " . htmlescape($env->getName());
-                            }
-                        }
-                        echo "</a>";
-                        echo "</div>";
+                        $label = $itemDBTM->getName();
+                        $url = $itemDBTM::getFormURLWithID($app['id']);
+                        $label .= self::getRelatedEnvironmentsLabel($app['id'], $app['itemtype']);
+                        $entries[] = ['url' => $url, 'label' => $label];
                     }
                 } elseif ($item->getType() == "Certificate") {
-                    //                    $itemDBTM = new $app['itemtype'];
                     if ($item->getFromDB($app['id'])) {
-                        $name = htmlescape($item->getName());
-                        $link = $item::getFormURLWithID($app['id']);
-                        echo "<div style='padding:5px;'>";
-                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
-                        echo "</a>";
-                        echo "</div>";
+                        $entries[] = [
+                            'url'   => $item::getFormURLWithID($app['id']),
+                            'label' => $item->getName(),
+                        ];
                     }
                 } else {
                     if ($obj->getFromDB($app['items_id'])) {
-                        $name = htmlescape($obj->getName());
-                        $link = $item::getFormURLWithID($app['items_id']);
-
-                        echo "<div style='padding:5px;'>";
-                        echo "<a class='list-group-item list-group-item-action' href='$link'>$name";
-
+                        $label = $obj->getName();
+                        $url = $item::getFormURLWithID($app['items_id']);
                         if ($item->getType() == "DatabaseInstance") {
-                            $items = $DB->request([
-                                'FROM' => Appliance_Item::getTable(),
-                                'WHERE' => [
-                                    'items_id' => $app['items_id'],
-                                    'itemtype' => 'DatabaseInstance',
-                                ],
-                            ]);
-                            $items = iterator_to_array($items);
-
-                            foreach ($items as $row) {
-                                $iterator = $DB->request([
-                                    'FROM' => Appliance_Item_Relation::getTable(),
-                                    'WHERE' => [
-                                        Appliance_Item::getForeignKeyField() => $row['id'],
-                                    ],
-                                ]);
-
-                                foreach ($iterator as $objrow) {
-                                    $envtype = $objrow['itemtype'];
-                                    $env = new $envtype();
-                                    $env->getFromDB($objrow['items_id']);
-                                    echo " - " . htmlescape($env->getName());
-                                }
-                            }
+                            $label .= self::getRelatedEnvironmentsLabel($app['items_id'], 'DatabaseInstance');
                         }
-                        echo "</a>";
-                        echo "</div>";
+                        $entries[] = ['url' => $url, 'label' => $label];
                     }
                 }
             }
         }
-        echo "</div>";
-        echo "</div>";
-        echo "</div>";
 
-        echo "</div>";
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_from.html.twig', [
+            'title_html' => $title_html,
+            'entries'    => $entries,
+        ]);
+    }
+
+    /**
+     * Build the " - env1 - env2" suffix listing the environments related to an
+     * appliance item, as plain text (escaping is handled by the template).
+     *
+     * @param int    $items_id
+     * @param string $itemtype
+     *
+     * @return string
+     */
+    private static function getRelatedEnvironmentsLabel($items_id, $itemtype): string
+    {
+        global $DB;
+
+        $label = "";
+        $items = $DB->request([
+            'FROM' => Appliance_Item::getTable(),
+            'WHERE' => [
+                'items_id' => $items_id,
+                'itemtype' => $itemtype,
+            ],
+        ]);
+        $items = iterator_to_array($items);
+
+        foreach ($items as $row) {
+            $iterator = $DB->request([
+                'FROM' => Appliance_Item_Relation::getTable(),
+                'WHERE' => [
+                    Appliance_Item::getForeignKeyField() => $row['id'],
+                ],
+            ]);
+
+            foreach ($iterator as $objrow) {
+                $envtype = $objrow['itemtype'];
+                $env = new $envtype();
+                $env->getFromDB($objrow['items_id']);
+                $label .= " - " . $env->getName();
+            }
+        }
+
+        return $label;
+    }
+
+    /**
+     * Build the "Edit" button and its iframe modal window for an object card.
+     * Returns an empty string when the current user cannot update the object.
+     *
+     * @param \CommonDBTM $object
+     * @param int         $id
+     *
+     * @return string
+     */
+    public static function getCardEditHtml($object, int $id): string
+    {
+        if (!$object->canUpdate()) {
+            return '';
+        }
+        $rand = mt_rand();
+        $link = $object::getFormURLWithID($id) . "&forcetab=main";
+        $html = Html::submit(
+            _sx('button', 'Edit'),
+            [
+                'name'           => 'edit',
+                'class'          => 'btn btn-secondary right',
+                'icon'           => 'ti ti-edit',
+                'form'           => '',
+                'data-bs-toggle' => 'modal',
+                'data-bs-target' => '#edit' . $id . $rand,
+            ]
+        );
+        $html .= Ajax::createIframeModalWindow(
+            'edit' . $id . $rand,
+            $link,
+            [
+                'display'       => false,
+                'reloadonclose' => true,
+            ]
+        );
+        return $html;
     }
 
     public static function getObjects($item, $ApplianceId)
@@ -550,22 +527,15 @@ class Dashboard extends CommonDBTM
         self::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addObject');
 
         if ($object->getType() == PhysicalInfrastructure::class) {
-            echo "<form name='form' method='post' action='"
-                . PLUGIN_WEBAPPLICATIONS_WEBDIR . "/front/dashboard.php" . "'>";
+            $form_action = PLUGIN_WEBAPPLICATIONS_WEBDIR . "/front/dashboard.php";
         } elseif ($object->getType() == "Certificate") {
-            echo "<form name='form' method='post' action='"
-                . Toolbox::getItemTypeFormURL('Certificate_Item') . "'>";
+            $form_action = Toolbox::getItemTypeFormURL('Certificate_Item');
         } else {
-            echo "<form name='form' method='post' action='"
-                . Toolbox::getItemTypeFormURL('Appliance_Item') . "'>";
+            $form_action = Toolbox::getItemTypeFormURL('Appliance_Item');
         }
 
-        echo "<div class='center'><table class='tab_cadre_fixe'>";
-        echo "<tr><th colspan='6'>" . __('Add an item') . "</th></tr>";
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td class='center'>";
-
+        // Build the "add an item" dropdown cell content.
+        ob_start();
         if ($object->getType() == PhysicalInfrastructure::class) {
             Dropdown::showSelectItemFromItemtypes(
                 [
@@ -583,56 +553,36 @@ class Dashboard extends CommonDBTM
                 $class::dropdown(['name' => 'items_id', 'used' => $used]);
                 echo Html::hidden('itemtype', ['value' => $object->getType()]);
             }
-
         }
-        echo "</td>";
-        echo "<td class='tab_bg_2 center' colspan='6'>";
+        $dropdown_html = ob_get_clean();
+
         if ($object->getType() == "Certificate") {
-            echo Html::hidden('items_id', ['value' => $ApplianceId]);
+            $hidden_html = Html::hidden('items_id', ['value' => $ApplianceId]);
         } else {
-            echo Html::hidden('appliances_id', ['value' => $ApplianceId]);
+            $hidden_html = Html::hidden('appliances_id', ['value' => $ApplianceId]);
         }
-
-        if ($object->canCreate()) {
-            echo Html::submit(_sx('button', 'Associate'), ['name' => 'add', 'class' => 'btn btn-primary']);
-        }
-        echo "</td>";
-        echo "</tr>";
-        echo "</table></div>";
-
-        Html::closeForm();
 
         $nb = count($list);
-
+        $list_title = "";
         if ($nb > 0) {
-            echo "<h2 class='card-header d-flex justify-content-between align-items-center'>";
             if ($item->getType() == Entity::class) {
-                echo _n("Entity list", "Entities list", $nb, 'webapplications');
+                $list_title = _n("Entity list", "Entities list", $nb, 'webapplications');
             } elseif ($item->getType() == Process::class) {
-                echo _n("Process list", "Processes list", $nb, 'webapplications');
+                $list_title = _n("Process list", "Processes list", $nb, 'webapplications');
             } elseif ($item->getType() == PhysicalInfrastructure::class) {
-                echo _n("Item list", "Items list", $nb, 'webapplications');
+                $list_title = _n("Item list", "Items list", $nb, 'webapplications');
             } elseif ($item->getType() == "DatabaseInstance") {
-                echo _n("Database list", "Databases list", $nb, 'webapplications');
+                $list_title = _n("Database list", "Databases list", $nb, 'webapplications');
             } elseif ($item->getType() == "Certificate") {
-                echo _n("Certificate list", "Certificates list", $nb, 'webapplications');
+                $list_title = _n("Certificate list", "Certificates list", $nb, 'webapplications');
             } elseif ($item->getType() == Stream::class) {
-                echo _n("Stream list", "Streams list", $nb, 'webapplications');
+                $list_title = _n("Stream list", "Streams list", $nb, 'webapplications');
             }
-            echo "</h2>";
         }
 
-        if (empty($list)) {
-            echo "<table class='tab_cadre_fixe'>";
-            echo "<tbody>";
-            echo "<tr class='center'>";
-            echo "<td colspan='4'>";
-            echo __("No associated objects", 'webapplications');
-            echo "</td>";
-            echo "</tr>";
-            echo "</tbody>";
-            echo "</table>";
-        } else {
+        $objects_html = "";
+        if (!empty($list)) {
+            ob_start();
             if ($item->getType() == "DatabaseInstance") {
                 DatabaseInstance::showListObjects($list);
             } elseif ($item->getType() == "Certificate") {
@@ -640,6 +590,19 @@ class Dashboard extends CommonDBTM
             } else {
                 $item::showListObjects($list);
             }
+            $objects_html = ob_get_clean();
         }
+
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_list.html.twig', [
+            'form_action'   => $form_action,
+            'add_title'     => __('Add an item'),
+            'dropdown_html' => $dropdown_html,
+            'hidden_html'   => $hidden_html,
+            'can_create'    => $object->canCreate(),
+            'list_title'    => $list_title,
+            'is_empty'      => empty($list),
+            'empty_message' => __("No associated objects", 'webapplications'),
+            'objects_html'  => $objects_html,
+        ]);
     }
 }

@@ -32,6 +32,7 @@ namespace GlpiPlugin\Webapplications;
 use Ajax;
 use CommonDBTM;
 use CommonGLPI;
+use Glpi\Application\View\TemplateRenderer;
 use Html;
 use Impact;
 use ImpactRelation;
@@ -130,17 +131,17 @@ class LogicalInfrastructure extends CommonDBTM
         $options['candel'] = false;
         $options['colspan'] = 1;
 
+        $rand = mt_rand();
+        $dropdown_html = \Appliance::dropdown([
+            'name'    => 'applianceDropdown',
+            'rand'    => $rand,
+            'display' => false,
+        ]);
 
-        echo "<div class='center'>
-        <table class='tab_cadre_fixe'>";
-        echo "<tr><td colspan='6' style='text-align:right'>" . __('Appliance') . "</td>";
-
-        echo "<td >";
-        $rand = \Appliance::dropdown(['name' => 'applianceDropdown']);
-        echo "</td>";
-        echo "</tr>";
-        echo "</table></div>";
-        echo "<div id=lists-LogicalInfra></div>";
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_logicalinfra_form.html.twig', [
+            'appliance_label' => __('Appliance'),
+            'dropdown_html'   => $dropdown_html,
+        ]);
 
         $array['value'] = '__VALUE__';
         $array['type'] = self::getType();
@@ -161,11 +162,10 @@ class LogicalInfrastructure extends CommonDBTM
 
         Dashboard::showHeaderDashboard($ApplianceId);
 
-        $icon = "<i class='" . self::getIcon() . " fa-1x'></i>";
-
-        echo "<h2 class='card-header card-web-header d-flex justify-content-between align-items-center'>$icon";
-        echo "&nbsp;<span style='margin-right: auto;'>"._n('Logical infrastructure', 'Logical infrastructure', 1,'webapplications')."</span>";
-        echo "</h2>";
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_title.html.twig', [
+            'icon'  => self::getIcon(),
+            'title' => _n('Logical infrastructure', 'Logical infrastructure', 1, 'webapplications'),
+        ]);
 
         $class = get_class($item);
 

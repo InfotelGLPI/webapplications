@@ -29,6 +29,7 @@
 
 use GlpiPlugin\Webapplications\Webapplication;
 use GlpiPlugin\Webapplications\Dashboard;
+use Glpi\Application\View\TemplateRenderer;
 
 // This page runs an irreversible migration that alters and deletes rows in core
 // tables. A READ capability must never authorize schema changes and mass deletion,
@@ -43,10 +44,9 @@ if (!isset($_POST['do_migration'])) {
 
 global $DB;
 
-echo "<div class='center'><h1>" . __('Core migration', 'webapplications') . "</h1><br/>";
+$messages = [];
 
-echo "<table class='center'><tr><td>";
-Html::showSimpleForm(
+$confirm_form = Html::getSimpleForm(
     $_SERVER['PHP_SELF'],
     'migration',
     __('Core migration', 'webapplications'),
@@ -56,16 +56,11 @@ Html::showSimpleForm(
     [__('Are you sure you want to do core migration ?', 'webapplications')]
 );
 
-echo "</td></tr></table>";
-
 if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['do_migration'] == 1) {
     $dbu      = new DbUtils();
     $idUnknow = 0;
 
-    echo "<br>";
-    echo "<br>";
-
-    echo __('Data migration', 'webapplications');
+    $messages[] = __('Data migration', 'webapplications');
 
     $webappstypes = $dbu->getAllDataFromTable('glpi_plugin_webapplications_webapplicationtypes');
     if (!$DB->fieldExists('glpi_appliancetypes', 'old_id')) {
@@ -170,8 +165,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
     $remove_temporary_column_query = "ALTER TABLE `glpi_appliancetypes` DROP `old_id`;";
     $DB->doQuery($remove_temporary_column_query);
 
-    echo "<br>";
-    echo __('Tables purge', 'webapplications');
+    $messages[] = __('Tables purge', 'webapplications');
 
     $tables = ["glpi_plugin_webapplications_webapplications",
                "glpi_plugin_webapplications_webapplications_items"];
@@ -192,11 +186,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
         $DB->doQuery("DROP TABLE IF EXISTS `$oldtable`;");
     }
 
-    echo "<br>";
-
-    echo "<br>";
-    echo __('Link with core purge', 'webapplications');
-    echo "<br>";
+    $messages[] = __('Link with core purge', 'webapplications');
 
     $in = "IN (" . implode(',', array(
           "'GlpiPlugin\Webapplications'"
@@ -216,8 +206,13 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
         $DB->doQuery($query);
     }
 
-    echo __('Migration was successful', 'webapplications');
+    $messages[] = __('Migration was successful', 'webapplications');
 }
 
-echo "</div>";
+TemplateRenderer::getInstance()->display('@webapplications/webapplication_migration.html.twig', [
+    'title'        => __('Core migration', 'webapplications'),
+    'confirm_form' => $confirm_form,
+    'messages'     => $messages,
+]);
+
 Html::footer();

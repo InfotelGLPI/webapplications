@@ -30,11 +30,12 @@
 namespace GlpiPlugin\Webapplications;
 use CommonDBTM;
 use Dropdown;
-use Html;
+use Glpi\Application\View\TemplateRenderer;
 use Plugin;
 use PluginFieldsContainer;
 use PluginFieldsField;
 use Session;
+use Toolbox;
 
 $GLPI_TYPES = [];
 
@@ -126,27 +127,6 @@ class Config extends CommonDBTM
     {
         $this->getFromDB($ID);
 
-        //The configuration is not deletable
-        $options['candel']  = false;
-        $options['colspan'] = 1;
-
-        $this->showFormHeader($options);
-
-        echo "<form name='form' method='post' action='" . $this->getFormURL() . "'>";
-
-        echo "<div align='center'><table class='tab_cadre_fixe'>";
-        echo "<tr><th colspan='2'>".__('Setting up PDF printing', 'webapplications')."</th></tr>";
-
-
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Use description field', 'webapplications');
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showYesNo('use_fields_description', $this->fields['use_fields_description']);
-        echo "</td>";
-        echo "</tr>";
-
         $array = [
             'Appliance|name' => __('Appliance') . ' - ' . __('Name'),
             'Appliance|comment' => __('Appliance') . ' - ' . __('Comment'),
@@ -174,18 +154,27 @@ class Config extends CommonDBTM
             }
         }
 
-        echo "<tr class='tab_bg_1'>";
-        echo "<td>";
-        echo __('Use field', 'webapplications');
-        echo "</td>";
-        echo "<td>";
-        Dropdown::showFromArray('fields', $array, ['value' => $this->fields['fields_description_table'] . '|' . $this->fields['fields_description_name']]);
-        echo "</td>";
-        echo "</tr>";
+        // Capture the GLPI-rendered dropdowns so they can be injected in the Twig template.
+        $use_fields_description_dropdown = Dropdown::showYesNo(
+            'use_fields_description',
+            $this->fields['use_fields_description'],
+            -1,
+            ['display' => false]
+        );
+        $fields_dropdown = Dropdown::showFromArray(
+            'fields',
+            $array,
+            [
+                'value'   => $this->fields['fields_description_table'] . '|' . $this->fields['fields_description_name'],
+                'display' => false,
+            ]
+        );
 
-
-        $this->showFormButtons($options);
-        echo "</table></div>";
-        Html::closeForm();
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_config_form.html.twig', [
+            'item_form_url'                   => Toolbox::getItemTypeFormURL(self::class),
+            'item_id'                         => (int) $this->fields['id'],
+            'use_fields_description_dropdown' => $use_fields_description_dropdown,
+            'fields_dropdown'                 => $fields_dropdown,
+        ]);
     }
 }

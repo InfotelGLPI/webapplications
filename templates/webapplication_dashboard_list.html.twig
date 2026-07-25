@@ -1,0 +1,60 @@
+{#
+ -------------------------------------------------------------------------
+ webapplications plugin for GLPI
+ Copyright (C) 2015-2026 by the webapplications Development Team.
+
+ https://github.com/InfotelGLPI/webapplications
+ -------------------------------------------------------------------------
+
+ LICENSE
+
+ This file is part of webapplications.
+
+ webapplications is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+
+ webapplications is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ --------------------------------------------------------------------------
+ #}
+
+<form name="form" method="post" action="{{ form_action }}">
+   <div class="center">
+      <table class="tab_cadre_fixe">
+         <tr><th colspan="6">{{ add_title }}</th></tr>
+         <tr class="tab_bg_1">
+            <td class="center">{{ dropdown_html|raw }}</td>
+            <td class="tab_bg_2 center" colspan="6">
+               {{ hidden_html|raw }}
+               {% if can_create %}
+                  <button type="submit" name="add" class="btn btn-primary">{{ _x('button', 'Associate') }}</button>
+               {% endif %}
+            </td>
+         </tr>
+      </table>
+   </div>
+   <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
+</form>
+
+{% if list_title %}
+   <h2 class="card-header d-flex justify-content-between align-items-center">{{ list_title }}</h2>
+{% endif %}
+
+{% if is_empty %}
+   <table class="tab_cadre_fixe">
+      <tbody>
+         <tr class="center">
+            <td colspan="4">{{ empty_message }}</td>
+         </tr>
+      </tbody>
+   </table>
+{% else %}
+   {{ objects_html|raw }}
+{% endif %}

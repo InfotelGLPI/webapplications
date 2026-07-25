@@ -211,70 +211,47 @@ class Entity extends CommonDBTM
     public static function showListObjects($list)
     {
         $object = new self();
-
-        echo "<div style='display: flex;flex-wrap: wrap;'>";
+        $cards = [];
 
         foreach ($list as $field) {
-            $name = $field['name'];
             $id = $field['id'];
             $object->getFromDB($id);
 
-            echo "<div class='card w-33' style='margin-right: 10px;margin-top: 10px;'>";
-            echo "<div class='card-body'>";
-            echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i class='".self::getIcon()."' style='font-size:5em'></i>";
-            echo "</div>";
-            echo "<div style='display: inline-block;'>";
-            echo "<h5 class='card-title' style='font-size: 14px;'>" . $object->getLink() . "</h5>";
+            $blocks = [];
             if ($object->fields['owner'] > 0) {
-                echo "<p class='card-text'>";
-                echo __('Owner', 'webapplications')." : ".htmlescape(getUserName($object->fields['owner']));
-                echo "</p>";
+                $blocks[] = [
+                    'kind'  => 'info',
+                    'label' => __('Owner', 'webapplications'),
+                    'value' => getUserName($object->fields['owner']),
+                ];
             }
             if ($object->fields['security_contact'] > 0) {
-                echo "<p class='card-text'>";
-                echo __('Security Contact', 'webapplications') . " : " . htmlescape(getUserName(
-                        $object->fields['security_contact']
-                    ));
-                echo "</p>";
+                $blocks[] = [
+                    'kind'  => 'info',
+                    'label' => __('Security Contact', 'webapplications'),
+                    'value' => getUserName($object->fields['security_contact']),
+                ];
             }
             if (!empty($object->fields['relation_nature'])) {
-                echo "<p class='card-text'>";
-                echo __('Relation nature', 'webapplications') . " : " . htmlescape($object->fields['relation_nature']);
-                echo "</p>";
+                $blocks[] = [
+                    'kind'  => 'info',
+                    'label' => __('Relation nature', 'webapplications'),
+                    'value' => $object->fields['relation_nature'],
+                ];
             }
-            $link = $object::getFormURLWithID($id);
-            $link .= "&forcetab=main";
-            $rand = mt_rand();
-            echo "<span style='float: right'>";
-            if ($object->canUpdate()) {
-                echo Html::submit(
-                    _sx('button', 'Edit'),
-                    [
-                        'name' => 'edit',
-                        'class' => 'btn btn-secondary right',
-                        'icon' => 'ti ti-edit',
-                        'form' => '',
-                        'data-bs-toggle' => 'modal',
-                        'data-bs-target' => '#edit' . $id . $rand
-                    ]
-                );
 
-                echo Ajax::createIframeModalWindow(
-                    'edit' . $id . $rand,
-                    $link,
-                    [
-                        'display' => false,
-                        'reloadonclose' => true
-                    ]
-                );
-            }
-            echo "</span>";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
-
+            $cards[] = [
+                'width_class' => 'w-33',
+                'icon'        => self::getIcon(),
+                'icon_size'   => '5em',
+                'title_html'  => $object->getLink(),
+                'blocks'      => $blocks,
+                'edit_html'   => Dashboard::getCardEditHtml($object, (int) $id),
+            ];
         }
-        echo "</div>";
+
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_object_cards.html.twig', [
+            'cards' => $cards,
+        ]);
     }
 }

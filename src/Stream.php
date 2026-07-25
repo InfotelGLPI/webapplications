@@ -350,23 +350,12 @@ class Stream extends CommonDBTM
     public static function showListObjects($list)
     {
         $object = new self();
-
-        echo "<div style='display: flex;flex-wrap: wrap;'>";
+        $cards = [];
 
         foreach ($list as $field) {
             $name = $field['name'];
             $id = $field['id'];
             $object->getFromDB($id);
-
-//            echo "<h3 class='accordionhead'>";
-//            echo $name;
-//            echo "</td>";
-//            echo "</h3>";
-//
-//            echo "<div class='panel' id='tabsbody'>";
-//            $options = [];
-//            $options['canedit'] = false;
-//            $options['candel'] = false;
 
             $linkReceiver = __('All');
             $receiverType = $field['receiver_type'];
@@ -376,7 +365,7 @@ class Stream extends CommonDBTM
                 $receiver->getFromDB($receiverid);
                 $linkR = $receiverType::getFormURLWithID($receiverid);
                 $receiverName = htmlescape($receiver->getName());
-                $linkReceiver = "<a href='$linkR'>" . $receiverName . "</a>";
+                $linkReceiver = "<a href='" . htmlescape($linkR) . "'>" . $receiverName . "</a>";
             }
 
             $linkTransmitter = __('All');
@@ -387,62 +376,42 @@ class Stream extends CommonDBTM
                 $transmitter->getFromDB($transmitterid);
                 $linkT = $transmitterType::getFormURLWithID($transmitterid);
                 $transmitterName = htmlescape($transmitter->getName());
-                $linkTransmitter = "<a href='$linkT'>" . $transmitterName . "</a>";
+                $linkTransmitter = "<a href='" . htmlescape($linkT) . "'>" . $transmitterName . "</a>";
             }
 
+            $title_html = "<i class='ti ti-network'></i>&nbsp;" . $linkTransmitter . "&nbsp;"
+                . "<i class='fa-1x ti ti-arrow-narrow-right'></i>"
+                . "&nbsp;<i class='ti ti-network'></i>&nbsp;" . $linkReceiver;
 
-            echo "<div class='card w-25' style='margin-right: 10px;margin-top: 10px;'>";
-            echo "<div class='card-body'>";
-            echo "<div style='display: inline-block;margin: 40px;'>";
-            echo "<i style='font-size:3em' class='" . self::getIcon() . "'></i>";
-            echo "</div>";
-            echo "<div style='display: inline-block;';>";
-
-            echo "<h5 class='card-title'><i class='ti ti-network'></i>&nbsp;" . $linkTransmitter . "&nbsp;";
-            echo "<i class='fa-1x ti ti-arrow-narrow-right'></i>";
-            echo "&nbsp;<i class='ti ti-network'></i>&nbsp;" . $linkReceiver . "</h5>";
-            echo "<p class='card-text'>";
-            echo htmlescape($name);
-            echo "</p>";
-            echo "<p class='card-text'>";
-            echo htmlescape($object->fields['protocol']) . " - " . htmlescape($object->fields['port']);
-            echo "</p>";
+            $blocks = [];
+            $blocks[] = [
+                'kind'  => 'text',
+                'value' => $name,
+            ];
+            $blocks[] = [
+                'kind'  => 'text',
+                'value' => $object->fields['protocol'] . " - " . $object->fields['port'],
+            ];
             if ($object->fields['encryption'] == 1) {
-                echo "<p class='card-text'>";
-                echo __('Encryption type', 'webapplications') . " : " . htmlescape($object->fields['encryption_type']);
-                echo "</p>";
+                $blocks[] = [
+                    'kind'  => 'info',
+                    'label' => __('Encryption type', 'webapplications'),
+                    'value' => $object->fields['encryption_type'],
+                ];
             }
-            $link = $object::getFormURLWithID($id);
-            $link .= "&forcetab=main";
-            $rand = mt_rand();
-            echo "<span style='float: right'>";
-            if ($object->canUpdate()) {
-                echo Html::submit(
-                    _sx('button', 'Edit'),
-                    [
-                        'name' => 'edit',
-                        'class' => 'btn btn-secondary right',
-                        'icon' => 'ti ti-edit',
-                        'form' => '',
-                        'data-bs-toggle' => 'modal',
-                        'data-bs-target' => '#edit' . $id . $rand
-                    ]
-                );
 
-                echo Ajax::createIframeModalWindow(
-                    'edit' . $id . $rand,
-                    $link,
-                    [
-                        'display' => false,
-                        'reloadonclose' => true
-                    ]
-                );
-            }
-            echo "</span>";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
+            $cards[] = [
+                'width_class' => 'w-25',
+                'icon'        => self::getIcon(),
+                'icon_size'   => '3em',
+                'title_html'  => $title_html,
+                'blocks'      => $blocks,
+                'edit_html'   => Dashboard::getCardEditHtml($object, (int) $id),
+            ];
         }
-        echo "</div>";
+
+        TemplateRenderer::getInstance()->display('@webapplications/webapplication_object_cards.html.twig', [
+            'cards' => $cards,
+        ]);
     }
 }

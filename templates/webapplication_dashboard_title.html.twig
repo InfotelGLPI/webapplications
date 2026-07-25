@@ -1,6 +1,4 @@
-<?php
-
-/*
+{#
  -------------------------------------------------------------------------
  webapplications plugin for GLPI
  Copyright (C) 2015-2026 by the webapplications Development Team.
@@ -25,35 +23,12 @@
  You should have received a copy of the GNU General Public License
  along with webapplications. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
- */
+ #}
 
-Session::checkLoginUser();
-
-use GlpiPlugin\Webapplications\Stream;
-use GlpiPlugin\Webapplications\Stream_Item;
-
-if (!isset($_GET["id"])) {
-    $_GET["id"] = "";
-}
-if (!isset($_GET["withtemplate"])) {
-    $_GET["withtemplate"] = "";
-}
-
-$streamItem = new Stream_Item();
-
-if (isset($_POST["add"])) {
-    // Check the right on the record actually being written (the relation),
-    // not on an unrelated Stream instance.
-    $streamItem->check(-1, CREATE, $_POST);
-    $newID = $streamItem->add($_POST);
-    if ($_SESSION['glpibackcreated']) {
-        Html::redirect($streamItem->getFormURL() . "?id=" . $newID);
-    }
-    Html::back();
-} elseif (isset($_POST["update"])) {
-    // $_POST['id'] is a Stream_Item id: reload and check that record so the
-    // authorization is evaluated on the object that update() will modify.
-    $streamItem->check($_POST['id'], UPDATE);
-    $streamItem->update($_POST);
-    Html::back();
-}
+<h2 class="card-header card-web-header d-flex justify-content-between align-items-center">
+   {% if icon is defined and icon %}<i class="{{ icon }} fa-1x"></i>{% endif %}
+   &nbsp;<span style="margin-right: auto;">{{ title }}</span>
+   {% if action_html is defined and action_html %}
+      <span style="float: right">{{ action_html|raw }}</span>
+   {% endif %}
+</h2>
