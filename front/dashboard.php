@@ -46,31 +46,40 @@ if (isset($_POST['add'])) {
     $iapp->check(-1, CREATE, $_POST);
     $iapp->add($_POST);
 
-    if ($_POST['itemtype'] == 'Computer') {
+    // The impact-analysis relations built below mirror the appliance's impact graph.
+    // Being allowed to link an item (checked above) must not, on its own, let a user
+    // mutate impact analysis: gate that on UPDATE over the target appliance, and cast
+    // every client-supplied identifier to its expected type before reuse.
+    $appliances_id = (int) ($_POST['appliances_id'] ?? 0);
+    $items_id      = (int) ($_POST['items_id'] ?? 0);
+    $itemtype      = (string) ($_POST['itemtype'] ?? '');
+    $can_impact    = $appliances_id > 0 && (new \Appliance())->can($appliances_id, UPDATE);
+
+    if ($itemtype == 'Computer') {
         $item = new \Appliance();
-        $item->getFromDB($_POST['appliances_id']);
+        $item->getFromDB($appliances_id);
 
         $instances = getAllDataFromTable(
             \DatabaseInstance::getTable(),
             [
                 'WHERE' => [
-                    'items_id' => $_POST['items_id'],
-                    'itemtype' => $_POST['itemtype'],
+                    'items_id' => $items_id,
+                    'itemtype' => $itemtype,
                 ],
             ]
         );
         foreach ($instances as $row) {
-            $input['appliances_id'] = $_POST['appliances_id'];
+            $input['appliances_id'] = $appliances_id;
             $input['items_id'] = $row['id'];
             $input['itemtype'] = "DatabaseInstance";
-            if ($iapp->add($input)) {
+            if ($iapp->add($input) && $can_impact) {
 
                 $i_items = getAllDataFromTable(
                     ImpactItem::getTable(),
                     [
                         'WHERE' => [
                             'itemtype' => 'Appliance',
-                            'items_id' => $_POST['appliances_id'],
+                            'items_id' => $appliances_id,
                         ]
                     ]
                 );
@@ -84,8 +93,8 @@ if (isset($_POST['add'])) {
                     ]);
                     $impactr = new ImpactRelation();
                     $impactr->add([
-                        'itemtype_source' => $_POST['itemtype'],
-                        'items_id_source' => $_POST['items_id'],
+                        'itemtype_source' => $itemtype,
+                        'items_id_source' => $items_id,
                         'itemtype_impacted' => 'DatabaseInstance',
                         'items_id_impacted' => $row['id'],
                     ]);
@@ -94,32 +103,33 @@ if (isset($_POST['add'])) {
         }
     }
 
-    $i_items = getAllDataFromTable(
-        ImpactItem::getTable(),
-        [
-            'WHERE' => [
-                'itemtype' => 'Appliance',
-                'items_id' => $_POST['appliances_id'],
+    if ($can_impact) {
+        $i_items = getAllDataFromTable(
+            ImpactItem::getTable(),
+            [
+                'WHERE' => [
+                    'itemtype' => 'Appliance',
+                    'items_id' => $appliances_id,
+                ]
             ]
-        ]
-    );
+        );
 
-    foreach ($i_items as $i_item) {
-        $impact = new ImpactItem();
-        $impact->add([
-            'impactcontexts_id' => $i_item['impactcontexts_id'],
-            'itemtype' => $_POST['itemtype'],
-            'items_id' => $_POST['items_id']
-        ]);
-        $impactr = new ImpactRelation();
-        $impactr->add([
-            'itemtype_source' => 'Appliance',
-            'items_id_source' => $_POST['appliances_id'],
-            'itemtype_impacted' => $_POST['itemtype'],
-            'items_id_impacted' => $_POST['items_id'],
-        ]);
+        foreach ($i_items as $i_item) {
+            $impact = new ImpactItem();
+            $impact->add([
+                'impactcontexts_id' => $i_item['impactcontexts_id'],
+                'itemtype' => $itemtype,
+                'items_id' => $items_id
+            ]);
+            $impactr = new ImpactRelation();
+            $impactr->add([
+                'itemtype_source' => 'Appliance',
+                'items_id_source' => $appliances_id,
+                'itemtype_impacted' => $itemtype,
+                'items_id_impacted' => $items_id,
+            ]);
+        }
     }
-
 
     Html::back();
 } elseif (isset($_POST['reset'])) {

@@ -38,7 +38,14 @@ Session::checkRight(Dashboard::$rightname,READ);
 
 if (isset($_POST['value'])
     && $_POST['value'] > 0) {
-    $_SESSION['plugin_webapplications_loaded_appliances_id'] = $_POST['value'];
+    $appliances_id = (int) $_POST['value'];
+    // The appliance id is user-controlled and is later read back from session by the tab
+    // renderers (Dashboard::showList) without re-checking. Enforce object-level right +
+    // entity access here, before storing it in session.
+    if (!(new \Appliance())->can($appliances_id, READ)) {
+        throw new \Glpi\Exception\Http\AccessDeniedHttpException();
+    }
+    $_SESSION['plugin_webapplications_loaded_appliances_id'] = $appliances_id;
     $dashboard = new Dashboard();
     $dashboard->display(['id' => 1, 'appliances_id' => $_SESSION['plugin_webapplications_loaded_appliances_id']]);
 }

@@ -32,6 +32,7 @@ namespace GlpiPlugin\Webapplications;
 use CommonDBTM;
 use CommonGLPI;
 use Glpi\Application\View\TemplateRenderer;
+use Glpi\Exception\Http\AccessDeniedHttpException;
 use KnowbaseItem;
 use KnowbaseItem_Item;
 
@@ -79,9 +80,18 @@ class Knowbase extends CommonDBTM
     public static function showLists()
     {
 
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+        $ApplianceId = (int) ($_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0);
         $item = new \Appliance();
-        $item->getFromDB($ApplianceId);
+        // Defense in depth: the appliance id is read from session (set from user input in
+        // ajax/getLists.php). When an appliance is selected, re-validate object-level
+        // right + entity access so this tab can never expose an out-of-scope appliance.
+        if ($ApplianceId > 0) {
+            if (!$item->can($ApplianceId, READ)) {
+                throw new AccessDeniedHttpException();
+            }
+        } else {
+            $item->getFromDB($ApplianceId);
+        }
 
         Dashboard::showHeaderDashboard($ApplianceId);
 

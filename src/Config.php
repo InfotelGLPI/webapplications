@@ -123,10 +123,15 @@ class Config extends CommonDBTM
         return parent::prepareInputForUpdate($input);
     }
 
-    public function showForm($ID, array $options = [])
+    /**
+     * Allowed "fields" choices for the PDF description selector, keyed by the
+     * "table|name" token that gets persisted in configuration. Used both to
+     * render the dropdown and to whitelist the submitted value server-side.
+     *
+     * @return array<string,string>
+     */
+    public static function getFieldsChoices(): array
     {
-        $this->getFromDB($ID);
-
         $array = [
             'Appliance|name' => __('Appliance') . ' - ' . __('Name'),
             'Appliance|comment' => __('Appliance') . ' - ' . __('Comment'),
@@ -153,6 +158,15 @@ class Config extends CommonDBTM
                 }
             }
         }
+
+        return $array;
+    }
+
+    public function showForm($ID, array $options = [])
+    {
+        $this->getFromDB($ID);
+
+        $array = self::getFieldsChoices();
 
         // Capture the GLPI-rendered dropdowns so they can be injected in the Twig template.
         $use_fields_description_dropdown = Dropdown::showYesNo(

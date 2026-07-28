@@ -500,11 +500,20 @@ class Dashboard extends CommonDBTM
 
         echo Html::css(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/css/webapplications.css");
 
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
-        ;
+        $ApplianceId = (int) ($_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0);
 
         $appliance = new \Appliance();
-        $appliance->getFromDB($ApplianceId);
+        // Defense in depth: this id is read from session (set from user input in
+        // ajax/getLists.php). When an appliance is actually selected, re-validate
+        // object-level right + entity access here so a tab render can never expose an
+        // appliance the user has no access to. can() loads the record on success.
+        if ($ApplianceId > 0) {
+            if (!$appliance->can($ApplianceId, READ)) {
+                throw new AccessDeniedHttpException();
+            }
+        } else {
+            $appliance->getFromDB($ApplianceId);
+        }
 
         self::showHeaderDashboard($ApplianceId);
 
