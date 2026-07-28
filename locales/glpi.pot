@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 09:22+0000\n"
+"POT-Creation-Date: 2026-07-28 17:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,7 +116,7 @@ msgid_plural "Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:577
+#: src/Dashboard.php:586
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] ""
@@ -138,7 +138,7 @@ msgstr ""
 msgid "Data migration"
 msgstr ""
 
-#: src/Dashboard.php:575
+#: src/Dashboard.php:584
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
@@ -162,7 +162,7 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: src/Dashboard.php:569
+#: src/Dashboard.php:578
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Integrity"
 msgstr ""
 
-#: src/Dashboard.php:573
+#: src/Dashboard.php:582
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
@@ -207,7 +207,7 @@ msgstr[1] ""
 msgid "Link with core purge"
 msgstr ""
 
-#: src/LogicalInfrastructure.php:54 src/LogicalInfrastructure.php:167
+#: src/LogicalInfrastructure.php:55 src/LogicalInfrastructure.php:177
 msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] ""
@@ -233,7 +233,7 @@ msgstr ""
 msgid "No associated links"
 msgstr ""
 
-#: src/Dashboard.php:604
+#: src/Dashboard.php:613
 msgid "No associated objects"
 msgstr ""
 
@@ -280,7 +280,7 @@ msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:571
+#: src/Dashboard.php:580
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
@@ -330,7 +330,7 @@ msgstr ""
 msgid "Setting up PDF printing"
 msgstr ""
 
-#: front/config.form.php:49 src/Config.php:87 src/Profile.php:232
+#: front/config.form.php:59 src/Config.php:87 src/Profile.php:232
 msgid "Setup"
 msgstr ""
 
@@ -345,7 +345,7 @@ msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Dashboard.php:579
+#: src/Dashboard.php:588
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
