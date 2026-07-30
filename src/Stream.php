@@ -349,69 +349,84 @@ class Stream extends CommonDBTM
 
     public static function showListObjects($list)
     {
-        $object = new self();
-        $cards = [];
+        $object  = new self();
+        $entries = [];
 
         foreach ($list as $field) {
-            $name = $field['name'];
-            $id = $field['id'];
+            $id = (int) $field['id'];
             $object->getFromDB($id);
 
+            // Endpoint (transmitter / receiver): itemtype + id, else "All".
             $linkReceiver = __('All');
             $receiverType = $field['receiver_type'];
-            $receiverid = $field['receiver'];
+            $receiverid   = $field['receiver'];
             if (!empty($receiverType) && !empty($receiverid)) {
-                $receiver = new $receiverType;
+                $receiver = new $receiverType();
                 $receiver->getFromDB($receiverid);
-                $linkR = $receiverType::getFormURLWithID($receiverid);
+                $linkR        = $receiverType::getFormURLWithID($receiverid);
                 $receiverName = htmlescape($receiver->getName());
                 $linkReceiver = "<a href='" . htmlescape($linkR) . "'>" . $receiverName . "</a>";
             }
 
             $linkTransmitter = __('All');
             $transmitterType = $field['transmitter_type'];
-            $transmitterid = $field['transmitter'];
+            $transmitterid   = $field['transmitter'];
             if (!empty($transmitterType) && !empty($transmitterid)) {
-                $transmitter = new $transmitterType;
+                $transmitter = new $transmitterType();
                 $transmitter->getFromDB($transmitterid);
-                $linkT = $transmitterType::getFormURLWithID($transmitterid);
+                $linkT           = $transmitterType::getFormURLWithID($transmitterid);
                 $transmitterName = htmlescape($transmitter->getName());
                 $linkTransmitter = "<a href='" . htmlescape($linkT) . "'>" . $transmitterName . "</a>";
             }
 
-            $title_html = "<i class='ti ti-network'></i>&nbsp;" . $linkTransmitter . "&nbsp;"
-                . "<i class='fa-1x ti ti-arrow-narrow-right'></i>"
-                . "&nbsp;<i class='ti ti-network'></i>&nbsp;" . $linkReceiver;
+            $flow_html = "<i class='ti ti-network'></i>&nbsp;" . $linkTransmitter
+                . "&nbsp;<i class='fa-1x ti ti-arrow-narrow-right'></i>&nbsp;"
+                . "<i class='ti ti-network'></i>&nbsp;" . $linkReceiver;
 
-            $blocks = [];
-            $blocks[] = [
-                'kind'  => 'text',
-                'value' => $name,
-            ];
-            $blocks[] = [
-                'kind'  => 'text',
-                'value' => $object->fields['protocol'] . " - " . $object->fields['port'],
-            ];
+            // Name links to the stream form (main tab).
+            $name_html = "<a href='" . htmlescape($object::getFormURLWithID($id)) . "'>"
+                . htmlescape($field['name']) . "</a>";
+
+            // Encryption: type badge when enabled, dash otherwise.
             if ($object->fields['encryption'] == 1) {
-                $blocks[] = [
-                    'kind'  => 'info',
-                    'label' => __('Encryption type', 'webapplications'),
-                    'value' => $object->fields['encryption_type'],
-                ];
+                $encryption_html = "<span class='badge bg-outline-secondary'>"
+                    . htmlescape($object->fields['encryption_type']) . "</span>";
+            } else {
+                $encryption_html = "<span class='text-muted'>&mdash;</span>";
             }
 
-            $cards[] = [
-                'width_class' => 'w-25',
-                'icon'        => self::getIcon(),
-                'icon_size'   => '3em',
-                'title_html'  => $title_html,
-                'blocks'      => $blocks,
-                'edit_html'   => Dashboard::getCardEditHtml($object, (int) $id),
+            $entries[] = [
+                'name'       => $name_html,
+                'flow'       => $flow_html,
+                'network'    => htmlescape($object->fields['protocol'] . " - " . $object->fields['port']),
+                'encryption' => $encryption_html,
+                'edit'       => Dashboard::getCardEditHtml($object, $id),
             ];
         }
 
-        TemplateRenderer::getInstance()->display('@webapplications/webapplication_object_cards.html.twig', [
-            'cards' => $cards,
+        // Core datatable component (no @namespace): read-only styled table for the
+        // dashboard tab. Sorting/filtering/paging are disabled as there is no dedicated
+        // controller to reload this tab-embedded list.
+        TemplateRenderer::getInstance()->display('components/datatable.html.twig', [
+            'nofilter'        => true,
+            'nosort'          => true,
+            'columns'         => [
+                'name'       => __('Name'),
+                'flow'       => __('Source', 'webapplications') . ' → ' . __('Destination', 'webapplications'),
+                'network'    => __('Protocol', 'webapplications') . ' / ' . __('Port', 'webapplications'),
+                'encryption' => __('Encryption type', 'webapplications'),
+                'edit'       => '',
+            ],
+            'formatters'      => [
+                'name'       => 'raw_html',
+                'flow'       => 'raw_html',
+                'network'    => 'raw_html',
+                'encryption' => 'raw_html',
+                'edit'       => 'raw_html',
+            ],
+            'entries'         => $entries,
+            'total_number'    => count($entries),
+            'filtered_number' => count($entries),
         ]);
     }
 }
