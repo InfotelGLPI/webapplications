@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-28 17:26+0000\n"
+"POT-Creation-Date: 2026-07-30 08:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,7 +144,8 @@ msgid_plural "Databases list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Stream.php:231 templates/webapplication_stream_form.html.twig:64
+#: src/Stream.php:231 src/Stream.php:415
+#: templates/webapplication_stream_form.html.twig:64
 #: templates/webapplication_stream_form.html.twig:69
 msgid "Destination"
 msgstr ""
@@ -157,7 +158,7 @@ msgstr ""
 msgid "Encryption"
 msgstr ""
 
-#: src/Stream.php:249 src/Stream.php:398
+#: src/Stream.php:249 src/Stream.php:417
 #: templates/webapplication_stream_form.html.twig:90
 msgid "Encryption type"
 msgstr ""
@@ -255,7 +256,8 @@ msgstr ""
 msgid "Physical Infrastructure"
 msgstr ""
 
-#: src/Stream.php:256 templates/webapplication_stream_form.html.twig:97
+#: src/Stream.php:256 src/Stream.php:416
+#: templates/webapplication_stream_form.html.twig:97
 msgid "Port"
 msgstr ""
 
@@ -294,7 +296,8 @@ msgstr ""
 msgid "Project team"
 msgstr ""
 
-#: src/Stream.php:263 templates/webapplication_stream_form.html.twig:104
+#: src/Stream.php:263 src/Stream.php:416
+#: templates/webapplication_stream_form.html.twig:104
 msgid "Protocol"
 msgstr ""
 
@@ -334,7 +337,8 @@ msgstr ""
 msgid "Setup"
 msgstr ""
 
-#: src/Stream.php:220 templates/webapplication_stream_form.html.twig:43
+#: src/Stream.php:220 src/Stream.php:415
+#: templates/webapplication_stream_form.html.twig:43
 #: templates/webapplication_stream_form.html.twig:48
 msgid "Source"
 msgstr ""
