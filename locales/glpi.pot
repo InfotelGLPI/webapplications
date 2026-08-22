@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-22 17:33+0000\n"
+"POT-Creation-Date: 2026-08-22 18:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,7 +143,7 @@ msgid_plural "Databases list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Stream.php:257 src/Stream.php:440
+#: src/Stream.php:262 src/Stream.php:445
 #: templates/webapplication_stream_form.html.twig:64
 #: templates/webapplication_stream_form.html.twig:69
 msgid "Destination"
@@ -153,11 +153,11 @@ msgstr ""
 msgid "Ecosystem"
 msgstr ""
 
-#: src/Stream.php:268 templates/webapplication_stream_form.html.twig:84
+#: src/Stream.php:273 templates/webapplication_stream_form.html.twig:84
 msgid "Encryption"
 msgstr ""
 
-#: src/Stream.php:275 src/Stream.php:442
+#: src/Stream.php:280 src/Stream.php:447
 #: templates/webapplication_stream_form.html.twig:90
 msgid "Encryption type"
 msgstr ""
@@ -255,7 +255,7 @@ msgstr ""
 msgid "Physical Infrastructure"
 msgstr ""
 
-#: src/Stream.php:282 src/Stream.php:441
+#: src/Stream.php:287 src/Stream.php:446
 #: templates/webapplication_stream_form.html.twig:97
 msgid "Port"
 msgstr ""
@@ -295,7 +295,7 @@ msgstr ""
 msgid "Project team"
 msgstr ""
 
-#: src/Stream.php:289 src/Stream.php:441
+#: src/Stream.php:294 src/Stream.php:446
 #: templates/webapplication_stream_form.html.twig:104
 msgid "Protocol"
 msgstr ""
@@ -336,7 +336,7 @@ msgstr ""
 msgid "Setup"
 msgstr ""
 
-#: src/Stream.php:246 src/Stream.php:440
+#: src/Stream.php:251 src/Stream.php:445
 #: templates/webapplication_stream_form.html.twig:43
 #: templates/webapplication_stream_form.html.twig:48
 msgid "Source"
