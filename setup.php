@@ -27,7 +27,7 @@
  * --------------------------------------------------------------------------
  */
 
-define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.2.2');
+define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.2.3');
 
 global $CFG_GLPI;
 
