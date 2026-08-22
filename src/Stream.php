@@ -105,9 +105,12 @@ class Stream extends CommonDBTM
             $transmitter = new $transmitter_type();
             $transmitter->getFromDB($transmitterId);
             $linkTransmitter = $transmitter_type::getFormURLWithID($transmitterId);
-            $transmitterName = $transmitter->getName();
+            // getName() returns the raw stored value (unescaped since GLPI 10) and
+            // this fragment is rendered as raw HTML by fields.htmlField, so escape
+            // the name to prevent stored XSS and quote the href.
+            $transmitterName = htmlspecialchars($transmitter->getName());
 
-            $options['linkTransmitter'] = "<a href= $linkTransmitter>$transmitterName</a>";
+            $options['linkTransmitter'] = '<a href="' . $linkTransmitter . '">' . $transmitterName . '</a>';
         } else {
             $options['linkTransmitter'] = __('All');
         }
@@ -118,9 +121,11 @@ class Stream extends CommonDBTM
             $receiver = new $receiver_type();
             $receiver->getFromDB($receiverId);
             $linkReceiver = $receiver_type::getFormURLWithID($receiverId);
-            $receiverName = $receiver->getName();
+            // Same as the transmitter above: escape the raw stored name before it
+            // is rendered as raw HTML by fields.htmlField, and quote the href.
+            $receiverName = htmlspecialchars($receiver->getName());
 
-            $options['linkReceiver'] = "<a href= $linkReceiver>$receiverName</a>";
+            $options['linkReceiver'] = '<a href="' . $linkReceiver . '">' . $receiverName . '</a>';
         } else {
             $options['linkReceiver'] = __('All');
         }
