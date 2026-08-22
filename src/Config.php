@@ -1,30 +1,30 @@
 <?php
 
-/*
- -------------------------------------------------------------------------
- webapplications plugin for GLPI
- Copyright (C) 2015-2026 by the webapplications Development Team.
-
- https://github.com/InfotelGLPI/webapplications
- -------------------------------------------------------------------------
-
- LICENSE
-
- This file is part of webapplications.
-
- webapplications is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3 of the License, or
- (at your option) any later version.
-
- webapplications is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with webapplications. If not, see <http://www.gnu.org/licenses/>.
- --------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------
+ * webapplications plugin for GLPI
+ * Copyright (C) 2015-2026 by the webapplications Development Team.
+ *
+ * https://github.com/InfotelGLPI/webapplications
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of webapplications.
+ *
+ * webapplications is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * webapplications is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ * --------------------------------------------------------------------------
  */
 
 namespace GlpiPlugin\Webapplications;
@@ -39,10 +39,11 @@ use Toolbox;
 
 $GLPI_TYPES = [];
 
-/* Comme il existe une table dans la base mySQL qui correspond au nom de la classe alors on peut accéder aux champs de la façon suivante :
- $this->fields['nom_du_champ_dans_la_table']
-table : glpi_plugin_webapplications_configs
-classe: Config
+/* Since a table in the MySQL database matches the class name, the fields can be
+ accessed as follows:
+ $this->fields['field_name_in_the_table']
+table: glpi_plugin_webapplications_configs
+class: Config
 */
 class Config extends CommonDBTM
 {
@@ -93,17 +94,17 @@ class Config extends CommonDBTM
     public function defineTabs($options = [])
     {
         $ong = [];
-        // Onglet principal du formulaire de l'objet courant
+        // Main form tab of the current object
         //$this->addDefaultFormTab($ong);
 
-        // Onglets standards liés à d'autres classes ou à la vôtre
+        // Standard tabs linked to other classes or to your own
         $this->addStandardTab(Config::class, $ong, $options);
         $this->addStandardTab(__CLASS__, $ong, $options);
-        //$this->addStandardTab('Log', $ong, $options); // Décommenter pour ajouter l'onglet "Historique"
+        //$this->addStandardTab('Log', $ong, $options); // Uncomment to add the "History" tab
         return $ong;
     }
 
-    /* Pour que les onglets s'affichent, il faut la présence de cette méthode qui retourne "false" */
+    /* This method returning "false" must be present for the tabs to be displayed */
     public function isNewItem()
     {
         return false;

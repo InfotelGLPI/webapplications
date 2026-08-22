@@ -1,30 +1,30 @@
 <?php
 
-/*
- -------------------------------------------------------------------------
- webapplications plugin for GLPI
- Copyright (C) 2015-2026 by the webapplications Development Team.
-
- https://github.com/InfotelGLPI/webapplications
- -------------------------------------------------------------------------
-
- LICENSE
-
- This file is part of webapplications.
-
- webapplications is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3 of the License, or
- (at your option) any later version.
-
- webapplications is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with webapplications. If not, see <http://www.gnu.org/licenses/>.
- --------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------
+ * webapplications plugin for GLPI
+ * Copyright (C) 2015-2026 by the webapplications Development Team.
+ *
+ * https://github.com/InfotelGLPI/webapplications
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of webapplications.
+ *
+ * webapplications is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * webapplications is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ * --------------------------------------------------------------------------
  */
 
 namespace GlpiPlugin\Webapplications;
@@ -38,8 +38,6 @@ if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
 
-
-
 /**
  * Class Printpdf
  */
@@ -51,8 +49,6 @@ class Printpdf extends CommonDBTM
     public $dohistory = true;
 
     public static $rightname = 'plugin_webapplications_configs';
-
-
 
     /**
      * Return the localized name of the current Type
@@ -84,7 +80,6 @@ class Printpdf extends CommonDBTM
     {
         return Session::haveRightsOr(self::$rightname, [CREATE, UPDATE, DELETE]);
     }
-
 
     /**
      * @param $field
@@ -129,7 +124,6 @@ class Printpdf extends CommonDBTM
 //            ["plugin_metademands_metademands_id" => $item->getID()]
 //        );
     }
-
 
     /**
      * @param $item            CommonGLPI object

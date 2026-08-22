@@ -1,30 +1,30 @@
 <?php
 
-/*
- -------------------------------------------------------------------------
- webapplications plugin for GLPI
- Copyright (C) 2015-2026 by the webapplications Development Team.
-
- https://github.com/InfotelGLPI/webapplications
- -------------------------------------------------------------------------
-
- LICENSE
-
- This file is part of webapplications.
-
- webapplications is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3 of the License, or
- (at your option) any later version.
-
- webapplications is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with webapplications. If not, see <http://www.gnu.org/licenses/>.
- --------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------
+ * webapplications plugin for GLPI
+ * Copyright (C) 2015-2026 by the webapplications Development Team.
+ *
+ * https://github.com/InfotelGLPI/webapplications
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of webapplications.
+ *
+ * webapplications is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * webapplications is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ * --------------------------------------------------------------------------
  */
 
 namespace GlpiPlugin\Webapplications;
@@ -66,10 +66,8 @@ class Stream extends CommonDBTM
 
         $menu['icon'] = self::getIcon();
 
-
         return $menu;
     }
-
 
     public static function getIcon()
     {
@@ -94,7 +92,6 @@ class Stream extends CommonDBTM
         return true;
     }
 
-
     public function showForm($ID, $options = [])
     {
         $this->initForm($ID, $options);
@@ -104,8 +101,7 @@ class Stream extends CommonDBTM
         $transmitter_type = $this->getField('transmitter_type');
         $transmitterId = $this->getField('transmitter');
 
-
-        if (!empty($transmitter_type) && !empty($transmitterId)) {
+        if (!empty($transmitterId) && self::isValidEndpointType($transmitter_type)) {
             $transmitter = new $transmitter_type;
             $transmitter->getFromDB($transmitterId);
             $linkTransmitter = $transmitter_type::getFormURLWithID($transmitterId);
@@ -118,7 +114,7 @@ class Stream extends CommonDBTM
 
         $receiver_type = $this->getField('receiver_type');
         $receiverId = $this->getField('receiver');
-        if (!empty($receiver_type) && !empty($receiverId)) {
+        if (!empty($receiverId) && self::isValidEndpointType($receiver_type)) {
             $receiver = new $receiver_type;
             $receiver->getFromDB($receiverId);
             $linkReceiver = $receiver_type::getFormURLWithID($receiverId);
@@ -154,12 +150,41 @@ class Stream extends CommonDBTM
         }
     }
 
+    /**
+     * Whether an endpoint itemtype (transmitter/receiver) is one of the plugin's
+     * allowed stream endpoint types. These values are user controlled and are later
+     * used as class names (`new $type()`), so this whitelist must gate both writes
+     * and every dynamic instantiation.
+     */
+    private static function isValidEndpointType($type): bool
+    {
+        global $CFG_GLPI;
+
+        return is_string($type) && $type !== ''
+            && in_array($type, $CFG_GLPI['stream_types'] ?? [], true);
+    }
+
+    /**
+     * Reset any transmitter/receiver itemtype that is not whitelisted to an empty
+     * value (meaning "All"), so a forged endpoint type can never be persisted.
+     */
+    private static function sanitizeEndpointTypes(array $input): array
+    {
+        foreach (['transmitter_type', 'receiver_type'] as $type_field) {
+            if (isset($input[$type_field]) && !self::isValidEndpointType($input[$type_field])) {
+                $input[$type_field] = '';
+            }
+        }
+        return $input;
+    }
+
     public function prepareInputForAdd($input)
     {
         $allowed = ['id', 'entities_id', 'is_recursive', 'name', 'appliances_id',
                     'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
                     'encryption', 'encryption_type', 'port', 'protocol'];
         $input = array_intersect_key($input, array_flip($allowed));
+        $input = self::sanitizeEndpointTypes($input);
         if (isset($input['appliances_id']) && !empty($input['appliances_id'])) {
             $item = new \Appliance();
             if ($item->getFromDB($input['appliances_id'])) {
@@ -176,6 +201,7 @@ class Stream extends CommonDBTM
                     'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
                     'encryption', 'encryption_type', 'port', 'protocol'];
         $input = array_intersect_key($input, array_flip($allowed));
+        $input = self::sanitizeEndpointTypes($input);
         return parent::prepareInputForUpdate($input);
     }
 
@@ -346,7 +372,6 @@ class Stream extends CommonDBTM
         return $ong;
     }
 
-
     public static function showListObjects($list)
     {
         $object  = new self();
@@ -360,7 +385,7 @@ class Stream extends CommonDBTM
             $linkReceiver = __('All');
             $receiverType = $field['receiver_type'];
             $receiverid   = $field['receiver'];
-            if (!empty($receiverType) && !empty($receiverid)) {
+            if (!empty($receiverid) && self::isValidEndpointType($receiverType)) {
                 $receiver = new $receiverType();
                 $receiver->getFromDB($receiverid);
                 $linkR        = $receiverType::getFormURLWithID($receiverid);
@@ -371,7 +396,7 @@ class Stream extends CommonDBTM
             $linkTransmitter = __('All');
             $transmitterType = $field['transmitter_type'];
             $transmitterid   = $field['transmitter'];
-            if (!empty($transmitterType) && !empty($transmitterid)) {
+            if (!empty($transmitterid) && self::isValidEndpointType($transmitterType)) {
                 $transmitter = new $transmitterType();
                 $transmitter->getFromDB($transmitterid);
                 $linkT           = $transmitterType::getFormURLWithID($transmitterid);

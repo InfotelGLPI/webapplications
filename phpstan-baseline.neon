@@ -1,6 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: front/dashboard.php
+
+		-
 			message: '#^Parameter \#2 \$force of method CommonDBTM\:\:delete\(\) expects bool, int given\.$#'
 			identifier: argument.type
 			count: 1
@@ -17,12 +23,6 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: front/stream.form.php
-
-		-
-			message: '#^Method DBmysql\:\:doQuery\(\) invoked with 2 parameters, 1 required\.$#'
-			identifier: arguments.count
-			count: 1
-			path: hook.php
 
 		-
 			message: '#^Method GlpiPlugin\\Webapplications\\Appliance\:\:applianceAdd\(\) should return false but return statement is missing\.$#'
@@ -81,7 +81,7 @@ parameters:
 		-
 			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
 			identifier: glpi.forbidDynamicInstantiation
-			count: 6
+			count: 5
 			path: src/Dashboard.php
 
 		-
@@ -351,12 +351,6 @@ parameters:
 		-
 			message: '#^Method GlpiPlugin\\Webapplications\\PhysicalInfrastructure\:\:displayTabContentForItem\(\) should return bool but return statement is missing\.$#'
 			identifier: return.missing
-			count: 1
-			path: src/PhysicalInfrastructure.php
-
-		-
-			message: '#^Result of static method Html\:\:showSimpleForm\(\) \(void\) is used\.$#'
-			identifier: staticMethod.void
 			count: 1
 			path: src/PhysicalInfrastructure.php
 

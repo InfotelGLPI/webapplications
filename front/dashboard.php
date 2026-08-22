@@ -1,35 +1,33 @@
 <?php
 
-/*
- -------------------------------------------------------------------------
- webapplications plugin for GLPI
- Copyright (C) 2015-2026 by the webapplications Development Team.
-
- https://github.com/InfotelGLPI/webapplications
- -------------------------------------------------------------------------
-
- LICENSE
-
- This file is part of webapplications.
-
- webapplications is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3 of the License, or
- (at your option) any later version.
-
- webapplications is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with webapplications. If not, see <http://www.gnu.org/licenses/>.
- --------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------
+ * webapplications plugin for GLPI
+ * Copyright (C) 2015-2026 by the webapplications Development Team.
+ *
+ * https://github.com/InfotelGLPI/webapplications
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of webapplications.
+ *
+ * webapplications is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * webapplications is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ * --------------------------------------------------------------------------
  */
 
 use GlpiPlugin\Webapplications\Dashboard;
-
-Session::checkLoginUser();
 
 Session::checkRight(Dashboard::$rightname,READ);
 
@@ -133,40 +131,52 @@ if (isset($_POST['add'])) {
 
     Html::back();
 } elseif (isset($_POST['reset'])) {
+    // The dashboard "Delete" button removes an item from the CURRENTLY loaded
+    // appliance only (the list it belongs to is scoped to that appliance). Bind
+    // both the authorization check and the destructive delete to that appliance
+    // so a purge can never cascade to links in other appliances or entities the
+    // user has no access to. Raw $_POST identifiers are not trusted for scoping.
+    $appliances_id = (int) ($_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0);
+    $items_id      = (int) ($_POST['items_id'] ?? 0);
+    $itemtype      = (string) ($_POST['itemtype'] ?? '');
+
     $itemsAppDBTM = new Appliance_Item();
 
-    $appliances_id = 0;
-    if (!$itemsAppDBTM->getFromDBByCrit([
-        'items_id' => $_POST['items_id'],
-        'itemtype' => $_POST['itemtype']
+    if ($appliances_id <= 0 || !$itemsAppDBTM->getFromDBByCrit([
+        'appliances_id' => $appliances_id,
+        'items_id'      => $items_id,
+        'itemtype'      => $itemtype,
     ])) {
         // Nothing to delete for these unchecked identifiers.
         Html::back();
+        return;
     }
-    // Enforce authorization (global right + entity access on both linked items)
-    // before running any destructive delete driven by raw $_POST identifiers.
+    // Enforce authorization (global right + entity access) on the exact link that
+    // will be deleted before running any destructive delete.
     $itemsAppDBTM->check($itemsAppDBTM->getID(), PURGE);
-    $appliances_id = $itemsAppDBTM->fields['appliances_id'];
 
     $itemsAppDBTM->deleteByCriteria([
-        'items_id' => $_POST['items_id'],
-        'itemtype' => $_POST['itemtype']
+        'appliances_id' => $appliances_id,
+        'items_id'      => $items_id,
+        'itemtype'      => $itemtype,
     ]);
 
-    if ($_POST['itemtype'] == 'Computer' && $appliances_id > 0) {
+    if ($itemtype == 'Computer') {
         $instances = getAllDataFromTable(
             DatabaseInstance::getTable(),
             [
                 'WHERE' => [
-                    'items_id' => $_POST['items_id'],
-                    'itemtype' => $_POST['itemtype'],
+                    'items_id' => $items_id,
+                    'itemtype' => $itemtype,
                 ],
             ]
         );
         foreach ($instances as $row) {
-            $input['appliances_id'] = $appliances_id;
-            $input['items_id'] = $row['id'];
-            $input['itemtype'] = "DatabaseInstance";
+            $input = [
+                'appliances_id' => $appliances_id,
+                'items_id'      => $row['id'],
+                'itemtype'      => "DatabaseInstance",
+            ];
             $itemsAppDBTM->deleteByCriteria($input);
         }
     }

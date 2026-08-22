@@ -1,30 +1,30 @@
 <?php
 
-/*
- -------------------------------------------------------------------------
- webapplications plugin for GLPI
- Copyright (C) 2015-2026 by the webapplications Development Team.
-
- https://github.com/InfotelGLPI/webapplications
- -------------------------------------------------------------------------
-
- LICENSE
-
- This file is part of webapplications.
-
- webapplications is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3 of the License, or
- (at your option) any later version.
-
- webapplications is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with webapplications. If not, see <http://www.gnu.org/licenses/>.
- --------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------
+ * webapplications plugin for GLPI
+ * Copyright (C) 2015-2026 by the webapplications Development Team.
+ *
+ * https://github.com/InfotelGLPI/webapplications
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of webapplications.
+ *
+ * webapplications is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * webapplications is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ * --------------------------------------------------------------------------
  */
 
 namespace GlpiPlugin\Webapplications;
@@ -50,7 +50,6 @@ class Entity extends CommonDBTM
 
     public static $rightname = "plugin_webapplications_entities";
 
-
     public static function getTypeName($nb = 0)
     {
         return __('Ecosystem', 'webapplications');
@@ -69,10 +68,8 @@ class Entity extends CommonDBTM
 
         $menu['icon'] = self::getIcon();
 
-
         return $menu;
     }
-
 
     public static function getIcon()
     {
@@ -176,7 +173,6 @@ class Entity extends CommonDBTM
             'name' => __('Owner', 'webapplications'),
             'datatype' => 'dropdown'
         ];
-
 
         $tab[] = [
             'id' => '3',

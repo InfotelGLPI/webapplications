@@ -1,30 +1,30 @@
 <?php
 
-/*
- -------------------------------------------------------------------------
- webapplications plugin for GLPI
- Copyright (C) 2015-2026 by the webapplications Development Team.
-
- https://github.com/InfotelGLPI/webapplications
- -------------------------------------------------------------------------
-
- LICENSE
-
- This file is part of webapplications.
-
- webapplications is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3 of the License, or
- (at your option) any later version.
-
- webapplications is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with webapplications. If not, see <http://www.gnu.org/licenses/>.
- --------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------
+ * webapplications plugin for GLPI
+ * Copyright (C) 2015-2026 by the webapplications Development Team.
+ *
+ * https://github.com/InfotelGLPI/webapplications
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of webapplications.
+ *
+ * webapplications is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * webapplications is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ * --------------------------------------------------------------------------
  */
 
 define('PLUGIN_WEBAPPLICATIONS_VERSION', '5.2.2');
@@ -47,7 +47,6 @@ if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
 }
 
 include_once PLUGIN_WEBAPPLICATIONS_DIR . "/vendor/autoload.php";
-
 
 // Init the hooks of the plugins -Needed
 function plugin_init_webapplications()
@@ -112,7 +111,6 @@ function plugin_init_webapplications()
         ],
     ];
 
-
     array_push(
         $CFG_GLPI['appliance_types'],
         Process::class,
@@ -121,7 +119,6 @@ function plugin_init_webapplications()
         'Appliance'
     );
     $CFG_GLPI['stream_types'] = ['DatabaseInstance', 'Computer', 'NetworkEquipment', 'Appliance'];
-
 
     if (isset($_SERVER['REQUEST_URI'])
         && (strpos($_SERVER['REQUEST_URI'], "front/appliance.form.php") == true
@@ -133,7 +130,6 @@ function plugin_init_webapplications()
 
     $PLUGIN_HOOKS[Hooks::ADD_CSS]['webapplications'] = ['css/webapplications.css'];
 }
-
 
 /**
  * Get the name and the version of the plugin - Needed

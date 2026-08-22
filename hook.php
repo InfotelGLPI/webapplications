@@ -1,30 +1,30 @@
 <?php
 
-/*
- -------------------------------------------------------------------------
- webapplications plugin for GLPI
- Copyright (C) 2015-2026 by the webapplications Development Team.
-
- https://github.com/InfotelGLPI/webapplications
- -------------------------------------------------------------------------
-
- LICENSE
-
- This file is part of webapplications.
-
- webapplications is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3 of the License, or
- (at your option) any later version.
-
- webapplications is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with webapplications. If not, see <http://www.gnu.org/licenses/>.
- --------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------
+ * webapplications plugin for GLPI
+ * Copyright (C) 2015-2026 by the webapplications Development Team.
+ *
+ * https://github.com/InfotelGLPI/webapplications
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of webapplications.
+ *
+ * webapplications is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * webapplications is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ * --------------------------------------------------------------------------
  */
 
 use GlpiPlugin\Webapplications\Process;
@@ -116,11 +116,18 @@ function plugin_webapplications_install()
                 ]);
                 if (count($iterator) > 0) {
                     foreach ($iterator as $data) {
-                        $iq = "INSERT INTO `glpi_notepads`
-                             (`itemtype`, `items_id`, `content`, `date`, `date_mod`)
-                      VALUES ('" . $dbu->getItemTypeForTable($t) . "', '" . $data['id'] . "',
-                              '" . addslashes($data['notepad']) . "', NOW(), NOW())";
-                        $DB->doQuery($iq, "0.85 migrate notepad data");
+                        // Use the query builder instead of a hand-concatenated
+                        // INSERT: parameter binding is safe by construction, whereas
+                        // addslashes() does not cover every SQL edge case (e.g.
+                        // multibyte charsets). NOW() has no builder API, hence the
+                        // QueryExpression.
+                        $DB->insert('glpi_notepads', [
+                            'itemtype' => $dbu->getItemTypeForTable($t),
+                            'items_id' => (int) $data['id'],
+                            'content'  => $data['notepad'],
+                            'date'     => new \Glpi\DBAL\QueryExpression('NOW()'),
+                            'date_mod' => new \Glpi\DBAL\QueryExpression('NOW()'),
+                        ]);
                     }
                 }
                 $query = "ALTER TABLE `glpi_plugin_webapplications_webapplications` DROP COLUMN `notepad`;";
@@ -288,18 +295,17 @@ function plugin_webapplications_install()
         }
     }
 
-
     if ($update) {
-        $query_  = "SELECT *
-                FROM `glpi_plugin_webapplications_profiles` ";
-        $result_ = $DB->doQuery($query_);
-        if ($DB->numrows($result_) > 0) {
-            while ($data = $DB->fetchArray($result_)) {
-                $query = "UPDATE `glpi_plugin_webapplications_profiles`
-                      SET `profiles_id` = '" . $data["id"] . "'
-                      WHERE `id` = '" . $data["id"] . "';";
-                $DB->doQuery($query);
-            }
+        // Query builder instead of a raw SELECT + concatenated UPDATE.
+        $profiles_iterator = $DB->request([
+            'FROM' => 'glpi_plugin_webapplications_profiles',
+        ]);
+        foreach ($profiles_iterator as $data) {
+            $DB->update(
+                'glpi_plugin_webapplications_profiles',
+                ['profiles_id' => (int) $data['id']],
+                ['id' => (int) $data['id']]
+            );
         }
 
         $query = "ALTER TABLE `glpi_plugin_webapplications_profiles`
@@ -338,7 +344,6 @@ function plugin_webapplications_install()
     return true;
 }
 
-
 /**
  * @return bool
  */
@@ -358,12 +363,8 @@ function plugin_webapplications_uninstall()
         "glpi_plugin_webapplications_webapplicationtechnics",
         "glpi_plugin_webapplications_webapplicationexternalexpositions"];
 
-    foreach ($tables as $table) {
-        $DB->doQuery("DROP TABLE IF EXISTS `$table`;");
-    }
-
     //old versions
-    $tables = ["glpi_plugin_appweb",
+    $oldtables = ["glpi_plugin_appweb",
         "glpi_dropdown_plugin_appweb_type",
         "glpi_dropdown_plugin_appweb_server_type",
         "glpi_dropdown_plugin_appweb_technic",
@@ -371,10 +372,6 @@ function plugin_webapplications_uninstall()
         "glpi_plugin_appweb_profiles",
         "glpi_plugin_webapplications_profiles",
         "glpi_plugin_webapplications_webapplications_items"];
-
-    foreach ($tables as $table) {
-        $DB->doQuery("DROP TABLE IF EXISTS `$table`;");
-    }
 
     $tables_glpi = ["glpi_displaypreferences",
         "glpi_documents_items",
@@ -394,11 +391,18 @@ function plugin_webapplications_uninstall()
         $profileRight->deleteByCriteria(['name' => $right['field']]);
     }
 
+    foreach ($tables as $table) {
+        $DB->dropTable($table, true);
+    }
+
+    foreach ($oldtables as $table) {
+        $DB->dropTable($table, true);
+    }
+
     Profile::removeRightsFromSession();
 
     return true;
 }
-
 
 // Define dropdown relations
 /**
@@ -416,7 +420,6 @@ function plugin_webapplications_uninstall()
 //
 //    return [];
 //}
-
 
 // Define Dropdown tables to be manage in GLPI :
 /**

@@ -1,30 +1,30 @@
 <?php
 
-/*
- -------------------------------------------------------------------------
- webapplications plugin for GLPI
- Copyright (C) 2015-2026 by the webapplications Development Team.
-
- https://github.com/InfotelGLPI/webapplications
- -------------------------------------------------------------------------
-
- LICENSE
-
- This file is part of webapplications.
-
- webapplications is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 3 of the License, or
- (at your option) any later version.
-
- webapplications is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with webapplications. If not, see <http://www.gnu.org/licenses/>.
- --------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------
+ * webapplications plugin for GLPI
+ * Copyright (C) 2015-2026 by the webapplications Development Team.
+ *
+ * https://github.com/InfotelGLPI/webapplications
+ * -------------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of webapplications.
+ *
+ * webapplications is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * webapplications is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with webapplications. If not, see <http://www.gnu.org/licenses/>.
+ * --------------------------------------------------------------------------
  */
 
 namespace GlpiPlugin\Webapplications;
@@ -59,7 +59,6 @@ use User;
 if (!defined('GLPI_ROOT')) {
     die("Sorry. You can't access directly to this file");
 }
-
 
 /**
  * Class Pdf
@@ -311,7 +310,6 @@ class Pdf extends \TCPDF
         $subtitle = Toolbox::stripTags($this->subtitle);
         $this->SetY($this->GetY());
 
-
         $this->SetX($this->margin_left);
 
         $this->CellTitleValue($this->page_width, 5, (htmlspecialchars_decode($title)), '', 'R', '', 0, $this->title_size - 6, 'black');
@@ -355,7 +353,6 @@ class Pdf extends \TCPDF
         $this->SetFontNormal($fontColor, $bold, $size);
         $this->Cell($w, $h, $value, $border, 0, $align, 1);
     }
-
 
     /**
      * Redéfinit une fonte
@@ -606,7 +603,6 @@ class Pdf extends \TCPDF
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $this->MultiCell($this->page_width, $this->title_height, (htmlspecialchars_decode(__('Summary', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
 
-
         //inclure ici le résumé des champs
         $statut = new State();
         $statut->getFromDB($this->appliance->fields['states_id']);
@@ -636,7 +632,6 @@ class Pdf extends \TCPDF
 
         $this->adddataonfourcolomn(__('Alternate username'), $this->appliance->fields['contact'] ?? '', __('Inventory number'), $this->appliance->fields['otherserial'] ?? '');
 
-
         $user = new User();
         $user->getFromDB($this->appliance->fields['users_id']);
         $groupsitem = new Group_Item();
@@ -645,9 +640,6 @@ class Pdf extends \TCPDF
             $groups .= Group::getFriendlyNameById($group['groups_id']) . ' ';
         }
         $this->adddataonfourcolomn(User::getTypeName(1), $user->fields['name'] ?? '', Group::getTypeName(1), $groups ?? '');
-
-
-
 
         //commentaire
         if (!$this->config->fields['use_fields_description'] ||
@@ -668,7 +660,6 @@ class Pdf extends \TCPDF
             }
         }
 
-
         $applianceenvironnement = new ApplianceEnvironment();
         $applianceenvironnement->getFromDB($this->appliance->fields['applianceenvironments_id']);
         $yligne3 = $this->GetY();
@@ -679,13 +670,11 @@ class Pdf extends \TCPDF
 
         $this->adddataonfourcolomn(__('URL', 'webapplications'), $this->webappAppliance->fields['address'] ?? '', __('Backoffice URL', 'webapplications'), $this->webappAppliance->fields['backoffice'] ?? '');
 
-
         $webapplicationServertype = new Webapplicationservertype();
         if (isset($this->webappAppliance->fields['webapplicationservertypes_id'])) {
             $webapplicationServertype->getFromDB($this->webappAppliance->fields['webapplicationservertypes_id']);
         }
         $this->adddataonfourcolomn(__('Installed version', 'webapplications'), $this->webappAppliance->fields['version'] ?? '', _n('Type of treatment server', 'Types of treatment server', 1, 'webapplications'), $webapplicationServertype->fields['name'] ?? '');
-
 
         $webapplicationtechnics = new Webapplicationtechnic();
         if (isset($this->webappAppliance->fields['webapplicationtechnics_id'])) {
@@ -784,15 +773,8 @@ class Pdf extends \TCPDF
             }
         }
 
-
-
-
-
         $this->setXY($this->margin_left, $this->GetY());
         $this->MultiCell($this->page_width, 1, '', 'LRB', 'L', false, 0, '', 'black');
-
-
-
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $this->MultiCell($this->page_width, $this->title_height, (htmlspecialchars_decode(__('Security Needs', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
@@ -865,7 +847,6 @@ class Pdf extends \TCPDF
         $this->setXY($this->margin_left + ($this->page_width/2) + 1, $yligne3);
         $this->MultiCell(($this->page_width/2) -1, $this->title_height, (htmlspecialchars_decode(_n('Process', 'Processes', 1))), 'TLRB', 'C', true, 0, '', 'black');
 
-
         $webapplicationentities = new Entity();
 
         $webapplicationprocesses = new Process();
@@ -916,18 +897,13 @@ class Pdf extends \TCPDF
             $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
         }
 
-
-
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $yligne3 = $this->GetY();
         $this->MultiCell(($this->page_width/2) -1, $this->title_height, (htmlspecialchars_decode(__('Physical Infrastructure', 'webapplications'))), 'TLRB', 'C', true);
         $this->setXY($this->margin_left + ($this->page_width/2) + 1, $yligne3);
         $this->MultiCell(($this->page_width/2) -1, $this->title_height, (htmlspecialchars_decode(\DatabaseInstance::getTypeName(2))), 'TLRB', 'C', true);
 
-
         $applicationItems = new Appliance_Item();
-
-
 
         $yligne3 = $this->GetY();
 
@@ -940,7 +916,6 @@ class Pdf extends \TCPDF
                 $this->setXY($this->margin_left, $this->GetY());
             }
         }
-
 
         $yligne4 = $this->GetY();
 
@@ -972,9 +947,6 @@ class Pdf extends \TCPDF
             $this->setXY($this->margin_left + ($this->page_width/2) +1, $yligne5);
             $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
         }
-
-
-
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $yligne3 = $this->GetY();
