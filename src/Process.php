@@ -118,7 +118,7 @@ class Process extends CommonDBTM
                     'WHERE' => [
                         'appliances_id' => $ApplianceId,
                     ],
-                ]
+                ],
             );
 
             foreach ($webs as $web) {
@@ -134,8 +134,8 @@ class Process extends CommonDBTM
     public function prepareInputForAdd($input)
     {
         $allowed = ['id', 'entities_id', 'is_recursive', 'name', 'appliances_id', 'owner',
-                    'webapplicationavailabilities', 'webapplicationintegrities',
-                    'webapplicationconfidentialities', 'webapplicationtraceabilities', 'comment'];
+            'webapplicationavailabilities', 'webapplicationintegrities',
+            'webapplicationconfidentialities', 'webapplicationtraceabilities', 'comment'];
         $input = array_intersect_key($input, array_flip($allowed));
         if (isset($input['appliances_id']) && !empty($input['appliances_id'])) {
             $item = new \Appliance();
@@ -150,8 +150,8 @@ class Process extends CommonDBTM
     public function prepareInputForUpdate($input)
     {
         $allowed = ['id', 'entities_id', 'is_recursive', 'name', 'owner',
-                    'webapplicationavailabilities', 'webapplicationintegrities',
-                    'webapplicationconfidentialities', 'webapplicationtraceabilities', 'comment'];
+            'webapplicationavailabilities', 'webapplicationintegrities',
+            'webapplicationconfidentialities', 'webapplicationtraceabilities', 'comment'];
         $input = array_intersect_key($input, array_flip($allowed));
         return parent::prepareInputForUpdate($input);
     }
@@ -166,7 +166,7 @@ class Process extends CommonDBTM
                     'appliances_id' => $appliance_id,
                     'items_id' => $this->getID(),
                     'itemtype' => Process::class,
-                ]
+                ],
             );
         }
     }

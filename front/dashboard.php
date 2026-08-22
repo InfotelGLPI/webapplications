@@ -29,7 +29,7 @@
 
 use GlpiPlugin\Webapplications\Dashboard;
 
-Session::checkRight(Dashboard::$rightname,READ);
+Session::checkRight(Dashboard::$rightname, READ);
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "1";
@@ -64,7 +64,7 @@ if (isset($_POST['add'])) {
                     'items_id' => $items_id,
                     'itemtype' => $itemtype,
                 ],
-            ]
+            ],
         );
         foreach ($instances as $row) {
             $input['appliances_id'] = $appliances_id;
@@ -78,8 +78,8 @@ if (isset($_POST['add'])) {
                         'WHERE' => [
                             'itemtype' => 'Appliance',
                             'items_id' => $appliances_id,
-                        ]
-                    ]
+                        ],
+                    ],
                 );
 
                 foreach ($i_items as $i_item) {
@@ -87,7 +87,7 @@ if (isset($_POST['add'])) {
                     $impact->add([
                         'impactcontexts_id' => $i_item['impactcontexts_id'],
                         'itemtype' => 'DatabaseInstance',
-                        'items_id' => $row['id']
+                        'items_id' => $row['id'],
                     ]);
                     $impactr = new ImpactRelation();
                     $impactr->add([
@@ -108,8 +108,8 @@ if (isset($_POST['add'])) {
                 'WHERE' => [
                     'itemtype' => 'Appliance',
                     'items_id' => $appliances_id,
-                ]
-            ]
+                ],
+            ],
         );
 
         foreach ($i_items as $i_item) {
@@ -117,7 +117,7 @@ if (isset($_POST['add'])) {
             $impact->add([
                 'impactcontexts_id' => $i_item['impactcontexts_id'],
                 'itemtype' => $itemtype,
-                'items_id' => $items_id
+                'items_id' => $items_id,
             ]);
             $impactr = new ImpactRelation();
             $impactr->add([
@@ -169,7 +169,7 @@ if (isset($_POST['add'])) {
                     'items_id' => $items_id,
                     'itemtype' => $itemtype,
                 ],
-            ]
+            ],
         );
         foreach ($instances as $row) {
             $input = [
@@ -184,13 +184,13 @@ if (isset($_POST['add'])) {
     Html::back();
 }
 
-$dashboard = new Dashboard;
+$dashboard = new Dashboard();
 
 Html::header(
     Dashboard::getTypeName(2),
     $_SERVER['PHP_SELF'],
     "appliancedashboard",
-    Dashboard::class
+    Dashboard::class,
 );
 
 $id = 0;

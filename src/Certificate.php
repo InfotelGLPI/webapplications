@@ -59,7 +59,7 @@ class Certificate extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
             $self = new \Certificate();
             $nb = count(Dashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);

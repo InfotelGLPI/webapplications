@@ -28,6 +28,7 @@
  */
 
 namespace GlpiPlugin\Webapplications;
+
 use CommonDBTM;
 use Dropdown;
 use Glpi\Application\View\TemplateRenderer;
@@ -150,7 +151,7 @@ class Config extends CommonDBTM
                             case 'text':
                             case 'textarea':
                             case 'richtext':
-                                $array['Fields' . '|' .$rowfield['id']] = 'Fields - ' . $rowfield['label'];
+                                $array['Fields' . '|' . $rowfield['id']] = 'Fields - ' . $rowfield['label'];
                                 break;
                             default:
                                 break;
@@ -174,7 +175,7 @@ class Config extends CommonDBTM
             'use_fields_description',
             $this->fields['use_fields_description'],
             -1,
-            ['display' => false]
+            ['display' => false],
         );
         $fields_dropdown = Dropdown::showFromArray(
             'fields',
@@ -182,7 +183,7 @@ class Config extends CommonDBTM
             [
                 'value'   => $this->fields['fields_description_table'] . '|' . $this->fields['fields_description_name'],
                 'display' => false,
-            ]
+            ],
         );
 
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_config_form.html.twig', [

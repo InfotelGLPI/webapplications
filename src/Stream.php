@@ -77,7 +77,7 @@ class Stream extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
             $self = new self();
             $nb = count(Dashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);
@@ -102,7 +102,7 @@ class Stream extends CommonDBTM
         $transmitterId = $this->getField('transmitter');
 
         if (!empty($transmitterId) && self::isValidEndpointType($transmitter_type)) {
-            $transmitter = new $transmitter_type;
+            $transmitter = new $transmitter_type();
             $transmitter->getFromDB($transmitterId);
             $linkTransmitter = $transmitter_type::getFormURLWithID($transmitterId);
             $transmitterName = $transmitter->getName();
@@ -115,7 +115,7 @@ class Stream extends CommonDBTM
         $receiver_type = $this->getField('receiver_type');
         $receiverId = $this->getField('receiver');
         if (!empty($receiverId) && self::isValidEndpointType($receiver_type)) {
-            $receiver = new $receiver_type;
+            $receiver = new $receiver_type();
             $receiver->getFromDB($receiverId);
             $linkReceiver = $receiver_type::getFormURLWithID($receiverId);
             $receiverName = $receiver->getName();
@@ -181,8 +181,8 @@ class Stream extends CommonDBTM
     public function prepareInputForAdd($input)
     {
         $allowed = ['id', 'entities_id', 'is_recursive', 'name', 'appliances_id',
-                    'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
-                    'encryption', 'encryption_type', 'port', 'protocol'];
+            'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
+            'encryption', 'encryption_type', 'port', 'protocol'];
         $input = array_intersect_key($input, array_flip($allowed));
         $input = self::sanitizeEndpointTypes($input);
         if (isset($input['appliances_id']) && !empty($input['appliances_id'])) {
@@ -198,8 +198,8 @@ class Stream extends CommonDBTM
     public function prepareInputForUpdate($input)
     {
         $allowed = ['id', 'entities_id', 'is_recursive', 'name',
-                    'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
-                    'encryption', 'encryption_type', 'port', 'protocol'];
+            'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
+            'encryption', 'encryption_type', 'port', 'protocol'];
         $input = array_intersect_key($input, array_flip($allowed));
         $input = self::sanitizeEndpointTypes($input);
         return parent::prepareInputForUpdate($input);
@@ -213,7 +213,7 @@ class Stream extends CommonDBTM
             $itemDBTM->add([
                 'appliances_id' => $appliance_id,
                 'items_id' => $this->getID(),
-                'itemtype' => Stream::class
+                'itemtype' => Stream::class,
             ]);
         }
     }
@@ -227,7 +227,7 @@ class Stream extends CommonDBTM
 
         $tab[] = [
             'id' => 'common',
-            'name' => self::getTypeName(2)
+            'name' => self::getTypeName(2),
         ];
 
         $tab[] = [
@@ -247,7 +247,7 @@ class Stream extends CommonDBTM
             'datatype' => 'specific',
             'massiveaction' => 'false',
             'nosort' => true,
-            'nosearch' => true
+            'nosearch' => true,
         ];
 
         $tab[] = [
@@ -258,7 +258,7 @@ class Stream extends CommonDBTM
             'datatype' => 'specific',
             'massiveaction' => 'false',
             'nosort' => true,
-            'nosearch' => true
+            'nosearch' => true,
         ];
 
         $tab[] = [
@@ -266,28 +266,28 @@ class Stream extends CommonDBTM
             'table' => self::getTable(),
             'field' => 'encryption',
             'name' => __('Encryption', 'webapplications'),
-            'datatype' => 'bool'
+            'datatype' => 'bool',
         ];
         $tab[] = [
             'id' => '7',
             'table' => self::getTable(),
             'field' => 'encryption_type',
             'name' => __('Encryption type', 'webapplications'),
-            'datatype' => 'text'
+            'datatype' => 'text',
         ];
         $tab[] = [
             'id' => '8',
             'table' => self::getTable(),
             'field' => 'port',
             'name' => __('Port', 'webapplications'),
-            'datatype' => 'text'
+            'datatype' => 'text',
         ];
         $tab[] = [
             'id' => '9',
             'table' => self::getTable(),
             'field' => 'protocol',
             'name' => __('Protocol', 'webapplications'),
-            'datatype' => 'text'
+            'datatype' => 'text',
         ];
 
         return $tab;
@@ -303,7 +303,7 @@ class Stream extends CommonDBTM
      * @return string
      *
      */
-    static function getSpecificValueToDisplay($field, $values, array $options = [])
+    public static function getSpecificValueToDisplay($field, $values, array $options = [])
     {
         global $CFG_GLPI;
 
@@ -357,7 +357,7 @@ class Stream extends CommonDBTM
                 return Dropdown::showFromArray(
                     $name,
                     $items,
-                    $options
+                    $options,
                 );
         }
         return parent::getSpecificValueToSelect($field, $name, $values, $options);

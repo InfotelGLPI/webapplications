@@ -78,25 +78,25 @@ class PhysicalInfrastructure extends CommonDBTM
     public static function getItems()
     {
         global $CFG_GLPI;
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
 
         $itemsAppDBTM = new Appliance_Item();
 
         $itemApp = $itemsAppDBTM->find([
             'appliances_id' => $ApplianceId,
-            'itemtype' => $CFG_GLPI['inventory_types']
+            'itemtype' => $CFG_GLPI['inventory_types'],
         ], 'itemtype');
 
         $listItem = [];
         foreach ($itemApp as $st) {
 
-            $itemDBTM = new $st['itemtype'];
+            $itemDBTM = new $st['itemtype']();
             if ($itemDBTM->getFromDB($st['items_id'])) {
                 $item = ['id' => $st['items_id'],'name' => $itemDBTM->fields['name'], 'itemtype' => $st['itemtype']];
                 array_push($listItem, $item);
             }
         }
-        usort($listItem, function($a, $b) {
+        usort($listItem, function ($a, $b) {
             return $a['name'] <=> $b['name'];
         });
 
@@ -136,7 +136,7 @@ class PhysicalInfrastructure extends CommonDBTM
                     'reset',
                     __('Delete'),
                     ['items_id' => $id, 'itemtype' => $itemtype],
-                    'ti-circle-x'
+                    'ti-circle-x',
                 );
 
                 $blocks = [];
@@ -145,8 +145,8 @@ class PhysicalInfrastructure extends CommonDBTM
                     'FROM'   => Appliance_Item::getTable(),
                     'WHERE'  => [
                         'items_id' => $items_id,
-                        'itemtype' => $itemtype
-                    ]
+                        'itemtype' => $itemtype,
+                    ],
                 ]);
                 $relations = iterator_to_array($relations);
 
@@ -155,8 +155,8 @@ class PhysicalInfrastructure extends CommonDBTM
                     $iterator = $DB->request([
                         'FROM'   => Appliance_Item_Relation::getTable(),
                         'WHERE'  => [
-                            Appliance_Item::getForeignKeyField() => $row['id']
-                        ]
+                            Appliance_Item::getForeignKeyField() => $row['id'],
+                        ],
                     ]);
 
                     foreach ($iterator as $row) {

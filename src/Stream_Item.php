@@ -47,8 +47,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class Stream_Item extends CommonDBTM
 {
-
-
     public static $rightname = "plugin_webapplications_streams";
 
     public static function getTypeName($nb = 0)
@@ -71,7 +69,7 @@ class Stream_Item extends CommonDBTM
                     $dbu = new DbUtils();
                     $nbItems = $dbu->countElementsInTable(
                         $this->getTable(),
-                        ["plugin_webapplications_streams_id" => $item->getID()]
+                        ["plugin_webapplications_streams_id" => $item->getID()],
                     );
                     return self::createTabEntry(self::getTypeName($nbItems), $nbItems);
                 }

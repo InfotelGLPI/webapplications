@@ -47,7 +47,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class Entity extends CommonDBTM
 {
-
     public static $rightname = "plugin_webapplications_entities";
 
     public static function getTypeName($nb = 0)
@@ -79,7 +78,7 @@ class Entity extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
             $self = new self();
             $nb = count(Dashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);
@@ -109,7 +108,7 @@ class Entity extends CommonDBTM
     public function prepareInputForAdd($input)
     {
         $allowed = ['id', 'entities_id', 'is_recursive', 'name', 'appliances_id',
-                    'owner', 'security_contact', 'relation_nature'];
+            'owner', 'security_contact', 'relation_nature'];
         $input = array_intersect_key($input, array_flip($allowed));
         if (isset($input['appliances_id']) && !empty($input['appliances_id'])) {
             $item = new \Appliance();
@@ -124,7 +123,7 @@ class Entity extends CommonDBTM
     public function prepareInputForUpdate($input)
     {
         $allowed = ['id', 'entities_id', 'is_recursive', 'name',
-                    'owner', 'security_contact', 'relation_nature'];
+            'owner', 'security_contact', 'relation_nature'];
         $input = array_intersect_key($input, array_flip($allowed));
         return parent::prepareInputForUpdate($input);
     }
@@ -138,8 +137,8 @@ class Entity extends CommonDBTM
                 [
                     'appliances_id' => $appliance_id,
                     'items_id' => $this->getID(),
-                    'itemtype' => Entity::class
-                ]
+                    'itemtype' => Entity::class,
+                ],
             );
         }
     }
@@ -153,7 +152,7 @@ class Entity extends CommonDBTM
 
         $tab[] = [
             'id' => 'common',
-            'name' => self::getTypeName(2)
+            'name' => self::getTypeName(2),
         ];
 
         $tab[] = [
@@ -171,7 +170,7 @@ class Entity extends CommonDBTM
             'field' => 'name',
             'linkfield' => 'owner',
             'name' => __('Owner', 'webapplications'),
-            'datatype' => 'dropdown'
+            'datatype' => 'dropdown',
         ];
 
         $tab[] = [
@@ -180,7 +179,7 @@ class Entity extends CommonDBTM
             'field' => 'name',
             'linkfield' => 'security_contact',
             'name' => __('Security Contact', 'webapplications'),
-            'datatype' => 'dropdown'
+            'datatype' => 'dropdown',
         ];
 
         $tab[] = [
@@ -188,7 +187,7 @@ class Entity extends CommonDBTM
             'table' => $this->getTable(),
             'field' => 'relation_nature',
             'name' => __('Relation nature', 'webapplications'),
-            'datatype' => 'text'
+            'datatype' => 'text',
         ];
 
         return $tab;

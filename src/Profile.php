@@ -91,7 +91,7 @@ class Profile extends \Profile
                     'plugin_webapplications_entities' => 0,
                     'plugin_webapplications_processes' => 0,
                     'plugin_webapplications_configs' => 0,
-                ]
+                ],
             );
             $prof->showForm($ID);
         }
@@ -114,7 +114,7 @@ class Profile extends \Profile
                 'plugin_webapplications_processes' => READ + CREATE + UPDATE + PURGE,
                 'plugin_webapplications_configs' => ALLSTANDARDRIGHT,
             ],
-            true
+            true,
         );
     }
 
@@ -132,13 +132,13 @@ class Profile extends \Profile
         foreach ($rights as $right => $value) {
             if ($dbu->countElementsInTable(
                 'glpi_profilerights',
-                ["profiles_id" => $profiles_id, "name" => $right]
+                ["profiles_id" => $profiles_id, "name" => $right],
             ) && $drop_existing) {
                 $profileRight->deleteByCriteria(['profiles_id' => $profiles_id, 'name' => $right]);
             }
             if (!$dbu->countElementsInTable(
                 'glpi_profilerights',
-                ["profiles_id" => $profiles_id, "name" => $right]
+                ["profiles_id" => $profiles_id, "name" => $right],
             )) {
                 $myright['profiles_id'] = $profiles_id;
                 $myright['name'] = $right;
@@ -228,8 +228,8 @@ class Profile extends \Profile
                 'itemtype' => Config::class,
                 'rights' => [READ => __('Read'), UPDATE => __('Update'), DELETE => __('Delete')],
                 'label' => __('Setup', 'webapplications'),
-                'field' => 'plugin_webapplications_configs'
-            ]
+                'field' => 'plugin_webapplications_configs',
+            ],
         ];
 
         return $rights;
@@ -309,7 +309,7 @@ class Profile extends \Profile
         foreach ($profile->getAllRights(true) as $data) {
             if ($dbu->countElementsInTable(
                 "glpi_profilerights",
-                ["name" => $data['field']]
+                ["name" => $data['field']],
             ) == 0) {
                 ProfileRight::addProfileRights([$data['field']]);
             }

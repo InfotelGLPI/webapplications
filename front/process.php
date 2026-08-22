@@ -36,4 +36,3 @@ Html::header(Process::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard"
 Search::show(Process::class);
 
 Html::footer();
-

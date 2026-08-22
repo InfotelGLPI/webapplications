@@ -47,8 +47,6 @@ if (!defined('GLPI_ROOT')) {
  */
 class Process_Entity extends CommonDBTM
 {
-
-
     public static $rightname = "plugin_webapplications_processes";
 
     public static function getTypeName($nb = 0)
@@ -71,11 +69,11 @@ class Process_Entity extends CommonDBTM
                     $dbu = new DbUtils();
                     $nb = $dbu->countElementsInTable(
                         $this->getTable(),
-                        ["plugin_webapplications_entities_id" => $item->getID()]
+                        ["plugin_webapplications_entities_id" => $item->getID()],
                     );
                     return self::createTabEntry(
                         Process::getTypeName($nb),
-                        $nb
+                        $nb,
                     );
                 }
                 return _n('Process', 'Processes', 2, 'webapplications');
@@ -85,11 +83,11 @@ class Process_Entity extends CommonDBTM
                     $dbu = new DbUtils();
                     $nb = $dbu->countElementsInTable(
                         $this->getTable(),
-                        ["plugin_webapplications_processes_id" => $item->getID()]
+                        ["plugin_webapplications_processes_id" => $item->getID()],
                     );
                     return self::createTabEntry(
                         Entity::getTypeName($nb),
-                        $nb
+                        $nb,
                     );
                 }
                 return _n('Entity', 'Entities', 2);

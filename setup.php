@@ -116,7 +116,7 @@ function plugin_init_webapplications()
         Process::class,
         Entity::class,
         Stream::class,
-        'Appliance'
+        'Appliance',
     );
     $CFG_GLPI['stream_types'] = ['DatabaseInstance', 'Computer', 'NetworkEquipment', 'Appliance'];
 
@@ -168,4 +168,3 @@ function plugin_webapplications_check_prerequisites()
 
     return true;
 }
-

@@ -47,20 +47,22 @@ if (isset($_POST["PrintPdf"])) {
 
         $datenow = new DateTime();
 
-        $title = __('Printed on', 'webapplications')." ".Html::convDateTime($datenow->format('Y-m-d H:i:s'));
+        $title = __('Printed on', 'webapplications') . " " . Html::convDateTime($datenow->format('Y-m-d H:i:s'));
         if ($appliance->fields['date_mod'] != null) {
-            $title .= " - ".__('Last update')." ".Html::convDateTime($appliance->fields['date_mod']);
+            $title .= " - " . __('Last update') . " " . Html::convDateTime($appliance->fields['date_mod']);
         }
 
         $docPdf = new Pdf(
-            $title
-            , $appliance->fields['name'], $appliance_id);
+            $title,
+            $appliance->fields['name'],
+            $appliance_id,
+        );
 
         $docPdf->drawPdf();
     } else {
-        $message = __('An error has occurred','webapplications');
+        $message = __('An error has occurred', 'webapplications');
         Session::addMessageAfterRedirect($message, false, ERROR);
     }
-}else {
+} else {
     Html::back();
 }

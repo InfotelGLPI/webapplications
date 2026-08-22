@@ -159,7 +159,7 @@ function plugin_webapplications_install()
     foreach ($classes as $old => $new) {
         $displayusers = $DB->request([
             'SELECT' => [
-                'users_id'
+                'users_id',
             ],
             'DISTINCT' => true,
             'FROM' => 'glpi_displaypreferences',
@@ -173,13 +173,13 @@ function plugin_webapplications_install()
                 $iterator = $DB->request([
                     'SELECT' => [
                         'num',
-                        'id'
+                        'id',
                     ],
                     'FROM' => 'glpi_displaypreferences',
                     'WHERE' => [
                         'itemtype' => $old,
                         'users_id' => $displayuser['users_id'],
-                        'interface' => 'central'
+                        'interface' => 'central',
                     ],
                 ]);
 
@@ -187,14 +187,14 @@ function plugin_webapplications_install()
                     foreach ($iterator as $data) {
                         $iterator2 = $DB->request([
                             'SELECT' => [
-                                'id'
+                                'id',
                             ],
                             'FROM' => 'glpi_displaypreferences',
                             'WHERE' => [
                                 'itemtype' => $new,
                                 'users_id' => $displayuser['users_id'],
                                 'num' => $data['num'],
-                                'interface' => 'central'
+                                'interface' => 'central',
                             ],
                         ]);
                         if (count($iterator2) > 0) {
@@ -203,7 +203,7 @@ function plugin_webapplications_install()
                                     'glpi_displaypreferences',
                                     [
                                         'id' => $dataid['id'],
-                                    ]
+                                    ],
                                 );
                                 $DB->doQuery($query);
                             }
@@ -215,7 +215,7 @@ function plugin_webapplications_install()
                                 ],
                                 [
                                     'id' => $data['id'],
-                                ]
+                                ],
                             );
                             $DB->doQuery($query);
                         }
@@ -233,7 +233,7 @@ function plugin_webapplications_install()
     foreach ($classes as $old => $new) {
         $displayitems = $DB->request([
             'SELECT' => [
-                'items_id'
+                'items_id',
             ],
             'DISTINCT' => true,
             'FROM' => 'glpi_appliances_items',
@@ -246,7 +246,7 @@ function plugin_webapplications_install()
             foreach ($displayitems as $displayitem) {
                 $iterator = $DB->request([
                     'SELECT' => [
-                        'id'
+                        'id',
                     ],
                     'FROM' => 'glpi_appliances_items',
                     'WHERE' => [
@@ -259,7 +259,7 @@ function plugin_webapplications_install()
                     foreach ($iterator as $data) {
                         $iterator2 = $DB->request([
                             'SELECT' => [
-                                'id'
+                                'id',
                             ],
                             'FROM' => 'glpi_appliances_items',
                             'WHERE' => [
@@ -273,7 +273,7 @@ function plugin_webapplications_install()
                                     'glpi_appliances_items',
                                     [
                                         'id' => $dataid['id'],
-                                    ]
+                                    ],
                                 );
                                 $DB->doQuery($query);
                             }
@@ -285,7 +285,7 @@ function plugin_webapplications_install()
                                 ],
                                 [
                                     'id' => $data['id'],
-                                ]
+                                ],
                             );
                             $DB->doQuery($query);
                         }
@@ -304,7 +304,7 @@ function plugin_webapplications_install()
             $DB->update(
                 'glpi_plugin_webapplications_profiles',
                 ['profiles_id' => (int) $data['id']],
-                ['id' => (int) $data['id']]
+                ['id' => (int) $data['id']],
             );
         }
 
@@ -361,7 +361,8 @@ function plugin_webapplications_uninstall()
         "glpi_plugin_webapplications_webapplicationtypes",
         "glpi_plugin_webapplications_webapplicationservertypes",
         "glpi_plugin_webapplications_webapplicationtechnics",
-        "glpi_plugin_webapplications_webapplicationexternalexpositions"];
+        "glpi_plugin_webapplications_webapplicationexternalexpositions",
+        "glpi_plugin_webapplications_configs"];
 
     //old versions
     $oldtables = ["glpi_plugin_appweb",
@@ -371,7 +372,8 @@ function plugin_webapplications_uninstall()
         "glpi_plugin_appweb_device",
         "glpi_plugin_appweb_profiles",
         "glpi_plugin_webapplications_profiles",
-        "glpi_plugin_webapplications_webapplications_items"];
+        "glpi_plugin_webapplications_webapplications_items",
+        "glpi_plugin_webapplications_webapplications"];
 
     $tables_glpi = ["glpi_displaypreferences",
         "glpi_documents_items",

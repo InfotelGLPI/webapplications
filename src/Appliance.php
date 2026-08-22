@@ -79,7 +79,7 @@ class Appliance extends CommonDBTM
                 'params' => $options,
                 'nbusers' => self::getNbUsers(),
             ]);
-        } else if ($item->getType() == 'DatabaseInstance') {
+        } elseif ($item->getType() == 'DatabaseInstance') {
             if ($item->getID()) {
                 $webapp_database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
             } else {
@@ -167,98 +167,98 @@ class Appliance extends CommonDBTM
                 $address = "";
                 if (isset($item->input['address'])) {
                     $address = $item->input['address'];
-                } else if (isset($appliance->fields['address'])) {
+                } elseif (isset($appliance->fields['address'])) {
                     $address = $appliance->fields['address'];
                 }
 
                 $backoffice = "";
                 if (isset($item->input['backoffice'])) {
                     $backoffice = $item->input['backoffice'];
-                } else if (isset($appliance->fields['backoffice'])) {
+                } elseif (isset($appliance->fields['backoffice'])) {
                     $backoffice = $appliance->fields['backoffice'];
                 }
 
                 $number_users = 0;
                 if (isset($item->input['number_users'])) {
                     $number_users = $item->input['number_users'];
-                } else if (isset($appliance->fields['number_users'])) {
+                } elseif (isset($appliance->fields['number_users'])) {
                     $number_users = $appliance->fields['number_users'];
                 }
 
                 $version = "";
                 if (isset($item->input['version'])) {
                     $version = $item->input['version'];
-                } else if (isset($appliance->fields['version'])) {
+                } elseif (isset($appliance->fields['version'])) {
                     $version = $appliance->fields['version'];
                 }
 
                 $editor = 0;
                 if (isset($item->input['editor'])) {
                     $editor = $item->input['editor'];
-                } else if (isset($appliance->fields['editor'])) {
+                } elseif (isset($appliance->fields['editor'])) {
                     $editor = $appliance->fields['editor'];
                 }
 
                 $webapplicationservertypes_id = 0;
                 if (isset($item->input['webapplicationservertypes_id'])) {
                     $webapplicationservertypes_id = $item->input['webapplicationservertypes_id'];
-                } else if (isset($appliance->fields['webapplicationservertypes_id'])) {
+                } elseif (isset($appliance->fields['webapplicationservertypes_id'])) {
                     $webapplicationservertypes_id = $appliance->fields['webapplicationservertypes_id'];
                 }
 
                 $webapplicationtechnics_id = 0;
                 if (isset($item->input['webapplicationtechnics_id'])) {
                     $webapplicationtechnics_id = $item->input['webapplicationtechnics_id'];
-                } else if (isset($appliance->fields['webapplicationtechnics_id'])) {
+                } elseif (isset($appliance->fields['webapplicationtechnics_id'])) {
                     $webapplicationtechnics_id = $appliance->fields['webapplicationtechnics_id'];
                 }
 
                 $webapplicationexternalexpositions_id = 0;
                 if (isset($item->input['webapplicationexternalexpositions_id'])) {
                     $webapplicationexternalexpositions_id = $item->input['webapplicationexternalexpositions_id'];
-                } else if (isset($appliance->fields['webapplicationexternalexpositions_id'])) {
+                } elseif (isset($appliance->fields['webapplicationexternalexpositions_id'])) {
                     $webapplicationexternalexpositions_id = $appliance->fields['webapplicationexternalexpositions_id'];
                 }
 
                 $webapplicationreferringdepartmentvalidation = 0;
                 if (isset($item->input['webapplicationreferringdepartmentvalidation'])) {
                     $webapplicationreferringdepartmentvalidation = $item->input['webapplicationreferringdepartmentvalidation'];
-                } else if (isset($appliance->fields['webapplicationreferringdepartmentvalidation'])) {
+                } elseif (isset($appliance->fields['webapplicationreferringdepartmentvalidation'])) {
                     $webapplicationreferringdepartmentvalidation = $appliance->fields['webapplicationreferringdepartmentvalidation'];
                 }
 
                 $webapplicationciovalidation = 0;
                 if (isset($item->input['webapplicationciovalidation'])) {
                     $webapplicationciovalidation = $item->input['webapplicationciovalidation'];
-                } else if (isset($appliance->fields['webapplicationciovalidation'])) {
+                } elseif (isset($appliance->fields['webapplicationciovalidation'])) {
                     $webapplicationciovalidation = $appliance->fields['webapplicationciovalidation'];
                 }
 
                 $webapplicationavailabilities = 0;
                 if (isset($item->input['webapplicationavailabilities'])) {
                     $webapplicationavailabilities = $item->input['webapplicationavailabilities'];
-                } else if (isset($appliance->fields['webapplicationavailabilities'])) {
+                } elseif (isset($appliance->fields['webapplicationavailabilities'])) {
                     $webapplicationavailabilities = $appliance->fields['webapplicationavailabilities'];
                 }
 
                 $webapplicationintegrities = 0;
                 if (isset($item->input['webapplicationintegrities'])) {
                     $webapplicationintegrities = $item->input['webapplicationintegrities'];
-                } else if (isset($appliance->fields['webapplicationintegrities'])) {
+                } elseif (isset($appliance->fields['webapplicationintegrities'])) {
                     $webapplicationintegrities = $appliance->fields['webapplicationintegrities'];
                 }
 
                 $webapplicationconfidentialities = 0;
                 if (isset($item->input['webapplicationconfidentialities'])) {
                     $webapplicationconfidentialities = $item->input['webapplicationconfidentialities'];
-                } else if (isset($appliance->fields['webapplicationconfidentialities'])) {
+                } elseif (isset($appliance->fields['webapplicationconfidentialities'])) {
                     $webapplicationconfidentialities = $appliance->fields['webapplicationconfidentialities'];
                 }
 
                 $webapplicationtraceabilities = 0;
                 if (isset($item->input['webapplicationtraceabilities'])) {
                     $webapplicationtraceabilities = $item->input['webapplicationtraceabilities'];
-                } else if (isset($appliance->fields['webapplicationtraceabilities'])) {
+                } elseif (isset($appliance->fields['webapplicationtraceabilities'])) {
                     $webapplicationtraceabilities = $appliance->fields['webapplicationtraceabilities'];
                 }
 
@@ -277,7 +277,7 @@ class Appliance extends CommonDBTM
                     'webapplicationavailabilities' => $webapplicationavailabilities,
                     'webapplicationintegrities' => $webapplicationintegrities,
                     'webapplicationconfidentialities' => $webapplicationconfidentialities,
-                    'webapplicationtraceabilities' => $webapplicationtraceabilities
+                    'webapplicationtraceabilities' => $webapplicationtraceabilities,
                 ]);
             } else {
 
@@ -492,7 +492,7 @@ class Appliance extends CommonDBTM
         Dashboard::showTitleforDashboard(
             _n('Associated document', 'Associated documents', count($docuItems), 'webapplications'),
             $ApplianceId,
-            $documentItemDBTM
+            $documentItemDBTM,
         );
         $doc_title = ob_get_clean();
 
@@ -500,7 +500,7 @@ class Appliance extends CommonDBTM
         Dashboard::showTitleforDashboard(
             _n('Associated contract', 'Associated contracts', count($contractItems), 'webapplications'),
             $ApplianceId,
-            $contractItemDBTM
+            $contractItemDBTM,
         );
         $contract_title = ob_get_clean();
 
@@ -508,7 +508,7 @@ class Appliance extends CommonDBTM
         Dashboard::showTitleforDashboard(
             _n('Associated link', 'Associated links', count($ManualLinkItems), 'webapplications'),
             $ApplianceId,
-            $ManualLinkDBTM
+            $ManualLinkDBTM,
         );
         $link_title = ob_get_clean();
 
@@ -539,7 +539,7 @@ class Appliance extends CommonDBTM
         ]);
     }
 
-    static public function getColorForDICT($field)
+    public static function getColorForDICT($field)
     {
         switch ($field) {
             case '1':

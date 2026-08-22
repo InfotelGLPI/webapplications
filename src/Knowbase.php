@@ -60,7 +60,7 @@ class Knowbase extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
             $kbAppDBTM = new KnowbaseItem_Item();
             $kbApp     = $kbAppDBTM->find(['items_id' => $ApplianceId,
                 'itemtype' => 'Appliance']);
@@ -138,12 +138,12 @@ class Knowbase extends CommonDBTM
                     'glpi_knowbaseitems' => [
                         'ON' => [
                             'glpi_knowbaseitems_items' => 'knowbaseitems_id',
-                            'glpi_knowbaseitems'       => 'id'
-                        ]
-                    ]
-                ]
+                            'glpi_knowbaseitems'       => 'id',
+                        ],
+                    ],
+                ],
             ],
-            KnowbaseItem::getVisibilityCriteria()
+            KnowbaseItem::getVisibilityCriteria(),
         );
 
         $entity_criteria = getEntitiesRestrictCriteria($item->getTable(), '', '', $item->maybeRecursive());
@@ -151,8 +151,8 @@ class Knowbase extends CommonDBTM
             $criteria['INNER JOIN'][$item->getTable()] = [
                 'ON' => [
                     'glpi_knowbaseitems_items' => 'items_id',
-                    $item->getTable()          => 'id'
-                ]
+                    $item->getTable()          => 'id',
+                ],
             ];
             $criteria['WHERE'][] = $entity_criteria;
         }

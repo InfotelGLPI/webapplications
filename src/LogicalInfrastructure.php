@@ -52,7 +52,7 @@ class LogicalInfrastructure extends CommonDBTM
 
     public static function getTypeName($nb = 0)
     {
-        return _n('Logical infrastructure', 'Logical infrastructure', $nb,'webapplications');
+        return _n('Logical infrastructure', 'Logical infrastructure', $nb, 'webapplications');
     }
 
     public static function getIcon()
@@ -65,7 +65,7 @@ class LogicalInfrastructure extends CommonDBTM
     {
         global $DB;
 
-        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+        $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
 
         $item = new \Appliance();
         $item->getFromDB($ApplianceId);
@@ -74,7 +74,7 @@ class LogicalInfrastructure extends CommonDBTM
         // Only enabled for CommonDBTM
         if (!is_a($item, "CommonDBTM", true)) {
             throw new \InvalidArgumentException(
-                "Argument \$item ($class) must be a CommonDBTM."
+                "Argument \$item ($class) must be a CommonDBTM.",
             );
         }
 
@@ -84,7 +84,7 @@ class LogicalInfrastructure extends CommonDBTM
         // Check if itemtype is valid
         if (!$is_enabled_asset && !$is_itil_object) {
             throw new \InvalidArgumentException(
-                "Argument \$item ($class) is not a valid target for impact analysis."
+                "Argument \$item ($class) is not a valid target for impact analysis.",
             );
         }
 
@@ -95,7 +95,7 @@ class LogicalInfrastructure extends CommonDBTM
         ) {
             // Count is disabled in config OR no item loaded OR ITIL object -> no count
             $total = 0;
-        } else if ($is_enabled_asset) {
+        } elseif ($is_enabled_asset) {
             // If on an asset, get the number of its direct dependencies
             $total = count($DB->request([
                 'FROM'  => ImpactRelation::getTable(),
@@ -110,10 +110,10 @@ class LogicalInfrastructure extends CommonDBTM
                             // Impacted item is our item AND source item is enabled
                             'itemtype_impacted' => get_class($item),
                             'items_id_impacted' => $item->fields['id'],
-                            'itemtype_source'   => Impact::getEnabledItemtypes()
-                        ]
-                    ]
-                ]
+                            'itemtype_source'   => Impact::getEnabledItemtypes(),
+                        ],
+                    ],
+                ],
             ]));
         }
         return self::createTabEntry(self::getTypeName($total), $total);
@@ -150,7 +150,7 @@ class LogicalInfrastructure extends CommonDBTM
             'dropdown_applianceDropdown' . $rand,
             'lists-LogicalInfra',
             $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_WEBDIR . '/ajax/getLists.php',
-            $array
+            $array,
         );
     }
 
@@ -182,7 +182,7 @@ class LogicalInfrastructure extends CommonDBTM
         // Only enabled for CommonDBTM
         if (!is_a($item, "CommonDBTM")) {
             throw new \InvalidArgumentException(
-                "Argument \$item ($class) must be a CommonDBTM)."
+                "Argument \$item ($class) must be a CommonDBTM).",
             );
         }
 

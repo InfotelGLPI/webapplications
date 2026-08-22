@@ -66,7 +66,7 @@ if (isset($_POST["add"])) {
     Html::back();
 } elseif (isset($_GET['_in_modal'])) {
     Html::popHeader(Stream::getTypeName(2), $_SERVER['PHP_SELF']);
-    $_SESSION['reload']=true;
+    $_SESSION['reload'] = true;
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true", 'stream_types' => $CFG_GLPI['stream_types']];
     if (isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];

@@ -36,4 +36,3 @@ Html::header(Entity::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard",
 Search::show(Entity::class);
 
 Html::footer();
-

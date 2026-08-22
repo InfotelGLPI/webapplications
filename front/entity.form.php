@@ -63,7 +63,7 @@ if (isset($_POST["add"])) {
     $entity->update($_POST);
     Html::back();
 } elseif (isset($_GET['_in_modal'])) {
-    $_SESSION['reload']=true;
+    $_SESSION['reload'] = true;
     Html::popHeader(Entity::getTypeName(2), $_SERVER['PHP_SELF']);
     $options = ['withtemplate' => $_GET["withtemplate"], 'formoptions'  => "data-track-changes=true"];
     if (isset($_GET['appliance_id'])) {

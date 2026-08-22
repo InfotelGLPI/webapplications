@@ -28,11 +28,12 @@
  */
 
 use GlpiPlugin\Webapplications\Config;
+
 $config = new Config();
 Session::checkRightsOr(Config::$rightname, [READ, UPDATE]);
 
 if (isset($_POST["add"])) {
-    Session::checkRight(Config::$rightname,CREATE);
+    Session::checkRight(Config::$rightname, CREATE);
     // Only accept a "fields" token that belongs to the server-side whitelist rendered in
     // the config dropdown; reject any forged value before splitting and persisting it.
     if (!array_key_exists($_POST["fields"] ?? '', Config::getFieldsChoices())) {
@@ -44,7 +45,7 @@ if (isset($_POST["add"])) {
     $config->add($_POST);
     Html::back();
 } elseif (isset($_POST["update"])) {
-    Session::checkRight(Config::$rightname,UPDATE);
+    Session::checkRight(Config::$rightname, UPDATE);
     // Only accept a "fields" token that belongs to the server-side whitelist rendered in
     // the config dropdown; reject any forged value before splitting and persisting it.
     if (!array_key_exists($_POST["fields"] ?? '', Config::getFieldsChoices())) {
@@ -55,7 +56,7 @@ if (isset($_POST["add"])) {
     $_POST['fields_description_name'] = $fields[1];
     $config->update($_POST);
     Html::back();
-}else {
+} else {
     Html::header(__('Setup', 'webapplications'), $_SERVER['PHP_SELF'], 'config', 'webapplications');
 
     /* showForm() affiche seulement le formulaire */

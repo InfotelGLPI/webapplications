@@ -285,7 +285,7 @@ parameters:
 		-
 			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
 			identifier: glpi.forbidDynamicInstantiation
-			count: 2
+			count: 1
 			path: src/Pdf.php
 
 		-
@@ -367,7 +367,7 @@ parameters:
 			path: src/Printpdf.php
 
 		-
-			message: '#^PHPDoc tag @param has invalid value \(item\)\: Unexpected token "\\r\\n     \*", expected variable at offset 85 on line 4$#'
+			message: '#^PHPDoc tag @param has invalid value \(item\)\: Unexpected token "\\n     \*", expected variable at offset 82 on line 4$#'
 			identifier: phpDoc.parseError
 			count: 1
 			path: src/Printpdf.php

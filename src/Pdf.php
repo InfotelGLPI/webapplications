@@ -66,7 +66,6 @@ if (!defined('GLPI_ROOT')) {
 #[AllowDynamicProperties]
 class Pdf extends \TCPDF
 {
-
     /* Constantes pour paramétrer certaines données. */
     public $line_height = 6;     // Hauteur d'une ligne simple.
     public $multiline_height = 6;     // Hauteur d'un textarea
@@ -95,6 +94,31 @@ class Pdf extends \TCPDF
     public $appliance;
     public $config;
     public $webappAppliance;
+
+    /**
+     * Normalize a fragment before it is concatenated into a SQL identifier
+     * (table/column name). The fields plugin's container and field names are
+     * admin-controlled, but they are stitched straight into `glpi_plugin_fields_*`
+     * table/column names here, so strip everything that is not a safe identifier
+     * character. Valid fields names only ever use [a-z0-9_], so this is a no-op
+     * for legitimate input and neutralizes any forged name at the sink.
+     */
+    private static function sanitizeSqlIdentifierPart($part): string
+    {
+        return preg_replace('/[^a-z0-9_]/', '', strtolower((string) $part));
+    }
+
+    /**
+     * Whether a dynamic value can be safely instantiated as a GLPI item class.
+     * The itemtype stored in the fields plugin data (`itemtype_<field>`) is
+     * user/admin controlled and later used as `new $itemtype()`, so it must be a
+     * known CommonDBTM subclass before instantiation (is_a implies class_exists).
+     */
+    private static function isSafeItemtype($itemtype): bool
+    {
+        return is_string($itemtype) && $itemtype !== ''
+            && is_a($itemtype, \CommonDBTM::class, true);
+    }
 
     /**
      * PluginMetaDemandsMetaDemandPdf constructor.
@@ -300,7 +324,7 @@ class Pdf extends \TCPDF
         // re-assert this report's 1mm horizontal padding.
         $this->setCellPaddings(1, 0, 1, 0);
 
-        $this->SetXY($this->margin_left, $this->margin_top-5);
+        $this->SetXY($this->margin_left, $this->margin_top - 5);
 
         $largeurCoteTitre = round($this->page_width / 3, 1);
         $largeurCaseTitre = $this->page_width - $largeurCoteTitre;
@@ -445,9 +469,9 @@ class Pdf extends \TCPDF
         $contractItemDatas = $contractItem->find(['itemtype' => 'Appliance', 'items_id' => $this->id]);
 
         $this->SetX($this->margin_left);
-//        $this->SetFontNormal('black', 1, 10);
+        //        $this->SetFontNormal('black', 1, 10);
         $this->CellTitleValue($this->page_width, '15', ($this->appliance->fields['name']), 'TLR', 'C', 'hardgrey', 1, '20', 'black');
-        $this->SetXY($this->margin_left, $this->GetY()+15);
+        $this->SetXY($this->margin_left, $this->GetY() + 15);
         $this->SetFontNormal('black', false, 10);
 
         if ($this->config->fields['use_fields_description']) {
@@ -467,7 +491,9 @@ class Pdf extends \TCPDF
                     $fieldsContainer->getFromDB($fieldsfield->fields['plugin_fields_containers_id']);
                     if (strpos($fieldsContainer->fields['itemtypes'], 'Appliance') !== false) {
                         $itemtype = json_decode($fieldsContainer->fields['itemtypes']);
-                        $firsttable = 'glpi_plugin_fields_' . strtolower($itemtype[0]) . strtolower($fieldsContainer->fields['name']) . 's';
+                        $firsttable = 'glpi_plugin_fields_'
+                            . self::sanitizeSqlIdentifierPart($itemtype[0] ?? '')
+                            . self::sanitizeSqlIdentifierPart($fieldsContainer->fields['name']) . 's';
 
                         $fieldsDatas = $DB->request(['FROM' => $firsttable, 'WHERE' => ['itemtype' => 'Appliance', 'items_id' => $this->id]]);
 
@@ -488,18 +514,18 @@ class Pdf extends \TCPDF
         }
         $yligne = $this->GetY();
         $number_users = $this->webappAppliance->fields['number_users'] ?? 0;
-        $this->MultiCell($this->page_width /4, 10, User::getTypeName(2) . PHP_EOL . (htmlspecialchars_decode($this->webappAppliance::getNbUsersValue($number_users))), 'LRBT', 'C', '', 0, '', 'black');
+        $this->MultiCell($this->page_width / 4, 10, User::getTypeName(2) . PHP_EOL . (htmlspecialchars_decode($this->webappAppliance::getNbUsersValue($number_users))), 'LRBT', 'C', '', 0, '', 'black');
         $yligne2 = $this->GetY();
-        $this->title_height = ($yligne2 - $yligne) /2;
-        $this->setXY($this->margin_left + ($this->page_width /4), $yligne);
-        $this->MultiCell($this->page_width - ($this->page_width/4), $this->title_height, __('Project leader', 'webapplications') . ' : ' . User::getFriendlyNameById($this->appliance->fields['users_id_tech']), 'BRT', 'C', '', 0, '', 'black');
-        $this->setX($this->margin_left + ($this->page_width /4));
+        $this->title_height = ($yligne2 - $yligne) / 2;
+        $this->setXY($this->margin_left + ($this->page_width / 4), $yligne);
+        $this->MultiCell($this->page_width - ($this->page_width / 4), $this->title_height, __('Project leader', 'webapplications') . ' : ' . User::getFriendlyNameById($this->appliance->fields['users_id_tech']), 'BRT', 'C', '', 0, '', 'black');
+        $this->setX($this->margin_left + ($this->page_width / 4));
         $groupsitem = new Group_Item();
         $groups = '';
         foreach ($groupsitem->find(['itemtype' => 'Appliance', 'items_id' => $this->id, 'type' => 2]) as $group) {
             $groups .= Group::getFriendlyNameById($group['groups_id']) . ' ';
         }
-        $this->MultiCell($this->page_width - ($this->page_width/4), $this->title_height, __('Project team', 'webapplications') . ' : ' . $groups, 'BR', 'C', '', 0, '', 'black');
+        $this->MultiCell($this->page_width - ($this->page_width / 4), $this->title_height, __('Project team', 'webapplications') . ' : ' . $groups, 'BR', 'C', '', 0, '', 'black');
 
         if (!empty($this->webappAppliance->fields['editor']) && $this->webappAppliance->fields['editor'] > 0) {
             $this->setY($this->GetY() + 2);
@@ -507,18 +533,18 @@ class Pdf extends \TCPDF
             $this->MultiCell($this->page_width, $this->title_height, __('Support', 'webapplications'), 'TLRB', 'C', true, 0, '', 'black');
 
             $yligne3 = $this->GetY();
-            $this->MultiCell($this->page_width/3, 7, (htmlspecialchars_decode(__('Referent editor', 'webapplications'))), 'LRB', 'C', '', 0, '', 'black');
-            $this->setXY($this->margin_left + ($this->page_width/3), $yligne3);
-            $this->MultiCell($this->page_width/3, 7, __('Mail support', 'webapplications'), 'RB', 'C', '', 0, '', 'black');
-            $this->setXY($this->margin_left + ($this->page_width/3)*2, $yligne3);
-            $this->MultiCell($this->page_width/3, 7, (htmlspecialchars_decode(__('Phone support', 'webapplications'))), 'RB', 'C', '', 0, '', 'black');
+            $this->MultiCell($this->page_width / 3, 7, (htmlspecialchars_decode(__('Referent editor', 'webapplications'))), 'LRB', 'C', '', 0, '', 'black');
+            $this->setXY($this->margin_left + ($this->page_width / 3), $yligne3);
+            $this->MultiCell($this->page_width / 3, 7, __('Mail support', 'webapplications'), 'RB', 'C', '', 0, '', 'black');
+            $this->setXY($this->margin_left + ($this->page_width / 3) * 2, $yligne3);
+            $this->MultiCell($this->page_width / 3, 7, (htmlspecialchars_decode(__('Phone support', 'webapplications'))), 'RB', 'C', '', 0, '', 'black');
 
             $yligne3 = $this->GetY();
-            $this->MultiCell($this->page_width/3, 7, (htmlspecialchars_decode($supplier->fields['name'] ?? '')), 'LRB', 'C', '', 0, '', 'black');
-            $this->setXY($this->margin_left + ($this->page_width/3), $yligne3);
-            $this->MultiCell($this->page_width/3, 7, (htmlspecialchars_decode($supplier->fields['email'] ?? '')), 'RB', 'C', '', 0, '', 'black');
-            $this->setXY($this->margin_left + ($this->page_width/3)*2, $yligne3);
-            $this->MultiCell($this->page_width/3, 7, (htmlspecialchars_decode($supplier->fields['phonenumber'] ?? '')), 'RB', 'C', '', 0, '', 'black');
+            $this->MultiCell($this->page_width / 3, 7, (htmlspecialchars_decode($supplier->fields['name'] ?? '')), 'LRB', 'C', '', 0, '', 'black');
+            $this->setXY($this->margin_left + ($this->page_width / 3), $yligne3);
+            $this->MultiCell($this->page_width / 3, 7, (htmlspecialchars_decode($supplier->fields['email'] ?? '')), 'RB', 'C', '', 0, '', 'black');
+            $this->setXY($this->margin_left + ($this->page_width / 3) * 2, $yligne3);
+            $this->MultiCell($this->page_width / 3, 7, (htmlspecialchars_decode($supplier->fields['phonenumber'] ?? '')), 'RB', 'C', '', 0, '', 'black');
         }
 
         $this->setY($this->GetY() + 2);
@@ -560,9 +586,9 @@ class Pdf extends \TCPDF
         foreach ($contractItemDatas as $contractItemData) {
             $contract->getFromDB($contractItemData['contracts_id']);
             $docurl = $CFG_GLPI["url_base"] . "/front/contract.form.php?id=" . $contractItemData['contracts_id'];
-            $this->Cell(($this->page_width/9)*2, 7, (htmlspecialchars_decode($contract->fields['name'])), 'L', 1, 'L', false, $docurl, 'black');
+            $this->Cell(($this->page_width / 9) * 2, 7, (htmlspecialchars_decode($contract->fields['name'])), 'L', 1, 'L', false, $docurl, 'black');
             $yligne4 = $this->GetY();
-            $this->setXY($this->margin_left + (($this->page_width/9)*2), $yligne3);
+            $this->setXY($this->margin_left + (($this->page_width / 9) * 2), $yligne3);
             $contractType = new ContractType();
             $contractType->getFromDB($contract->fields['contracttypes_id']);
             $typename = '';
@@ -581,17 +607,17 @@ class Pdf extends \TCPDF
                 }
             }
 
-            $this->Cell(($this->page_width/9), $yligne4 - $yligne3, (htmlspecialchars_decode($typename)), '', 1, 'C', false);
-            $this->setXY($this->margin_left + (($this->page_width/9)*4), $yligne3);
-            $this->Cell(($this->page_width/9), $yligne4 - $yligne3, (htmlspecialchars_decode($contract->fields['num'])), '', 1, 'C', false);
-            $this->setXY($this->margin_left + (($this->page_width/9)*6), $yligne3);
+            $this->Cell(($this->page_width / 9), $yligne4 - $yligne3, (htmlspecialchars_decode($typename)), '', 1, 'C', false);
+            $this->setXY($this->margin_left + (($this->page_width / 9) * 4), $yligne3);
+            $this->Cell(($this->page_width / 9), $yligne4 - $yligne3, (htmlspecialchars_decode($contract->fields['num'])), '', 1, 'C', false);
+            $this->setXY($this->margin_left + (($this->page_width / 9) * 6), $yligne3);
 
             $datebegin = isset($contract->fields['begin_date']) ? new DateTime($contract->fields['begin_date']) : '';
-            $this->Cell(($this->page_width/9), $yligne4 - $yligne3, (htmlspecialchars_decode(isset($contract->fields['begin_date']) ? $datebegin->format('Y-m-d') : '')), '', 1, 'C', false);
-            $this->setXY($this->margin_left + (($this->page_width/9)*7), $yligne3);
-            $this->Cell(($this->page_width/9), $yligne4 - $yligne3, (htmlspecialchars_decode($contract->fields['duration'] . ' months')), '', 1, 'C', false);
-            $this->setXY($this->margin_left + (($this->page_width/9)*8), $yligne3);
-            $this->Cell(($this->page_width/9), $yligne4 - $yligne3, (htmlspecialchars_decode($costcontract) . ' EUR'), 'R', 1, 'C', false);
+            $this->Cell(($this->page_width / 9), $yligne4 - $yligne3, (htmlspecialchars_decode(isset($contract->fields['begin_date']) ? $datebegin->format('Y-m-d') : '')), '', 1, 'C', false);
+            $this->setXY($this->margin_left + (($this->page_width / 9) * 7), $yligne3);
+            $this->Cell(($this->page_width / 9), $yligne4 - $yligne3, (htmlspecialchars_decode($contract->fields['duration'] . ' months')), '', 1, 'C', false);
+            $this->setXY($this->margin_left + (($this->page_width / 9) * 8), $yligne3);
+            $this->Cell(($this->page_width / 9), $yligne4 - $yligne3, (htmlspecialchars_decode($costcontract) . ' EUR'), 'R', 1, 'C', false);
             $yligne3 = $this->GetY();
         }
         $this->MultiCell($this->page_width, 1, '', 'RBL', 'C', false, 0, '', 'black');
@@ -646,16 +672,16 @@ class Pdf extends \TCPDF
             $this->config->fields['fields_description_table'] != 'Appliance' ||
             $this->config->fields['fields_description_name'] != 'comment') {
             $yligne3 = $this->GetY();
-            $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode(_n('Comment', 'Comments', 2) . ' : ')), 'L', 'L', false, 0, '', 'black');
+            $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode(_n('Comment', 'Comments', 2) . ' : ')), 'L', 'L', false, 0, '', 'black');
             $yligne35 = $this->GetY();
-            $this->setXY($this->margin_left + ($this->page_width/4), $yligne3);
-            $this->MultiCell(($this->page_width/4)*3, 7, (htmlspecialchars_decode($this->appliance->fields['comment'] ?? '')), 'R', 'L', false, 0, '', 'black');
+            $this->setXY($this->margin_left + ($this->page_width / 4), $yligne3);
+            $this->MultiCell(($this->page_width / 4) * 3, 7, (htmlspecialchars_decode($this->appliance->fields['comment'] ?? '')), 'R', 'L', false, 0, '', 'black');
             $this->setXY($this->margin_left, $this->GetY());
 
             $yligne4 = $this->GetY();
             if ($yligne35 != $yligne4) {
                 $this->setXY($this->margin_left, $yligne35);
-                $this->MultiCell(($this->page_width/4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
+                $this->MultiCell(($this->page_width / 4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
                 $this->SetXY($this->margin_left, $yligne4);
             }
         }
@@ -663,9 +689,9 @@ class Pdf extends \TCPDF
         $applianceenvironnement = new ApplianceEnvironment();
         $applianceenvironnement->getFromDB($this->appliance->fields['applianceenvironments_id']);
         $yligne3 = $this->GetY();
-        $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode(_n('Environment', 'Environments', 1) . ' : ')), 'L', 'L', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($this->page_width/4), $yligne3);
-        $this->MultiCell(($this->page_width/4)*3, 7, (htmlspecialchars_decode($applianceenvironnement->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
+        $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode(_n('Environment', 'Environments', 1) . ' : ')), 'L', 'L', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($this->page_width / 4), $yligne3);
+        $this->MultiCell(($this->page_width / 4) * 3, 7, (htmlspecialchars_decode($applianceenvironnement->fields['name'] ?? '')), 'R', 'L', false, 0, '', 'black');
         $this->setXY($this->margin_left, $this->GetY());
 
         $this->adddataonfourcolomn(__('URL', 'webapplications'), $this->webappAppliance->fields['address'] ?? '', __('Backoffice URL', 'webapplications'), $this->webappAppliance->fields['backoffice'] ?? '');
@@ -694,7 +720,9 @@ class Pdf extends \TCPDF
             foreach ($fieldsContainer->find(['type' => 'dom']) as $row) {
                 if (strpos($row['itemtypes'], 'Appliance') !== false) {
                     $row['itemtype'] = json_decode($row['itemtypes']);
-                    $firsttable = 'glpi_plugin_fields_' . strtolower($row['itemtype'][0]) . strtolower($row['name']) . 's';
+                    $firsttable = 'glpi_plugin_fields_'
+                        . self::sanitizeSqlIdentifierPart($row['itemtype'][0] ?? '')
+                        . self::sanitizeSqlIdentifierPart($row['name']) . 's';
 
                     $fieldsDatas = $DB->request(['FROM' => $firsttable, 'WHERE' => ['itemtype' => 'Appliance', 'items_id' => $this->id]]);
 
@@ -710,64 +738,67 @@ class Pdf extends \TCPDF
                                     $fieldsData[$rowfield['name']] = $fieldsData[$rowfield['name']] == 1 ? __('Yes') : __('No');
                                     break;
                                 case 'dropdown':
-                                    $fieldsdropdown = $DB->request(['SELECT' => 'name', 'FROM' => 'glpi_plugin_fields_' . strtolower($rowfield['name']) . 'dropdowns', 'WHERE' => ['id' => $fieldsData['plugin_fields_' . $rowfield['name'] . 'dropdowns_id']]]);
+                                    $dropdown_table = 'glpi_plugin_fields_' . self::sanitizeSqlIdentifierPart($rowfield['name']) . 'dropdowns';
+                                    $fieldsdropdown = $DB->request(['SELECT' => 'name', 'FROM' => $dropdown_table, 'WHERE' => ['id' => $fieldsData['plugin_fields_' . $rowfield['name'] . 'dropdowns_id']]]);
                                     foreach ($fieldsdropdown as $dropdown) {
                                         $fieldsData[$rowfield['name']] = $dropdown['name'];
                                     }
                                     break;
                                 case 'glpi_item':
-                                    if (isset($fieldsData['itemtype_' . $rowfield['name']])) {
-                                        $item = new $fieldsData['itemtype_' . $rowfield['name']]();
+                                    $glpi_item_type = $fieldsData['itemtype_' . $rowfield['name']] ?? null;
+                                    if (self::isSafeItemtype($glpi_item_type)) {
+                                        $item = new $glpi_item_type();
                                         $item->getFromDB($fieldsData['items_id_' . $rowfield['name']]);
                                         $fieldsData[$rowfield['name']] = $item::getTypeName() . ' - ' . $item->fields['name'];
                                     } else {
                                         $fieldsData[$rowfield['name']] = '';
                                     }
+                                    // no break
                                 default:
                                     break;
                             }
-                            if (!str_starts_with($rowfield['type'], 'dropdown-') && (!$this->config->fields['use_fields_description'] || $this->config->fields['fields_description_table'] != 'Fields' || $this->config->fields['fields_description_name'] != $rowfield['id'] )) {
-                                if ($compteurfields == 0 || $compteurfields%2 == 0) {
+                            if (!str_starts_with($rowfield['type'], 'dropdown-') && (!$this->config->fields['use_fields_description'] || $this->config->fields['fields_description_table'] != 'Fields' || $this->config->fields['fields_description_name'] != $rowfield['id'])) {
+                                if ($compteurfields == 0 || $compteurfields % 2 == 0) {
                                     //impair (a gauche)
                                     $this->SetX($this->margin_left);
                                     $yligne3 = $this->GetY();
-                                    $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode($rowfield['label'] . ' : ')), 'L', 'L', false, 0, '', 'black');
+                                    $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode($rowfield['label'] . ' : ')), 'L', 'L', false, 0, '', 'black');
                                     $yligne35 = $this->GetY();
-                                    $this->setXY($this->margin_left + ($this->page_width/4), $yligne3);
-                                    $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode($fieldsData[$rowfield['name']])), '', 'L', false, 0, '', 'black');
+                                    $this->setXY($this->margin_left + ($this->page_width / 4), $yligne3);
+                                    $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode($fieldsData[$rowfield['name']])), '', 'L', false, 0, '', 'black');
 
-                                    $compteurfields ++;
+                                    $compteurfields++;
                                     $yligne4 = $this->GetY();
                                     if ($yligne35 != $yligne4) {
                                         $this->setXY($this->margin_left, $yligne35);
-                                        $this->MultiCell(($this->page_width/4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
-                                        $this->SetXY($this->margin_left + ($this->page_width/4)*2, $yligne4);
+                                        $this->MultiCell(($this->page_width / 4), $yligne4 - $yligne35, '', 'L', 'C', false, 0, '', 'black');
+                                        $this->SetXY($this->margin_left + ($this->page_width / 4) * 2, $yligne4);
                                     }
                                 } else {
                                     //pair à droite
-                                    $this->setXY($this->margin_left + ($this->page_width/4)*2, $yligne3);
-                                    $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode($rowfield['label'] . ' : ')), '', 'L', false, 0, '', 'black');
-                                    $this->setXY($this->margin_left + ($this->page_width/4)*3, $yligne3);
-                                    $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode($fieldsData[$rowfield['name']])), 'R', 'L', false, 0, '', 'black');
-                                    $compteurfields ++;
+                                    $this->setXY($this->margin_left + ($this->page_width / 4) * 2, $yligne3);
+                                    $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode($rowfield['label'] . ' : ')), '', 'L', false, 0, '', 'black');
+                                    $this->setXY($this->margin_left + ($this->page_width / 4) * 3, $yligne3);
+                                    $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode($fieldsData[$rowfield['name']])), 'R', 'L', false, 0, '', 'black');
+                                    $compteurfields++;
 
                                     // Ajuster le tableau
 
-                                    $this->setXY($this->margin_left + ($this->page_width/2), $this->GetY());
+                                    $this->setXY($this->margin_left + ($this->page_width / 2), $this->GetY());
                                     if ($this->GetY() < $yligne4) {
-                                        $this->MultiCell(($this->page_width/2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
+                                        $this->MultiCell(($this->page_width / 2), $yligne4 - $this->GetY(), '', 'R', 'C', false, 0, '', 'black');
                                     } elseif ($this->GetY() > $yligne4) {
                                         $yligne5 = $this->GetY();
                                         $this->setXY($this->margin_left, $yligne4);
-                                        $this->MultiCell(($this->page_width/2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
+                                        $this->MultiCell(($this->page_width / 2), $yligne5 - $yligne4, '', 'L', 'C', false, 0, '', 'black');
                                     }
                                 }
                             }
                         }
                     }
-                    if ($compteurfields %2 == 1) {
-                        $this->setXY($this->margin_left + ($this->page_width/2), $yligne3);
-                        $this->MultiCell(($this->page_width/2), $yligne4 - $yligne3, '', 'R', 'C', false, 0, '', 'black');
+                    if ($compteurfields % 2 == 1) {
+                        $this->setXY($this->margin_left + ($this->page_width / 2), $yligne3);
+                        $this->MultiCell(($this->page_width / 2), $yligne4 - $yligne3, '', 'R', 'C', false, 0, '', 'black');
                     }
                 }
             }
@@ -781,30 +812,31 @@ class Pdf extends \TCPDF
 
         $yligne3 = $this->GetY();
         $value = $this->webappAppliance->fields['webapplicationavailabilities'] ?? '';
-        $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode(__('Availability', 'webapplications') . ' : ' . $value)), 'LRB', 'C', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($this->page_width/4), $yligne3);
+        $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode(__('Availability', 'webapplications') . ' : ' . $value)), 'LRB', 'C', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($this->page_width / 4), $yligne3);
         $value = $this->webappAppliance->fields['webapplicationintegrities'] ?? '';
-        $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode(__('Integrity', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($this->page_width/4)*2, $yligne3);
+        $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode(__('Integrity', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($this->page_width / 4) * 2, $yligne3);
         $value = $this->webappAppliance->fields['webapplicationconfidentialities'] ?? '';
-        $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode(__('Confidentiality', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($this->page_width/4)*3, $yligne3);
+        $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode(__('Confidentiality', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($this->page_width / 4) * 3, $yligne3);
         $value = $this->webappAppliance->fields['webapplicationtraceabilities'] ?? '';
-        $this->MultiCell($this->page_width/4, 7, (htmlspecialchars_decode(__('Traceability', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
+        $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode(__('Traceability', 'webapplications') . ' : ' . $value)), 'RB', 'C', false, 0, '', 'black');
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $this->MultiCell($this->page_width, $this->title_height, (htmlspecialchars_decode(__('Validation', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
 
         $yligne3 = $this->GetY();
         $answer = isset($this->webappAppliance->fields['webapplicationreferringdepartmentvalidation']) && $this->webappAppliance->fields['webapplicationreferringdepartmentvalidation'] == 0 ? __('No') : __('Yes');
-        $this->MultiCell($this->page_width/2, 7, (htmlspecialchars_decode(__('Validation of the request by the referring Department', 'webapplications') . ' : ')) . $answer, 'LRB', 'C', false, 0, '', 'black');
-        $this->setXY($this->margin_left + ($this->page_width/2), $yligne3);
+        $this->MultiCell($this->page_width / 2, 7, (htmlspecialchars_decode(__('Validation of the request by the referring Department', 'webapplications') . ' : ')) . $answer, 'LRB', 'C', false, 0, '', 'black');
+        $this->setXY($this->margin_left + ($this->page_width / 2), $yligne3);
         $answer = isset($this->webappAppliance->fields['webapplicationciovalidation']) && $this->webappAppliance->fields['webapplicationciovalidation'] == 0 ? __('No') : __('Yes');
-        $this->MultiCell($this->page_width/2, 7, (htmlspecialchars_decode(__('Validation by CISO', 'webapplications') . ' : ')) . $answer, 'RB', 'C', false, 0, '', 'black');
+        $this->MultiCell($this->page_width / 2, 7, (htmlspecialchars_decode(__('Validation by CISO', 'webapplications') . ' : ')) . $answer, 'RB', 'C', false, 0, '', 'black');
 
     }
 
-    private function adddataonfourcolomn($titleleft, $dataleft, $titleright, $dataright){
+    private function adddataonfourcolomn($titleleft, $dataleft, $titleright, $dataright)
+    {
         $yligne3 = $this->GetY();
         $this->MultiCell($this->page_width / 4, 7, (htmlspecialchars_decode($titleleft . ' : ')), 'L', 'L');
         $yligne35 = $this->GetY();
@@ -843,9 +875,9 @@ class Pdf extends \TCPDF
     {
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $yligne3 = $this->GetY();
-        $this->MultiCell(($this->page_width/2) -1, $this->title_height, (htmlspecialchars_decode(__('Ecosystem', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
-        $this->setXY($this->margin_left + ($this->page_width/2) + 1, $yligne3);
-        $this->MultiCell(($this->page_width/2) -1, $this->title_height, (htmlspecialchars_decode(_n('Process', 'Processes', 1))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->MultiCell(($this->page_width / 2) - 1, $this->title_height, (htmlspecialchars_decode(__('Ecosystem', 'webapplications'))), 'TLRB', 'C', true, 0, '', 'black');
+        $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
+        $this->MultiCell(($this->page_width / 2) - 1, $this->title_height, (htmlspecialchars_decode(_n('Process', 'Processes', 1))), 'TLRB', 'C', true, 0, '', 'black');
 
         $webapplicationentities = new Entity();
 
@@ -863,14 +895,14 @@ class Pdf extends \TCPDF
         foreach ($applicationItemsDatas as $applicationItemsData) {
             $webapplicationentitiesDatas = $webapplicationentities->find(['id' => $applicationItemsData['items_id']]);
             foreach ($webapplicationentitiesDatas as $webapplicationentitiesData) {
-                $this->MultiCell(($this->page_width/2) -1, 7, (htmlspecialchars_decode($webapplicationentitiesData['name'])) , 'LR',  'C', false);
-                $this->setXY($this->margin_left,$this->GetY());
+                $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode($webapplicationentitiesData['name'])), 'LR', 'C', false);
+                $this->setXY($this->margin_left, $this->GetY());
             }
         }
 
         $yligne4 = $this->GetY();
 
-        $this->setXY($this->margin_left + ($this->page_width/2) +1, $yligne3);
+        $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
         $applicationItemsDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'PluginWebapplicationsProcess']);
         foreach ($applicationItemsDatas as $applicationItemsData) {
             $webapplicationprocessesDatas = $webapplicationprocesses->find(['id' => $applicationItemsData['items_id']]);
@@ -880,28 +912,28 @@ class Pdf extends \TCPDF
             }
         }
         if ($this->GetY() < $yligne4) {
-            $this->MultiCell(($this->page_width/2)-1, $yligne4 - $this->GetY() +1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C');
             $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
         } elseif ($this->GetY() > $yligne4) {
             $yligne5 = $this->GetY();
             $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell(($this->page_width/2) -1, $yligne5 - $yligne4 + 1, '', 'LRB', 'C');
-            $this->setXY($this->margin_left + ($this->page_width/2) + 1, $yligne5);
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C',);
+            $this->MultiCell(($this->page_width / 2) - 1, $yligne5 - $yligne4 + 1, '', 'LRB', 'C');
+            $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne5);
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C', );
         } else {
             $yligne5 = $this->GetY();
             $this->setXY($this->margin_left, $this->GetY());
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
-            $this->setXY($this->margin_left + ($this->page_width/2) +1, $yligne5);
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
+            $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne5);
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
         }
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $yligne3 = $this->GetY();
-        $this->MultiCell(($this->page_width/2) -1, $this->title_height, (htmlspecialchars_decode(__('Physical Infrastructure', 'webapplications'))), 'TLRB', 'C', true);
-        $this->setXY($this->margin_left + ($this->page_width/2) + 1, $yligne3);
-        $this->MultiCell(($this->page_width/2) -1, $this->title_height, (htmlspecialchars_decode(\DatabaseInstance::getTypeName(2))), 'TLRB', 'C', true);
+        $this->MultiCell(($this->page_width / 2) - 1, $this->title_height, (htmlspecialchars_decode(__('Physical Infrastructure', 'webapplications'))), 'TLRB', 'C', true);
+        $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
+        $this->MultiCell(($this->page_width / 2) - 1, $this->title_height, (htmlspecialchars_decode(\DatabaseInstance::getTypeName(2))), 'TLRB', 'C', true);
 
         $applicationItems = new Appliance_Item();
 
@@ -910,16 +942,19 @@ class Pdf extends \TCPDF
         foreach (["Computer", "Printer", "Phone", "NetworkEquipment"] as $itemtype) {
             $physicalinfraDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => $itemtype]);
             foreach ($physicalinfraDatas as $physicalinfraData) {
-                $item = new $physicalinfraData['itemtype']();
+                // $itemtype is a hardcoded, whitelisted class (it is the find()
+                // criterion), so instantiate from it rather than re-reading the
+                // itemtype column back from the row.
+                $item = new $itemtype();
                 $item->getFromDB($physicalinfraData['items_id']);
-                $this->MultiCell(($this->page_width/2) -1, 7, (htmlspecialchars_decode((string) ($item->fields['name'] ?? ''))), 'LR', 'C');
+                $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode((string) ($item->fields['name'] ?? ''))), 'LR', 'C');
                 $this->setXY($this->margin_left, $this->GetY());
             }
         }
 
         $yligne4 = $this->GetY();
 
-        $this->setXY($this->margin_left + ($this->page_width/2) +1, $yligne3);
+        $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
 
         $databasesInstanceDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'DatabaseInstance']);
         foreach ($databasesInstanceDatas as $databasesInstanceData) {
@@ -927,35 +962,35 @@ class Pdf extends \TCPDF
             // GlpiPlugin\Webapplications\DatabaseInstance is a link table without one.
             $databaseInstance = new \DatabaseInstance();
             $databaseInstance->getFromDB($databasesInstanceData['items_id']);
-            $this->MultiCell(($this->page_width/2) -1, 7, (htmlspecialchars_decode((string) ($databaseInstance->fields['name'] ?? ''))), 'LR', 'C');
-            $this->setXY($this->margin_left + ($this->page_width/2) +1, $this->GetY());
+            $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode((string) ($databaseInstance->fields['name'] ?? ''))), 'LR', 'C');
+            $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $this->GetY());
         }
         if ($this->GetY() < $yligne4) {
-            $this->MultiCell(($this->page_width/2)-1, $yligne4 - $this->GetY() +1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C');
             $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
         } elseif ($this->GetY() > $yligne4) {
             $yligne5 = $this->GetY();
             $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell(($this->page_width/2) -1, $yligne5 - $yligne4 + 1, '', 'LRB', 'C');
-            $this->setXY($this->margin_left + ($this->page_width/2) + 1, $yligne5);
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, $yligne5 - $yligne4 + 1, '', 'LRB', 'C');
+            $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne5);
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
         } else {
             $yligne5 = $this->GetY();
             $this->setXY($this->margin_left, $this->GetY());
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
-            $this->setXY($this->margin_left + ($this->page_width/2) +1, $yligne5);
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
+            $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne5);
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
         }
 
         $this->setXY($this->margin_left, $this->GetY() + 2);
         $yligne3 = $this->GetY();
-        $this->MultiCell(($this->page_width/2) -1, $this->title_height, (htmlspecialchars_decode(_n("Certificate", 'Certificates', 2))), 'TLRB', 'C', true);
-        $this->setXY($this->margin_left + ($this->page_width/2) + 1, $yligne3);
-        $this->MultiCell(($this->page_width/2) -1, $this->title_height, (htmlspecialchars_decode(_n('Stream', 'Streams', 2, 'webapplications'))), 'TLRB', 'C', true);
+        $this->MultiCell(($this->page_width / 2) - 1, $this->title_height, (htmlspecialchars_decode(_n("Certificate", 'Certificates', 2))), 'TLRB', 'C', true);
+        $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
+        $this->MultiCell(($this->page_width / 2) - 1, $this->title_height, (htmlspecialchars_decode(_n('Stream', 'Streams', 2, 'webapplications'))), 'TLRB', 'C', true);
 
         $certificatItem = new Certificate_Item();
-        $certificatItemDatas = $certificatItem->find(['items_id'=>$this->id, 'itemtype'=>'Appliance']);
+        $certificatItemDatas = $certificatItem->find(['items_id' => $this->id, 'itemtype' => 'Appliance']);
 
         $webapplicationstream = new Stream();
 
@@ -964,13 +999,13 @@ class Pdf extends \TCPDF
         foreach ($certificatItemDatas as $certificatItemData) {
             $certificat = new \Certificate();
             $certificat->getFromDB($certificatItemData['certificates_id']);
-            $this->MultiCell(($this->page_width/2) -1, 7, (htmlspecialchars_decode($certificat->fields['name'])), 'LR', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode($certificat->fields['name'])), 'LR', 'C');
             $this->setXY($this->margin_left, $this->GetY());
         }
 
         $yligne4 = $this->GetY();
 
-        $this->setXY($this->margin_left + ($this->page_width/2) +1, $yligne3);
+        $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
         $applicationItemsDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'PluginWebapplicationsStream']);
         foreach ($applicationItemsDatas as $applicationItemsData) {
             $webapplicationstreamDatas = $webapplicationstream->find(['id' => $applicationItemsData['items_id']]);
@@ -980,21 +1015,21 @@ class Pdf extends \TCPDF
             }
         }
         if ($this->GetY() < $yligne4) {
-            $this->MultiCell(($this->page_width/2)-1, $yligne4 - $this->GetY() +1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C');
             $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
         } elseif ($this->GetY() > $yligne4) {
             $yligne5 = $this->GetY();
             $this->setXY($this->margin_left, $yligne4);
-            $this->MultiCell(($this->page_width/2) -1, $yligne5 - $yligne4 + 1, '', 'LRB', 'C');
-            $this->setXY($this->margin_left + ($this->page_width/2) + 1, $yligne5);
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, $yligne5 - $yligne4 + 1, '', 'LRB', 'C');
+            $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne5);
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
         } else {
             $yligne5 = $this->GetY();
             $this->setXY($this->margin_left, $this->GetY());
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
-            $this->setXY($this->margin_left + ($this->page_width/2) +1, $yligne5);
-            $this->MultiCell(($this->page_width/2) -1, 1, '', 'LRB', 'C');
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
+            $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne5);
+            $this->MultiCell(($this->page_width / 2) - 1, 1, '', 'LRB', 'C');
         }
     }
 }

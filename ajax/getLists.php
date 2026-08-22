@@ -32,7 +32,7 @@ use GlpiPlugin\Webapplications\Dashboard;
 header("Content-Type: text/html; charset=UTF-8");
 Html::header_nocache();
 
-Session::checkRight(Dashboard::$rightname,READ);
+Session::checkRight(Dashboard::$rightname, READ);
 
 if (isset($_POST['value'])
     && $_POST['value'] > 0) {

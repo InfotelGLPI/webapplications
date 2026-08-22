@@ -64,7 +64,7 @@ class DatabaseInstance extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;;
+            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
             $self = new \DatabaseInstance();
             $nb = count(Dashboard::getObjects($self, $ApplianceId));
             return self::createTabEntry(self::getTypeName($nb), $nb);
@@ -82,30 +82,30 @@ class DatabaseInstance extends CommonDBTM
     /**
      * @param $params
      */
-//    public static function addFields($params)
-//    {
-//        $item = $params['item'];
-//        $webapp_database = new self();
-//        if ($item->getType() == 'DatabaseInstance') {
-//            if ($item->getID()) {
-//                $webapp_database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
-//            } else {
-//                $webapp_database->getEmpty();
-//            }
-//
-//            $options = [];
-//
-//            if (isset($params["options"]["appliances_id"])) {
-//                $options = ['appliances_id' => $params["options"]["appliances_id"]];
-//            }
-//
-//            TemplateRenderer::getInstance()->display('@webapplications/webapplication_database_form.html.twig', [
-//                'item' => $webapp_database,
-//                'params' => $options,
-//            ]);
-//        }
-//        return true;
-//    }
+    //    public static function addFields($params)
+    //    {
+    //        $item = $params['item'];
+    //        $webapp_database = new self();
+    //        if ($item->getType() == 'DatabaseInstance') {
+    //            if ($item->getID()) {
+    //                $webapp_database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
+    //            } else {
+    //                $webapp_database->getEmpty();
+    //            }
+    //
+    //            $options = [];
+    //
+    //            if (isset($params["options"]["appliances_id"])) {
+    //                $options = ['appliances_id' => $params["options"]["appliances_id"]];
+    //            }
+    //
+    //            TemplateRenderer::getInstance()->display('@webapplications/webapplication_database_form.html.twig', [
+    //                'item' => $webapp_database,
+    //                'params' => $options,
+    //            ]);
+    //        }
+    //        return true;
+    //    }
 
     public function showForm($ID, $options = [])
     {
@@ -124,14 +124,14 @@ class DatabaseInstance extends CommonDBTM
             $data = $itemDBTM->find([
                 'appliances_id' => $appliance_id,
                 'items_id' => $items_id,
-                'itemtype' => 'DatabaseInstance'
+                'itemtype' => 'DatabaseInstance',
             ]);
 
             if (count($data) == 0) {
                 $itemDBTM->add([
                     'appliances_id' => $appliance_id,
                     'items_id' => $items_id,
-                    'itemtype' => 'DatabaseInstance'
+                    'itemtype' => 'DatabaseInstance',
                 ]);
             }
         }
@@ -171,8 +171,8 @@ class DatabaseInstance extends CommonDBTM
                     [
                         'WHERE' => [
                             'appliances_id' => $item->input['appliances_id'],
-                        ]
-                    ]
+                        ],
+                    ],
                 );
                 foreach ($webs as $web) {
                     $item->input["webapplicationexternalexpositions_id"] = $web["webapplicationexternalexpositions_id"];
@@ -214,7 +214,7 @@ class DatabaseInstance extends CommonDBTM
                     'webapplicationconfidentialities' => $webapplicationconfidentialities,
                     'webapplicationtraceabilities' => $webapplicationtraceabilities,
                     'appliances_id' => isset($item->input['appliances_id']) ? $item->input['appliances_id'] : 0,
-                    'databaseinstances_id' => $item->input['items_id']
+                    'databaseinstances_id' => $item->input['items_id'],
                 ]);
             } else {
                 $webs = getAllDataFromTable(
@@ -222,8 +222,8 @@ class DatabaseInstance extends CommonDBTM
                     [
                         'WHERE' => [
                             'appliances_id' => $item->input['appliances_id'],
-                        ]
-                    ]
+                        ],
+                    ],
                 );
                 foreach ($webs as $web) {
                     $item->input["webapplicationexternalexpositions_id"] = $web["webapplicationexternalexpositions_id"];
@@ -265,7 +265,7 @@ class DatabaseInstance extends CommonDBTM
                     'webapplicationconfidentialities' => $webapplicationconfidentialities,
                     'webapplicationtraceabilities' => $webapplicationtraceabilities,
                     'appliances_id' => isset($item->input['appliances_id']) ? $item->input['appliances_id'] : 0,
-                    'databaseinstances_id' => $item->input['items_id']
+                    'databaseinstances_id' => $item->input['items_id'],
                 ]);
             }
         }
@@ -336,7 +336,7 @@ class DatabaseInstance extends CommonDBTM
                     'webapplicationavailabilities' => $webapplicationavailabilities,
                     'webapplicationintegrities' => $webapplicationintegrities,
                     'webapplicationconfidentialities' => $webapplicationconfidentialities,
-                    'webapplicationtraceabilities' => $webapplicationtraceabilities
+                    'webapplicationtraceabilities' => $webapplicationtraceabilities,
                 ]);
             } else {
                 if ($item->getID() > 0) {
@@ -345,8 +345,8 @@ class DatabaseInstance extends CommonDBTM
                         [
                             'WHERE' => [
                                 'databaseinstances_id' => $item->getID(),
-                            ]
-                        ]
+                            ],
+                        ],
                     );
                     foreach ($webs as $web) {
                         $item->input["webapplicationavailabilities"] = $web["webapplicationavailabilities"];
@@ -388,7 +388,7 @@ class DatabaseInstance extends CommonDBTM
                     'webapplicationconfidentialities' => $webapplicationconfidentialities,
                     'webapplicationtraceabilities' => $webapplicationtraceabilities,
                     'appliances_id' => isset($item->input['appliances_id']) ? $item->input['appliances_id'] : 0,
-                    'databaseinstances_id' => $item->getID()
+                    'databaseinstances_id' => $item->getID(),
                 ]);
             }
         }
@@ -420,8 +420,8 @@ class DatabaseInstance extends CommonDBTM
                 'FROM' => Appliance_Item::getTable(),
                 'WHERE' => [
                     'items_id' => $id,
-                    'itemtype' => 'DatabaseInstance'
-                ]
+                    'itemtype' => 'DatabaseInstance',
+                ],
             ]);
             $items = iterator_to_array($items);
 
@@ -430,8 +430,8 @@ class DatabaseInstance extends CommonDBTM
                 $iterator = $DB->request([
                     'FROM' => Appliance_Item_Relation::getTable(),
                     'WHERE' => [
-                        Appliance_Item::getForeignKeyField() => $row['id']
-                    ]
+                        Appliance_Item::getForeignKeyField() => $row['id'],
+                    ],
                 ]);
 
                 foreach ($iterator as $row) {
@@ -455,7 +455,7 @@ class DatabaseInstance extends CommonDBTM
                     'label' => __('Type'),
                     'value' => Dropdown::getDropdownName(
                         "glpi_databaseinstancetypes",
-                        $object->fields['databaseinstancetypes_id']
+                        $object->fields['databaseinstancetypes_id'],
                     ),
                 ];
             }
@@ -466,8 +466,8 @@ class DatabaseInstance extends CommonDBTM
                     'WHERE' => [
                         'databaseinstances_id' => $id,
                     ],
-                    'ORDER' => 'name'
-                ]
+                    'ORDER' => 'name',
+                ],
             );
             $db = new Database();
             $sizes_html = "";
@@ -490,8 +490,8 @@ class DatabaseInstance extends CommonDBTM
                 [
                     'WHERE' => [
                         'databaseinstances_id' => $id,
-                    ]
-                ]
+                    ],
+                ],
             );
 
             foreach ($dicts as $dict) {

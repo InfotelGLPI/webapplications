@@ -28,6 +28,7 @@
  */
 
 namespace GlpiPlugin\Webapplications;
+
 use CommonDBTM;
 use DbUtils;
 use Glpi\Application\View\TemplateRenderer;
@@ -119,10 +120,10 @@ class Printpdf extends CommonDBTM
     public static function getNumberOfOptionsForItem($item)
     {
         $dbu = new DbUtils();
-//        return $dbu->countElementsInTable(
-//            $dbu->getTableForItemType(__CLASS__),
-//            ["plugin_metademands_metademands_id" => $item->getID()]
-//        );
+        //        return $dbu->countElementsInTable(
+        //            $dbu->getTableForItemType(__CLASS__),
+        //            ["plugin_metademands_metademands_id" => $item->getID()]
+        //        );
     }
 
     /**

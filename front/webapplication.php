@@ -53,7 +53,7 @@ $confirm_form = Html::getSimpleForm(
     ['do_migration' => '1'],
     '',
     '',
-    [__('Are you sure you want to do core migration ?', 'webapplications')]
+    [__('Are you sure you want to do core migration ?', 'webapplications')],
 );
 
 if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['do_migration'] == 1) {
@@ -129,21 +129,21 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
         $DB->update(
             'glpi_plugin_webapplications_appliances',
             ['appliances_id' => (int) $new_appliance['id']],
-            ['appliances_id' => (int) $new_appliance['old_id']]
+            ['appliances_id' => (int) $new_appliance['old_id']],
         );
 
         if (Plugin::isPluginActive('accounts')) {
             $DB->update(
                 'glpi_plugin_accounts_accounts_items',
                 ['items_id' => (int) $new_appliance['id'], 'itemtype' => 'Appliance'],
-                ['items_id' => (int) $new_appliance['old_id'], 'itemtype' => 'PluginWebapplicationsWebapplication']
+                ['items_id' => (int) $new_appliance['old_id'], 'itemtype' => 'PluginWebapplicationsWebapplication'],
             );
         }
         if (Plugin::isPluginActive('databases')) {
             $DB->update(
                 'glpi_plugin_databases_databases_items',
                 ['items_id' => (int) $new_appliance['id'], 'itemtype' => 'Appliance'],
-                ['items_id' => (int) $new_appliance['old_id'], 'itemtype' => 'PluginWebapplicationsWebapplication']
+                ['items_id' => (int) $new_appliance['old_id'], 'itemtype' => 'PluginWebapplicationsWebapplication'],
             );
         }
     }
@@ -157,7 +157,7 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
         $DB->update(
             'glpi_appliances',
             ['appliancetypes_id' => (int) $appliance_type['id']],
-            ['appliancetypes_id' => (int) $appliance_type['old_id']]
+            ['appliancetypes_id' => (int) $appliance_type['old_id']],
         );
     }
 
@@ -167,19 +167,19 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
     $messages[] = __('Tables purge', 'webapplications');
 
     $tables = ["glpi_plugin_webapplications_webapplications",
-               "glpi_plugin_webapplications_webapplications_items"];
+        "glpi_plugin_webapplications_webapplications_items"];
 
     foreach ($tables as $table) {
         $DB->doQuery("DROP TABLE IF EXISTS `$table`;");
     }
 
     $oldtables = ["glpi_plugin_appweb",
-                  "glpi_dropdown_plugin_appweb_type",
-                  "glpi_dropdown_plugin_appweb_server_type",
-                  "glpi_dropdown_plugin_appweb_technic",
-                  "glpi_plugin_appweb_device",
-                  "glpi_plugin_appweb_profiles",
-                  "glpi_plugin_webapplications_profiles"];
+        "glpi_dropdown_plugin_appweb_type",
+        "glpi_dropdown_plugin_appweb_server_type",
+        "glpi_dropdown_plugin_appweb_technic",
+        "glpi_plugin_appweb_device",
+        "glpi_plugin_appweb_profiles",
+        "glpi_plugin_webapplications_profiles"];
 
     foreach ($oldtables as $oldtable) {
         $DB->doQuery("DROP TABLE IF EXISTS `$oldtable`;");
@@ -187,14 +187,14 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
 
     $messages[] = __('Link with core purge', 'webapplications');
 
-    $tables = array(
-       "glpi_displaypreferences",
-       "glpi_documents_items",
-       "glpi_contracts_items",
-       "glpi_savedsearches",
-       "glpi_logs",
-       "glpi_notepads",
-    );
+    $tables = [
+        "glpi_displaypreferences",
+        "glpi_documents_items",
+        "glpi_contracts_items",
+        "glpi_savedsearches",
+        "glpi_logs",
+        "glpi_notepads",
+    ];
 
     foreach ($tables as $table) {
         // Query builder instead of a concatenated DELETE. The itemtype value is

@@ -63,12 +63,12 @@ class Dashboard extends CommonDBTM
         $this->addStandardTab(
             PhysicalInfrastructure::class,
             $ong,
-            $options
+            $options,
         );
         $this->addStandardTab(
             LogicalInfrastructure::class,
             $ong,
-            $options
+            $options,
         );
         $this->addStandardTab(DatabaseInstance::class, $ong, $options);
         $this->addStandardTab(Certificate::class, $ong, $options);
@@ -146,7 +146,7 @@ class Dashboard extends CommonDBTM
             'dropdown_applianceDropdown' . $rand,
             'lists-dashboard',
             $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_WEBDIR . '/ajax/getLists.php',
-            $array
+            $array,
         );
     }
 
@@ -291,7 +291,7 @@ class Dashboard extends CommonDBTM
                         'style' => 'float: right',
                         'data-bs-toggle' => 'modal',
                         'data-bs-target' => '#' . $name . $id . $rand,
-                    ]
+                    ],
                 );
 
                 $action_html .= Ajax::createIframeModalWindow(
@@ -300,7 +300,7 @@ class Dashboard extends CommonDBTM
                     [
                         'display' => false,
                         'reloadonclose' => true,
-                    ]
+                    ],
                 );
             }
         }
@@ -439,7 +439,7 @@ class Dashboard extends CommonDBTM
                 'form'           => '',
                 'data-bs-toggle' => 'modal',
                 'data-bs-target' => '#edit' . $id . $rand,
-            ]
+            ],
         );
         $html .= Ajax::createIframeModalWindow(
             'edit' . $id . $rand,
@@ -447,7 +447,7 @@ class Dashboard extends CommonDBTM
             [
                 'display'       => false,
                 'reloadonclose' => true,
-            ]
+            ],
         );
         return $html;
     }
@@ -547,7 +547,7 @@ class Dashboard extends CommonDBTM
                     'items_id_name' => 'items_id',
                     'itemtypes' => $CFG_GLPI['inventory_types'],
                     'checkright' => true,
-                ]
+                ],
             );
         } else {
             $class = $object->getType();
