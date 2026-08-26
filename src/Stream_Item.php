@@ -89,16 +89,41 @@ class Stream_Item extends CommonDBTM
         return true;
     }
 
+    /**
+     * Whether an itemtype is one of the plugin's allowed stream endpoint types.
+     * The value is user controlled and is later used as a class name
+     * (`new $itemtype()` in showForStream()), so this whitelist must gate both
+     * writes and every dynamic instantiation - mirroring
+     * Stream::isValidEndpointType().
+     */
+    public static function isValidStreamItemtype($itemtype): bool
+    {
+        global $CFG_GLPI;
+
+        return is_string($itemtype) && $itemtype !== ''
+            && in_array($itemtype, $CFG_GLPI['stream_types'] ?? [], true);
+    }
+
     public function prepareInputForAdd($input)
     {
         $allowed = ['id', 'plugin_webapplications_streams_id', 'items_id', 'itemtype'];
-        return array_intersect_key($input, array_flip($allowed));
+        $input = array_intersect_key($input, array_flip($allowed));
+        // Reject a forged itemtype: it is used as a class name at render time, so
+        // it must be one of the whitelisted stream endpoint types, never an
+        // arbitrary GLPI class whose name would then leak via getLink().
+        if (isset($input['itemtype']) && !self::isValidStreamItemtype($input['itemtype'])) {
+            return false;
+        }
+        return $input;
     }
 
     public function prepareInputForUpdate($input)
     {
         $allowed = ['id', 'plugin_webapplications_streams_id', 'items_id', 'itemtype'];
         $input = array_intersect_key($input, array_flip($allowed));
+        if (isset($input['itemtype']) && !self::isValidStreamItemtype($input['itemtype'])) {
+            return false;
+        }
         return parent::prepareInputForUpdate($input);
     }
 
@@ -127,11 +152,20 @@ class Stream_Item extends CommonDBTM
 
         $entries = [];
         foreach ($items as $row) {
-            if (!class_exists($row['itemtype'])) {
+            // Defense in depth for rows persisted before the write-time whitelist:
+            // the itemtype must be a known stream endpoint class, and the viewer
+            // must actually be allowed to read the target. getLink() discloses the
+            // item name regardless of read right (only the link is gated), so skip
+            // any row the viewer cannot read to avoid leaking cross-entity /
+            // cross-itemtype names.
+            if (!self::isValidStreamItemtype($row['itemtype'])
+                || !is_a($row['itemtype'], CommonDBTM::class, true)) {
                 continue;
             }
             $it = new $row['itemtype']();
-            $it->getFromDB($row['items_id']);
+            if (!$it->can($row['items_id'], READ)) {
+                continue;
+            }
             $entries[] = [
                 'itemtype' => self::class,
                 'id'       => $row['id'],
