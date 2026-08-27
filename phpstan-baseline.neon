@@ -475,12 +475,6 @@ parameters:
 			path: src/Stream_Item.php
 
 		-
-			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
-			identifier: glpi.forbidDynamicInstantiation
-			count: 1
-			path: src/Stream_Item.php
-
-		-
 			message: '#^Unreachable statement \- code above always terminates\.$#'
 			identifier: deadCode.unreachable
 			count: 1
