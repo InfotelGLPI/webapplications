@@ -27,6 +27,7 @@
  * --------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
 use GlpiPlugin\Webapplications\Dashboard;
 
 header("Content-Type: text/html; charset=UTF-8");
@@ -41,7 +42,7 @@ if (isset($_POST['value'])
     // renderers (Dashboard::showList) without re-checking. Enforce object-level right +
     // entity access here, before storing it in session.
     if (!(new \Appliance())->can($appliances_id, READ)) {
-        throw new \Glpi\Exception\Http\AccessDeniedHttpException();
+        throw new AccessDeniedHttpException();
     }
     $_SESSION['plugin_webapplications_loaded_appliances_id'] = $appliances_id;
     $dashboard = new Dashboard();
