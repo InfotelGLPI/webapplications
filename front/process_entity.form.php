@@ -29,6 +29,12 @@
 
 use GlpiPlugin\Webapplications\Process_Entity;
 
+// Page-level guard mirroring the sibling controllers (process.php, stream.php):
+// establishes the "whole page is authorized" invariant. The per-branch
+// check(-1, CREATE, $_POST) / check($_POST['id'], UPDATE) below remain the real
+// authorization boundary on the mutated record.
+Session::checkRight("plugin_webapplications_processes", READ);
+
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
 }
