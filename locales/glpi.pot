@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-28 07:32+0000\n"
+"POT-Creation-Date: 2026-08-29 10:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -96,7 +96,7 @@ msgid_plural "Associated links"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:563 hook.php:636 src/DatabaseInstance.php:504 src/Process.php:216
+#: hook.php:563 hook.php:636 src/DatabaseInstance.php:510 src/Process.php:216
 #: src/Process.php:278 src/Pdf.php:815
 #: templates/webapplication_process_form.html.twig:54
 #: templates/webapplication_appliance_form.html.twig:142
@@ -121,7 +121,7 @@ msgid_plural "Certificates list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:581 hook.php:652 src/DatabaseInstance.php:514 src/Process.php:230
+#: hook.php:581 hook.php:652 src/DatabaseInstance.php:520 src/Process.php:230
 #: src/Process.php:288 src/Pdf.php:821
 #: templates/webapplication_process_form.html.twig:87
 #: templates/webapplication_appliance_form.html.twig:174
@@ -183,7 +183,7 @@ msgstr ""
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:572 hook.php:644 src/DatabaseInstance.php:509 src/Process.php:223
+#: hook.php:572 hook.php:644 src/DatabaseInstance.php:515 src/Process.php:223
 #: src/Process.php:283 src/Pdf.php:818
 #: templates/webapplication_process_form.html.twig:71
 #: templates/webapplication_appliance_form.html.twig:158
@@ -367,7 +367,7 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: hook.php:590 hook.php:660 src/DatabaseInstance.php:519 src/Process.php:237
+#: hook.php:590 hook.php:660 src/DatabaseInstance.php:525 src/Process.php:237
 #: src/Process.php:293 src/Pdf.php:824
 #: templates/webapplication_process_form.html.twig:104
 #: templates/webapplication_appliance_form.html.twig:191
