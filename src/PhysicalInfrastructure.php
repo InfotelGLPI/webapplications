@@ -150,7 +150,7 @@ class PhysicalInfrastructure extends CommonDBTM
                 ]);
                 $relations = iterator_to_array($relations);
 
-                $env_html = "";
+                $env_lines = [];
                 foreach ($relations as $row) {
                     $iterator = $DB->request([
                         'FROM'   => Appliance_Item_Relation::getTable(),
@@ -163,14 +163,17 @@ class PhysicalInfrastructure extends CommonDBTM
                         $envtype = $row['itemtype'];
                         $env = new $envtype();
                         $env->getFromDB($row['items_id']);
-                        $env_html .= "<i class='" . htmlescape($env->getIcon()) . "'></i>" .
-                            "&nbsp;" . $env->getLink();
+                        // Icon class is DB data escaped by Twig; getLink() returns trusted framework markup.
+                        $env_lines[] = [
+                            'icon' => $env->getIcon(),
+                            'link' => $env->getLink(),
+                        ];
                     }
                 }
-                if (!empty($env_html)) {
+                if (!empty($env_lines)) {
                     $blocks[] = [
-                        'kind' => 'raw',
-                        'html' => $env_html,
+                        'kind'  => 'links',
+                        'lines' => $env_lines,
                     ];
                 }
 
@@ -188,21 +191,24 @@ class PhysicalInfrastructure extends CommonDBTM
 
                 if ($itemtype == "Computer") {
                     $iterator = Item_OperatingSystem::getFromItem($object);
-                    $os_html = "";
+                    $os_lines = [];
                     foreach ($iterator as $row) {
-                        $os_html .= htmlescape($row['name']) . " - " . htmlescape($row['version'])
-                            . "</br>" . htmlescape($row['architecture']);
+                        $os_lines[] = [
+                            'name'         => $row['name'],
+                            'version'      => $row['version'],
+                            'architecture' => $row['architecture'],
+                        ];
                     }
-                    if (!empty($os_html)) {
+                    if (!empty($os_lines)) {
                         $blocks[] = [
-                            'kind' => 'raw',
-                            'html' => $os_html,
+                            'kind'  => 'os',
+                            'lines' => $os_lines,
                         ];
                     }
                 }
 
-                $iplist = "";
-                $ip     = new IPAddress();
+                $ips = [];
+                $ip  = new IPAddress();
                 foreach ($DB->request(['FROM' => 'glpi_networkports', 'WHERE' => ['itemtype' => $itemtype,
                     'items_id' => $items_id]]) as $netname) {
                     foreach ($DB->request(['FROM' => 'glpi_networknames', 'WHERE' => ['itemtype' => 'NetworkPort',
@@ -212,15 +218,15 @@ class PhysicalInfrastructure extends CommonDBTM
                             $ip->getFromDB($data['id']);
 
                             if ($ip->getName() != "127.0.0.1" && $ip->fields['version'] != 6) {
-                                $iplist .= htmlescape($ip->getName()) . "<br>";
+                                $ips[] = $ip->getName();
                             }
                         }
                     }
                 }
-                if (!empty($iplist)) {
+                if (!empty($ips)) {
                     $blocks[] = [
-                        'kind' => 'raw',
-                        'html' => $iplist,
+                        'kind' => 'iplist',
+                        'ips'  => $ips,
                     ];
                 }
 

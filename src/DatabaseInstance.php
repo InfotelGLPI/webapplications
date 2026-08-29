@@ -425,7 +425,7 @@ class DatabaseInstance extends CommonDBTM
             ]);
             $items = iterator_to_array($items);
 
-            $env_html = "";
+            $env_lines = [];
             foreach ($items as $row) {
                 $iterator = $DB->request([
                     'FROM' => Appliance_Item_Relation::getTable(),
@@ -438,14 +438,17 @@ class DatabaseInstance extends CommonDBTM
                     $envtype = $row['itemtype'];
                     $env = new $envtype();
                     $env->getFromDB($row['items_id']);
-                    $env_html .= "<i class='" . htmlescape($env->getIcon()) . "'></i>" .
-                        "&nbsp;" . $env->getLink();
+                    // Icon class is DB data escaped by Twig; getLink() returns trusted framework markup.
+                    $env_lines[] = [
+                        'icon' => $env->getIcon(),
+                        'link' => $env->getLink(),
+                    ];
                 }
             }
-            if (!empty($env_html)) {
+            if (!empty($env_lines)) {
                 $blocks[] = [
-                    'kind' => 'raw',
-                    'html' => $env_html,
+                    'kind'  => 'links',
+                    'lines' => $env_lines,
                 ];
             }
 
@@ -470,18 +473,21 @@ class DatabaseInstance extends CommonDBTM
                 ],
             );
             $db = new Database();
-            $sizes_html = "";
+            $size_lines = [];
             foreach ($databases as $row) {
                 $db->getFromDB($row['id']);
                 if ($row['size'] > 0) {
-                    $sizes_html .= $db->getLink() . " - "
-                        . htmlescape(sprintf(__('%s Mio'), $row['size'])) . "</br>";
+                    // getLink() is trusted framework markup; the size label is DB data escaped by Twig.
+                    $size_lines[] = [
+                        'link'       => $db->getLink(),
+                        'size_label' => sprintf(__('%s Mio'), $row['size']),
+                    ];
                 }
             }
-            if (!empty($sizes_html)) {
+            if (!empty($size_lines)) {
                 $blocks[] = [
-                    'kind' => 'raw',
-                    'html' => $sizes_html,
+                    'kind'  => 'sizes',
+                    'lines' => $size_lines,
                 ];
             }
 

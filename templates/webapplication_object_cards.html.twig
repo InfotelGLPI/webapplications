@@ -63,6 +63,23 @@
                            <span class="dict-min" style="background-color:{{ badge.color }}" title="{{ badge.title }}">{{ badge.value }}</span>
                         {% endfor %}
                      </p>
+                  {% elseif block.kind == 'links' %}
+                     {#- Environment relations: icon class is DB data ({{ }}), the link markup comes from getLink() (raw) -#}
+                     {%- for line in block.lines -%}
+                        <i class="{{ line.icon }}"></i>&nbsp;{{ line.link|raw }}
+                     {%- endfor -%}
+                  {% elseif block.kind == 'os' %}
+                     {%- for line in block.lines -%}
+                        {{ line.name }} - {{ line.version }}</br>{{ line.architecture }}
+                     {%- endfor -%}
+                  {% elseif block.kind == 'iplist' %}
+                     {%- for ip in block.ips -%}
+                        {{ ip }}<br>
+                     {%- endfor -%}
+                  {% elseif block.kind == 'sizes' %}
+                     {%- for line in block.lines -%}
+                        {{ line.link|raw }} - {{ line.size_label }}</br>
+                     {%- endfor -%}
                   {% elseif block.kind == 'raw' %}
                      {{ block.html|raw }}
                   {% endif %}
