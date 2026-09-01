@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-31 14:56+0000\n"
+"POT-Creation-Date: 2026-09-01 11:55+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2020\n"
 "Language-Team: Polish (Poland) (https://app.transifex.com/infotelGLPI/"
@@ -148,6 +148,18 @@ msgstr ""
 
 #: front/webapplication.php:52 front/webapplication.php:209
 msgid "Core migration"
+msgstr ""
+
+#: templates/webapplication_appliance_form.html.twig:124
+msgid ""
+"DICT Criteria:\n"
+"Availability (A): Identify the impact on the availability of the IT asset as "
+"a result of the change\n"
+"Integrity (I): Identify the impact on the data managed by the IT asset\n"
+"Confidentiality (C): Identify the impact on the IT asset's processing "
+"related to data confidentiality\n"
+"Traceability (T): Identify the impact on the IT asset's processes related to "
+"data traceability"
 msgstr ""
 
 #: front/webapplication.php:63
