@@ -122,8 +122,6 @@ class LogicalInfrastructure extends CommonDBTM
 
     public function showForm($ID, $options = [])
     {
-        global $CFG_GLPI;
-
         $options['candel'] = false;
         $options['colspan'] = 1;
 
@@ -144,7 +142,9 @@ class LogicalInfrastructure extends CommonDBTM
         Ajax::updateItemOnSelectEvent(
             'dropdown_applianceDropdown' . $rand,
             'lists-LogicalInfra',
-            $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_WEBDIR . '/ajax/getLists.php',
+            // Same duplicated prefix as in Dashboard::showDropdown(): the constant already
+            // carries root_doc.
+            PLUGIN_WEBAPPLICATIONS_WEBDIR . '/ajax/getLists.php',
             $array,
         );
     }

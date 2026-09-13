@@ -383,9 +383,41 @@ function plugin_webapplications_uninstall()
         "glpi_notepads",
         "glpi_dropdowntranslations"];
 
+    // MySQL gives the backslash a meaning of its own inside a LIKE pattern: it is the
+    // escape character, so the single backslash this pattern used to carry was consumed
+    // and the engine compared against "GlpiPluginWebapplications%", which matches no
+    // itemtype at all. The uninstall therefore left every display preference, document
+    // link, contract link, saved search, log entry, ticket link, notepad and dropdown
+    // translation of the plugin objects behind, pointing at tables dropped a few lines
+    // below. The doubled backslash of the PHP literal (four in source) is the idiom the
+    // core itself uses for this exact pattern, in CronTask::getItemtypes().
     foreach ($tables_glpi as $table_glpi) {
-        $DB->delete($table_glpi, ['itemtype' => ['LIKE' => 'GlpiPlugin\Webapplications%']]);
+        $DB->delete($table_glpi, ['itemtype' => ['LIKE' => 'GlpiPlugin\\\\Webapplications%']]);
     }
+
+    // The plugin links its own itemtypes to core Appliances through
+    // glpi_appliances_items (Entity::post_addItem(), Stream, Process). Those rows used
+    // to survive the uninstall, leaving the core "Items" tab of an Appliance iterating
+    // over classes that no longer exist, and a later reinstall would silently re-bind
+    // them to whatever ids the freshly created tables hand out.
+    // glpi_appliance_item_relations has to be cleaned first and by cascade: its own
+    // itemtype column only ever holds the core types of
+    // Appliance_Item_Relation::getTypes() (Location, Network, Domain,
+    // ApplianceEnvironment), never a plugin class, so a LIKE on it would match nothing.
+    // It is reached through the appliances_items_id it points at instead.
+    $appliance_items_ids = [];
+    foreach ($DB->request([
+        'SELECT' => 'id',
+        'FROM'   => 'glpi_appliances_items',
+        'WHERE'  => ['itemtype' => ['LIKE' => 'GlpiPlugin\\\\Webapplications%']],
+    ]) as $appliance_item) {
+        $appliance_items_ids[] = (int) $appliance_item['id'];
+    }
+    if (count($appliance_items_ids) > 0) {
+        // Guarded: an empty criteria array would wipe the whole table.
+        $DB->delete('glpi_appliance_item_relations', ['appliances_items_id' => $appliance_items_ids]);
+    }
+    $DB->delete('glpi_appliances_items', ['itemtype' => ['LIKE' => 'GlpiPlugin\\\\Webapplications%']]);
 
     //Delete rights associated with the plugin
     $profileRight = new ProfileRight();

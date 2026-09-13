@@ -167,8 +167,15 @@ class DatabaseInstance extends CommonDBTM
             $database = new DatabaseInstance();
             $database->getFromDBByCrit(['databaseinstances_id' => $item->input['items_id']]);
             if (is_array($database->fields) && count($database->fields) > 0) {
+                // The plugin Appliance, not the core one: the five columns read in the loop
+                // below (exposure, availability, integrity, confidentiality, traceability)
+                // belong to glpi_plugin_webapplications_appliances, and so does the
+                // appliances_id column the criterion filters on - glpi_appliances has neither.
+                // The leading backslash resolved the name to the core class, so the query hit
+                // the wrong table and returned nothing at best. Appliance is imported at the
+                // top of this file as the plugin class.
                 $webs = getAllDataFromTable(
-                    \Appliance::getTable(),
+                    Appliance::getTable(),
                     [
                         'WHERE' => [
                             'appliances_id' => $item->input['appliances_id'],
@@ -208,7 +215,11 @@ class DatabaseInstance extends CommonDBTM
                     $webapplicationtraceabilities = $item->input['webapplicationtraceabilities'];
                 }
 
+                // CommonDBTM::update() keys the write on the id of the input array and does
+                // nothing at all without it, so this whole branch was a no-op: the record
+                // loaded by getFromDBByCrit() a few lines above is the one to update.
                 $database->update([
+                    'id' => $database->fields['id'],
                     'webapplicationexternalexpositions_id' => $webapplicationexternalexpositions_id,
                     'webapplicationavailabilities' => $webapplicationavailabilities,
                     'webapplicationintegrities' => $webapplicationintegrities,
@@ -296,49 +307,34 @@ class DatabaseInstance extends CommonDBTM
             $database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
             if (is_array($database->fields) && count($database->fields) > 0) {
 
-                $webapplicationexternalexpositions_id = 0;
-                if (isset($item->input['webapplicationexternalexpositions_id'])) {
-                    $webapplicationexternalexpositions_id = $item->input['webapplicationexternalexpositions_id'];
-                } elseif (isset($database->fields['plugin_webapplications_webapplicationexternalexpositions_id'])) {
-                    $webapplicationexternalexpositions_id = $database->fields['plugin_webapplications_webapplicationexternalexpositions_id'];
+                // Each field used to fall back on $database->fields with a
+                // "plugin_webapplications_" prefix, but the row loaded just above comes from
+                // glpi_plugin_webapplications_databaseinstances, whose columns carry no such
+                // prefix (see install/sql/empty.sql and the migration in
+                // front/webapplication.php). The elseif was therefore never true, and every
+                // field missing from $item->input fell back on the initial 0. As this method
+                // runs on the update hook of the CORE DatabaseInstance - a form that carries
+                // none of these five fields - saving the core object silently zeroed the
+                // exposure, availability, integrity, confidentiality and traceability of the
+                // plugin record. Only the values actually submitted are written now: a field
+                // left out simply keeps what is stored, which is what the fallback was trying
+                // to express.
+                $input = ['id' => $database->fields['id']];
+                foreach ([
+                    'webapplicationexternalexpositions_id',
+                    'webapplicationavailabilities',
+                    'webapplicationintegrities',
+                    'webapplicationconfidentialities',
+                    'webapplicationtraceabilities',
+                ] as $field) {
+                    if (isset($item->input[$field])) {
+                        $input[$field] = $item->input[$field];
+                    }
                 }
 
-                $webapplicationavailabilities = 0;
-                if (isset($item->input['webapplicationavailabilities'])) {
-                    $webapplicationavailabilities = $item->input['webapplicationavailabilities'];
-                } elseif (isset($database->fields['plugin_webapplications_webapplicationavailabilities'])) {
-                    $webapplicationavailabilities = $database->fields['plugin_webapplications_webapplicationavailabilities'];
+                if (count($input) > 1) {
+                    $database->update($input);
                 }
-
-                $webapplicationintegrities = 0;
-                if (isset($item->input['webapplicationintegrities'])) {
-                    $webapplicationintegrities = $item->input['webapplicationintegrities'];
-                } elseif (isset($database->fields['plugin_webapplications_webapplicationintegrities'])) {
-                    $webapplicationintegrities = $database->fields['plugin_webapplications_webapplicationintegrities'];
-                }
-
-                $webapplicationconfidentialities = 0;
-                if (isset($item->input['webapplicationconfidentialities'])) {
-                    $webapplicationconfidentialities = $item->input['webapplicationconfidentialities'];
-                } elseif (isset($database->fields['plugin_webapplications_webapplicationconfidentialities'])) {
-                    $webapplicationconfidentialities = $database->fields['plugin_webapplications_webapplicationconfidentialities'];
-                }
-
-                $webapplicationtraceabilities = 0;
-                if (isset($item->input['webapplicationtraceabilities'])) {
-                    $webapplicationtraceabilities = $item->input['webapplicationtraceabilities'];
-                } elseif (isset($database->fields['plugin_webapplications_webapplicationtraceabilities'])) {
-                    $webapplicationtraceabilities = $database->fields['plugin_webapplications_webapplicationtraceabilities'];
-                }
-
-                $database->update([
-                    'id' => $database->fields['id'],
-                    'webapplicationexternalexpositions_id' => $webapplicationexternalexpositions_id,
-                    'webapplicationavailabilities' => $webapplicationavailabilities,
-                    'webapplicationintegrities' => $webapplicationintegrities,
-                    'webapplicationconfidentialities' => $webapplicationconfidentialities,
-                    'webapplicationtraceabilities' => $webapplicationtraceabilities,
-                ]);
             } else {
                 if ($item->getID() > 0) {
                     $webs = getAllDataFromTable(
@@ -435,10 +431,25 @@ class DatabaseInstance extends CommonDBTM
                     ],
                 ]);
 
-                foreach ($iterator as $row) {
-                    $envtype = $row['itemtype'];
+                foreach ($iterator as $objrow) {
+                    $envtype = $objrow['itemtype'];
+                    // Same two guards as the twin loop in
+                    // Dashboard::getRelatedEnvironmentsLabel(), which reads this very
+                    // table: only that one had been hardened. The class name comes from
+                    // the database, so it is validated before instantiation (an
+                    // autoloadable non-CommonDBTM value would otherwise be constructed,
+                    // or raise a fatal error on the tab), and the environment may belong
+                    // to another entity than the viewer, so the read right - which
+                    // getFromDB() does not apply - is checked before its name is
+                    // disclosed. The loop variable is renamed as well: it used to shadow
+                    // the $row of the enclosing loop.
+                    if (!is_a($envtype, CommonDBTM::class, true)) {
+                        continue;
+                    }
                     $env = new $envtype();
-                    $env->getFromDB($row['items_id']);
+                    if (!$env->can((int) $objrow['items_id'], READ)) {
+                        continue;
+                    }
                     // Icon class is DB data escaped by Twig; getLink() returns trusted framework markup.
                     $env_lines[] = [
                         'icon' => $env->getIcon(),

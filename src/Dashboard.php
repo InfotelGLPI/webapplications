@@ -88,7 +88,17 @@ class Dashboard extends CommonDBTM
         }
         if ($appId > 0) {
             $appliance = new \Appliance();
-            $appliance->getFromDB($appId);
+            // The id was validated when it was stored (ajax/getLists.php) but it survives
+            // in session across a profile or active-entity change. getHeaderName() is
+            // called while rendering the page header, that is, before showList() /
+            // showForm() raise AccessDeniedHttpException, so the name was already written
+            // to the response by the time access was refused. Resetting the stale
+            // selection is preferable to an exception here, the method being part of the
+            // header rendering.
+            if (!$appliance->can($appId, READ)) {
+                $_SESSION['plugin_webapplications_loaded_appliances_id'] = 0;
+                return "";
+            }
             return $appliance->getName();
         }
         return "";
@@ -112,8 +122,6 @@ class Dashboard extends CommonDBTM
 
     public static function selectAppliance($id)
     {
-        global $CFG_GLPI;
-
         $rand = mt_rand();
         $dropdown_html = \Appliance::dropdown([
             'name'    => 'applianceDropdown',
@@ -141,7 +149,11 @@ class Dashboard extends CommonDBTM
         Ajax::updateItemOnSelectEvent(
             'dropdown_applianceDropdown' . $rand,
             'lists-dashboard',
-            $CFG_GLPI['root_doc'] . PLUGIN_WEBAPPLICATIONS_WEBDIR . '/ajax/getLists.php',
+            // PLUGIN_WEBAPPLICATIONS_WEBDIR already starts with $CFG_GLPI['root_doc']
+            // (setup.php), so prefixing it again produced /infotel11/infotel11/marketplace/...
+            // and the dropdown silently refreshed nothing on any instance not served from the
+            // web root. Every other use of the constant in the plugin passes it alone.
+            PLUGIN_WEBAPPLICATIONS_WEBDIR . '/ajax/getLists.php',
             $array,
         );
     }
@@ -502,8 +514,7 @@ class Dashboard extends CommonDBTM
             $obj = new $item();
             // find() applies neither the object right nor the entity restriction, while
             // the items linked to an appliance may very well live in entities the viewer
-            // has no access to. Keep only the rows the viewer may actually read, exactly
-            // as Stream_Item::showForStream() already does.
+            // has no access to. Keep only the rows the viewer may actually read.
             foreach ($obj->find(['id' => $listId]) as $key => $row) {
                 if ($obj->can((int) $row['id'], READ)) {
                     $list[$key] = $row;

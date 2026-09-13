@@ -36,7 +36,6 @@ use Glpi\Application\View\TemplateRenderer;
 use Plugin;
 use PluginFieldsContainer;
 use PluginFieldsField;
-use Session;
 use Toolbox;
 
 $GLPI_TYPES = [];
@@ -61,15 +60,13 @@ class Config extends CommonDBTM
         }
     }
 
-    public static function canView(): bool
-    {
-        return Session::haveRight('config', READ);
-    }
-
-    public static function canCreate(): bool
-    {
-        return Session::haveRight('config', UPDATE);
-    }
+    // canView()/canCreate() used to return the core `config` right while $rightname, the
+    // profile matrix entry (Profile::getAllRights()), the controller front/config.form.php
+    // and the CONFIG_PAGE hook of setup.php all use plugin_webapplications_configs. Since
+    // CommonDBTM::add()/update() never call canCreate(), the plugin right was the one
+    // actually enforced on writes and the overrides only misled every caller asking
+    // whether the action was allowed. Dropping them lets CommonDBTM derive both from
+    // $rightname, leaving a single authorization model on this object.
 
     public static function getConfig($update = false)
     {
@@ -116,7 +113,7 @@ class Config extends CommonDBTM
 
     public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
     {
-        if ($item->getType() === __CLASS__) {
+        if ($item instanceof self) {
             if ($tabnum === 1) {
                 $item->showForm(1);
             }

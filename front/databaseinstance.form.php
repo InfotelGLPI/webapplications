@@ -42,7 +42,13 @@ if (isset($_GET['_in_modal'])) {
     if (isset($_GET['appliance_id'])) {
         $options['appliances_id'] = $_GET['appliance_id'];
     }
-    \DatabaseInstance::displayFullPageForItem($_GET['id'], $options);
+    // The second parameter of CommonDBTM::displayFullPageForItem() is the menu path, not
+    // the options: passing $options there meant the options never reached the renderer -
+    // so withtemplate and appliances_id were silently dropped - while the menu path was
+    // built from string keys the menu knows nothing about. Same shape as the sibling
+    // controllers (front/entity.form.php, front/stream.form.php, front/process.form.php).
+    $menus = ["appliancedashboard", "databaseinstance"];
+    \DatabaseInstance::displayFullPageForItem($_GET['id'], $menus, $options);
 
 
     Html::popFooter();

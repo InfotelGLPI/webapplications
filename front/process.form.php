@@ -29,6 +29,9 @@
 
 use GlpiPlugin\Webapplications\Process;
 
+// Page-level guard, same rationale as front/entity.form.php.
+Session::checkRight("plugin_webapplications_processes", READ);
+
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
 }

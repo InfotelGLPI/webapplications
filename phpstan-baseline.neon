@@ -85,12 +85,6 @@ parameters:
 			path: src/Dashboard.php
 
 		-
-			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
-			identifier: glpi.forbidDynamicInstantiation
-			count: 1
-			path: src/DatabaseInstance.php
-
-		-
 			message: '#^Method GlpiPlugin\\Webapplications\\DatabaseInstance\:\:databaseAdd\(\) should return false but return statement is missing\.$#'
 			identifier: return.missing
 			count: 1
@@ -377,16 +371,3 @@ parameters:
 			identifier: glpi.forbidDynamicInstantiation
 			count: 4
 			path: src/Stream.php
-
-		-
-			message: '#^Call to an undefined method CommonGLPI\:\:getID\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Stream_Item.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
-			path: src/Stream_Item.php
-

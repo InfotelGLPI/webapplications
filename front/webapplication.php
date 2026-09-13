@@ -197,9 +197,18 @@ if ($DB->TableExists("glpi_plugin_webapplications_webapplications") && $_POST['d
     ];
 
     foreach ($tables as $table) {
-        // Query builder instead of a concatenated DELETE. The itemtype value is
-        // preserved exactly as before (single backslash at the PHP level).
-        $DB->delete($table, ['itemtype' => 'GlpiPlugin\\Webapplications']);
+        // The criterion used to be a strict equality on "GlpiPlugin\Webapplications", which
+        // is the namespace and not an itemtype: no row has ever carried that value, so this
+        // purge silently removed nothing and the display preferences, document links,
+        // contract links, saved searches, logs and notepads of the migrated object survived
+        // as orphans pointing at a table dropped twenty lines above. What has to be removed
+        // is what belonged to the plugin Webapplication object just migrated into a core
+        // Appliance, under both spellings it has had: the historical flat name - the one
+        // this very file uses when relinking the accounts and databases plugins above - and
+        // the namespaced one introduced with GLPI 10. An explicit list is used rather than a
+        // LIKE so that the sibling itemtypes of the plugin (Entity, Process, Stream), which
+        // this migration does not touch, keep their own links.
+        $DB->delete($table, ['itemtype' => ['PluginWebapplicationsWebapplication', Webapplication::class]]);
     }
 
     $messages[] = __('Migration was successful', 'webapplications');

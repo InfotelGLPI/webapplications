@@ -29,6 +29,16 @@
 
 use GlpiPlugin\Webapplications\Entity;
 
+// Page-level guard mirroring the sibling controllers (front/entity.php,
+// process_entity.form.php). Without it, a call with no id reached
+// the else branch and display(['id' => ""]): CommonGLPI::display() runs no check at all in
+// that case, since isNewID("") skips getFromDB() and the can($_GET['id'], READ) guard is
+// short-circuited by the empty, falsy id - so the creation form and its core-populated
+// dropdowns were rendered to a profile holding no plugin right whatsoever. The per-branch
+// check(-1, CREATE, $_POST) / check($_POST['id'], UPDATE) below remain the real
+// authorization boundary on the mutated record.
+Session::checkRight("plugin_webapplications_entities", READ);
+
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";
 }

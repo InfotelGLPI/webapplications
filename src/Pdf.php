@@ -551,7 +551,19 @@ class Pdf extends \TCPDF
 
         $document = new Document();
         foreach ($documentItemDatas as $documentItemData) {
-            $document->getFromDB($documentItemData['documents_id']);
+            // Security (cross-entity disclosure): the dashboard rendering of this very
+            // data filters every linked object with can($id, READ) - see
+            // Appliance::showDocumentsAndContractsFromDashboard() and
+            // Dashboard::getObjects() - but the PDF path loaded each row with
+            // getFromDB(), which checks neither the right of the target type nor
+            // Session::haveAccessToEntity(). The entry guard of printpdf.form.php only
+            // covers the appliance itself, not the objects linked to it. can() applies
+            // both checks and still populates ->fields, so the rest of the loop is
+            // unchanged. Same filter repeated on every linked collection below, so the
+            // two renderings of the same data cannot diverge again.
+            if (!$document->can((int) $documentItemData['documents_id'], READ)) {
+                continue;
+            }
             $docurl = $CFG_GLPI["url_base"] . "/front/document.send.php?docid=" . $documentItemData['documents_id'];
             $this->Cell($this->page_width, 7, (htmlspecialchars_decode($document->fields['name'])), 'LR', 1, 'C', false, $docurl, 'black');
             $this->setXY($this->margin_left, $this->GetY());
@@ -566,7 +578,10 @@ class Pdf extends \TCPDF
         $knowbase = new KnowbaseItem();
         $this->setXY($this->margin_left, $this->GetY());
         foreach ($knowbaseItemDatas as $knowbaseItemData) {
-            $knowbase->getFromDB($knowbaseItemData['knowbaseitems_id']);
+            // Same read filter as the documents above.
+            if (!$knowbase->can((int) $knowbaseItemData['knowbaseitems_id'], READ)) {
+                continue;
+            }
             $docurl = $CFG_GLPI["url_base"] . "/front/knowbaseitem.form.php?id=" . $knowbaseItemData['knowbaseitems_id'];
             $this->Cell($this->page_width, 7, (htmlspecialchars_decode($knowbase->fields['name'])), 'LR', 1, 'C', false, $docurl, 'black');
             $this->setXY($this->margin_left, $this->GetY());
@@ -580,7 +595,12 @@ class Pdf extends \TCPDF
 
         $contract = new Contract();
         foreach ($contractItemDatas as $contractItemData) {
-            $contract->getFromDB($contractItemData['contracts_id']);
+            // Same read filter as the documents above. Skipping here also skips the
+            // ContractCost aggregation further down, so the costs of a contract the
+            // viewer may not read are never summed either.
+            if (!$contract->can((int) $contractItemData['contracts_id'], READ)) {
+                continue;
+            }
             $docurl = $CFG_GLPI["url_base"] . "/front/contract.form.php?id=" . $contractItemData['contracts_id'];
             $this->Cell(($this->page_width / 9) * 2, 7, (htmlspecialchars_decode($contract->fields['name'])), 'L', 1, 'L', false, $docurl, 'black');
             $yligne4 = $this->GetY();
@@ -942,7 +962,12 @@ class Pdf extends \TCPDF
                 // criterion), so instantiate from it rather than re-reading the
                 // itemtype column back from the row.
                 $item = new $itemtype();
-                $item->getFromDB($physicalinfraData['items_id']);
+                // Same read filter as the documents on the first page:
+                // PhysicalInfrastructure::getItems() filters the dashboard rendering of
+                // this list with can($id, READ).
+                if (!$item->can((int) $physicalinfraData['items_id'], READ)) {
+                    continue;
+                }
                 $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode((string) ($item->fields['name'] ?? ''))), 'LR', 'C');
                 $this->setXY($this->margin_left, $this->GetY());
             }
@@ -957,7 +982,10 @@ class Pdf extends \TCPDF
             // Core \DatabaseInstance (has a "name" column); the plugin's own
             // GlpiPlugin\Webapplications\DatabaseInstance is a link table without one.
             $databaseInstance = new \DatabaseInstance();
-            $databaseInstance->getFromDB($databasesInstanceData['items_id']);
+            // Same read filter as the documents on the first page.
+            if (!$databaseInstance->can((int) $databasesInstanceData['items_id'], READ)) {
+                continue;
+            }
             $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode((string) ($databaseInstance->fields['name'] ?? ''))), 'LR', 'C');
             $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $this->GetY());
         }
@@ -994,7 +1022,10 @@ class Pdf extends \TCPDF
 
         foreach ($certificatItemDatas as $certificatItemData) {
             $certificat = new \Certificate();
-            $certificat->getFromDB($certificatItemData['certificates_id']);
+            // Same read filter as the documents on the first page.
+            if (!$certificat->can((int) $certificatItemData['certificates_id'], READ)) {
+                continue;
+            }
             $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode($certificat->fields['name'])), 'LR', 'C');
             $this->setXY($this->margin_left, $this->GetY());
         }

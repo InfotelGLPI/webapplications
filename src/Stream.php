@@ -98,33 +98,44 @@ class Stream extends CommonDBTM
         $transmitter_type = $this->getField('transmitter_type');
         $transmitterId = $this->getField('transmitter');
 
+        // Security (cross-entity disclosure): the endpoint columns point at a core object
+        // (Computer, NetworkEquipment, DatabaseInstance, Appliance) that may live in a
+        // completely different entity than the stream itself. isValidEndpointType()
+        // settles which class is loaded, not whether the viewer may read that row, and
+        // getFromDB() applies neither the right of the target type nor
+        // Session::haveAccessToEntity(). Every other rendering of the same data already
+        // filters with can($id, READ) - Dashboard::getObjects(),
+        // PhysicalInfrastructure::getItems(), Pdf.php - these two
+        // sites were the only ones left out. On refusal the neutral "All" label is shown
+        // rather than the name, so the very existence of the target is not revealed either.
+        $options['linkTransmitter'] = __('All');
         if (!empty($transmitterId) && self::isValidEndpointType($transmitter_type)) {
             $transmitter = new $transmitter_type();
-            $transmitter->getFromDB($transmitterId);
-            $linkTransmitter = $transmitter_type::getFormURLWithID($transmitterId);
-            // getName() returns the raw stored value (unescaped since GLPI 10) and
-            // this fragment is rendered as raw HTML by fields.htmlField, so escape
-            // the name to prevent stored XSS and quote the href.
-            $transmitterName = htmlspecialchars($transmitter->getName());
+            if ($transmitter->can((int) $transmitterId, READ)) {
+                $linkTransmitter = $transmitter_type::getFormURLWithID($transmitterId);
+                // getName() returns the raw stored value (unescaped since GLPI 10) and
+                // this fragment is rendered as raw HTML by fields.htmlField, so escape
+                // the name to prevent stored XSS and quote the href.
+                $transmitterName = htmlspecialchars($transmitter->getName());
 
-            $options['linkTransmitter'] = '<a href="' . $linkTransmitter . '">' . $transmitterName . '</a>';
-        } else {
-            $options['linkTransmitter'] = __('All');
+                $options['linkTransmitter'] = '<a href="' . $linkTransmitter . '">' . $transmitterName . '</a>';
+            }
         }
 
         $receiver_type = $this->getField('receiver_type');
         $receiverId = $this->getField('receiver');
+        // Same read filter as the transmitter above.
+        $options['linkReceiver'] = __('All');
         if (!empty($receiverId) && self::isValidEndpointType($receiver_type)) {
             $receiver = new $receiver_type();
-            $receiver->getFromDB($receiverId);
-            $linkReceiver = $receiver_type::getFormURLWithID($receiverId);
-            // Same as the transmitter above: escape the raw stored name before it
-            // is rendered as raw HTML by fields.htmlField, and quote the href.
-            $receiverName = htmlspecialchars($receiver->getName());
+            if ($receiver->can((int) $receiverId, READ)) {
+                $linkReceiver = $receiver_type::getFormURLWithID($receiverId);
+                // Same as the transmitter above: escape the raw stored name before it
+                // is rendered as raw HTML by fields.htmlField, and quote the href.
+                $receiverName = htmlspecialchars($receiver->getName());
 
-            $options['linkReceiver'] = '<a href="' . $linkReceiver . '">' . $receiverName . '</a>';
-        } else {
-            $options['linkReceiver'] = __('All');
+                $options['linkReceiver'] = '<a href="' . $linkReceiver . '">' . $receiverName . '</a>';
+            }
         }
 
         $options['appliances_id'] = $_SESSION['plugin_webapplications_loaded_appliances_id'];
@@ -402,23 +413,28 @@ class Stream extends CommonDBTM
             $linkReceiver = __('All');
             $receiverType = $field['receiver_type'];
             $receiverid   = $field['receiver'];
+            // Same read filter as Stream::showForm(): the endpoint may belong to an
+            // entity the viewer has no access to, and getFromDB() checks nothing.
             if (!empty($receiverid) && self::isValidEndpointType($receiverType)) {
                 $receiver = new $receiverType();
-                $receiver->getFromDB($receiverid);
-                $linkR        = $receiverType::getFormURLWithID($receiverid);
-                $receiverName = htmlescape($receiver->getName());
-                $linkReceiver = "<a href='" . htmlescape($linkR) . "'>" . $receiverName . "</a>";
+                if ($receiver->can((int) $receiverid, READ)) {
+                    $linkR        = $receiverType::getFormURLWithID($receiverid);
+                    $receiverName = htmlescape($receiver->getName());
+                    $linkReceiver = "<a href='" . htmlescape($linkR) . "'>" . $receiverName . "</a>";
+                }
             }
 
             $linkTransmitter = __('All');
             $transmitterType = $field['transmitter_type'];
             $transmitterid   = $field['transmitter'];
+            // Same read filter as the receiver above.
             if (!empty($transmitterid) && self::isValidEndpointType($transmitterType)) {
                 $transmitter = new $transmitterType();
-                $transmitter->getFromDB($transmitterid);
-                $linkT           = $transmitterType::getFormURLWithID($transmitterid);
-                $transmitterName = htmlescape($transmitter->getName());
-                $linkTransmitter = "<a href='" . htmlescape($linkT) . "'>" . $transmitterName . "</a>";
+                if ($transmitter->can((int) $transmitterid, READ)) {
+                    $linkT           = $transmitterType::getFormURLWithID($transmitterid);
+                    $transmitterName = htmlescape($transmitter->getName());
+                    $linkTransmitter = "<a href='" . htmlescape($linkT) . "'>" . $transmitterName . "</a>";
+                }
             }
 
             $flow_html = "<i class='ti ti-network'></i>&nbsp;" . $linkTransmitter
