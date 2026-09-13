@@ -29,10 +29,6 @@
 
 namespace GlpiPlugin\Webapplications;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 use CommonDBTM;
 use CommonGLPI;
 use Contract;
@@ -448,7 +444,13 @@ class Appliance extends CommonDBTM
         $docuDBTM = new Document();
         $doc_entries = [];
         foreach ($docuItems as $docuItem) {
-            $docuDBTM->getFromDB($docuItem['documents_id']);
+            // Document_Item::find() applies neither the read right nor the entity
+            // restriction: a document attached to this appliance may be out of the
+            // viewer's scope, so skip it rather than disclosing its name and a
+            // download link.
+            if (!$docuDBTM->can((int) $docuItem['documents_id'], READ)) {
+                continue;
+            }
             $open = $CFG_GLPI["root_doc"] . "/front/document.send.php";
             $open .= (strpos($open, '?') ? '&' : '?') . 'docid=' . $docuItem['documents_id'];
             $doc_entries[] = ['url' => $open, 'label' => $docuDBTM->getName()];
@@ -459,7 +461,10 @@ class Appliance extends CommonDBTM
         $contractDBTM = new Contract();
         $contract_entries = [];
         foreach ($contractItems as $contractItem) {
-            $contractDBTM->getFromDB($contractItem['contracts_id']);
+            // Same as the documents above: Contract_Item::find() is a direct table read.
+            if (!$contractDBTM->can((int) $contractItem['contracts_id'], READ)) {
+                continue;
+            }
             $open = $CFG_GLPI["root_doc"] . "/front/contract.form.php";
             $open .= (strpos($open, '?') ? '&' : '?') . 'id=' . $contractItem['contracts_id'];
             $contract_entries[] = ['url' => $open, 'label' => $contractDBTM->getName()];
@@ -469,6 +474,9 @@ class Appliance extends CommonDBTM
         $ManualLinkItems = $ManualLinkDBTM->find(['items_id' => $ApplianceId, 'itemtype' => 'Appliance']);
         $link_entries = [];
         foreach ($ManualLinkItems as $ManualLinkItem) {
+            if (!$ManualLinkDBTM->can((int) $ManualLinkItem['id'], READ)) {
+                continue;
+            }
             $url = (string) $ManualLinkItem['url'];
             // Only allow http(s) or relative URLs; reject javascript:/data:/vbscript: schemes.
             if (preg_match('/^\s*(javascript|data|vbscript):/i', $url)) {
@@ -490,7 +498,7 @@ class Appliance extends CommonDBTM
 
         ob_start();
         Dashboard::showTitleforDashboard(
-            _n('Associated document', 'Associated documents', count($docuItems), 'webapplications'),
+            _n('Associated document', 'Associated documents', count($doc_entries), 'webapplications'),
             $ApplianceId,
             $documentItemDBTM,
         );
@@ -498,7 +506,7 @@ class Appliance extends CommonDBTM
 
         ob_start();
         Dashboard::showTitleforDashboard(
-            _n('Associated contract', 'Associated contracts', count($contractItems), 'webapplications'),
+            _n('Associated contract', 'Associated contracts', count($contract_entries), 'webapplications'),
             $ApplianceId,
             $contractItemDBTM,
         );
@@ -506,7 +514,7 @@ class Appliance extends CommonDBTM
 
         ob_start();
         Dashboard::showTitleforDashboard(
-            _n('Associated link', 'Associated links', count($ManualLinkItems), 'webapplications'),
+            _n('Associated link', 'Associated links', count($link_entries), 'webapplications'),
             $ApplianceId,
             $ManualLinkDBTM,
         );

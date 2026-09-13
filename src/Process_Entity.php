@@ -38,10 +38,6 @@ use GlpiPlugin\Webapplications\Entity;
 use Html;
 use Toolbox;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Class Process_Entity
  */
@@ -137,7 +133,12 @@ class Process_Entity extends CommonDBTM
         $processes = $this->find(['plugin_webapplications_entities_id' => $item->getID()]);
         $processDBTM = new Process();
         foreach ($processes as $process) {
-            $processDBTM->getFromDB($process['plugin_webapplications_processes_id']);
+            // find() is a direct table read: the linked process may belong to an entity
+            // the viewer has no access to, and getFromDB() would disclose its name
+            // anyway. can() applies the object right and the entity access.
+            if (!$processDBTM->can((int) $process['plugin_webapplications_processes_id'], READ)) {
+                continue;
+            }
             $rows[] = [
                 'name' => $processDBTM->getName(),
                 'url'  => Process::getFormURLWithID($process['plugin_webapplications_processes_id']),
@@ -171,7 +172,10 @@ class Process_Entity extends CommonDBTM
         $entities = $this->find(['plugin_webapplications_processes_id' => $item->getID()]);
         $entityDBTM = new Entity();
         foreach ($entities as $entity) {
-            $entityDBTM->getFromDB($entity['plugin_webapplications_entities_id']);
+            // Mirror of showForEntity(): the far end of the relation must be readable.
+            if (!$entityDBTM->can((int) $entity['plugin_webapplications_entities_id'], READ)) {
+                continue;
+            }
             $rows[] = [
                 'name' => $entityDBTM->getName(),
                 'url'  => Entity::getFormURLWithID($entity['plugin_webapplications_entities_id']),

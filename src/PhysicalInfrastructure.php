@@ -39,10 +39,6 @@ use Html;
 use IPAddress;
 use Item_OperatingSystem;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Class PhysicalInfrastructure
  */
@@ -89,9 +85,16 @@ class PhysicalInfrastructure extends CommonDBTM
 
         $listItem = [];
         foreach ($itemApp as $st) {
-
+            // The itemtype comes from the database and is used as a class name, so it
+            // must be a real CommonDBTM before it is instantiated. can() then applies
+            // the object right AND Session::haveAccessToEntity(), neither of which
+            // find()/getFromDB() enforce: without it this tab listed the names,
+            // operating systems and IP addresses of items outside the viewer's scope.
+            if (!is_a($st['itemtype'], CommonDBTM::class, true)) {
+                continue;
+            }
             $itemDBTM = new $st['itemtype']();
-            if ($itemDBTM->getFromDB($st['items_id'])) {
+            if ($itemDBTM->can((int) $st['items_id'], READ)) {
                 $item = ['id' => $st['items_id'],'name' => $itemDBTM->fields['name'], 'itemtype' => $st['itemtype']];
                 array_push($listItem, $item);
             }
@@ -113,6 +116,11 @@ class PhysicalInfrastructure extends CommonDBTM
         }
 
         foreach ($list_by_itemtypes as $itemtype => $items) {
+            // showListObjects() is also reached from Dashboard::showList() with a list
+            // this class did not build, so re-validate the dynamic class name here too.
+            if (!is_a($itemtype, CommonDBTM::class, true)) {
+                continue;
+            }
 
             $object = new $itemtype();
             $cards = [];
@@ -127,8 +135,12 @@ class PhysicalInfrastructure extends CommonDBTM
             }
 
             foreach ($items as $items_id) {
-
-                $object->getFromDB($items_id);
+                // Defense in depth: the caller may pass a list that never went through
+                // getItems(), so the read right is re-checked before anything about the
+                // item is rendered. can() loads the record on success.
+                if (!$object->can((int) $items_id, READ)) {
+                    continue;
+                }
                 $id = $items_id;
 
                 $delete_html = Html::getSimpleForm(
@@ -161,8 +173,15 @@ class PhysicalInfrastructure extends CommonDBTM
 
                     foreach ($iterator as $row) {
                         $envtype = $row['itemtype'];
+                        // Database-driven class name, and the environment may live in
+                        // another entity: validate the class, then the read right.
+                        if (!is_a($envtype, CommonDBTM::class, true)) {
+                            continue;
+                        }
                         $env = new $envtype();
-                        $env->getFromDB($row['items_id']);
+                        if (!$env->can((int) $row['items_id'], READ)) {
+                            continue;
+                        }
                         // Icon class is DB data escaped by Twig; getLink() returns trusted framework markup.
                         $env_lines[] = [
                             'icon' => $env->getIcon(),
@@ -239,6 +258,12 @@ class PhysicalInfrastructure extends CommonDBTM
                     'blocks'        => $blocks,
                     'edit_html'     => Dashboard::getCardEditHtml($object, (int) $id),
                 ];
+            }
+
+            if (empty($cards)) {
+                // Every item of this type was filtered out: do not even disclose that
+                // the appliance is linked to items of that type.
+                continue;
             }
 
             TemplateRenderer::getInstance()->display('@webapplications/webapplication_object_cards.html.twig', [

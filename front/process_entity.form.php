@@ -27,7 +27,45 @@
  * --------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
+use GlpiPlugin\Webapplications\Entity;
+use GlpiPlugin\Webapplications\Process;
 use GlpiPlugin\Webapplications\Process_Entity;
+
+/**
+ * Re-validate both ends of the relation.
+ *
+ * glpi_plugin_webapplications_processes_entities carries no entities_id, so
+ * check(-1, CREATE, $_POST) / check($id, UPDATE) degrade to the global right bit
+ * and never look at the process nor at the entity being linked. The relation is
+ * edited from either side (showForEntity() / showForProcess() gate their form on
+ * UPDATE over the side they render), so require UPDATE on one end and READ on
+ * the other - and never less than READ on both.
+ */
+function plugin_webapplications_check_process_entity_endpoints(int $entities_id, int $processes_id): void
+{
+    $entity = new Entity();
+    $process = new Process();
+
+    if ($entities_id <= 0 || $processes_id <= 0) {
+        throw new AccessDeniedHttpException();
+    }
+
+    $can_entity = $entity->can($entities_id, UPDATE);
+    $can_process = $process->can($processes_id, UPDATE);
+
+    if ($can_entity && $can_process) {
+        return;
+    }
+    if ($can_entity && $process->can($processes_id, READ)) {
+        return;
+    }
+    if ($can_process && $entity->can($entities_id, READ)) {
+        return;
+    }
+
+    throw new AccessDeniedHttpException();
+}
 
 // Page-level guard mirroring the sibling controllers (process.php, stream.php):
 // establishes the "whole page is authorized" invariant. The per-branch
@@ -48,6 +86,10 @@ if (isset($_POST["add"])) {
     // Check the right on the record actually being written (the relation),
     // not on an unrelated Process instance.
     $processEntity->check(-1, CREATE, $_POST);
+    plugin_webapplications_check_process_entity_endpoints(
+        (int) ($_POST['plugin_webapplications_entities_id'] ?? 0),
+        (int) ($_POST['plugin_webapplications_processes_id'] ?? 0),
+    );
     $newID = $processEntity->add($_POST);
     if ($_SESSION['glpibackcreated']) {
         Html::redirect($processEntity->getFormURL() . "?id=" . $newID);
@@ -57,6 +99,17 @@ if (isset($_POST["add"])) {
     // $_POST['id'] is a Process_Entity id: reload and check that record so the
     // authorization is evaluated on the object that update() will modify.
     $processEntity->check($_POST['id'], UPDATE);
+    // The pair the row currently holds, then the pair it would be moved to.
+    plugin_webapplications_check_process_entity_endpoints(
+        (int) $processEntity->fields['plugin_webapplications_entities_id'],
+        (int) $processEntity->fields['plugin_webapplications_processes_id'],
+    );
+    plugin_webapplications_check_process_entity_endpoints(
+        (int) ($_POST['plugin_webapplications_entities_id']
+            ?? $processEntity->fields['plugin_webapplications_entities_id']),
+        (int) ($_POST['plugin_webapplications_processes_id']
+            ?? $processEntity->fields['plugin_webapplications_processes_id']),
+    );
     $processEntity->update($_POST);
     Html::back();
 }

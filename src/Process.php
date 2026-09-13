@@ -35,11 +35,8 @@ use CommonDBTM;
 use CommonGLPI;
 use Glpi\Application\View\TemplateRenderer;
 use Html;
+use Session;
 use User;
-
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
 
 /**
  * Class Process
@@ -139,10 +136,22 @@ class Process extends CommonDBTM
         $input = array_intersect_key($input, array_flip($allowed));
         if (isset($input['appliances_id']) && !empty($input['appliances_id'])) {
             $item = new \Appliance();
-            if ($item->getFromDB($input['appliances_id'])) {
-                $input['entities_id'] = $item->fields['entities_id'];
-                $input['is_recursive'] = $item->fields['is_recursive'];
+            // The posted appliance drives both the entity this record lands in and the
+            // Appliance_Item link created by post_addItem(). The core governs that link
+            // with UPDATE on the appliance (Appliance_Item is a CommonDBRelation whose
+            // $checkItem_1_Rights is HAVE_SAME_RIGHT_ON_ITEM); replay the same check
+            // here since the plugin calls Appliance_Item::add() directly. can() also
+            // applies Session::haveAccessToEntity(), which getFromDB() does not.
+            if (!$item->can((int) $input['appliances_id'], UPDATE)) {
+                Session::addMessageAfterRedirect(
+                    __("You don't have permission to perform this action."),
+                    false,
+                    ERROR,
+                );
+                return false;
             }
+            $input['entities_id'] = $item->fields['entities_id'];
+            $input['is_recursive'] = $item->fields['is_recursive'];
         }
         return $input;
     }
@@ -158,8 +167,11 @@ class Process extends CommonDBTM
 
     public function post_addItem()
     {
-        $appliance_id = $this->input['appliances_id'];
-        if (isset($appliance_id) && !empty($appliance_id)) {
+        // prepareInputForAdd() already refused any appliance the caller cannot update,
+        // so reaching this point means the link is authorized. The null coalescing
+        // keeps the method safe when the record is created without an appliance.
+        $appliance_id = (int) ($this->input['appliances_id'] ?? 0);
+        if ($appliance_id > 0) {
             $itemDBTM = new Appliance_Item();
             $itemDBTM->add(
                 [

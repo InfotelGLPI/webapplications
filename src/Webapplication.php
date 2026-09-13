@@ -31,10 +31,6 @@ namespace GlpiPlugin\Webapplications;
 
 use CommonDBTM;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Class Webapplication
  */

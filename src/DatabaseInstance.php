@@ -40,10 +40,6 @@ use Glpi\Application\View\TemplateRenderer;
 use GlpiPlugin\Webapplications\Appliance;
 use Html;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Class DatabaseInstance
  */
@@ -117,9 +113,14 @@ class DatabaseInstance extends CommonDBTM
 
     public function post_addItem()
     {
-        $appliance_id = $this->input['appliances_id'];
-        $items_id = $this->input['databaseinstances_id'];
-        if (isset($appliance_id) && !empty($appliance_id)) {
+        $appliance_id = (int) ($this->input['appliances_id'] ?? 0);
+        $items_id = (int) ($this->input['databaseinstances_id'] ?? 0);
+        // setDatabase() forwards the appliance id posted on the core DatabaseInstance
+        // form without any check. Linking an item to an appliance is governed by UPDATE
+        // on that appliance (Appliance_Item is a CommonDBRelation whose
+        // $checkItem_1_Rights is HAVE_SAME_RIGHT_ON_ITEM); calling Appliance_Item::add()
+        // directly bypasses it, so replay the check here.
+        if ($appliance_id > 0 && (new \Appliance())->can($appliance_id, UPDATE)) {
             $itemDBTM = new Appliance_Item();
             $data = $itemDBTM->find([
                 'appliances_id' => $appliance_id,

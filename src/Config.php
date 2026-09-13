@@ -30,6 +30,7 @@
 namespace GlpiPlugin\Webapplications;
 
 use CommonDBTM;
+use CommonGLPI;
 use Dropdown;
 use Glpi\Application\View\TemplateRenderer;
 use Plugin;
@@ -89,6 +90,15 @@ class Config extends CommonDBTM
         return __("Setup", "webapplications");
     }
 
+    public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
+    {
+        if (!$withtemplate && $item->getType() === __CLASS__) {
+            return [
+                1 => self::createTabEntry(__('Setup', 'webapplications'), 0, $item->getType(), 'ti ti-adjustments'),
+            ];
+        }
+        return '';
+    }
     /**
      * @see CommonGLPI::defineTabs()
      */
@@ -99,10 +109,19 @@ class Config extends CommonDBTM
         //$this->addDefaultFormTab($ong);
 
         // Standard tabs linked to other classes or to your own
-        $this->addStandardTab(Config::class, $ong, $options);
         $this->addStandardTab(__CLASS__, $ong, $options);
         //$this->addStandardTab('Log', $ong, $options); // Uncomment to add the "History" tab
         return $ong;
+    }
+
+    public static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0)
+    {
+        if ($item->getType() === __CLASS__) {
+            if ($tabnum === 1) {
+                $item->showForm(1);
+            }
+        }
+        return true;
     }
 
     /* This method returning "false" must be present for the tabs to be displayed */

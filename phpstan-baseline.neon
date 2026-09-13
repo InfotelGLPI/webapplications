@@ -37,18 +37,6 @@ parameters:
 			path: src/Appliance.php
 
 		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Appliance.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Certificate.php
-
-		-
 			message: '#^Call to method find\(\) on an unknown class PluginFieldsContainer\.$#'
 			identifier: class.notFound
 			count: 1
@@ -81,7 +69,7 @@ parameters:
 		-
 			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
 			identifier: glpi.forbidDynamicInstantiation
-			count: 5
+			count: 3
 			path: src/Dashboard.php
 
 		-
@@ -93,12 +81,6 @@ parameters:
 		-
 			message: '#^Method GlpiPlugin\\Webapplications\\Dashboard\:\:showForm\(\) should return bool but return statement is missing\.$#'
 			identifier: return.missing
-			count: 1
-			path: src/Dashboard.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
 			count: 1
 			path: src/Dashboard.php
 
@@ -137,24 +119,6 @@ parameters:
 			identifier: parameter.phpDocType
 			count: 3
 			path: src/DatabaseInstance.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/DatabaseInstance.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Entity.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Knowbase.php
 
 		-
 			message: '#^Call to an undefined static method GlpiPlugin\\Webapplications\\LogicalInfrastructure\:\:isEnabled\(\)\.$#'
@@ -208,12 +172,6 @@ parameters:
 			message: '#^Variable \$total might not be defined\.$#'
 			identifier: variable.undefined
 			count: 2
-			path: src/LogicalInfrastructure.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
 			path: src/LogicalInfrastructure.php
 
 		-
@@ -337,26 +295,8 @@ parameters:
 			path: src/Pdf.php
 
 		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Pdf.php
-
-		-
-			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
-			identifier: glpi.forbidDynamicInstantiation
-			count: 3
-			path: src/PhysicalInfrastructure.php
-
-		-
 			message: '#^Method GlpiPlugin\\Webapplications\\PhysicalInfrastructure\:\:displayTabContentForItem\(\) should return bool but return statement is missing\.$#'
 			identifier: return.missing
-			count: 1
-			path: src/PhysicalInfrastructure.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
 			count: 1
 			path: src/PhysicalInfrastructure.php
 
@@ -373,18 +313,6 @@ parameters:
 			path: src/Printpdf.php
 
 		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Printpdf.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Process.php
-
-		-
 			message: '#^Call to an undefined method CommonGLPI\:\:getID\(\)\.$#'
 			identifier: method.notFound
 			count: 2
@@ -394,12 +322,6 @@ parameters:
 			message: '#^Unreachable statement \- code above always terminates\.$#'
 			identifier: deadCode.unreachable
 			count: 2
-			path: src/Process_Entity.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
 			path: src/Process_Entity.php
 
 		-
@@ -451,21 +373,9 @@ parameters:
 			path: src/Profile.php
 
 		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Profile.php
-
-		-
 			message: '#^Instantiating an object from an unrestricted dynamic string is forbidden \(see https\://github\.com/glpi\-project/phpstan\-glpi\?tab\=readme\-ov\-file\#forbiddynamicinstantiationrule\)\.$#'
 			identifier: glpi.forbidDynamicInstantiation
 			count: 4
-			path: src/Stream.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
 			path: src/Stream.php
 
 		-
@@ -480,38 +390,3 @@ parameters:
 			count: 1
 			path: src/Stream_Item.php
 
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Stream_Item.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Webapplication.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Webapplicationexternalexposition.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Webapplicationservertype.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Webapplicationtechnic.php
-
-		-
-			message: '#^You should not use the `die` function\. It prevents the execution of post\-request/post\-command routines\.$#'
-			identifier: glpi.forbidExit
-			count: 1
-			path: src/Webapplicationtype.php

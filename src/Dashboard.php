@@ -42,10 +42,6 @@ use Group_User;
 use Html;
 use Toolbox;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Class Dashboard
  */
@@ -327,34 +323,38 @@ class Dashboard extends CommonDBTM
         } else {
             $apps = $app_item->find(['appliances_id' => $ApplianceId, 'itemtype' => $item->getType()]);
         }
-        $title = $item->getTypeName(count($apps));
-
-        ob_start();
-        self::showTitleforDashboard($title, $ApplianceId, $item);
-        $title_html = ob_get_clean();
-
         $obj = new $item();
 
+        // The summary panel is built before the title so the count reflects what the
+        // viewer may actually see. getFromDB() checks nothing: every branch below now
+        // goes through can(READ), which applies both the object right and the entity
+        // access, so a linked item from another entity is no longer disclosed.
         $entries = [];
         if (!empty($apps)) {
             foreach ($apps as $app) {
                 if ($item->getType() == PhysicalInfrastructure::class) {
+                    // The itemtype is database data used as a class name.
+                    if (!is_a($app['itemtype'], CommonDBTM::class, true)) {
+                        continue;
+                    }
                     $itemDBTM = new $app['itemtype']();
-                    if ($itemDBTM->getFromDB($app['id'])) {
+                    if ($itemDBTM->can((int) $app['id'], READ)) {
                         $label = $itemDBTM->getName();
                         $url = $itemDBTM::getFormURLWithID($app['id']);
                         $label .= self::getRelatedEnvironmentsLabel($app['id'], $app['itemtype']);
                         $entries[] = ['url' => $url, 'label' => $label];
                     }
                 } elseif ($item->getType() == "Certificate") {
-                    if ($item->getFromDB($app['id'])) {
+                    // Load into $obj, not $item: $item is handed to showTitleforDashboard()
+                    // below and must keep its pristine state.
+                    if ($obj->can((int) $app['id'], READ)) {
                         $entries[] = [
                             'url'   => $item::getFormURLWithID($app['id']),
-                            'label' => $item->getName(),
+                            'label' => $obj->getName(),
                         ];
                     }
                 } else {
-                    if ($obj->getFromDB($app['items_id'])) {
+                    if ($obj->can((int) $app['items_id'], READ)) {
                         $label = $obj->getName();
                         $url = $item::getFormURLWithID($app['items_id']);
                         if ($item->getType() == "DatabaseInstance") {
@@ -365,6 +365,12 @@ class Dashboard extends CommonDBTM
                 }
             }
         }
+
+        $title = $item->getTypeName(count($entries));
+
+        ob_start();
+        self::showTitleforDashboard($title, $ApplianceId, $item);
+        $title_html = ob_get_clean();
 
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_from.html.twig', [
             'title_html' => $title_html,
@@ -405,8 +411,15 @@ class Dashboard extends CommonDBTM
 
             foreach ($iterator as $objrow) {
                 $envtype = $objrow['itemtype'];
+                // Database-driven class name, and the environment may belong to another
+                // entity than the viewer's: validate the class, then the read right.
+                if (!is_a($envtype, CommonDBTM::class, true)) {
+                    continue;
+                }
                 $env = new $envtype();
-                $env->getFromDB($objrow['items_id']);
+                if (!$env->can((int) $objrow['items_id'], READ)) {
+                    continue;
+                }
                 $label .= " - " . $env->getName();
             }
         }
@@ -425,7 +438,10 @@ class Dashboard extends CommonDBTM
      */
     public static function getCardEditHtml($object, int $id): string
     {
-        if (!$object->canUpdate()) {
+        // canUpdate() only tests the global right bit: it ignores the record and its
+        // entity, so an "Edit" button was offered for objects the caller cannot update.
+        // can() applies the object right AND Session::haveAccessToEntity().
+        if (!$object->can($id, UPDATE)) {
             return '';
         }
         $rand = mt_rand();
@@ -484,7 +500,15 @@ class Dashboard extends CommonDBTM
         $list = [];
         if (!empty($listId)) {
             $obj = new $item();
-            $list = $obj->find(['id' => $listId]);
+            // find() applies neither the object right nor the entity restriction, while
+            // the items linked to an appliance may very well live in entities the viewer
+            // has no access to. Keep only the rows the viewer may actually read, exactly
+            // as Stream_Item::showForStream() already does.
+            foreach ($obj->find(['id' => $listId]) as $key => $row) {
+                if ($obj->can((int) $row['id'], READ)) {
+                    $list[$key] = $row;
+                }
+            }
         }
 
         return $list;

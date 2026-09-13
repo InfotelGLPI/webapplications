@@ -31,10 +31,6 @@ namespace GlpiPlugin\Webapplications;
 
 use CommonDropdown;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Class Webapplicationexternalexposition
  */

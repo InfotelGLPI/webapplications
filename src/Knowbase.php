@@ -36,10 +36,6 @@ use Glpi\Exception\Http\AccessDeniedHttpException;
 use KnowbaseItem;
 use KnowbaseItem_Item;
 
-if (!defined('GLPI_ROOT')) {
-    die("Sorry. You can't access directly to this file");
-}
-
 /**
  * Class Knowbase
  */

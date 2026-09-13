@@ -27,6 +27,7 @@
  * --------------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\BadRequestHttpException;
 use GlpiPlugin\Webapplications\Config;
 
 $config = new Config();
@@ -37,7 +38,7 @@ if (isset($_POST["add"])) {
     // Only accept a "fields" token that belongs to the server-side whitelist rendered in
     // the config dropdown; reject any forged value before splitting and persisting it.
     if (!array_key_exists($_POST["fields"] ?? '', Config::getFieldsChoices())) {
-        throw new \Glpi\Exception\Http\BadRequestHttpException();
+        throw new BadRequestHttpException();
     }
     $fields = explode('|', $_POST["fields"]);
     $_POST['fields_description_table'] = $fields[0];
@@ -49,7 +50,7 @@ if (isset($_POST["add"])) {
     // Only accept a "fields" token that belongs to the server-side whitelist rendered in
     // the config dropdown; reject any forged value before splitting and persisting it.
     if (!array_key_exists($_POST["fields"] ?? '', Config::getFieldsChoices())) {
-        throw new \Glpi\Exception\Http\BadRequestHttpException();
+        throw new BadRequestHttpException();
     }
     $fields = explode('|', $_POST["fields"]);
     $_POST['fields_description_table'] = $fields[0];
@@ -60,7 +61,8 @@ if (isset($_POST["add"])) {
     Html::header(__('Setup', 'webapplications'), $_SERVER['PHP_SELF'], 'config', 'webapplications');
 
     /* showForm() affiche seulement le formulaire */
-    $config->showForm(1);
+    $config->getFromDB(1);
+    $config->display(['id' => 1]);
 
     Html::footer();
 }
