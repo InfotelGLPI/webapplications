@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-07 08:11+0000\n"
+"POT-Creation-Date: 2026-09-13 10:12+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Maykon Henrique Facincani <facincani.maykon@gmail.com>, "
 "2022\n"
@@ -25,19 +25,19 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
 "1000000 == 0 ? 1 : 2;\n"
 
-#: src/Appliance.php:107 src/Appliance.php:119
+#: src/Appliance.php:103 src/Appliance.php:115
 msgid "1 to 100"
 msgstr ""
 
-#: src/Appliance.php:108 src/Appliance.php:120
+#: src/Appliance.php:104 src/Appliance.php:116
 msgid "100 to 500"
 msgstr ""
 
-#: src/Appliance.php:110 src/Appliance.php:122
+#: src/Appliance.php:106 src/Appliance.php:118
 msgid "1000 to 5000"
 msgstr ""
 
-#: src/Appliance.php:109 src/Appliance.php:121
+#: src/Appliance.php:105 src/Appliance.php:117
 msgid "500 to 1000"
 msgstr ""
 
@@ -47,11 +47,11 @@ msgctxt "button"
 msgid "Add"
 msgstr ""
 
-#: src/Process_Entity.php:150
+#: src/Process_Entity.php:151
 msgid "Add a process"
 msgstr ""
 
-#: src/Process_Entity.php:184
+#: src/Process_Entity.php:188
 msgid "Add an entity"
 msgstr ""
 
@@ -59,7 +59,7 @@ msgstr ""
 msgid "Add an item"
 msgstr ""
 
-#: src/Appliance.php:111 src/Appliance.php:123
+#: src/Appliance.php:107 src/Appliance.php:119
 msgid "All users"
 msgstr ""
 
@@ -67,12 +67,12 @@ msgstr ""
 msgid "An error has occurred"
 msgstr ""
 
-#: setup.php:142 src/Webapplication.php:53 src/Profile.php:209
-#: src/Dashboard.php:84
+#: setup.php:142 src/Webapplication.php:49 src/Profile.php:205
+#: src/Dashboard.php:80
 msgid "Appliance dashboard"
 msgstr ""
 
-#: src/Pdf.php:508
+#: src/Pdf.php:504
 msgid "Appliance description"
 msgstr ""
 
@@ -85,56 +85,56 @@ msgctxt "button"
 msgid "Associate"
 msgstr ""
 
-#: src/Appliance.php:501 src/Pdf.php:582
+#: src/Appliance.php:509 src/Pdf.php:578
 msgid "Associated contract"
 msgid_plural "Associated contracts"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Appliance.php:493 src/Pdf.php:553
+#: src/Appliance.php:501 src/Pdf.php:549
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Appliance.php:509
+#: src/Appliance.php:517
 msgid "Associated link"
 msgid_plural "Associated links"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: hook.php:563 hook.php:636 src/Pdf.php:815 src/Process.php:216
-#: src/Process.php:278 src/DatabaseInstance.php:510
+#: hook.php:563 hook.php:636 src/Pdf.php:811 src/Process.php:228
+#: src/Process.php:290 src/DatabaseInstance.php:511
 #: templates/webapplication_appliance_form.html.twig:142
 #: templates/webapplication_process_form.html.twig:54
 #: templates/webapplication_database_form.html.twig:59
 msgid "Availability"
 msgstr ""
 
-#: hook.php:459 src/Pdf.php:697 templates/webapplication_form.html.twig:59
+#: hook.php:459 src/Pdf.php:693 templates/webapplication_form.html.twig:59
 #: templates/webapplication_appliance_form.html.twig:59
 msgid "Backoffice URL"
 msgstr "URL de retaguarda"
 
-#: src/Webapplicationtype.php:55
+#: src/Webapplicationtype.php:51
 msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "Categoria"
 msgstr[1] "Categorias"
 msgstr[2] "Categorias"
 
-#: src/Dashboard.php:582
+#: src/Dashboard.php:606
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: hook.php:581 hook.php:652 src/Pdf.php:821 src/Process.php:230
-#: src/Process.php:288 src/DatabaseInstance.php:520
+#: hook.php:581 hook.php:652 src/Pdf.php:817 src/Process.php:242
+#: src/Process.php:300 src/DatabaseInstance.php:521
 #: templates/webapplication_appliance_form.html.twig:174
 #: templates/webapplication_process_form.html.twig:87
 #: templates/webapplication_database_form.html.twig:89
@@ -161,40 +161,40 @@ msgstr ""
 msgid "Data migration"
 msgstr "Migração de dados"
 
-#: src/Dashboard.php:580
+#: src/Dashboard.php:604
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Stream.php:262 src/Stream.php:445
+#: src/Stream.php:274 src/Stream.php:457
 #: templates/webapplication_stream_form.html.twig:64
 #: templates/webapplication_stream_form.html.twig:69
 msgid "Destination"
 msgstr ""
 
-#: src/Pdf.php:878 src/Entity.php:54
+#: src/Pdf.php:874 src/Entity.php:51
 msgid "Ecosystem"
 msgstr ""
 
-#: src/Stream.php:273 templates/webapplication_stream_form.html.twig:84
+#: src/Stream.php:285 templates/webapplication_stream_form.html.twig:84
 msgid "Encryption"
 msgstr ""
 
-#: src/Stream.php:280 src/Stream.php:447
+#: src/Stream.php:292 src/Stream.php:459
 #: templates/webapplication_stream_form.html.twig:90
 msgid "Encryption type"
 msgstr ""
 
-#: src/Dashboard.php:574
+#: src/Dashboard.php:598
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Webapplicationexternalexposition.php:53 src/Pdf.php:713
+#: src/Webapplicationexternalexposition.php:49 src/Pdf.php:709
 msgid "External exposition"
 msgid_plural "External exposition"
 msgstr[0] ""
@@ -205,27 +205,27 @@ msgstr[2] ""
 msgid "Generate PDF"
 msgstr ""
 
-#: hook.php:536 src/Pdf.php:703
+#: hook.php:536 src/Pdf.php:699
 #: templates/webapplication_appliance_form.html.twig:68
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:572 hook.php:644 src/Pdf.php:818 src/Process.php:223
-#: src/Process.php:283 src/DatabaseInstance.php:515
+#: hook.php:572 hook.php:644 src/Pdf.php:814 src/Process.php:235
+#: src/Process.php:295 src/DatabaseInstance.php:516
 #: templates/webapplication_appliance_form.html.twig:158
 #: templates/webapplication_process_form.html.twig:71
 #: templates/webapplication_database_form.html.twig:75
 msgid "Integrity"
 msgstr ""
 
-#: src/Dashboard.php:578
+#: src/Dashboard.php:602
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Webapplicationtechnic.php:53 src/Pdf.php:713
+#: src/Webapplicationtechnic.php:49 src/Pdf.php:709
 msgid "Language of treatment"
 msgid_plural "Languages of treatment"
 msgstr[0] "Idioma de tratamento"
@@ -236,14 +236,14 @@ msgstr[2] "Idiomas de tratamento"
 msgid "Link with core purge"
 msgstr "Ligar com a limpeza do núcleo"
 
-#: src/LogicalInfrastructure.php:55 src/LogicalInfrastructure.php:177
+#: src/LogicalInfrastructure.php:50 src/LogicalInfrastructure.php:172
 msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Pdf.php:538 templates/webapplication_dashboard_support.html.twig:50
+#: src/Pdf.php:534 templates/webapplication_dashboard_support.html.twig:50
 msgid "Mail support"
 msgstr ""
 
@@ -251,19 +251,19 @@ msgstr ""
 msgid "Migration was successful"
 msgstr "Migração realizada com sucesso"
 
-#: src/Appliance.php:526
+#: src/Appliance.php:534
 msgid "No associated contracts"
 msgstr ""
 
-#: src/Appliance.php:519
+#: src/Appliance.php:527
 msgid "No associated documents"
 msgstr ""
 
-#: src/Appliance.php:533
+#: src/Appliance.php:541
 msgid "No associated links"
 msgstr ""
 
-#: src/Dashboard.php:609
+#: src/Dashboard.php:633
 msgid "No associated objects"
 msgstr ""
 
@@ -271,26 +271,26 @@ msgstr ""
 msgid "Number of users"
 msgstr ""
 
-#: src/Process.php:208 src/Process.php:268 src/Entity.php:172
-#: src/Entity.php:219 templates/webapplication_entity_form.html.twig:40
+#: src/Process.php:220 src/Process.php:280 src/Entity.php:184
+#: src/Entity.php:231 templates/webapplication_entity_form.html.twig:40
 #: templates/webapplication_process_form.html.twig:39
 msgid "Owner"
 msgstr ""
 
-#: src/Pdf.php:540 templates/webapplication_dashboard_support.html.twig:59
+#: src/Pdf.php:536 templates/webapplication_dashboard_support.html.twig:59
 msgid "Phone support"
 msgstr ""
 
-#: src/PhysicalInfrastructure.php:55 src/Pdf.php:934
+#: src/PhysicalInfrastructure.php:51 src/Pdf.php:930
 msgid "Physical Infrastructure"
 msgstr ""
 
-#: src/Stream.php:287 src/Stream.php:446
+#: src/Stream.php:299 src/Stream.php:458
 #: templates/webapplication_stream_form.html.twig:97
 msgid "Port"
 msgstr ""
 
-#: src/Printpdf.php:64 templates/webapplication_printpdf_form.html.twig:31
+#: src/Printpdf.php:60 templates/webapplication_printpdf_form.html.twig:31
 msgid "Print PDF"
 msgstr ""
 
@@ -298,48 +298,48 @@ msgstr ""
 msgid "Printed on"
 msgstr ""
 
-#: src/Process_Entity.php:79 src/Process_Entity.php:154 src/Process.php:53
-#: src/Profile.php:219
+#: src/Process_Entity.php:75 src/Process_Entity.php:155 src/Process.php:50
+#: src/Profile.php:215
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Process_Entity.php:54
+#: src/Process_Entity.php:50
 msgid "Process Entity"
 msgid_plural "Processes Entity"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Dashboard.php:576
+#: src/Dashboard.php:600
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Pdf.php:521 src/Dashboard.php:224
+#: src/Pdf.php:517 src/Dashboard.php:220
 msgid "Project leader"
 msgstr ""
 
-#: src/Pdf.php:528 src/Dashboard.php:226
+#: src/Pdf.php:524 src/Dashboard.php:222
 msgid "Project team"
 msgstr ""
 
-#: src/Stream.php:294 src/Stream.php:446
+#: src/Stream.php:306 src/Stream.php:458
 #: templates/webapplication_stream_form.html.twig:104
 msgid "Protocol"
 msgstr ""
 
-#: hook.php:600 src/Pdf.php:536
+#: hook.php:600 src/Pdf.php:532
 #: templates/webapplication_appliance_form.html.twig:248
 #: templates/webapplication_dashboard_support.html.twig:41
 msgid "Referent editor"
 msgstr ""
 
-#: src/Entity.php:189 src/Entity.php:233
+#: src/Entity.php:201 src/Entity.php:245
 #: templates/webapplication_entity_form.html.twig:64
 msgid "Relation nature"
 msgstr ""
@@ -350,12 +350,12 @@ msgctxt "button"
 msgid "Save"
 msgstr ""
 
-#: src/Entity.php:181 src/Entity.php:226
+#: src/Entity.php:193 src/Entity.php:238
 #: templates/webapplication_entity_form.html.twig:52
 msgid "Security Contact"
 msgstr ""
 
-#: src/Pdf.php:811 templates/webapplication_appliance_form.html.twig:122
+#: src/Pdf.php:807 templates/webapplication_appliance_form.html.twig:122
 #: templates/webapplication_process_form.html.twig:45
 #: templates/webapplication_database_form.html.twig:51
 msgid "Security Needs"
@@ -365,35 +365,36 @@ msgstr ""
 msgid "Setting up PDF printing"
 msgstr ""
 
-#: front/config.form.php:60 src/Profile.php:230 src/Config.php:89
+#: front/config.form.php:61 src/Profile.php:226 src/Config.php:90
+#: src/Config.php:97
 msgid "Setup"
 msgstr ""
 
-#: src/Stream.php:251 src/Stream.php:445
+#: src/Stream.php:263 src/Stream.php:457
 #: templates/webapplication_stream_form.html.twig:43
 #: templates/webapplication_stream_form.html.twig:48
 msgid "Source"
 msgstr ""
 
-#: src/Stream.php:53 src/Pdf.php:990 src/Profile.php:214
+#: src/Stream.php:50 src/Pdf.php:986 src/Profile.php:210
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Dashboard.php:584
+#: src/Dashboard.php:608
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Pdf.php:630 src/Dashboard.php:198
+#: src/Pdf.php:626 src/Dashboard.php:194
 msgid "Summary"
 msgstr ""
 
-#: src/Appliance.php:404 src/Pdf.php:533
+#: src/Appliance.php:400 src/Pdf.php:529
 #: templates/webapplication_appliance_form.html.twig:238
 msgid "Support"
 msgstr ""
@@ -402,22 +403,22 @@ msgstr ""
 msgid "Tables purge"
 msgstr "Limpeza de tabelas"
 
-#: hook.php:590 hook.php:660 src/Pdf.php:824 src/Process.php:237
-#: src/Process.php:293 src/DatabaseInstance.php:525
+#: hook.php:590 hook.php:660 src/Pdf.php:820 src/Process.php:249
+#: src/Process.php:305 src/DatabaseInstance.php:526
 #: templates/webapplication_appliance_form.html.twig:191
 #: templates/webapplication_process_form.html.twig:104
 #: templates/webapplication_database_form.html.twig:104
 msgid "Traceability"
 msgstr ""
 
-#: src/Pdf.php:703 src/Webapplicationservertype.php:53
+#: src/Pdf.php:699 src/Webapplicationservertype.php:49
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] "Tipo de servidor de tratamento"
 msgstr[1] "Tipos de servidores de tratamento"
 msgstr[2] "Tipos de servidores de tratamento"
 
-#: src/Pdf.php:697 templates/webapplication_form.html.twig:50
+#: src/Pdf.php:693 templates/webapplication_form.html.twig:50
 #: templates/webapplication_appliance_form.html.twig:50
 msgid "URL"
 msgstr ""
@@ -430,7 +431,7 @@ msgstr ""
 msgid "Use field"
 msgstr ""
 
-#: src/Pdf.php:827 templates/webapplication_appliance_form.html.twig:212
+#: src/Pdf.php:823 templates/webapplication_appliance_form.html.twig:212
 msgid "Validation"
 msgstr ""
 
@@ -438,22 +439,22 @@ msgstr ""
 msgid "Validation by CIO"
 msgstr ""
 
-#: src/Pdf.php:834 templates/webapplication_appliance_form.html.twig:229
+#: src/Pdf.php:830 templates/webapplication_appliance_form.html.twig:229
 msgid "Validation by CISO"
 msgstr ""
 
-#: hook.php:545 src/Pdf.php:831
+#: hook.php:545 src/Pdf.php:827
 #: templates/webapplication_appliance_form.html.twig:221
 msgid "Validation of the request by the referring Department"
 msgstr ""
 
-#: src/Appliance.php:55 src/Profile.php:204
+#: src/Appliance.php:51 src/Profile.php:200
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "Aplicação web"
 msgstr[1] "Aplicações web"
 msgstr[2] "Aplicações web"
 
-#: src/Pdf.php:345
+#: src/Pdf.php:341
 msgid "page"
 msgstr ""
