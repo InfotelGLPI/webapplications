@@ -40,6 +40,7 @@ use Glpi\Application\View\TemplateRenderer;
 use Glpi\Exception\Http\AccessDeniedHttpException;
 use Group_User;
 use Html;
+use Session;
 use Toolbox;
 
 /**
@@ -287,9 +288,25 @@ class Dashboard extends CommonDBTM
             }
 
             $rand = mt_rand();
+            // canUpdate() is the itemtype-wide right: it says nothing about the record the
+            // button opens, and above all it does not replay Session::haveAccessToEntity(), so
+            // the edit command was offered on records of entities the caller cannot reach - the
+            // sink refuses them, but the interface announced a capability that does not exist.
+            // The entity is read from the record already loaded in $item rather than re-fetched
+            // through can((int) $id, UPDATE): the callers do not all pass the object's own
+            // identifier here - showForm() hands the core appliance id together with the plugin
+            // record it loaded by appliances_id - and can() would additionally overwrite the
+            // fields the caller reuses after this call (see the comment at showList()).
+            $can_edit = $item->canUpdate();
+            if ($can_edit && !$item->isNewItem() && $item->isEntityAssign()) {
+                $can_edit = Session::haveAccessToEntity(
+                    $item->fields['entities_id'],
+                    $item->maybeRecursive() && $item->fields['is_recursive'],
+                );
+            }
             if ($item->getType() != "DatabaseInstance"
                 && $item->getType() != PhysicalInfrastructure::class
-                && $item->canUpdate()) {
+                && $can_edit) {
                 $action_html = Html::submit(
                     $btntitle,
                     [

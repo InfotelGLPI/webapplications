@@ -34,10 +34,16 @@
 
 {% block more_fields %}
 
-    {% set editor_item = get_item(params['itemtype'], params['items_id']) %}
+    {# fields.htmlField() prints its value with |raw: it is an HTML sink, not a text field.
+     # Every value below is therefore built and escaped in
+     # Appliance::showSupportPartFromDashboard() - editorlink carries the getLink() markup and
+     # is empty when the caller may not read the supplier, the mail and the phone number go
+     # through htmlescape(). The get_item() call that used to resolve the supplier here is gone:
+     # that Twig function does a bare getFromDB(), with neither right nor entity check, so it
+     # re-read the row the PHP side may have just refused. #}
     {{ fields.htmlField(
         'editor',
-        editor_item.getLink(),
+        params['editorlink'],
         __("Referent editor", 'webapplications'),
         field_options|merge({
             'add_field_class': 'col-sm-12',

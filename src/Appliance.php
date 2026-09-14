@@ -38,6 +38,7 @@ use Document_Item;
 use Dropdown;
 use Glpi\Application\View\TemplateRenderer;
 use ManualLink;
+use Session;
 use Supplier;
 
 /**
@@ -56,6 +57,19 @@ class Appliance extends CommonDBTM
      */
     public static function addFields($params)
     {
+        // The block below is grafted on the CORE Appliance and DatabaseInstance forms through
+        // the POST_ITEM_FORM hook, so the only authorization the framework applies here is the
+        // one carried by the core object. Without this test, the backoffice URL, the referring
+        // editor, the installed version, the user count and above all the DICT rating
+        // (availability, integrity, confidentiality, traceability) were displayed to every
+        // profile holding read access on Appliance, including the profiles from which the
+        // plugin right was deliberately withheld. hook.php already conditions the very same
+        // columns in the search options on this right, and every dashboard view enforces it:
+        // the core form was the one path around the rule.
+        if (!Session::haveRight(self::$rightname, READ)) {
+            return true;
+        }
+
         $item = $params['item'];
         $webapp_appliance = new self();
         $webapp_database = new DatabaseInstance();
@@ -154,6 +168,15 @@ class Appliance extends CommonDBTM
      */
     public static function setAppliance(\Appliance $item)
     {
+        // Write side of the same parallel path: this runs on the ITEM_ADD / PRE_ITEM_UPDATE
+        // hooks of the core Appliance, so saving that form persisted the plugin fields with
+        // nothing but the core update right. A profile without the plugin right could lower
+        // the confidentiality rating of an application by posting the field, whether or not
+        // the form ever rendered it. Returning early leaves the stored values untouched.
+        if (!Session::haveRight(self::$rightname, UPDATE)) {
+            return;
+        }
+
         $appliance = new Appliance();
         if (!empty($item->fields) && $item->getType() == 'Appliance') {
             $appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
@@ -403,19 +426,42 @@ class Appliance extends CommonDBTM
         $editorName = null;
         $editoremail = null;
         $editorephonenumber = null;
+        // getLink() markup, empty when there is no supplier to show or no right to see it.
+        $editorlink = '';
 
         if ($is_known) {
-            $refEditId = $applianceplugin->fields['editor'];
+            $refEditId = (int) $applianceplugin->fields['editor'];
 
+            // getFromDB() applies neither the READ right of Supplier nor
+            // Session::haveAccessToEntity(), so the referent editor of the application - name,
+            // mail and phone number - was published to anyone allowed to open the dashboard,
+            // whatever entity the supplier lives in. Same read filter as Stream::showForm().
+            // On refusal nothing is exposed, not even the existence of the row, and the
+            // identifier handed to the template is dropped with it.
             $editor = new Supplier();
-            $editor->getFromDB($refEditId);
-            $editorName = $editor->getName();
-            $editoremail = $editor->getField('email');
-            $editorephonenumber = $editor->getField('phonenumber');
+            if ($refEditId > 0 && $editor->can($refEditId, READ)) {
+                $editorName = $editor->getName();
+                // Both values are rendered by fields.htmlField(), whose macro prints its value
+                // with |raw: they are plain stored strings, not markup, so they have to be
+                // escaped at the point where they enter the HTML - same idiom as
+                // Stream::showForm() above. A supplier whose mail or phone field held markup
+                // executed it in the session of every reader of the dashboard.
+                $editoremail = htmlescape($editor->getField('email'));
+                $editorephonenumber = htmlescape($editor->getField('phonenumber'));
+                // getLink() builds the anchor itself and escapes what it interpolates.
+                $editorlink = $editor->getLink();
+            } else {
+                $refEditId = 0;
+            }
         }
 
-        $options['itemtype'] = 'Supplier';
+        $options['itemtype'] = Supplier::class;
         $options['items_id'] = $refEditId;
+        // The template used to resolve the supplier by itself through the get_item() Twig
+        // function, which does a bare getFromDB() with no right check and no entity check: it
+        // handed back the very row the test above may have just refused. The link fragment is
+        // built here instead, and the template only prints it.
+        $options['editorlink'] = $editorlink;
         $options['editorName'] = $editorName ?? NOT_AVAILABLE;
         $options['editoremail'] = $editoremail ?? NOT_AVAILABLE;
         $options['editorephonenumber'] = $editorephonenumber ?? NOT_AVAILABLE;

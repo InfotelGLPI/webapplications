@@ -134,6 +134,10 @@ class PhysicalInfrastructure extends CommonDBTM
                 $card_icon = "ti-router";
             }
 
+            // The whole screen is framed by the application loaded in session - getItems()
+            // filters its own query on it - so the relation rows have to be filtered on it too.
+            $appliances_id = (int) ($_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0);
+
             foreach ($items as $items_id) {
                 // Defense in depth: the caller may pass a list that never went through
                 // getItems(), so the read right is re-checked before anything about the
@@ -143,43 +147,65 @@ class PhysicalInfrastructure extends CommonDBTM
                 }
                 $id = $items_id;
 
-                $delete_html = Html::getSimpleForm(
-                    PLUGIN_WEBAPPLICATIONS_WEBDIR . "/front/dashboard.php",
-                    'reset',
-                    __('Delete'),
-                    ['items_id' => $id, 'itemtype' => $itemtype],
-                    'ti-circle-x',
-                );
-
                 $blocks = [];
 
+                // The appliances_id criterion was missing: every link row of the item was
+                // walked, whatever application referenced it, so the environments declared by
+                // OTHER applications were listed in the dashboard of the current one. Each
+                // environment is still re-checked below, so nothing unauthorised was rendered,
+                // but the screen told a manager scoped on application A that a given server is
+                // also used by an application they are not supposed to know about, under a name
+                // its own team chose.
                 $relations = $DB->request([
                     'FROM'   => Appliance_Item::getTable(),
                     'WHERE'  => [
+                        'appliances_id' => $appliances_id,
                         'items_id' => $items_id,
                         'itemtype' => $itemtype,
                     ],
                 ]);
                 $relations = iterator_to_array($relations);
 
+                // The Delete button posts to front/dashboard.php, which detaches the item from
+                // the application by purging this very Appliance_Item row, after its own
+                // check($id, PURGE). It used to be emitted for anyone able to read the list, so
+                // a read-only user was offered a command that could only ever answer with an
+                // access error. can() covers both the PURGE right and the entity of the link.
+                $delete_html = '';
+                $link_item = new Appliance_Item();
+                foreach ($relations as $relation) {
+                    if ($link_item->can((int) $relation['id'], PURGE)) {
+                        $delete_html = Html::getSimpleForm(
+                            PLUGIN_WEBAPPLICATIONS_WEBDIR . "/front/dashboard.php",
+                            'reset',
+                            __('Delete'),
+                            ['items_id' => $id, 'itemtype' => $itemtype],
+                            'ti-circle-x',
+                        );
+                        break;
+                    }
+                }
+
                 $env_lines = [];
-                foreach ($relations as $row) {
+                foreach ($relations as $relation) {
                     $iterator = $DB->request([
                         'FROM'   => Appliance_Item_Relation::getTable(),
                         'WHERE'  => [
-                            Appliance_Item::getForeignKeyField() => $row['id'],
+                            Appliance_Item::getForeignKeyField() => $relation['id'],
                         ],
                     ]);
 
-                    foreach ($iterator as $row) {
-                        $envtype = $row['itemtype'];
+                    // The inner loop used to reuse $row, the variable of the outer loop, so the
+                    // link row was overwritten by the last relation read.
+                    foreach ($iterator as $relation_row) {
+                        $envtype = $relation_row['itemtype'];
                         // Database-driven class name, and the environment may live in
                         // another entity: validate the class, then the read right.
                         if (!is_a($envtype, CommonDBTM::class, true)) {
                             continue;
                         }
                         $env = new $envtype();
-                        if (!$env->can((int) $row['items_id'], READ)) {
+                        if (!$env->can((int) $relation_row['items_id'], READ)) {
                             continue;
                         }
                         // Icon class is DB data escaped by Twig; getLink() returns trusted framework markup.

@@ -56,12 +56,20 @@ class Knowbase extends CommonDBTM
     public function getTabNameForItem(CommonGLPI $item, $withtemplate = 0)
     {
         if ($_SESSION['glpishow_count_on_tabs']) {
-            $ApplianceId = $_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0;
-            $kbAppDBTM = new KnowbaseItem_Item();
-            $kbApp     = $kbAppDBTM->find(['items_id' => $ApplianceId,
-                'itemtype' => 'Appliance']);
-
-            $nbEntities = count($kbApp);
+            // The counter used to run a bare find() on the link table, filtered on the appliance
+            // and the itemtype only, so none of the visibility model of the knowledge base was
+            // replayed: profiles, groups, entities, target users and validity window were all
+            // ignored. The content of the tab, on the other hand, is built by
+            // KnowbaseItem_Item::showForItem(), which does apply that model. Reader and counter
+            // therefore disagreed, and the difference is itself the disclosure: the number told
+            // how many articles are attached to the appliance, including the ones the reader is
+            // never allowed to open - and, on a restricted appliance, how much documentation
+            // exists at all. getCountForItem() below is the very criteria used by
+            // showFromDashboard(); it joins glpi_knowbaseitems and injects
+            // KnowbaseItem::getVisibilityCriteria(), so the two numbers can no longer drift.
+            $appliance   = new \Appliance();
+            $appliance_id = (int) ($_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0);
+            $nbEntities  = $appliance->getFromDB($appliance_id) ? self::getCountForItem($appliance) : 0;
             return self::createTabEntry(self::getTypeName($nbEntities), $nbEntities);
         }
         return self::getTypeName();

@@ -158,7 +158,13 @@ class Process extends CommonDBTM
 
     public function prepareInputForUpdate($input)
     {
-        $allowed = ['id', 'entities_id', 'is_recursive', 'name', 'owner',
+        // entities_id and is_recursive are deliberately out of the whitelist: the entity of
+        // this record is derived from the linked appliance by prepareInputForAdd(), after a
+        // can($appliances_id, UPDATE) on it, and no field of the form posts them. While they
+        // were accepted, a forged POST moved the record into an entity the caller has no
+        // access to - check($id, UPDATE) only settles the entity the record already occupies,
+        // and CommonDBTM::update() does not revalidate a posted entities_id.
+        $allowed = ['id', 'name', 'owner',
             'webapplicationavailabilities', 'webapplicationintegrities',
             'webapplicationconfidentialities', 'webapplicationtraceabilities', 'comment'];
         $input = array_intersect_key($input, array_flip($allowed));

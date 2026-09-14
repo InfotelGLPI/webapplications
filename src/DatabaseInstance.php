@@ -39,6 +39,7 @@ use Dropdown;
 use Glpi\Application\View\TemplateRenderer;
 use GlpiPlugin\Webapplications\Appliance;
 use Html;
+use Session;
 
 /**
  * Class DatabaseInstance
@@ -163,6 +164,25 @@ class DatabaseInstance extends CommonDBTM
             // Already cancel by another plugin
             return false;
         }
+
+        // This runs on the ITEM_ADD hook of the core Appliance_Item, that is when a database
+        // is attached to an appliance from the core relation tab, which the core gates on its
+        // own right alone. It is the fourth path writing the plugin's DICT rating and exposure
+        // for a database, and the only one that had no check of its own once applianceAdd(),
+        // applianceUpdate() and setDatabase() got theirs: holding the core appliance update
+        // right was enough to create or overwrite the plugin record, since the values are then
+        // copied from the appliance without any further validation. The entity boundary is
+        // replayed on the appliance itself because the criterion below filters on the posted
+        // appliances_id, and can() covers both the right and the entity of that appliance.
+        if (!Session::haveRight(self::$rightname, UPDATE)) {
+            return false;
+        }
+        $appliances_id = (int) ($item->input['appliances_id'] ?? $item->fields['appliances_id'] ?? 0);
+        $appliance = new \Appliance();
+        if ($appliances_id <= 0 || !$appliance->can($appliances_id, UPDATE)) {
+            return false;
+        }
+
         if (!empty($item->input) && $item->input['itemtype'] == 'DatabaseInstance') {
             $database = new DatabaseInstance();
             $database->getFromDBByCrit(['databaseinstances_id' => $item->input['items_id']]);
@@ -302,6 +322,15 @@ class DatabaseInstance extends CommonDBTM
      */
     public static function setDatabase(\DatabaseInstance $item)
     {
+        // Same reasoning as Appliance::setAppliance(): these hooks fire on the core
+        // DatabaseInstance form, which carries no plugin right of its own, and the fields
+        // written here are the exposure and the DICT rating of the database. The right is the
+        // one this class declares, plugin_webapplications_appliances, the same one hook.php
+        // requires before adding these columns to the search options.
+        if (!Session::haveRight(self::$rightname, UPDATE)) {
+            return;
+        }
+
         $database = new DatabaseInstance();
         if (!empty($item->fields)) {
             $database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);

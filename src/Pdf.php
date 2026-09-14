@@ -901,31 +901,49 @@ class Pdf extends \TCPDF
 
         $applicationItems = new Appliance_Item();
 
-        $applicationItemsDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'PluginWebapplicationsEntity']);
-
-        $webapplicationentitiesDatas = $webapplicationentities->find();
-        $webapplicationprocessesDatas = $webapplicationprocesses->find();
+        // The relation rows are written with the namespaced class name (src/Entity.php:158,
+        // src/Process.php:186, src/Stream.php:250 all store ::class) and read that way
+        // everywhere else in the plugin, but the three queries of the PDF export filtered on
+        // the historical flat itemtypes: no row ever carried the flat value, so the frames were
+        // rendered with their headers and no line at all. Both spellings are accepted, as
+        // front/webapplication.php:215 already does for the migration purge, so long-installed
+        // databases that still hold legacy rows keep printing.
+        $applicationItemsDatas = $applicationItems->find([
+            'appliances_id' => $this->id,
+            'itemtype'      => ['PluginWebapplicationsEntity', Entity::class],
+        ]);
 
         $yligne3 = $this->GetY();
 
         foreach ($applicationItemsDatas as $applicationItemsData) {
-            $webapplicationentitiesDatas = $webapplicationentities->find(['id' => $applicationItemsData['items_id']]);
-            foreach ($webapplicationentitiesDatas as $webapplicationentitiesData) {
-                $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode($webapplicationentitiesData['name'])), 'LR', 'C', false);
-                $this->setXY($this->margin_left, $this->GetY());
+            // Restoring the filter above turns a loop that never ran into one that prints the
+            // name of every linked entity, so the read right has to be applied here: the page is
+            // only gated on Printpdf, and a profile holding it without
+            // plugin_webapplications_entities in READ would otherwise obtain in the PDF the
+            // objects the interface refuses him. getFromDB() applies neither the right nor the
+            // entity, can() applies both. Same filter as the documents, contracts and
+            // certificates of the other pages.
+            if (!$webapplicationentities->can((int) $applicationItemsData['items_id'], READ)) {
+                continue;
             }
+            $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode($webapplicationentities->fields['name'])), 'LR', 'C', false);
+            $this->setXY($this->margin_left, $this->GetY());
         }
 
         $yligne4 = $this->GetY();
 
         $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
-        $applicationItemsDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'PluginWebapplicationsProcess']);
+        $applicationItemsDatas = $applicationItems->find([
+            'appliances_id' => $this->id,
+            'itemtype'      => ['PluginWebapplicationsProcess', Process::class],
+        ]);
         foreach ($applicationItemsDatas as $applicationItemsData) {
-            $webapplicationprocessesDatas = $webapplicationprocesses->find(['id' => $applicationItemsData['items_id']]);
-            foreach ($webapplicationprocessesDatas as $webapplicationprocessesData) {
-                $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode($webapplicationprocessesData['name'])), 'LR', 'C', false);
-                $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $this->GetY());
+            // Same read filter as the entities above.
+            if (!$webapplicationprocesses->can((int) $applicationItemsData['items_id'], READ)) {
+                continue;
             }
+            $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode($webapplicationprocesses->fields['name'])), 'LR', 'C', false);
+            $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $this->GetY());
         }
         if ($this->GetY() < $yligne4) {
             $this->MultiCell(($this->page_width / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C');
@@ -1033,13 +1051,17 @@ class Pdf extends \TCPDF
         $yligne4 = $this->GetY();
 
         $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $yligne3);
-        $applicationItemsDatas = $applicationItems->find(['appliances_id' => $this->id, 'itemtype' => 'PluginWebapplicationsStream']);
+        $applicationItemsDatas = $applicationItems->find([
+            'appliances_id' => $this->id,
+            'itemtype'      => ['PluginWebapplicationsStream', Stream::class],
+        ]);
         foreach ($applicationItemsDatas as $applicationItemsData) {
-            $webapplicationstreamDatas = $webapplicationstream->find(['id' => $applicationItemsData['items_id']]);
-            foreach ($webapplicationstreamDatas as $webapplicationstreamData) {
-                $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode($webapplicationstreamData['name'])), 'LR', 'C', false);
-                $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $this->GetY());
+            // Same read filter as the entities and the processes of the previous page.
+            if (!$webapplicationstream->can((int) $applicationItemsData['items_id'], READ)) {
+                continue;
             }
+            $this->MultiCell(($this->page_width / 2) - 1, 7, (htmlspecialchars_decode($webapplicationstream->fields['name'])), 'LR', 'C', false);
+            $this->setXY($this->margin_left + ($this->page_width / 2) + 1, $this->GetY());
         }
         if ($this->GetY() < $yligne4) {
             $this->MultiCell(($this->page_width / 2) - 1, $yligne4 - $this->GetY() + 1, '', 'LRB', 'C');

@@ -44,7 +44,7 @@ function plugin_webapplications_install()
     $update = false;
     //from 3.0 version (glpi 9.5)
     if (!$DB->tableExists("glpi_plugin_webapplications_webapplicationtypes")) {
-        $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/empty-5.0.0.sql");
+        $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/empty-5.0.4.sql");
     } else {
         if ($DB->tableExists("glpi_application") && !$DB->tableExists("glpi_plugin_appweb")) {
             $update = true;
@@ -335,6 +335,45 @@ function plugin_webapplications_install()
         $DB->runFile(PLUGIN_WEBAPPLICATIONS_DIR . "/sql/update-5.0.3.sql");
     }
 
+    // Stream::prepareInputForAdd() and Entity::prepareInputForAdd() derive is_recursive from
+    // the appliance the record is attached to, but the column did not exist on either table:
+    // CommonDBTM::add() filters the input against $DB->listFields(), so the value was dropped
+    // without error. maybeRecursive() therefore answered false for both classes and
+    // checkEntity() called Session::haveAccessToEntity($entities_id, false), which hides every
+    // stream and every environment of a recursive application from its child entities - with
+    // no message and no trace. Same migration shape as the webapplicationtypes one above.
+    $recursive_tables = [
+        'glpi_plugin_webapplications_streams',
+        'glpi_plugin_webapplications_entities',
+    ];
+    $dbu_recursive = new \DbUtils();
+    foreach ($recursive_tables as $recursive_table) {
+        if (!$DB->tableExists($recursive_table) || $DB->fieldExists($recursive_table, 'is_recursive')) {
+            continue;
+        }
+        $DB->doQuery(
+            "ALTER TABLE `$recursive_table` ADD `is_recursive` TINYINT NOT NULL DEFAULT '0' AFTER `entities_id`;",
+        );
+
+        // Backfill from the appliance each record hangs on, which is where the flag is read
+        // from at creation time. The link lives in the core glpi_appliances_items table.
+        $appliance = new \Appliance();
+        $links = $DB->request([
+            'SELECT' => ['items_id', 'appliances_id'],
+            'FROM'   => 'glpi_appliances_items',
+            'WHERE'  => ['itemtype' => $dbu_recursive->getItemTypeForTable($recursive_table)],
+        ]);
+        foreach ($links as $link) {
+            if ($appliance->getFromDB((int) $link['appliances_id'])) {
+                $DB->update(
+                    $recursive_table,
+                    ['is_recursive' => (int) $appliance->fields['is_recursive']],
+                    ['id' => (int) $link['items_id']],
+                );
+            }
+        }
+    }
+
     Profile::initProfile();
     Profile::createFirstAccess($_SESSION['glpiactiveprofile']['id']);
 
@@ -375,8 +414,14 @@ function plugin_webapplications_uninstall()
         "glpi_plugin_webapplications_webapplications_items",
         "glpi_plugin_webapplications_webapplications"];
 
+    // glpi_contracts_items was missing from this list while the migration routine of
+    // front/webapplication.php already carried it: the contract-to-item links of the plugin
+    // objects survived the uninstall, leaving the "Items" tab of a contract iterating over
+    // GlpiPlugin\Webapplications\... itemtypes that no longer resolve to a class, and a
+    // reinstall does not clean them up.
     $tables_glpi = ["glpi_displaypreferences",
         "glpi_documents_items",
+        "glpi_contracts_items",
         "glpi_savedsearches",
         "glpi_logs",
         "glpi_items_tickets",

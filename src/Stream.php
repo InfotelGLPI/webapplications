@@ -178,14 +178,48 @@ class Stream extends CommonDBTM
     }
 
     /**
-     * Reset any transmitter/receiver itemtype that is not whitelisted to an empty
-     * value (meaning "All"), so a forged endpoint type can never be persisted.
+     * Reset any transmitter/receiver endpoint the caller may not designate to an empty
+     * couple (meaning "All"), so neither a forged itemtype nor an object identifier out of
+     * the caller's scope can be persisted.
      */
-    private static function sanitizeEndpointTypes(array $input): array
+    private function sanitizeEndpoints(array $input): array
     {
-        foreach (['transmitter_type', 'receiver_type'] as $type_field) {
-            if (isset($input[$type_field]) && !self::isValidEndpointType($input[$type_field])) {
+        // Only the itemtype used to be filtered, against $CFG_GLPI['stream_types']. The
+        // identifier travelling with it went through array_intersect_key() as a plain integer
+        // and was never confronted with anything: neither a read right nor an entity. A forged
+        // form could therefore attach to a stream the computer of another entity. showForm()
+        // and rawSearchOptions() do hide the name behind a can(READ), so nothing is shown on
+        // the spot, but the identifier stays in the record, is written to the history, and is
+        // reprinted by the PDF export - and any rendering added later that forgets the filter
+        // turns the stored reference into a disclosure. The right place for that check is the
+        // write, which is where the plugin already validates appliances_id.
+        foreach (['transmitter' => 'transmitter_type', 'receiver' => 'receiver_type'] as $id_field => $type_field) {
+            if (!array_key_exists($type_field, $input) && !array_key_exists($id_field, $input)) {
+                // Nothing posted for this endpoint: leave the stored couple alone.
+                continue;
+            }
+
+            // An update may post only one half of the couple, so the missing half is read back
+            // from the record: what is checked is the pair that will actually be persisted.
+            $type = (string) ($input[$type_field] ?? ($this->fields[$type_field] ?? ''));
+            $id   = (int) ($input[$id_field] ?? ($this->fields[$id_field] ?? 0));
+
+            $allowed = false;
+            if (self::isValidEndpointType($type) && $id > 0) {
+                // getItemForItemtype() rather than a direct new $type(): the itemtype has
+                // already been confronted with the allow-list above, and the factory returns a
+                // usable instance or false without a dynamic instantiation here.
+                $endpoint = getItemForItemtype($type);
+                // can() applies the global right, the object right and
+                // Session::haveAccessToEntity(); getFromDB() applies none of them.
+                $allowed = $endpoint instanceof CommonDBTM && $endpoint->can($id, READ);
+            }
+
+            if (!$allowed) {
+                // Same fallback as a non-conforming itemtype, applied to the whole couple so
+                // no orphan identifier survives: the endpoint becomes "All".
                 $input[$type_field] = '';
+                $input[$id_field]   = 0;
             }
         }
         return $input;
@@ -197,7 +231,7 @@ class Stream extends CommonDBTM
             'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
             'encryption', 'encryption_type', 'port', 'protocol'];
         $input = array_intersect_key($input, array_flip($allowed));
-        $input = self::sanitizeEndpointTypes($input);
+        $input = $this->sanitizeEndpoints($input);
         if (isset($input['appliances_id']) && !empty($input['appliances_id'])) {
             $item = new \Appliance();
             // The posted appliance drives both the entity this record lands in and the
@@ -222,11 +256,17 @@ class Stream extends CommonDBTM
 
     public function prepareInputForUpdate($input)
     {
-        $allowed = ['id', 'entities_id', 'is_recursive', 'name',
+        // entities_id and is_recursive are deliberately out of the whitelist: the entity of
+        // this record is derived from the linked appliance by prepareInputForAdd(), after a
+        // can($appliances_id, UPDATE) on it, and no field of the form posts them. While they
+        // were accepted, a forged POST moved the record into an entity the caller has no
+        // access to - check($id, UPDATE) only settles the entity the record already occupies,
+        // and CommonDBTM::update() does not revalidate a posted entities_id.
+        $allowed = ['id', 'name',
             'transmitter', 'transmitter_type', 'receiver', 'receiver_type',
             'encryption', 'encryption_type', 'port', 'protocol'];
         $input = array_intersect_key($input, array_flip($allowed));
-        $input = self::sanitizeEndpointTypes($input);
+        $input = $this->sanitizeEndpoints($input);
         return parent::prepareInputForUpdate($input);
     }
 

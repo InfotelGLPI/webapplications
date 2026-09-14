@@ -46,8 +46,12 @@ global $DB;
 
 $messages = [];
 
+// PHP_SELF names the front controller the router actually executed (public/index.php under
+// GLPI 11), not the URL the browser asked for, so the migration form posted to a target that
+// is not this page on any install served through a rewritten path or a sub-directory, and the
+// migration appeared to do nothing. REQUEST_URI is the idiom for a self-posting form.
 $confirm_form = Html::getSimpleForm(
-    $_SERVER['PHP_SELF'],
+    $_SERVER['REQUEST_URI'],
     'migration',
     __('Core migration', 'webapplications'),
     ['do_migration' => '1'],
