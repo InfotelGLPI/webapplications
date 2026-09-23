@@ -2,24 +2,23 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
-# INOUE Daisuke, 2026
-#
+# Daisuke INOUE, 2026
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 08:59+0000\n"
+"POT-Creation-Date: 2026-09-14 09:04+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
-"Last-Translator: INOUE Daisuke, 2026\n"
-"Language-Team: Japanese (Japan) (https://app.transifex.com/infotelGLPI/"
-"teams/12376/ja_JP/)\n"
-"Language: ja_JP\n"
+"Last-Translator: Daisuke INOUE, 2026\n"
+"Language-Team: Japanese (Japan) (https://app.transifex.com/infotelGLPI/teams/12376/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ja_JP\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/Appliance.php:117 src/Appliance.php:129
@@ -41,7 +40,7 @@ msgstr "500 ～ 1000"
 #: templates/webapplication_process_entity.html.twig:38
 msgctxt "button"
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 #: src/Process_Entity.php:151
 msgid "Add a process"
@@ -75,7 +74,7 @@ msgstr "コア移行を行います。よろしいですか？"
 #: templates/webapplication_dashboard_list.html.twig:37
 msgctxt "button"
 msgid "Associate"
-msgstr ""
+msgstr "関連づける"
 
 #: src/Appliance.php:555 src/Pdf.php:593
 msgid "Associated contract"
@@ -130,14 +129,16 @@ msgstr "コア移行"
 #: templates/webapplication_appliance_form.html.twig:124
 msgid ""
 "DICT Criteria:\n"
-"Availability (A): Identify the impact on the availability of the IT asset as "
-"a result of the change\n"
+"Availability (A): Identify the impact on the availability of the IT asset as a result of the change\n"
 "Integrity (I): Identify the impact on the data managed by the IT asset\n"
-"Confidentiality (C): Identify the impact on the IT asset's processing "
-"related to data confidentiality\n"
-"Traceability (T): Identify the impact on the IT asset's processes related to "
-"data traceability"
+"Confidentiality (C): Identify the impact on the IT asset's processing related to data confidentiality\n"
+"Traceability (T): Identify the impact on the IT asset's processes related to data traceability"
 msgstr ""
+"DICT基準：\n"
+"可用性（A）：変更による IT 資産の可用性への影響を特定する\n"
+"完全性（I）：IT 資産によって管理されるデータへの影響を特定する\n"
+"機密性（C）：データの機密性に関連する IT 資産の処理への影響を特定する\n"
+"追跡可能性（T）：データの追跡可能性に関連する IT 資産のプロセスへの影響を特定する"
 
 #: front/webapplication.php:67
 msgid "Data migration"
@@ -312,7 +313,7 @@ msgstr "関連元"
 #: templates/webapplication_config_form.html.twig:45
 msgctxt "button"
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: src/Entity.php:199 src/Entity.php:244
 #: templates/webapplication_entity_form.html.twig:52
