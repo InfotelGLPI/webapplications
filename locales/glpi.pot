@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 09:04+0000\n"
+"POT-Creation-Date: 2026-09-23 16:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,8 +55,8 @@ msgstr ""
 msgid "An error has occurred"
 msgstr ""
 
-#: setup.php:142 src/Webapplication.php:49 src/Profile.php:205
-#: src/Dashboard.php:81
+#: setup.php:142 src/Profile.php:205 src/Dashboard.php:81
+#: src/Webapplication.php:49
 msgid "Appliance dashboard"
 msgstr ""
 
@@ -73,13 +73,13 @@ msgctxt "button"
 msgid "Associate"
 msgstr ""
 
-#: src/Appliance.php:555 src/Pdf.php:593
+#: src/Pdf.php:593 src/Appliance.php:555
 msgid "Associated contract"
 msgid_plural "Associated contracts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Appliance.php:547 src/Pdf.php:549
+#: src/Pdf.php:549 src/Appliance.php:547
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] ""
@@ -91,16 +91,16 @@ msgid_plural "Associated links"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:640 hook.php:713 src/Pdf.php:831 src/Process.php:234
-#: src/Process.php:296 src/DatabaseInstance.php:551
+#: src/DatabaseInstance.php:551 src/Pdf.php:831 src/Process.php:234
+#: src/Process.php:296 hook.php:640 hook.php:713
 #: templates/webapplication_appliance_form.html.twig:142
-#: templates/webapplication_process_form.html.twig:54
-#: templates/webapplication_database_form.html.twig:59
+#: templates/webapplication_process_form.html.twig:54 templates/webapplication_database_form.html.twig:59
 msgid "Availability"
 msgstr ""
 
-#: hook.php:536 src/Pdf.php:713 templates/webapplication_form.html.twig:59
+#: src/Pdf.php:713 hook.php:536
 #: templates/webapplication_appliance_form.html.twig:59
+#: templates/webapplication_form.html.twig:59
 msgid "Backoffice URL"
 msgstr ""
 
@@ -116,11 +116,10 @@ msgid_plural "Certificates list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: hook.php:658 hook.php:729 src/Pdf.php:837 src/Process.php:248
-#: src/Process.php:306 src/DatabaseInstance.php:561
+#: src/DatabaseInstance.php:561 src/Pdf.php:837 src/Process.php:248
+#: src/Process.php:306 hook.php:658 hook.php:729
 #: templates/webapplication_appliance_form.html.twig:174
-#: templates/webapplication_process_form.html.twig:87
-#: templates/webapplication_database_form.html.twig:89
+#: templates/webapplication_process_form.html.twig:87 templates/webapplication_database_form.html.twig:89
 msgid "Confidentiality"
 msgstr ""
 
@@ -185,16 +184,15 @@ msgstr[1] ""
 msgid "Generate PDF"
 msgstr ""
 
-#: hook.php:613 src/Pdf.php:719
+#: src/Pdf.php:719 hook.php:613
 #: templates/webapplication_appliance_form.html.twig:68
 msgid "Installed version"
 msgstr ""
 
-#: hook.php:649 hook.php:721 src/Pdf.php:834 src/Process.php:241
-#: src/Process.php:301 src/DatabaseInstance.php:556
+#: src/DatabaseInstance.php:556 src/Pdf.php:834 src/Process.php:241
+#: src/Process.php:301 hook.php:649 hook.php:721
 #: templates/webapplication_appliance_form.html.twig:158
-#: templates/webapplication_process_form.html.twig:71
-#: templates/webapplication_database_form.html.twig:75
+#: templates/webapplication_process_form.html.twig:71 templates/webapplication_database_form.html.twig:75
 msgid "Integrity"
 msgstr ""
 
@@ -249,8 +247,8 @@ msgid "Number of users"
 msgstr ""
 
 #: src/Process.php:226 src/Process.php:286 src/Entity.php:190
-#: src/Entity.php:237 templates/webapplication_entity_form.html.twig:40
-#: templates/webapplication_process_form.html.twig:39
+#: src/Entity.php:237 templates/webapplication_process_form.html.twig:39
+#: templates/webapplication_entity_form.html.twig:40
 msgid "Owner"
 msgstr ""
 
@@ -275,8 +273,8 @@ msgstr ""
 msgid "Printed on"
 msgstr ""
 
-#: src/Process_Entity.php:75 src/Process_Entity.php:155 src/Process.php:50
-#: src/Profile.php:215
+#: src/Process_Entity.php:75 src/Process_Entity.php:155 src/Profile.php:215
+#: src/Process.php:50
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] ""
@@ -294,11 +292,11 @@ msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Pdf.php:517 src/Dashboard.php:233
+#: src/Dashboard.php:233 src/Pdf.php:517
 msgid "Project leader"
 msgstr ""
 
-#: src/Pdf.php:524 src/Dashboard.php:235
+#: src/Dashboard.php:235 src/Pdf.php:524
 msgid "Project team"
 msgstr ""
 
@@ -307,9 +305,9 @@ msgstr ""
 msgid "Protocol"
 msgstr ""
 
-#: hook.php:677 src/Pdf.php:532
-#: templates/webapplication_appliance_form.html.twig:248
+#: src/Pdf.php:532 hook.php:677
 #: templates/webapplication_dashboard_support.html.twig:47
+#: templates/webapplication_appliance_form.html.twig:248
 msgid "Referent editor"
 msgstr ""
 
@@ -318,8 +316,8 @@ msgstr ""
 msgid "Relation nature"
 msgstr ""
 
-#: templates/webapplication_profile_form.html.twig:34
 #: templates/webapplication_config_form.html.twig:45
+#: templates/webapplication_profile_form.html.twig:34
 msgctxt "button"
 msgid "Save"
 msgstr ""
@@ -330,8 +328,7 @@ msgid "Security Contact"
 msgstr ""
 
 #: src/Pdf.php:827 templates/webapplication_appliance_form.html.twig:122
-#: templates/webapplication_process_form.html.twig:45
-#: templates/webapplication_database_form.html.twig:51
+#: templates/webapplication_process_form.html.twig:45 templates/webapplication_database_form.html.twig:51
 msgid "Security Needs"
 msgstr ""
 
@@ -350,7 +347,7 @@ msgstr ""
 msgid "Source"
 msgstr ""
 
-#: src/Stream.php:50 src/Pdf.php:1032 src/Profile.php:210
+#: src/Profile.php:210 src/Pdf.php:1032 src/Stream.php:50
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] ""
@@ -362,11 +359,11 @@ msgid_plural "Streams list"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Pdf.php:646 src/Dashboard.php:207
+#: src/Dashboard.php:207 src/Pdf.php:646
 msgid "Summary"
 msgstr ""
 
-#: src/Appliance.php:423 src/Pdf.php:529
+#: src/Pdf.php:529 src/Appliance.php:423
 #: templates/webapplication_appliance_form.html.twig:238
 msgid "Support"
 msgstr ""
@@ -375,22 +372,21 @@ msgstr ""
 msgid "Tables purge"
 msgstr ""
 
-#: hook.php:667 hook.php:737 src/Pdf.php:840 src/Process.php:255
-#: src/Process.php:311 src/DatabaseInstance.php:566
+#: src/DatabaseInstance.php:566 src/Pdf.php:840 src/Process.php:255
+#: src/Process.php:311 hook.php:667 hook.php:737
 #: templates/webapplication_appliance_form.html.twig:191
-#: templates/webapplication_process_form.html.twig:104
-#: templates/webapplication_database_form.html.twig:104
+#: templates/webapplication_process_form.html.twig:104 templates/webapplication_database_form.html.twig:104
 msgid "Traceability"
 msgstr ""
 
-#: src/Pdf.php:719 src/Webapplicationservertype.php:49
+#: src/Webapplicationservertype.php:49 src/Pdf.php:719
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Pdf.php:713 templates/webapplication_form.html.twig:50
-#: templates/webapplication_appliance_form.html.twig:50
+#: src/Pdf.php:713 templates/webapplication_appliance_form.html.twig:50
+#: templates/webapplication_form.html.twig:50
 msgid "URL"
 msgstr ""
 
@@ -414,12 +410,12 @@ msgstr ""
 msgid "Validation by CISO"
 msgstr ""
 
-#: hook.php:622 src/Pdf.php:847
+#: src/Pdf.php:847 hook.php:622
 #: templates/webapplication_appliance_form.html.twig:221
 msgid "Validation of the request by the referring Department"
 msgstr ""
 
-#: src/Appliance.php:52 src/Profile.php:200
+#: src/Profile.php:200 src/Appliance.php:52
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] ""
