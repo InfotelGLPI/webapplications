@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-14 08:59+0000\n"
+"POT-Creation-Date: 2026-09-23 16:00+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/infotelGLPI/"
@@ -59,8 +59,8 @@ msgstr "Tüm kullanıcılar"
 msgid "An error has occurred"
 msgstr "Bir sorun çıktı"
 
-#: setup.php:142 src/Webapplication.php:49 src/Profile.php:205
-#: src/Dashboard.php:81
+#: setup.php:142 src/Profile.php:205 src/Dashboard.php:81
+#: src/Webapplication.php:49
 msgid "Appliance dashboard"
 msgstr "Aygıt panosu"
 
@@ -77,13 +77,13 @@ msgctxt "button"
 msgid "Associate"
 msgstr "İlişkilendir"
 
-#: src/Appliance.php:555 src/Pdf.php:593
+#: src/Pdf.php:593 src/Appliance.php:555
 msgid "Associated contract"
 msgid_plural "Associated contracts"
 msgstr[0] "İlgili sözleşme"
 msgstr[1] "İlgili sözleşmeler"
 
-#: src/Appliance.php:547 src/Pdf.php:549
+#: src/Pdf.php:549 src/Appliance.php:547
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] "İlgili belge"
@@ -95,16 +95,17 @@ msgid_plural "Associated links"
 msgstr[0] "İlgili bağlantı"
 msgstr[1] "İlgili bağlantılar"
 
-#: hook.php:640 hook.php:713 src/Pdf.php:831 src/Process.php:234
-#: src/Process.php:296 src/DatabaseInstance.php:551
+#: src/DatabaseInstance.php:551 src/Pdf.php:831 src/Process.php:234
+#: src/Process.php:296 hook.php:640 hook.php:713
 #: templates/webapplication_appliance_form.html.twig:142
 #: templates/webapplication_process_form.html.twig:54
 #: templates/webapplication_database_form.html.twig:59
 msgid "Availability"
 msgstr "Kullanılabilirlik"
 
-#: hook.php:536 src/Pdf.php:713 templates/webapplication_form.html.twig:59
+#: src/Pdf.php:713 hook.php:536
 #: templates/webapplication_appliance_form.html.twig:59
+#: templates/webapplication_form.html.twig:59
 msgid "Backoffice URL"
 msgstr "Arka ofis adresi"
 
@@ -120,8 +121,8 @@ msgid_plural "Certificates list"
 msgstr[0] "Sertifika listesi"
 msgstr[1] "Sertifikaların listesi"
 
-#: hook.php:658 hook.php:729 src/Pdf.php:837 src/Process.php:248
-#: src/Process.php:306 src/DatabaseInstance.php:561
+#: src/DatabaseInstance.php:561 src/Pdf.php:837 src/Process.php:248
+#: src/Process.php:306 hook.php:658 hook.php:729
 #: templates/webapplication_appliance_form.html.twig:174
 #: templates/webapplication_process_form.html.twig:87
 #: templates/webapplication_database_form.html.twig:89
@@ -198,13 +199,13 @@ msgstr[1] "Dışa açıklık"
 msgid "Generate PDF"
 msgstr "PDF oluştur"
 
-#: hook.php:613 src/Pdf.php:719
+#: src/Pdf.php:719 hook.php:613
 #: templates/webapplication_appliance_form.html.twig:68
 msgid "Installed version"
 msgstr "Kurulu sürüm"
 
-#: hook.php:649 hook.php:721 src/Pdf.php:834 src/Process.php:241
-#: src/Process.php:301 src/DatabaseInstance.php:556
+#: src/DatabaseInstance.php:556 src/Pdf.php:834 src/Process.php:241
+#: src/Process.php:301 hook.php:649 hook.php:721
 #: templates/webapplication_appliance_form.html.twig:158
 #: templates/webapplication_process_form.html.twig:71
 #: templates/webapplication_database_form.html.twig:75
@@ -262,8 +263,8 @@ msgid "Number of users"
 msgstr "Kullanıcı sayısı"
 
 #: src/Process.php:226 src/Process.php:286 src/Entity.php:190
-#: src/Entity.php:237 templates/webapplication_entity_form.html.twig:40
-#: templates/webapplication_process_form.html.twig:39
+#: src/Entity.php:237 templates/webapplication_process_form.html.twig:39
+#: templates/webapplication_entity_form.html.twig:40
 msgid "Owner"
 msgstr "Sahip"
 
@@ -288,8 +289,8 @@ msgstr "PDF yazdır"
 msgid "Printed on"
 msgstr "Şuraya yazdırıldı"
 
-#: src/Process_Entity.php:75 src/Process_Entity.php:155 src/Process.php:50
-#: src/Profile.php:215
+#: src/Process_Entity.php:75 src/Process_Entity.php:155 src/Profile.php:215
+#: src/Process.php:50
 msgid "Process"
 msgid_plural "Processes"
 msgstr[0] "Süreç"
@@ -307,11 +308,11 @@ msgid_plural "Processes list"
 msgstr[0] "Süreç listesi"
 msgstr[1] "Süreçler listesi"
 
-#: src/Pdf.php:517 src/Dashboard.php:233
+#: src/Dashboard.php:233 src/Pdf.php:517
 msgid "Project leader"
 msgstr "Proje lideri"
 
-#: src/Pdf.php:524 src/Dashboard.php:235
+#: src/Dashboard.php:235 src/Pdf.php:524
 msgid "Project team"
 msgstr "Proje ekibi"
 
@@ -320,9 +321,9 @@ msgstr "Proje ekibi"
 msgid "Protocol"
 msgstr "İletişim kuralı"
 
-#: hook.php:677 src/Pdf.php:532
-#: templates/webapplication_appliance_form.html.twig:248
+#: src/Pdf.php:532 hook.php:677
 #: templates/webapplication_dashboard_support.html.twig:47
+#: templates/webapplication_appliance_form.html.twig:248
 msgid "Referent editor"
 msgstr "Referans düzenleyici"
 
@@ -331,8 +332,8 @@ msgstr "Referans düzenleyici"
 msgid "Relation nature"
 msgstr "İlişki doğası"
 
-#: templates/webapplication_profile_form.html.twig:34
 #: templates/webapplication_config_form.html.twig:45
+#: templates/webapplication_profile_form.html.twig:34
 msgctxt "button"
 msgid "Save"
 msgstr "Kaydet"
@@ -363,7 +364,7 @@ msgstr "Ayarla"
 msgid "Source"
 msgstr "Kaynak"
 
-#: src/Stream.php:50 src/Pdf.php:1032 src/Profile.php:210
+#: src/Profile.php:210 src/Pdf.php:1032 src/Stream.php:50
 msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] "Akış"
@@ -375,11 +376,11 @@ msgid_plural "Streams list"
 msgstr[0] "Akış listesi"
 msgstr[1] "Akışlar listesi"
 
-#: src/Pdf.php:646 src/Dashboard.php:207
+#: src/Dashboard.php:207 src/Pdf.php:646
 msgid "Summary"
 msgstr "Özet"
 
-#: src/Appliance.php:423 src/Pdf.php:529
+#: src/Pdf.php:529 src/Appliance.php:423
 #: templates/webapplication_appliance_form.html.twig:238
 msgid "Support"
 msgstr "Destek"
@@ -388,22 +389,22 @@ msgstr "Destek"
 msgid "Tables purge"
 msgstr "Tablo temizliği"
 
-#: hook.php:667 hook.php:737 src/Pdf.php:840 src/Process.php:255
-#: src/Process.php:311 src/DatabaseInstance.php:566
+#: src/DatabaseInstance.php:566 src/Pdf.php:840 src/Process.php:255
+#: src/Process.php:311 hook.php:667 hook.php:737
 #: templates/webapplication_appliance_form.html.twig:191
 #: templates/webapplication_process_form.html.twig:104
 #: templates/webapplication_database_form.html.twig:104
 msgid "Traceability"
 msgstr "İzlenebilirlik"
 
-#: src/Pdf.php:719 src/Webapplicationservertype.php:49
+#: src/Webapplicationservertype.php:49 src/Pdf.php:719
 msgid "Type of treatment server"
 msgid_plural "Types of treatment server"
 msgstr[0] "Çalıştığı sunucu türü"
 msgstr[1] "Çalıştığı sunucu türleri"
 
-#: src/Pdf.php:713 templates/webapplication_form.html.twig:50
-#: templates/webapplication_appliance_form.html.twig:50
+#: src/Pdf.php:713 templates/webapplication_appliance_form.html.twig:50
+#: templates/webapplication_form.html.twig:50
 msgid "URL"
 msgstr "Adres"
 
@@ -427,12 +428,12 @@ msgstr "CIO onayı"
 msgid "Validation by CISO"
 msgstr "CISO onayı"
 
-#: hook.php:622 src/Pdf.php:847
+#: src/Pdf.php:847 hook.php:622
 #: templates/webapplication_appliance_form.html.twig:221
 msgid "Validation of the request by the referring Department"
 msgstr "Yönlendiren bölüm tarafından isteğin onaylanması"
 
-#: src/Appliance.php:52 src/Profile.php:200
+#: src/Profile.php:200 src/Appliance.php:52
 msgid "Web application"
 msgid_plural "Web applications"
 msgstr[0] "İnternet uygulaması"
