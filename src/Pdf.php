@@ -450,10 +450,12 @@ class Pdf extends \TCPDF
             $this->webappAppliance->getFromDB($row['id']);
         }
 
-        $supplier = new Supplier();
-        if (!empty($this->webappAppliance->fields['editor']) && $this->webappAppliance->fields['editor'] > 0) {
-            $supplier->getFromDB($this->webappAppliance->fields['editor']);
-        }
+        // Same filter as Appliance::showSupportPartFromDashboard(): the editor may sit in an
+        // entity the viewer cannot reach, in which case its name, mail and phone are replaced
+        // by NOT_AVAILABLE instead of being printed from a bare getFromDB().
+        $supplier       = new Supplier();
+        $editor_id      = (int) ($this->webappAppliance->fields['editor'] ?? 0);
+        $editor_visible = $editor_id > 0 && $supplier->can($editor_id, READ);
 
         $documentItem = new Document_Item();
         $documentItemDatas = $documentItem->find(['itemtype' => 'Appliance', 'items_id' => $this->id]);
@@ -536,11 +538,11 @@ class Pdf extends \TCPDF
             $this->MultiCell($this->page_width / 3, 7, (htmlspecialchars_decode(__('Phone support', 'webapplications'))), 'RB', 'C', '', 0, '', 'black');
 
             $yligne3 = $this->GetY();
-            $this->MultiCell($this->page_width / 3, 7, (htmlspecialchars_decode($supplier->fields['name'] ?? '')), 'LRB', 'C', '', 0, '', 'black');
+            $this->MultiCell($this->page_width / 3, 7, $editor_visible ? htmlspecialchars_decode($supplier->fields['name'] ?? '') : NOT_AVAILABLE, 'LRB', 'C', '', 0, '', 'black');
             $this->setXY($this->margin_left + ($this->page_width / 3), $yligne3);
-            $this->MultiCell($this->page_width / 3, 7, (htmlspecialchars_decode($supplier->fields['email'] ?? '')), 'RB', 'C', '', 0, '', 'black');
+            $this->MultiCell($this->page_width / 3, 7, $editor_visible ? htmlspecialchars_decode($supplier->fields['email'] ?? '') : NOT_AVAILABLE, 'RB', 'C', '', 0, '', 'black');
             $this->setXY($this->margin_left + ($this->page_width / 3) * 2, $yligne3);
-            $this->MultiCell($this->page_width / 3, 7, (htmlspecialchars_decode($supplier->fields['phonenumber'] ?? '')), 'RB', 'C', '', 0, '', 'black');
+            $this->MultiCell($this->page_width / 3, 7, $editor_visible ? htmlspecialchars_decode($supplier->fields['phonenumber'] ?? '') : NOT_AVAILABLE, 'RB', 'C', '', 0, '', 'black');
         }
 
         $this->setY($this->GetY() + 2);
@@ -763,9 +765,13 @@ class Pdf extends \TCPDF
                                 case 'glpi_item':
                                     $glpi_item_type = $fieldsData['itemtype_' . $rowfield['name']] ?? null;
                                     if (self::isSafeItemtype($glpi_item_type)) {
-                                        $item = new $glpi_item_type();
-                                        $item->getFromDB($fieldsData['items_id_' . $rowfield['name']]);
-                                        $fieldsData[$rowfield['name']] = $item::getTypeName() . ' - ' . $item->fields['name'];
+                                        // The referenced object may belong to an entity the viewer
+                                        // cannot reach: print its name only if it is readable.
+                                        $item          = new $glpi_item_type();
+                                        $linked_id     = (int) ($fieldsData['items_id_' . $rowfield['name']] ?? 0);
+                                        $fieldsData[$rowfield['name']] = $linked_id > 0 && $item->can($linked_id, READ)
+                                            ? $item::getTypeName() . ' - ' . ($item->fields['name'] ?? '')
+                                            : NOT_AVAILABLE;
                                     } else {
                                         $fieldsData[$rowfield['name']] = '';
                                     }

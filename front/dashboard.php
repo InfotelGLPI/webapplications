@@ -67,9 +67,18 @@ if (isset($_POST['add'])) {
             ],
         );
         foreach ($instances as $row) {
-            $input['appliances_id'] = $appliances_id;
-            $input['items_id'] = $row['id'];
-            $input['itemtype'] = "DatabaseInstance";
+            // getAllDataFromTable() applies neither rights nor entity scope: each instance
+            // hosted on the computer may belong to an entity the user cannot reach, so the
+            // link (and its impact relation) is checked instance by instance.
+            $input = [
+                'appliances_id' => $appliances_id,
+                'items_id'      => (int) $row['id'],
+                'itemtype'      => \DatabaseInstance::class,
+            ];
+            if (!$iapp->can(-1, CREATE, $input)
+                || !(new \DatabaseInstance())->can((int) $row['id'], READ)) {
+                continue;
+            }
             if ($iapp->add($input) && $can_impact) {
 
                 $i_items = getAllDataFromTable(
@@ -101,7 +110,10 @@ if (isset($_POST['add'])) {
         }
     }
 
-    if ($can_impact) {
+    // UPDATE on the appliance is not enough to insert the linked item into its impact
+    // graph: the user must also be able to read that item.
+    $linked_item = getItemForItemtype($itemtype);
+    if ($can_impact && $linked_item && $linked_item->can($items_id, READ)) {
         $i_items = getAllDataFromTable(
             ImpactItem::getTable(),
             [
@@ -171,13 +183,18 @@ if (isset($_POST['add'])) {
                 ],
             ],
         );
-        foreach ($instances as $row) {
-            $input = [
-                'appliances_id' => $appliances_id,
-                'items_id'      => $row['id'],
-                'itemtype'      => "DatabaseInstance",
-            ];
-            $itemsAppDBTM->deleteByCriteria($input);
+        // deleteByCriteria() replays no right: purge each instance link on its own, and
+        // only when the user may purge it (the instance may sit in an unreachable entity).
+        $instances_ids = array_map('intval', array_column($instances, 'id'));
+        $links         = $instances_ids === [] ? [] : $itemsAppDBTM->find([
+            'appliances_id' => $appliances_id,
+            'itemtype'      => DatabaseInstance::class,
+            'items_id'      => $instances_ids,
+        ]);
+        foreach ($links as $link) {
+            if ($itemsAppDBTM->can($link['id'], PURGE)) {
+                $itemsAppDBTM->delete(['id' => $link['id']], true);
+            }
         }
     }
 
