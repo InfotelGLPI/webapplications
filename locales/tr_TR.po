@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-25 08:12+0000\n"
+"POT-Creation-Date: 2026-10-02 10:21+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/infotelGLPI/"
@@ -77,19 +77,19 @@ msgctxt "button"
 msgid "Associate"
 msgstr "İlişkilendir"
 
-#: src/Pdf.php:595 src/Appliance.php:555
+#: src/Pdf.php:595 src/Appliance.php:614
 msgid "Associated contract"
 msgid_plural "Associated contracts"
 msgstr[0] "İlgili sözleşme"
 msgstr[1] "İlgili sözleşmeler"
 
-#: src/Pdf.php:551 src/Appliance.php:547
+#: src/Pdf.php:551 src/Appliance.php:606
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] "İlgili belge"
 msgstr[1] "İlgili belgeler"
 
-#: src/Appliance.php:563
+#: src/Appliance.php:622
 msgid "Associated link"
 msgid_plural "Associated links"
 msgstr[0] "İlgili bağlantı"
@@ -242,15 +242,15 @@ msgstr "E-posta desteği"
 msgid "Migration was successful"
 msgstr "Aktarım tamamlandı"
 
-#: src/Appliance.php:580
+#: src/Appliance.php:639
 msgid "No associated contracts"
 msgstr "İlişkili bir sözleşme yok"
 
-#: src/Appliance.php:573
+#: src/Appliance.php:632
 msgid "No associated documents"
 msgstr "İlişkili bir belge yok"
 
-#: src/Appliance.php:587
+#: src/Appliance.php:646
 msgid "No associated links"
 msgstr "Herhangi bir ilgili bağlantı yok"
 
@@ -380,7 +380,7 @@ msgstr[1] "Akışlar listesi"
 msgid "Summary"
 msgstr "Özet"
 
-#: src/Pdf.php:531 src/Appliance.php:423
+#: src/Pdf.php:531 src/Appliance.php:482
 #: templates/webapplication_appliance_form.html.twig:238
 msgid "Support"
 msgstr "Destek"
