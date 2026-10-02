@@ -391,6 +391,65 @@ class Appliance extends CommonDBTM
         }
     }
 
+    public function prepareInputForAdd($input)
+    {
+        return self::sanitizeValues($input, []);
+    }
+
+    public function prepareInputForUpdate($input)
+    {
+        return self::sanitizeValues($input, $this->fields);
+    }
+
+    /**
+     * Posted values are copied from the core Appliance form by setAppliance(): check() on the
+     * appliance vets the row, not the values. Keep an editor or a dropdown value only when the
+     * caller may read it (right + entity), and each rating inside its domain; anything else
+     * keeps the stored value (0 on add) instead of persisting a foreign reference.
+     *
+     * @param array $input
+     * @param array $stored
+     */
+    private static function sanitizeValues(array $input, array $stored): array
+    {
+        $readable = [
+            'editor'                               => Supplier::class,
+            'webapplicationservertypes_id'         => Webapplicationservertype::class,
+            'webapplicationtechnics_id'            => Webapplicationtechnic::class,
+            'webapplicationexternalexpositions_id' => Webapplicationexternalexposition::class,
+        ];
+        foreach ($readable as $field => $itemtype) {
+            if (!array_key_exists($field, $input)) {
+                continue;
+            }
+            $id = (int) $input[$field];
+            if ($id !== 0 && $id !== (int) ($stored[$field] ?? 0)) {
+                $target = new $itemtype();
+                if (!$target->can($id, READ)) {
+                    $id = (int) ($stored[$field] ?? 0);
+                }
+            }
+            $input[$field] = $id;
+        }
+
+        $domains = [
+            'number_users'                                => 5,
+            'webapplicationavailabilities'                => 4,
+            'webapplicationintegrities'                   => 4,
+            'webapplicationconfidentialities'             => 4,
+            'webapplicationtraceabilities'                => 4,
+            'webapplicationreferringdepartmentvalidation' => 1,
+            'webapplicationciovalidation'                 => 1,
+        ];
+        foreach ($domains as $field => $max) {
+            if (array_key_exists($field, $input)) {
+                $input[$field] = max(0, min($max, (int) $input[$field]));
+            }
+        }
+
+        return $input;
+    }
+
     public function post_getEmpty()
     {
         $this->fields["webapplicationconfidentialities"] = 0;
