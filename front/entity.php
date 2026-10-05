@@ -29,7 +29,7 @@
 
 use GlpiPlugin\Webapplications\Entity;
 
-Session::checkRight("plugin_webapplications_entities", READ);
+Session::checkRight(Entity::$rightname, READ);
 
 Html::header(Entity::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", Entity::class);
 

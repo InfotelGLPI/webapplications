@@ -44,7 +44,7 @@ use User;
  */
 class Entity extends CommonDBTM
 {
-    public static $rightname = "plugin_webapplications_entities";
+    public static string $rightname = "plugin_webapplications_entities";
 
     public static function getTypeName($nb = 0)
     {

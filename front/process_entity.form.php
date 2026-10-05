@@ -71,7 +71,7 @@ function plugin_webapplications_check_process_entity_endpoints(int $entities_id,
 // establishes the "whole page is authorized" invariant. The per-branch
 // check(-1, CREATE, $_POST) / check($_POST['id'], UPDATE) below remain the real
 // authorization boundary on the mutated record.
-Session::checkRight("plugin_webapplications_processes", READ);
+Session::checkRight(Process::$rightname, READ);
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";

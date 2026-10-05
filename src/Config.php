@@ -48,8 +48,8 @@ class: Config
 */
 class Config extends CommonDBTM
 {
-    public static $rightname = 'plugin_webapplications_configs';
-    public $dohistory = true;
+    public static string $rightname = 'plugin_webapplications_configs';
+    public bool $dohistory = true;
 
     public function __construct()
     {

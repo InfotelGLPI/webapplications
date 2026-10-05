@@ -46,7 +46,7 @@ use Supplier;
  */
 class Appliance extends CommonDBTM
 {
-    public static $rightname = "plugin_webapplications_appliances";
+    public static string $rightname = "plugin_webapplications_appliances";
     public static function getTypeName($nb = 0)
     {
         return _n('Web application', 'Web applications', $nb, 'webapplications');
@@ -181,7 +181,7 @@ class Appliance extends CommonDBTM
         if (!empty($item->fields) && $item->getType() == 'Appliance') {
             $appliance->getFromDBByCrit(['appliances_id' => $item->getID()]);
 
-            if (is_array($appliance->fields) && count($appliance->fields) > 0) {
+            if (count($appliance->fields) > 0) {
 
                 $address = "";
                 if (isset($item->input['address'])) {

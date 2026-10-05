@@ -29,7 +29,7 @@
 
 use GlpiPlugin\Webapplications\Process;
 
-Session::checkRight("plugin_webapplications_processes", READ);
+Session::checkRight(Process::$rightname, READ);
 
 Html::header(Process::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", Process::class);
 

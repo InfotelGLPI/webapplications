@@ -33,7 +33,6 @@
             <tr class="tab_bg_1">
                <td class="center">{{ dropdown_html|raw }}</td>
                <td class="tab_bg_2 center" colspan="6">
-                  <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
                   <input type="hidden" name="{{ hidden_name }}" value="{{ hidden_value }}">
                   <button type="submit" name="add" class="btn btn-primary">{{ _x('button', 'Add') }}</button>
                </td>

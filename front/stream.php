@@ -29,7 +29,7 @@
 
 use GlpiPlugin\Webapplications\Stream;
 
-Session::checkRight("plugin_webapplications_streams", READ);
+Session::checkRight(Stream::$rightname, READ);
 
 Html::header(Stream::getTypeName(2), $_SERVER['PHP_SELF'], "appliancedashboard", Stream::class);
 

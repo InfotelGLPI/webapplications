@@ -43,7 +43,7 @@ use ImpactRelation;
  */
 class LogicalInfrastructure extends CommonDBTM
 {
-    public static $rightname = "plugin_webapplications_appliances";
+    public static string $rightname = "plugin_webapplications_appliances";
 
     public static function getTypeName($nb = 0)
     {

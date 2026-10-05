@@ -37,7 +37,7 @@ use GlpiPlugin\Webapplications\Entity;
 // dropdowns were rendered to a profile holding no plugin right whatsoever. The per-branch
 // check(-1, CREATE, $_POST) / check($_POST['id'], UPDATE) below remain the real
 // authorization boundary on the mutated record.
-Session::checkRight("plugin_webapplications_entities", READ);
+Session::checkRight(Entity::$rightname, READ);
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";

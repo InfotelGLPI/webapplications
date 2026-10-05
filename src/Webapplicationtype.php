@@ -38,8 +38,8 @@ use CommonDropdown;
  */
 class Webapplicationtype extends CommonDropdown
 {
-    public static $rightname = "plugin_webapplications_appliances";
-    public $can_be_translated = true;
+    public static string $rightname = "plugin_webapplications_appliances";
+    public bool $can_be_translated = true;
 
     /**
      * @param int $nb

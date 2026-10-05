@@ -36,8 +36,8 @@ use CommonDBTM;
  */
 class Webapplication extends CommonDBTM
 {
-    public $dohistory = true;
-    public static $rightname = "plugin_webapplications_appliances";
+    public bool $dohistory = true;
+    public static string $rightname = "plugin_webapplications_appliances";
 
     /**
      * @param int $nb

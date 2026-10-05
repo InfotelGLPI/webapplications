@@ -31,7 +31,6 @@
          <tr class="tab_bg_1"><th colspan="2">{{ __('Print PDF', 'webapplications') }}</th></tr>
          <tr class="tab_bg_1">
             <td colspan="2" class="tab_bg_2 center">
-               <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
                <input type="hidden" name="plugin_webapplications_appliance_id" value="{{ appliance_id }}">
                <button type="submit" name="PrintPdf" class="btn btn-primary">
                   {{ __('Generate PDF', 'webapplications') }}

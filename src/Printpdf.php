@@ -43,9 +43,9 @@ class Printpdf extends CommonDBTM
 {
     public static $itemtype = 'PluginWebapplicationsPrintpdf';
 
-    public $dohistory = true;
+    public bool $dohistory = true;
 
-    public static $rightname = 'plugin_webapplications_configs';
+    public static string $rightname = 'plugin_webapplications_configs';
 
     /**
      * Return the localized name of the current Type

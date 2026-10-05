@@ -48,7 +48,7 @@ use Toolbox;
  */
 class Dashboard extends CommonDBTM
 {
-    public static $rightname = "plugin_webapplications_dashboards";
+    public static string $rightname = "plugin_webapplications_dashboards";
 
     public function defineTabs($options = [])
     {

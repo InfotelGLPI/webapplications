@@ -34,7 +34,7 @@ use Glpi\Application\View\TemplateRenderer;
 // This page runs an irreversible migration that alters and deletes rows in core
 // tables. A READ capability must never authorize schema changes and mass deletion,
 // so require a global configuration UPDATE right.
-Session::checkRight("config", UPDATE);
+Session::checkRight(\Config::$rightname, UPDATE);
 
 Html::header(Webapplication::getTypeName(2), "", Dashboard::class, "");
 

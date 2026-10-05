@@ -128,12 +128,12 @@ class Pdf extends \TCPDF
         // latin1 conversion (Toolbox::decodeFromUtf8) is needed anymore.
         parent::__construct('P', 'mm', 'A4', true, 'UTF-8');
 
-        // Match the FPDF layout: page margins, ~1mm horizontal cell padding and
-        // no promotional footer link. Header()/Footer() stay enabled (overridden).
+        // Match the FPDF layout: page margins and ~1mm horizontal cell padding.
+        // Header()/Footer() stay enabled (overridden). TCPDF 7 (GLPI 12) no longer adds a
+        // promotional footer link, so the former $tcpdflink switch is gone.
         $this->SetMargins($this->margin_left, $this->margin_top, $this->margin_left);
         $this->SetAutoPageBreak(true, $this->margin_bottom);
         $this->setCellPaddings(1, 0, 1, 0);
-        $this->tcpdflink = false;
 
         $this->title = $title;
         $this->subtitle = $subtitle;

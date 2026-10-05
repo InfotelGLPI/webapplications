@@ -253,27 +253,9 @@ parameters:
 			path: src/Pdf.php
 
 		-
-			message: '#^Parameter \#2 \$h of method GlpiPlugin\\Webapplications\\Pdf\:\:MultiCell\(\) expects float, string given\.$#'
-			identifier: argument.type
-			count: 5
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \#6 \$fill of method GlpiPlugin\\Webapplications\\Pdf\:\:MultiCell\(\) expects bool, string given\.$#'
-			identifier: argument.type
-			count: 14
-			path: src/Pdf.php
-
-		-
 			message: '#^Parameter \#7 \$bold of method GlpiPlugin\\Webapplications\\Pdf\:\:CellTitleValue\(\) expects bool, int given\.$#'
 			identifier: argument.type
 			count: 3
-			path: src/Pdf.php
-
-		-
-			message: '#^Parameter \#7 \$fill of method GlpiPlugin\\Webapplications\\Pdf\:\:Cell\(\) expects bool, int given\.$#'
-			identifier: argument.type
-			count: 1
 			path: src/Pdf.php
 
 		-

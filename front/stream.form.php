@@ -30,7 +30,7 @@
 use GlpiPlugin\Webapplications\Stream;
 
 // Page-level guard, same rationale as front/entity.form.php.
-Session::checkRight("plugin_webapplications_streams", READ);
+Session::checkRight(Stream::$rightname, READ);
 
 if (!isset($_GET["id"])) {
     $_GET["id"] = "";

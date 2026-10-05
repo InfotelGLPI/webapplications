@@ -46,7 +46,7 @@ use Session;
  */
 class DatabaseInstance extends CommonDBTM
 {
-    public static $rightname = "plugin_webapplications_appliances";
+    public static string $rightname = "plugin_webapplications_appliances";
 
     public static function getTypeName($nb = 0)
     {
@@ -186,7 +186,7 @@ class DatabaseInstance extends CommonDBTM
         if (!empty($item->input) && $item->input['itemtype'] == 'DatabaseInstance') {
             $database = new DatabaseInstance();
             $database->getFromDBByCrit(['databaseinstances_id' => $item->input['items_id']]);
-            if (is_array($database->fields) && count($database->fields) > 0) {
+            if (count($database->fields) > 0) {
                 // The plugin Appliance, not the core one: the five columns read in the loop
                 // below (exposure, availability, integrity, confidentiality, traceability)
                 // belong to glpi_plugin_webapplications_appliances, and so does the
@@ -334,7 +334,7 @@ class DatabaseInstance extends CommonDBTM
         $database = new DatabaseInstance();
         if (!empty($item->fields)) {
             $database->getFromDBByCrit(['databaseinstances_id' => $item->getID()]);
-            if (is_array($database->fields) && count($database->fields) > 0) {
+            if (count($database->fields) > 0) {
 
                 // Each field used to fall back on $database->fields with a
                 // "plugin_webapplications_" prefix, but the row loaded just above comes from

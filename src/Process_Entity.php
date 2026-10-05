@@ -43,7 +43,7 @@ use Toolbox;
  */
 class Process_Entity extends CommonDBTM
 {
-    public static $rightname = "plugin_webapplications_processes";
+    public static string $rightname = "plugin_webapplications_processes";
 
     public static function getTypeName($nb = 0)
     {

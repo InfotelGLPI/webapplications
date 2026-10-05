@@ -39,6 +39,8 @@ use GlpiPlugin\Webapplications\Entity;
 use GlpiPlugin\Webapplications\Process;
 use GlpiPlugin\Webapplications\Profile;
 use GlpiPlugin\Webapplications\Stream;
+use GlpiPlugin\Webapplications\Printpdf;
+use GlpiPlugin\Webapplications\Webapplication;
 
 if (!defined("PLUGIN_WEBAPPLICATIONS_DIR")) {
     define("PLUGIN_WEBAPPLICATIONS_DIR", Plugin::getPhpDir("webapplications"));
@@ -60,10 +62,10 @@ function plugin_init_webapplications()
 
     Plugin::registerClass(Profile::class, ['addtabon' => ['Profile']]);
     if (Session::getLoginUserID()) {
-        if (Session::haveRight("plugin_webapplications_configs", UPDATE)) {
+        if (Session::haveRight(Printpdf::$rightname, UPDATE)) {
             $PLUGIN_HOOKS[Hooks::CONFIG_PAGE]['webapplications'] = 'front/config.form.php';
         }
-        if (Session::haveRight("plugin_webapplications_appliances", READ)) {
+        if (Session::haveRight(Webapplication::$rightname, READ)) {
             $PLUGIN_HOOKS[Hooks::MENU_TOADD]['webapplications']['appliancedashboard'] = [
                 Dashboard::class,
                 Entity::class,
@@ -147,8 +149,8 @@ function plugin_version_webapplications()
         'homepage' => 'https://github.com/InfotelGLPI/webapplications',
         'requirements' => [
             'glpi' => [
-                'min' => '11.0',
-                'max' => '12.0',
+                'min' => '11.0.99',
+                'max' => '12.0.99',
                 'dev' => false,
             ],
         ],
