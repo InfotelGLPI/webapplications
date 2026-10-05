@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-02 10:21+0000\n"
+"POT-Creation-Date: 2026-10-05 16:58+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Daisuke INOUE, 2026\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/infotelGLPI/"
@@ -38,7 +38,7 @@ msgstr "1000 ～ 5000"
 msgid "500 to 1000"
 msgstr "500 ～ 1000"
 
-#: templates/webapplication_process_entity.html.twig:38
+#: templates/webapplication_process_entity.html.twig:37
 msgctxt "button"
 msgid "Add"
 msgstr "追加"
@@ -59,7 +59,7 @@ msgstr "すべてのユーザー"
 msgid "An error has occurred"
 msgstr "エラーが発生しました"
 
-#: setup.php:142 src/Profile.php:205 src/Dashboard.php:81
+#: setup.php:144 src/Profile.php:205 src/Dashboard.php:81
 #: src/Webapplication.php:49
 msgid "Appliance dashboard"
 msgstr "アプライアンス ダッシュボード"
@@ -93,14 +93,14 @@ msgid_plural "Associated links"
 msgstr[0] "関連リンク"
 
 #: src/DatabaseInstance.php:551 src/Pdf.php:837 src/Process.php:234
-#: src/Process.php:296 hook.php:640 hook.php:713
+#: src/Process.php:296 hook.php:641 hook.php:714
 #: templates/webapplication_appliance_form.html.twig:142
 #: templates/webapplication_process_form.html.twig:54
 #: templates/webapplication_database_form.html.twig:59
 msgid "Availability"
 msgstr "アベイラビリティー"
 
-#: src/Pdf.php:715 hook.php:536
+#: src/Pdf.php:715 hook.php:537
 #: templates/webapplication_appliance_form.html.twig:59
 #: templates/webapplication_form.html.twig:59
 msgid "Backoffice URL"
@@ -117,7 +117,7 @@ msgid_plural "Certificates list"
 msgstr[0] "証明書リスト"
 
 #: src/DatabaseInstance.php:561 src/Pdf.php:843 src/Process.php:248
-#: src/Process.php:306 hook.php:658 hook.php:729
+#: src/Process.php:306 hook.php:659 hook.php:730
 #: templates/webapplication_appliance_form.html.twig:174
 #: templates/webapplication_process_form.html.twig:87
 #: templates/webapplication_database_form.html.twig:89
@@ -155,7 +155,7 @@ msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] "データベースリスト"
 
-#: src/Stream.php:325 src/Stream.php:513
+#: src/Stream.php:330 src/Stream.php:518
 #: templates/webapplication_stream_form.html.twig:64
 #: templates/webapplication_stream_form.html.twig:69
 msgid "Destination"
@@ -165,11 +165,11 @@ msgstr "デスティネーション"
 msgid "Ecosystem"
 msgstr "エコシステム"
 
-#: src/Stream.php:336 templates/webapplication_stream_form.html.twig:84
+#: src/Stream.php:341 templates/webapplication_stream_form.html.twig:84
 msgid "Encryption"
 msgstr "暗号化"
 
-#: src/Stream.php:343 src/Stream.php:515
+#: src/Stream.php:348 src/Stream.php:520
 #: templates/webapplication_stream_form.html.twig:90
 msgid "Encryption type"
 msgstr "暗号化の型"
@@ -184,17 +184,17 @@ msgid "External exposition"
 msgid_plural "External exposition"
 msgstr[0] "外部解説"
 
-#: templates/webapplication_printpdf_form.html.twig:37
+#: templates/webapplication_printpdf_form.html.twig:36
 msgid "Generate PDF"
 msgstr "PDF 生成"
 
-#: src/Pdf.php:721 hook.php:613
+#: src/Pdf.php:721 hook.php:614
 #: templates/webapplication_appliance_form.html.twig:68
 msgid "Installed version"
 msgstr "インストール バージョン"
 
 #: src/DatabaseInstance.php:556 src/Pdf.php:840 src/Process.php:241
-#: src/Process.php:301 hook.php:649 hook.php:721
+#: src/Process.php:301 hook.php:650 hook.php:722
 #: templates/webapplication_appliance_form.html.twig:158
 #: templates/webapplication_process_form.html.twig:71
 #: templates/webapplication_database_form.html.twig:75
@@ -262,7 +262,7 @@ msgstr "電話サポート"
 msgid "Physical Infrastructure"
 msgstr "物理インフラ"
 
-#: src/Stream.php:350 src/Stream.php:514
+#: src/Stream.php:355 src/Stream.php:519
 #: templates/webapplication_stream_form.html.twig:97
 msgid "Port"
 msgstr "ポート"
@@ -299,12 +299,12 @@ msgstr "プロジェクトリーダー"
 msgid "Project team"
 msgstr "プロジェクトチーム"
 
-#: src/Stream.php:357 src/Stream.php:514
+#: src/Stream.php:362 src/Stream.php:519
 #: templates/webapplication_stream_form.html.twig:104
 msgid "Protocol"
 msgstr "プロトコル"
 
-#: src/Pdf.php:534 hook.php:677
+#: src/Pdf.php:534 hook.php:678
 #: templates/webapplication_dashboard_support.html.twig:47
 #: templates/webapplication_appliance_form.html.twig:248
 msgid "Referent editor"
@@ -315,7 +315,7 @@ msgstr "リファレンス エディター"
 msgid "Relation nature"
 msgstr "関連元"
 
-#: templates/webapplication_config_form.html.twig:45
+#: templates/webapplication_config_form.html.twig:44
 #: templates/webapplication_profile_form.html.twig:34
 msgctxt "button"
 msgid "Save"
@@ -341,7 +341,7 @@ msgstr "PDF 印刷設定"
 msgid "Setup"
 msgstr "設定"
 
-#: src/Stream.php:314 src/Stream.php:513
+#: src/Stream.php:319 src/Stream.php:518
 #: templates/webapplication_stream_form.html.twig:43
 #: templates/webapplication_stream_form.html.twig:48
 msgid "Source"
@@ -371,7 +371,7 @@ msgid "Tables purge"
 msgstr "テーブル抹消"
 
 #: src/DatabaseInstance.php:566 src/Pdf.php:846 src/Process.php:255
-#: src/Process.php:311 hook.php:667 hook.php:737
+#: src/Process.php:311 hook.php:668 hook.php:738
 #: templates/webapplication_appliance_form.html.twig:191
 #: templates/webapplication_process_form.html.twig:104
 #: templates/webapplication_database_form.html.twig:104
@@ -400,7 +400,7 @@ msgstr "フィールドを使う"
 msgid "Validation"
 msgstr "検証"
 
-#: hook.php:631
+#: hook.php:632
 msgid "Validation by CIO"
 msgstr "CIO による検証"
 
@@ -408,7 +408,7 @@ msgstr "CIO による検証"
 msgid "Validation by CISO"
 msgstr "CISO 認証"
 
-#: src/Pdf.php:853 hook.php:622
+#: src/Pdf.php:853 hook.php:623
 #: templates/webapplication_appliance_form.html.twig:221
 msgid "Validation of the request by the referring Department"
 msgstr "照会先部署による要請の検証"
