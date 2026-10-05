@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 16:58+0000\n"
+"POT-Creation-Date: 2026-10-05 23:41+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/infotelGLPI/"
@@ -165,8 +165,7 @@ msgstr[0] "Veri tabanı listesi"
 msgstr[1] "Veri tabanları listesi"
 
 #: src/Stream.php:330 src/Stream.php:518
-#: templates/webapplication_stream_form.html.twig:64
-#: templates/webapplication_stream_form.html.twig:69
+#: templates/webapplication_stream_form.html.twig:51
 msgid "Destination"
 msgstr "Hedef"
 
@@ -174,12 +173,12 @@ msgstr "Hedef"
 msgid "Ecosystem"
 msgstr "Ekosistem"
 
-#: src/Stream.php:341 templates/webapplication_stream_form.html.twig:84
+#: src/Stream.php:341 templates/webapplication_stream_form.html.twig:65
 msgid "Encryption"
 msgstr "Şifreleme"
 
 #: src/Stream.php:348 src/Stream.php:520
-#: templates/webapplication_stream_form.html.twig:90
+#: templates/webapplication_stream_form.html.twig:71
 msgid "Encryption type"
 msgstr "Şifreleme türü"
 
@@ -277,7 +276,7 @@ msgid "Physical Infrastructure"
 msgstr "Fiziksel yapı"
 
 #: src/Stream.php:355 src/Stream.php:519
-#: templates/webapplication_stream_form.html.twig:97
+#: templates/webapplication_stream_form.html.twig:78
 msgid "Port"
 msgstr "Bağlantı noktası"
 
@@ -317,7 +316,7 @@ msgid "Project team"
 msgstr "Proje ekibi"
 
 #: src/Stream.php:362 src/Stream.php:519
-#: templates/webapplication_stream_form.html.twig:104
+#: templates/webapplication_stream_form.html.twig:85
 msgid "Protocol"
 msgstr "İletişim kuralı"
 
@@ -359,8 +358,7 @@ msgid "Setup"
 msgstr "Ayarla"
 
 #: src/Stream.php:319 src/Stream.php:518
-#: templates/webapplication_stream_form.html.twig:43
-#: templates/webapplication_stream_form.html.twig:48
+#: templates/webapplication_stream_form.html.twig:38
 msgid "Source"
 msgstr "Kaynak"
 
