@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-25 08:12+0000\n"
+"POT-Creation-Date: 2026-10-02 10:21+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Daisuke INOUE, 2026\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/infotelGLPI/"
@@ -77,17 +77,17 @@ msgctxt "button"
 msgid "Associate"
 msgstr "関連づける"
 
-#: src/Pdf.php:595 src/Appliance.php:555
+#: src/Pdf.php:595 src/Appliance.php:614
 msgid "Associated contract"
 msgid_plural "Associated contracts"
 msgstr[0] "関連する契約"
 
-#: src/Pdf.php:551 src/Appliance.php:547
+#: src/Pdf.php:551 src/Appliance.php:606
 msgid "Associated document"
 msgid_plural "Associated documents"
 msgstr[0] "関連文書"
 
-#: src/Appliance.php:563
+#: src/Appliance.php:622
 msgid "Associated link"
 msgid_plural "Associated links"
 msgstr[0] "関連リンク"
@@ -228,15 +228,15 @@ msgstr "メールサポート"
 msgid "Migration was successful"
 msgstr "移行が成功しました"
 
-#: src/Appliance.php:580
+#: src/Appliance.php:639
 msgid "No associated contracts"
 msgstr "関連する契約なし"
 
-#: src/Appliance.php:573
+#: src/Appliance.php:632
 msgid "No associated documents"
 msgstr "関連文書なし"
 
-#: src/Appliance.php:587
+#: src/Appliance.php:646
 msgid "No associated links"
 msgstr "関連リンクなし"
 
@@ -361,7 +361,7 @@ msgstr[0] "ストリームリスト"
 msgid "Summary"
 msgstr "概要"
 
-#: src/Pdf.php:531 src/Appliance.php:423
+#: src/Pdf.php:531 src/Appliance.php:482
 #: templates/webapplication_appliance_form.html.twig:238
 msgid "Support"
 msgstr "サポート"
