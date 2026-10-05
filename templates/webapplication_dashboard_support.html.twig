@@ -29,7 +29,7 @@
 {% set params  = params ?? [] %}
 {% set field_options = {
     'full_width': true,
-    'add_field_class': (is_expanded ? 'col-sm-12' : ''),
+    'add_field_class': ((is_expanded ?? false) ? 'col-sm-12' : ''),
 } %}
 
 {% block more_fields %}
