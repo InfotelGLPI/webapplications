@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 16:58+0000\n"
+"POT-Creation-Date: 2026-10-05 23:41+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2026\n"
 "Language-Team: French (France) (https://app.transifex.com/infotelGLPI/"
@@ -173,8 +173,7 @@ msgstr[1] "Liste des bases de données"
 msgstr[2] "Liste des bases de données"
 
 #: src/Stream.php:330 src/Stream.php:518
-#: templates/webapplication_stream_form.html.twig:64
-#: templates/webapplication_stream_form.html.twig:69
+#: templates/webapplication_stream_form.html.twig:51
 msgid "Destination"
 msgstr "Destination"
 
@@ -182,12 +181,12 @@ msgstr "Destination"
 msgid "Ecosystem"
 msgstr "Ecosystème"
 
-#: src/Stream.php:341 templates/webapplication_stream_form.html.twig:84
+#: src/Stream.php:341 templates/webapplication_stream_form.html.twig:65
 msgid "Encryption"
 msgstr "Chiffrement"
 
 #: src/Stream.php:348 src/Stream.php:520
-#: templates/webapplication_stream_form.html.twig:90
+#: templates/webapplication_stream_form.html.twig:71
 msgid "Encryption type"
 msgstr "Type de chiffrement"
 
@@ -290,7 +289,7 @@ msgid "Physical Infrastructure"
 msgstr "Infrastructure physique"
 
 #: src/Stream.php:355 src/Stream.php:519
-#: templates/webapplication_stream_form.html.twig:97
+#: templates/webapplication_stream_form.html.twig:78
 msgid "Port"
 msgstr "Port"
 
@@ -333,7 +332,7 @@ msgid "Project team"
 msgstr "Equipe du projet"
 
 #: src/Stream.php:362 src/Stream.php:519
-#: templates/webapplication_stream_form.html.twig:104
+#: templates/webapplication_stream_form.html.twig:85
 msgid "Protocol"
 msgstr "Protocole"
 
@@ -375,8 +374,7 @@ msgid "Setup"
 msgstr "Configuration"
 
 #: src/Stream.php:319 src/Stream.php:518
-#: templates/webapplication_stream_form.html.twig:43
-#: templates/webapplication_stream_form.html.twig:48
+#: templates/webapplication_stream_form.html.twig:38
 msgid "Source"
 msgstr "Source"
 
