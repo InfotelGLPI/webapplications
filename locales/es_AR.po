@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 23:41+0000\n"
+"POT-Creation-Date: 2026-10-06 23:11+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Luis Angel Uriarte <luisuriarte@gmail.com>, 2020\n"
 "Language-Team: Spanish (Argentina) (https://app.transifex.com/infotelGLPI/"
@@ -61,6 +61,13 @@ msgstr ""
 msgid "An error has occurred"
 msgstr ""
 
+#: templates/webapplication_dashboard_select.html.twig:34
+msgid "Appliance"
+msgid_plural "Appliances"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
 #: setup.php:144 src/Profile.php:205 src/Dashboard.php:81
 #: src/Webapplication.php:49
 msgid "Appliance dashboard"
@@ -74,7 +81,7 @@ msgstr ""
 msgid "Are you sure you want to do core migration ?"
 msgstr ""
 
-#: templates/webapplication_dashboard_list.html.twig:37
+#: templates/webapplication_dashboard_list.html.twig:39
 msgctxt "button"
 msgid "Associate"
 msgstr ""
@@ -121,7 +128,7 @@ msgstr[0] "Categoría"
 msgstr[1] "Categorías"
 msgstr[2] "Categorías"
 
-#: src/Dashboard.php:634
+#: src/Dashboard.php:633
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] ""
@@ -156,7 +163,7 @@ msgstr ""
 msgid "Data migration"
 msgstr "Migración de dato"
 
-#: src/Dashboard.php:632
+#: src/Dashboard.php:631
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] ""
@@ -181,7 +188,7 @@ msgstr ""
 msgid "Encryption type"
 msgstr ""
 
-#: src/Dashboard.php:626
+#: src/Dashboard.php:625
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] ""
@@ -212,7 +219,7 @@ msgstr ""
 msgid "Integrity"
 msgstr ""
 
-#: src/Dashboard.php:630
+#: src/Dashboard.php:629
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] ""
@@ -237,7 +244,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Pdf.php:536 templates/webapplication_dashboard_support.html.twig:56
+#: src/Pdf.php:536 templates/webapplication_dashboard_support.html.twig:39
 msgid "Mail support"
 msgstr ""
 
@@ -245,7 +252,7 @@ msgstr ""
 msgid "Migration was successful"
 msgstr "La migración fue exitosa"
 
-#: src/Appliance.php:639
+#: src/Appliance.php:637
 msgid "No associated contracts"
 msgstr ""
 
@@ -253,12 +260,16 @@ msgstr ""
 msgid "No associated documents"
 msgstr ""
 
-#: src/Appliance.php:646
+#: src/Appliance.php:642
 msgid "No associated links"
 msgstr ""
 
-#: src/Dashboard.php:661
+#: src/Dashboard.php:660
 msgid "No associated objects"
+msgstr ""
+
+#: templates/webapplication_dashboard_from.html.twig:43
+msgid "No results found"
 msgstr ""
 
 #: templates/webapplication_appliance_form.html.twig:104
@@ -271,7 +282,7 @@ msgstr ""
 msgid "Owner"
 msgstr ""
 
-#: src/Pdf.php:538 templates/webapplication_dashboard_support.html.twig:65
+#: src/Pdf.php:538 templates/webapplication_dashboard_support.html.twig:40
 msgid "Phone support"
 msgstr ""
 
@@ -307,18 +318,18 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Dashboard.php:628
+#: src/Dashboard.php:627
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Dashboard.php:233 src/Pdf.php:519
+#: src/Dashboard.php:231 src/Pdf.php:519
 msgid "Project leader"
 msgstr ""
 
-#: src/Dashboard.php:235 src/Pdf.php:526
+#: src/Dashboard.php:233 src/Pdf.php:526
 msgid "Project team"
 msgstr ""
 
@@ -328,7 +339,7 @@ msgid "Protocol"
 msgstr ""
 
 #: src/Pdf.php:534 hook.php:678
-#: templates/webapplication_dashboard_support.html.twig:47
+#: templates/webapplication_dashboard_support.html.twig:38
 #: templates/webapplication_appliance_form.html.twig:248
 msgid "Referent editor"
 msgstr ""
@@ -376,14 +387,14 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Dashboard.php:636
+#: src/Dashboard.php:635
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: src/Dashboard.php:207 src/Pdf.php:648
+#: src/Dashboard.php:205 src/Pdf.php:648
 msgid "Summary"
 msgstr ""
 
