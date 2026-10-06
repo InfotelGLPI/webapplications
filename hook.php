@@ -438,7 +438,7 @@ function plugin_webapplications_uninstall()
     // below. The doubled backslash of the PHP literal (four in source) is the idiom the
     // core itself uses for this exact pattern, in CronTask::getItemtypes().
     foreach ($tables_glpi as $table_glpi) {
-        $DB->delete($table_glpi, ['itemtype' => ['LIKE' => 'GlpiPlugin\\\\Webapplications%']]);
+        $DB->delete($table_glpi, ['itemtype' => ['LIKE', 'GlpiPlugin\\\\Webapplications%']]);
     }
 
     // The plugin links its own itemtypes to core Appliances through
@@ -455,7 +455,7 @@ function plugin_webapplications_uninstall()
     foreach ($DB->request([
         'SELECT' => 'id',
         'FROM'   => 'glpi_appliances_items',
-        'WHERE'  => ['itemtype' => ['LIKE' => 'GlpiPlugin\\\\Webapplications%']],
+        'WHERE'  => ['itemtype' => ['LIKE', 'GlpiPlugin\\\\Webapplications%']],
     ]) as $appliance_item) {
         $appliance_items_ids[] = (int) $appliance_item['id'];
     }
@@ -463,7 +463,7 @@ function plugin_webapplications_uninstall()
         // Guarded: an empty criteria array would wipe the whole table.
         $DB->delete('glpi_appliance_item_relations', ['appliances_items_id' => $appliance_items_ids]);
     }
-    $DB->delete('glpi_appliances_items', ['itemtype' => ['LIKE' => 'GlpiPlugin\\\\Webapplications%']]);
+    $DB->delete('glpi_appliances_items', ['itemtype' => ['LIKE', 'GlpiPlugin\\\\Webapplications%']]);
 
     //Delete rights associated with the plugin
     $profileRight = new ProfileRight();
