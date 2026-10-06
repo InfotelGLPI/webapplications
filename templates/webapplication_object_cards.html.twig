@@ -30,65 +30,77 @@
  Each card exposes an ordered list of "blocks" so that every value can be
  escaped by Twig, while genuine HTML fragments (item links, GLPI helpers)
  are passed explicitly through 'raw' blocks.
+ The width_class / icon_size the callers still send are ignored: the grid sizes the cards.
  #}
 
 {% if group_header is defined and group_header %}
-   <br>
-   <h2 class="card-header card-web-header d-flex justify-content-between align-items-center">
-      <i class="{{ group_icon }} fa-1x"></i>
-      &nbsp;<span style="margin-right: auto;">{{ group_title }}</span>
-   </h2>
+    <h3 class="d-flex align-items-center gap-2 mt-4 mb-3">
+        <i class="{{ group_icon }} text-secondary"></i>{{ group_title }}
+    </h3>
 {% endif %}
 
-<div style="display: flex;flex-wrap: wrap;">
-   {% for card in cards %}
-      <div class="card {{ card.width_class|default('w-33') }}" style="margin-right: 10px;margin-top: 10px;">
-         <div class="card-body">
-            <div style="display: inline-block;margin: 40px;">
-               <i class="{{ card.icon }}" style="font-size:{{ card.icon_size|default('3em') }}"></i>
-            </div>
-            <div style="display: inline-block;">
-               {% if card.top_right_html is defined %}
-                  <span style="float: right">{{ card.top_right_html|raw }}</span>
-               {% endif %}
-               <h5 class="card-title" style="font-size: 14px;">{{ card.title_html|raw }}</h5>
-               {% for block in card.blocks %}
-                  {% if block.kind == 'text' %}
-                     <p class="card-text">{{ block.value }}</p>
-                  {% elseif block.kind == 'info' %}
-                     <p class="card-text">{{ block.label }} : {{ block.value }}</p>
-                  {% elseif block.kind == 'badges' %}
-                     <p class="card-text">
-                        {% for badge in block.badges %}
-                           <span class="dict-min" style="background-color:{{ badge.color }}" title="{{ badge.title }}">{{ badge.value }}</span>
+<div class="row row-cards g-3 mb-3">
+    {% for card in cards %}
+        <div class="col-12 col-md-6 col-xxl-4">
+            <div class="card h-100">
+                <div class="card-body d-flex gap-3">
+                    <span class="avatar avatar-lg bg-blue-lt flex-shrink-0">
+                        <i class="{{ card.icon }} fs-1"></i>
+                    </span>
+                    <div class="flex-fill" style="min-width: 0;">
+                        <div class="d-flex align-items-start gap-2 mb-2">
+                            <h4 class="card-title mb-0 flex-fill text-truncate">{{ card.title_html|raw }}</h4>
+                            {% if card.top_right_html is defined %}
+                                <div class="flex-shrink-0">{{ card.top_right_html|raw }}</div>
+                            {% endif %}
+                        </div>
+                        {% for block in card.blocks %}
+                            {% if block.kind == 'text' %}
+                                <div class="text-secondary mb-1">{{ block.value }}</div>
+                            {% elseif block.kind == 'info' %}
+                                <div class="mb-1"><span class="text-secondary">{{ block.label }} :</span> {{ block.value }}</div>
+                            {% elseif block.kind == 'badges' %}
+                                <div class="d-flex flex-wrap gap-1 mb-1">
+                                    {% for badge in block.badges %}
+                                        <span class="badge text-dark" style="background-color:{{ badge.color }}" title="{{ badge.title }}">{{ badge.value }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% elseif block.kind == 'links' %}
+                                {#- Environment relations: icon class is DB data ({{ }}), the link markup comes from getLink() (raw) -#}
+                                <div class="mb-1">
+                                    {%- for line in block.lines -%}
+                                        <div><i class="{{ line.icon }} me-1"></i>{{ line.link|raw }}</div>
+                                    {%- endfor -%}
+                                </div>
+                            {% elseif block.kind == 'os' %}
+                                <div class="mb-1">
+                                    {%- for line in block.lines -%}
+                                        <div>{{ line.name }} - {{ line.version }}</div>
+                                        <div class="text-secondary small">{{ line.architecture }}</div>
+                                    {%- endfor -%}
+                                </div>
+                            {% elseif block.kind == 'iplist' %}
+                                <div class="mb-1 font-monospace small">
+                                    {%- for ip in block.ips -%}
+                                        <div>{{ ip }}</div>
+                                    {%- endfor -%}
+                                </div>
+                            {% elseif block.kind == 'sizes' %}
+                                <div class="mb-1">
+                                    {%- for line in block.lines -%}
+                                        <div>{{ line.link|raw }} - {{ line.size_label }}</div>
+                                    {%- endfor -%}
+                                </div>
+                            {% elseif block.kind == 'raw' %}
+                                {{ block.html|raw }}
+                            {% endif %}
                         {% endfor %}
-                     </p>
-                  {% elseif block.kind == 'links' %}
-                     {#- Environment relations: icon class is DB data ({{ }}), the link markup comes from getLink() (raw) -#}
-                     {%- for line in block.lines -%}
-                        <i class="{{ line.icon }}"></i>&nbsp;{{ line.link|raw }}
-                     {%- endfor -%}
-                  {% elseif block.kind == 'os' %}
-                     {%- for line in block.lines -%}
-                        {{ line.name }} - {{ line.version }}</br>{{ line.architecture }}
-                     {%- endfor -%}
-                  {% elseif block.kind == 'iplist' %}
-                     {%- for ip in block.ips -%}
-                        {{ ip }}<br>
-                     {%- endfor -%}
-                  {% elseif block.kind == 'sizes' %}
-                     {%- for line in block.lines -%}
-                        {{ line.link|raw }} - {{ line.size_label }}</br>
-                     {%- endfor -%}
-                  {% elseif block.kind == 'raw' %}
-                     {{ block.html|raw }}
-                  {% endif %}
-               {% endfor %}
-               {% if card.edit_html is defined %}
-                  <span style="float: right">{{ card.edit_html|raw }}</span>
-               {% endif %}
+                    </div>
+                </div>
+                {% if card.edit_html is defined %}
+                    <div class="card-footer py-2 text-end">{{ card.edit_html|raw }}</div>
+                {% endif %}
             </div>
-         </div>
-      </div>
-   {% endfor %}
+        </div>
+    {% endfor %}
 </div>

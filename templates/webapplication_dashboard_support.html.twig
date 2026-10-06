@@ -25,47 +25,30 @@
  # --------------------------------------------------------------------------
  #}
 
-{% import 'components/form/fields_macros.html.twig' as fields %}
-{% set params  = params ?? [] %}
-{% set field_options = {
-    'full_width': true,
-    'add_field_class': ((is_expanded ?? false) ? 'col-sm-12' : ''),
-} %}
 
-{% block more_fields %}
-
-    {# fields.htmlField() prints its value with |raw: it is an HTML sink, not a text field.
-     # Every value below is therefore built and escaped in
-     # Appliance::showSupportPartFromDashboard() - editorlink carries the getLink() markup and
-     # is empty when the caller may not read the supplier, the mail and the phone number go
-     # through htmlescape(). The get_item() call that used to resolve the supplier here is gone:
-     # that Twig function does a bare getFromDB(), with neither right nor entity check, so it
-     # re-read the row the PHP side may have just refused. #}
-    {{ fields.htmlField(
-        'editor',
-        params['editorlink'],
-        __("Referent editor", 'webapplications'),
-        field_options|merge({
-            'add_field_class': 'col-sm-12',
-        })
-    ) }}
-
-    {{ fields.htmlField(
-        "email",
-        params['editoremail'],
-        __("Mail support", 'webapplications'),
-        field_options|merge({
-            'add_field_class': 'col-sm-12',
-        })
-    ) }}
-
-    {{ fields.htmlField(
-        "phonenumber",
-        params['editorephonenumber'],
-        __("Phone support", 'webapplications'),
-        field_options|merge({
-            'add_field_class': 'col-sm-12',
-        })
-    ) }}
-
-{% endblock %}
+{# Support card of the dashboard (Appliance::showSupportPartFromDashboard()), read only.
+ # The three values are printed with |raw: they are built and escaped in
+ # Appliance::showSupportPartFromDashboard() - editorlink carries the getLink() markup and
+ # is empty when the caller may not read the supplier, the mail and the phone number go
+ # through htmlescape(). The get_item() call that used to resolve the supplier here is gone:
+ # that Twig function does a bare getFromDB(), with neither right nor entity check, so it
+ # re-read the row the PHP side may have just refused. #}
+{% set params = params ?? [] %}
+{% set rows = [
+    {'icon': 'ti-building-store', 'label': __("Referent editor", 'webapplications'), 'value': params['editorlink'] ?? ''},
+    {'icon': 'ti-mail', 'label': __("Mail support", 'webapplications'), 'value': params['editoremail'] ?? ''},
+    {'icon': 'ti-phone', 'label': __("Phone support", 'webapplications'), 'value': params['editorephonenumber'] ?? ''},
+] %}
+<div class="card-body">
+    <div class="list-group list-group-flush">
+        {% for row in rows %}
+            <div class="list-group-item px-0 d-flex align-items-center gap-3">
+                <span class="avatar bg-secondary-lt flex-shrink-0"><i class="ti {{ row.icon }} fs-2"></i></span>
+                <div style="min-width: 0;">
+                    <div class="fw-bold">{{ row.label }}</div>
+                    <div class="text-truncate">{{ row.value is not empty ? row.value|raw : '-' }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

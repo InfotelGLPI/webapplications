@@ -25,35 +25,32 @@
  # --------------------------------------------------------------------------
  #}
 
-<form name="form" method="post" action="{{ form_action }}">
-   <div class="center">
-      <table class="tab_cadre_fixe">
-         <tr><th colspan="6">{{ add_title }}</th></tr>
-         <tr class="tab_bg_1">
-            <td class="center">{{ dropdown_html|raw }}</td>
-            <td class="tab_bg_2 center" colspan="6">
-               {{ hidden_html|raw }}
-               {% if can_create %}
-                  <button type="submit" name="add" class="btn btn-primary">{{ _x('button', 'Associate') }}</button>
-               {% endif %}
-            </td>
-         </tr>
-      </table>
-   </div>
+{# Object tab of the dashboard (Dashboard::showList()): the association form, then the
+ # objects already linked to the appliance. dropdown_html / hidden_html / objects_html come
+ # from core helpers or from webapplication_object_cards. #}
+<form name="form" method="post" action="{{ form_action }}" class="card mb-3">
+    <div class="card-body">
+        <label class="form-label">{{ add_title }}</label>
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <div class="flex-grow-1" style="min-width: 16rem; max-width: 40rem;">{{ dropdown_html|raw }}</div>
+            {{ hidden_html|raw }}
+            {% if can_create %}
+                <button type="submit" name="add" value="1" class="btn btn-primary">
+                    <i class="ti ti-link me-1"></i>{{ _x('button', 'Associate') }}
+                </button>
+            {% endif %}
+        </div>
+    </div>
 </form>
 
 {% if list_title %}
-   <h2 class="card-header d-flex justify-content-between align-items-center">{{ list_title }}</h2>
+    <h3 class="mb-3">{{ list_title }}</h3>
 {% endif %}
 
 {% if is_empty %}
-   <table class="tab_cadre_fixe">
-      <tbody>
-         <tr class="center">
-            <td colspan="4">{{ empty_message }}</td>
-         </tr>
-      </tbody>
-   </table>
+    <div class="alert alert-info">
+        <i class="ti ti-info-circle me-2"></i>{{ empty_message }}
+    </div>
 {% else %}
-   {{ objects_html|raw }}
+    {{ objects_html|raw }}
 {% endif %}

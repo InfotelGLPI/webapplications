@@ -25,6 +25,9 @@
  # --------------------------------------------------------------------------
  #}
 
-<div class="card-body">
-   {{ content|raw }}
+{# A card around content rendered by a core helper (the knowledge base tab). #}
+<div class="card mb-3">
+    <div class="card-body">
+        {{ content|raw }}
+    </div>
 </div>

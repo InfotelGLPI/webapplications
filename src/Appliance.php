@@ -591,7 +591,7 @@ class Appliance extends CommonDBTM
             $icon_html = "";
             if (!empty($ManualLinkItem['icon'])) {
                 $icon_html = "<i class='ti " . htmlescape($ManualLinkItem['icon'])
-                    . "' aria-hidden='true' style='margin-right: 5px;'></i>";
+                    . "' aria-hidden='true'></i>";
             }
             $link_entries[] = [
                 'url'       => $url,
@@ -630,15 +630,11 @@ class Appliance extends CommonDBTM
             'title_html'        => $doc_title,
             'entries'           => $doc_entries,
             'empty_message'     => __("No associated documents", 'webapplications'),
-            'break_after_list'  => '<br>',
-            'break_after_empty' => '<br><br>',
         ]);
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_linklist.html.twig', [
             'title_html'        => $contract_title,
             'entries'           => $contract_entries,
             'empty_message'     => __("No associated contracts", 'webapplications'),
-            'break_after_list'  => '<br>',
-            'break_after_empty' => '<br><br>',
         ]);
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_linklist.html.twig', [
             'title_html'    => $link_title,
