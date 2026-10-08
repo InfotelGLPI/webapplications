@@ -25,17 +25,23 @@
  # --------------------------------------------------------------------------
  #}
 
-<div class="card-body child50">
-   {{ title_html|raw }}
-   <div class="row flex-row">
-      <div class="form-field row col-12 col-sm-12 mb-2">
-         <div class="col-xxl-12 field-container list-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            {% for entry in entries %}
-               <div style="padding:5px;">
-                  <a class="list-group-item list-group-item-action" href="{{ entry.url }}">{{ entry.label }}</a>
-               </div>
-            {% endfor %}
-         </div>
-      </div>
-   </div>
+{# One object type of the loaded appliance (Dashboard::showFromDashboard()), as a card:
+ # title_html is a webapplication_dashboard_title render, then the linked objects. #}
+<div class="col-12 col-xl-6">
+    <div class="card h-100">
+        {{ title_html|raw }}
+        <div class="card-body">
+            {% if entries is not empty %}
+                <div class="row g-2">
+                    {% for entry in entries %}
+                        <div class="col-12 col-md-6">
+                            <a class="d-block border rounded px-3 py-2 text-reset text-truncate" href="{{ entry.url }}">{{ entry.label }}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-secondary"><i class="ti ti-info-circle me-1"></i>{{ __('No results found') }}</div>
+            {% endif %}
+        </div>
+    </div>
 </div>

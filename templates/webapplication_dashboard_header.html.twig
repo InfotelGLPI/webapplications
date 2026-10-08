@@ -25,13 +25,11 @@
  # --------------------------------------------------------------------------
  #}
 
-<div class="card-header card-web-header main-header d-flex flex-wrap mx-n2 mt-n2 align-items-stretch">
-   <h3 class="card-title d-flex align-items-center ps-4">
-      <div class="ribbon ribbon-bookmark ribbon-top ribbon-start bg-blue s-1">
-         <i class="{{ icon }} fa-2x"></i>
-      </div>
-      <h1 style="margin: auto">
-         <a href="{{ link_url }}">{{ link_html|raw }}</a>
-      </h1>
-   </h3>
+{# Name of the loaded appliance, on top of every tab of the dashboard. link_html is the
+ # core getLink() markup. #}
+<div class="d-flex align-items-center gap-3 mb-3">
+    <span class="avatar avatar-md bg-blue text-white">
+        <i class="{{ icon }} fs-1"></i>
+    </span>
+    <h2 class="mb-0">{{ link_html|raw }}</h2>
 </div>

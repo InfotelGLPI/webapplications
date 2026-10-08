@@ -25,37 +25,79 @@
  * --------------------------------------------------------------------------
  */
 
-$(document).ready(function () {
-    $(document).ajaxComplete(function () {
-        document.querySelectorAll('[name="webapplicationavailabilities"], [name="webapplicationintegrities"], ' +
-            '[name="webapplicationconfidentialities"], [name="webapplicationtraceabilities"]').forEach(function (e) {
 
-            let select2id = e.id;
-            let select2obj = "#" + select2id;
+/* global $ */
 
-            var childSpan = $(select2obj).next('span').find('span:first-child');
+/**
+ * Background color of the DICT (availability, integrity, confidentiality, traceability) select2
+ * fields, matching the level: same mapping as Appliance::getColorForDICT().
+ *
+ * The colors used to be applied only on `ajaxComplete`, i.e. after some later AJAX request of the
+ * page: on load the fields stayed uncolored until one happened, and picking another level did not
+ * recolor the field. They are now applied as soon as the fields are in the page (also when they
+ * are injected later, in an AJAX loaded tab) and on every change.
+ */
+(() => {
+    const FIELDS = [
+        'webapplicationavailabilities',
+        'webapplicationintegrities',
+        'webapplicationconfidentialities',
+        'webapplicationtraceabilities',
+    ];
+    const SELECTOR = FIELDS.map((name) => `select[name="${name}"]`).join(', ');
+    const COLORS = {
+        '1': '#00FF00',
+        '2': '#FFFF00',
+        '3': '#FF9900',
+        '4': '#FF0000',
+    };
 
-            if (typeof (childSpan.children()[0]) !== 'undefined') {
-                childSpan.children()[0].style = "color: black; font-weight: bold";
-            }
-
-            switch ($(select2obj).text()) {
-                case '1':
-                    childSpan.css("background-color", "#00FF00");
-                    break;
-                case '2':
-                    childSpan.css("background-color", "#FFFF00");
-                    break;
-                case '3':
-                    childSpan.css("background-color", "#FF9900");
-                    break;
-                case '4':
-                    childSpan.css("background-color", "#FF0000");
-                    break;
-                default:
-                    childSpan.css("background-color", "#999999");
-                    break;
-            }
+    const colorize = (select) => {
+        // Rendered selection box of the select2 widget that follows the <select>
+        const selection = $(select).next('.select2-container').find('.select2-selection');
+        if (selection.length === 0) {
+            return false;
+        }
+        selection.css('background-color', COLORS[String(select.value)] ?? '#999999');
+        selection.find('.select2-selection__rendered').css({
+            color: 'black',
+            'font-weight': 'bold',
         });
+        return true;
+    };
+
+    const colorizeAll = (root) => {
+        $(root).find(SELECTOR).addBack(SELECTOR).each(function () {
+            colorize(this);
+        });
+    };
+
+    // A new level picked by the user
+    $(document).on('change', SELECTOR, function () {
+        colorize(this);
     });
-});
+
+    $(() => {
+        colorizeAll(document);
+
+        // select2 builds its container right after the <select>, and the fields can arrive later
+        // in an AJAX loaded tab: color them whenever they show up
+        new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                for (const node of mutation.addedNodes) {
+                    if (node.nodeType !== Node.ELEMENT_NODE) {
+                        continue;
+                    }
+                    if (node.matches('.select2-container')) {
+                        const select = node.previousElementSibling;
+                        if (select && select.matches(SELECTOR)) {
+                            colorize(select);
+                        }
+                    } else {
+                        colorizeAll(node);
+                    }
+                }
+            }
+        }).observe(document.body, {childList: true, subtree: true});
+    });
+})();

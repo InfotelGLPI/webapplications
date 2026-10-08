@@ -25,10 +25,20 @@
  # --------------------------------------------------------------------------
  #}
 
-<div class="center" style="margin-top: 10px">
-   {{ dropdown_html|raw }}
-</div>
+{# Appliance picker of the dashboard (Dashboard::selectAppliance()). #lists-dashboard is the
+ # target ajax/getLists.php refreshes when another appliance is picked: keep its id. #}
+<div class="container-fluid my-3">
+    <div class="card mb-3">
+        <div class="card-body d-flex flex-wrap align-items-center gap-3">
+            <span class="avatar bg-blue-lt"><i class="ti ti-apps fs-2"></i></span>
+            <label class="form-label mb-0">{{ _n('Appliance', 'Appliances', 1) }}</label>
+            <div class="flex-grow-1" style="max-width: 32rem;">
+                {{ dropdown_html|raw }}
+            </div>
+        </div>
+    </div>
 
-<div id="lists-dashboard">
-   {{ list_html|raw }}
+    <div id="lists-dashboard">
+        {{ list_html|raw }}
+    </div>
 </div>

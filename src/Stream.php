@@ -91,6 +91,8 @@ class Stream extends CommonDBTM
 
     public function showForm($ID, $options = [])
     {
+        global $CFG_GLPI;
+
         $this->initForm($ID, $options);
 
         $this->getFromDB($ID);
@@ -138,7 +140,10 @@ class Stream extends CommonDBTM
             }
         }
 
-        $options['appliances_id'] = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $options['appliances_id'] = (int) ($_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0);
+        // Endpoint types offered by the source/destination selectors (registered in setup.php).
+        // The template read params['stream_types'] without anything ever setting it.
+        $options['stream_types'] = $CFG_GLPI['stream_types'] ?? [];
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_stream_form.html.twig', [
             'item' => $this,
             'params' => $options,

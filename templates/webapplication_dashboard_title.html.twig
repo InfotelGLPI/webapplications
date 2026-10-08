@@ -25,10 +25,25 @@
  # --------------------------------------------------------------------------
  #}
 
-<h2 class="card-header card-web-header d-flex justify-content-between align-items-center">
-   {% if icon is defined and icon %}<i class="{{ icon }} fa-1x"></i>{% endif %}
-   &nbsp;<span style="margin-right: auto;">{{ title }}</span>
-   {% if action_html is defined and action_html %}
-      <span style="float: right">{{ action_html|raw }}</span>
-   {% endif %}
-</h2>
+{# Title of a dashboard block (Dashboard::showTitleforDashboard()): the header of a card, or
+ # with as_heading the heading of a whole tab. action_html is the edit / add button and its
+ # iframe modal, built by core helpers. #}
+{% if as_heading ?? false %}
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+        <h3 class="mb-0 me-auto d-flex align-items-center gap-2">
+            {% if icon is defined and icon %}<i class="{{ icon }}"></i>{% endif %}
+            {{ title }}
+        </h3>
+        {% if action_html is defined and action_html %}{{ action_html|raw }}{% endif %}
+    </div>
+{% else %}
+    <div class="card-header">
+        <h3 class="card-title d-flex align-items-center gap-2 mb-0">
+            {% if icon is defined and icon %}<i class="{{ icon }}"></i>{% endif %}
+            {{ title }}
+        </h3>
+        {% if action_html is defined and action_html %}
+            <div class="card-actions">{{ action_html|raw }}</div>
+        {% endif %}
+    </div>
+{% endif %}

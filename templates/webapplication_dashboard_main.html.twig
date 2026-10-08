@@ -25,39 +25,42 @@
  # --------------------------------------------------------------------------
  #}
 
-<div style="display: flex;flex-wrap: wrap;">
-   <div class="card-body child33" style="text-align:center;font-weight: bold">
-      <h2>{{ users_label }}</h2>
-      <i class="fa fa-users fa-3x"></i>
-      <br>
-      <h1>{{ users_value }}</h1>
-   </div>
-
-   <div class="card-body child33" style="text-align:center;font-weight: bold">
-      <h2>{{ leader_label }}</h2>
-      <i class="fa fa-user-cog fa-3x"></i>
-      <br>
-      <h2>{{ leader_name }}</h2>
-   </div>
-
-   <div class="card-body child33" style="text-align:center;font-weight: bold">
-      <h2>{{ team_label }}</h2>
-      <i class="fa fa-users-cog fa-3x"></i>
-      <br>
-      <h1>{{ team_number }}</h1>
-   </div>
+{# Main tab of the dashboard (Dashboard::showForm()): key figures, support cards, the
+ # appliance summary and the objects linked to it. The *_html values are renders of the
+ # other dashboard templates or of core helpers. #}
+<div class="row row-cards g-3 mb-3">
+    {% for kpi in [
+        {'label': users_label, 'value': users_value, 'icon': 'ti-users', 'color': 'blue'},
+        {'label': leader_label, 'value': leader_name, 'icon': 'ti-user-star', 'color': 'green', 'small': true},
+        {'label': team_label, 'value': team_number, 'icon': 'ti-users-group', 'color': 'orange'},
+    ] %}
+        <div class="col-12 col-md-4">
+            <div class="card card-sm h-100">
+                <div class="card-body d-flex align-items-center gap-3">
+                    <span class="avatar avatar-lg bg-{{ kpi.color }}-lt">
+                        <i class="ti {{ kpi.icon }} fs-1"></i>
+                    </span>
+                    <div class="text-truncate">
+                        <div class="text-secondary">{{ kpi.label }}</div>
+                        <div class="{{ kpi.small ?? false ? 'h3' : 'h1' }} mb-0 text-truncate">{{ kpi.value }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 </div>
 
-<div style="display: flex;flex-wrap: wrap;">
-   {{ support_html|raw }}
+<div class="row row-cards g-3 mb-3">
+    {{ support_html|raw }}
 </div>
 
-<div class="card-body border-0">
-   {{ summary_title_html|raw }}
+<div class="card mb-3">
+    {{ summary_title_html|raw }}
+    <div class="card-body">
+        {{ summary_html|raw }}
+    </div>
 </div>
 
-{{ summary_html|raw }}
-
-<div style="display: flex;flex-wrap: wrap;">
-   {{ objects_html|raw }}
+<div class="row row-cards g-3 mb-3">
+    {{ objects_html|raw }}
 </div>

@@ -170,6 +170,7 @@ class LogicalInfrastructure extends CommonDBTM
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_title.html.twig', [
             'icon'  => self::getIcon(),
             'title' => _n('Logical infrastructure', 'Logical infrastructure', 1, 'webapplications'),
+            'as_heading' => true,
         ]);
 
         $class = get_class($item);

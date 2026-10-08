@@ -161,8 +161,6 @@ class Dashboard extends CommonDBTM
 
     public function showForm($ID, $options = [])
     {
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/css/webapplications.css");
-
         $options['candel'] = false;
         $options['colspan'] = 1;
 
@@ -255,7 +253,10 @@ class Dashboard extends CommonDBTM
         ]);
     }
 
-    public static function showTitleforDashboard($title, $id, $item = false, $type = "add", $name = "")
+    /**
+     * @param bool $as_heading true for the title of a whole tab, false for the header of a card
+     */
+    public static function showTitleforDashboard($title, $id, $item = false, $type = "add", $name = "", bool $as_heading = false)
     {
         $icon = "";
         if ($item != false && $id > 0) {
@@ -313,7 +314,6 @@ class Dashboard extends CommonDBTM
                         'name' => 'edit',
                         'class' => 'btn btn-secondary',
                         'icon' => 'ti ti-edit',
-                        'style' => 'float: right',
                         'data-bs-toggle' => 'modal',
                         'data-bs-target' => '#' . $name . $id . $rand,
                     ],
@@ -334,6 +334,7 @@ class Dashboard extends CommonDBTM
             'icon'        => $icon,
             'title'       => $title,
             'action_html' => $action_html,
+            'as_heading'  => $as_heading,
         ]);
     }
 
@@ -546,8 +547,6 @@ class Dashboard extends CommonDBTM
     {
         global $CFG_GLPI;
 
-        echo Html::css(PLUGIN_WEBAPPLICATIONS_WEBDIR . "/css/webapplications.css");
-
         $ApplianceId = (int) ($_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0);
 
         $appliance = new \Appliance();
@@ -581,7 +580,7 @@ class Dashboard extends CommonDBTM
         }
 
         $title = $object->getTypeName(2);
-        self::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addObject');
+        self::showTitleforDashboard($title, $ApplianceId, $object, 'add', 'addObject', true);
 
         if ($object->getType() == PhysicalInfrastructure::class) {
             $form_action = PLUGIN_WEBAPPLICATIONS_WEBDIR . "/front/dashboard.php";

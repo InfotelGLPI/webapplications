@@ -102,6 +102,7 @@ class Knowbase extends CommonDBTM
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_dashboard_title.html.twig', [
             'icon'  => self::getIcon(),
             'title' => __('Knowledge base'),
+            'as_heading' => true,
         ]);
 
         $withtemplate = 0;

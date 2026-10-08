@@ -93,7 +93,7 @@ class Entity extends CommonDBTM
     public function showForm($ID, $options = [])
     {
         $this->initForm($ID, $options);
-        $options['appliances_id'] = $_SESSION['plugin_webapplications_loaded_appliances_id'];
+        $options['appliances_id'] = (int) ($_SESSION['plugin_webapplications_loaded_appliances_id'] ?? 0);
         TemplateRenderer::getInstance()->display('@webapplications/webapplication_entity_form.html.twig', [
             'item' => $this,
             'params' => $options,

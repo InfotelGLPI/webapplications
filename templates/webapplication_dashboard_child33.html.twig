@@ -25,6 +25,10 @@
  # --------------------------------------------------------------------------
  #}
 
-<div class="card-body child33">
-   {{ content|raw }}
+{# One card of the support row of the dashboard: `content` holds its header(s) and body
+ # (webapplication_dashboard_title + linklist / support), already rendered. #}
+<div class="col-12 col-lg-4">
+    <div class="card h-100">
+        {{ content|raw }}
+    </div>
 </div>
