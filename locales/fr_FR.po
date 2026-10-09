@@ -2,26 +2,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # Xavier CAILLAUD <thetsmr@gmail.com>, 2026
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 23:41+0000\n"
+"POT-Creation-Date: 2026-10-06 23:11+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2026\n"
-"Language-Team: French (France) (https://app.transifex.com/infotelGLPI/"
-"teams/12376/fr_FR/)\n"
-"Language: fr_FR\n"
+"Language-Team: French (France) (https://app.transifex.com/infotelGLPI/teams/12376/fr_FR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
-"1000000 == 0 ? 1 : 2;\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: src/Appliance.php:117 src/Appliance.php:129
 msgid "1 to 100"
@@ -60,6 +58,13 @@ msgstr "Tous les utilisateurs"
 msgid "An error has occurred"
 msgstr "Une erreur s'est produite"
 
+#: templates/webapplication_dashboard_select.html.twig:34
+msgid "Appliance"
+msgid_plural "Appliances"
+msgstr[0] "Applicatif"
+msgstr[1] "Applicatifs"
+msgstr[2] "Applicatifs"
+
 #: setup.php:144 src/Profile.php:205 src/Dashboard.php:81
 #: src/Webapplication.php:49
 msgid "Appliance dashboard"
@@ -73,7 +78,7 @@ msgstr "Description de l'applicatif"
 msgid "Are you sure you want to do core migration ?"
 msgstr "Êtes-vous sûr de vouloir effectuer une migration de base ?"
 
-#: templates/webapplication_dashboard_list.html.twig:37
+#: templates/webapplication_dashboard_list.html.twig:39
 msgctxt "button"
 msgid "Associate"
 msgstr "Associer"
@@ -120,7 +125,7 @@ msgstr[0] "Catégorie"
 msgstr[1] "Catégories"
 msgstr[2] "Catégories"
 
-#: src/Dashboard.php:634
+#: src/Dashboard.php:633
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] "Liste des certificats"
@@ -142,30 +147,22 @@ msgstr "Migration dans le coeur"
 #: templates/webapplication_appliance_form.html.twig:124
 msgid ""
 "DICT Criteria:\n"
-"Availability (A): Identify the impact on the availability of the IT asset as "
-"a result of the change\n"
+"Availability (A): Identify the impact on the availability of the IT asset as a result of the change\n"
 "Integrity (I): Identify the impact on the data managed by the IT asset\n"
-"Confidentiality (C): Identify the impact on the IT asset's processing "
-"related to data confidentiality\n"
-"Traceability (T): Identify the impact on the IT asset's processes related to "
-"data traceability"
+"Confidentiality (C): Identify the impact on the IT asset's processing related to data confidentiality\n"
+"Traceability (T): Identify the impact on the IT asset's processes related to data traceability"
 msgstr ""
 "Critères DICT :\n"
-"Disponibilité (A) : Identifier l’impact de la modification sur la "
-"disponibilité du système informatique.\n"
-"Intégrité (I) : Identifier l’impact sur les données gérées par le système "
-"informatique.\n"
-"Confidentialité (C) : Identifier l’impact de la modification sur le "
-"traitement des données par le système informatique en matière de "
-"confidentialité.\n"
-"Traçabilité (T) : Identifier l’impact de la modification sur les processus "
-"du système informatique en matière de traçabilité des données."
+"Disponibilité (A) : Identifier l’impact de la modification sur la disponibilité du système informatique.\n"
+"Intégrité (I) : Identifier l’impact sur les données gérées par le système informatique.\n"
+"Confidentialité (C) : Identifier l’impact de la modification sur le traitement des données par le système informatique en matière de confidentialité.\n"
+"Traçabilité (T) : Identifier l’impact de la modification sur les processus du système informatique en matière de traçabilité des données."
 
 #: front/webapplication.php:67
 msgid "Data migration"
 msgstr "Migration des données"
 
-#: src/Dashboard.php:632
+#: src/Dashboard.php:631
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] "Liste des bases de données"
@@ -190,7 +187,7 @@ msgstr "Chiffrement"
 msgid "Encryption type"
 msgstr "Type de chiffrement"
 
-#: src/Dashboard.php:626
+#: src/Dashboard.php:625
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] "Liste des entités"
@@ -221,7 +218,7 @@ msgstr "Version installée"
 msgid "Integrity"
 msgstr "Intégrité"
 
-#: src/Dashboard.php:630
+#: src/Dashboard.php:629
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] "Liste des matériels"
@@ -246,7 +243,7 @@ msgstr[0] "Infrastructure logique"
 msgstr[1] "Infrastructure logique"
 msgstr[2] "Infrastructure logique"
 
-#: src/Pdf.php:536 templates/webapplication_dashboard_support.html.twig:56
+#: src/Pdf.php:536 templates/webapplication_dashboard_support.html.twig:39
 msgid "Mail support"
 msgstr "Email du support"
 
@@ -254,7 +251,7 @@ msgstr "Email du support"
 msgid "Migration was successful"
 msgstr "La migration a réussi"
 
-#: src/Appliance.php:639
+#: src/Appliance.php:637
 msgid "No associated contracts"
 msgstr "Pas de contrats associés"
 
@@ -262,13 +259,17 @@ msgstr "Pas de contrats associés"
 msgid "No associated documents"
 msgstr "Pas de documents associées"
 
-#: src/Appliance.php:646
+#: src/Appliance.php:642
 msgid "No associated links"
 msgstr "Pas de liens trouvés"
 
-#: src/Dashboard.php:661
+#: src/Dashboard.php:660
 msgid "No associated objects"
 msgstr "Pas d'objets associés"
+
+#: templates/webapplication_dashboard_from.html.twig:43
+msgid "No results found"
+msgstr "Aucun résultats trouvés"
 
 #: templates/webapplication_appliance_form.html.twig:104
 msgid "Number of users"
@@ -280,7 +281,7 @@ msgstr "Nombre d'utilisateurs"
 msgid "Owner"
 msgstr "Propriétaire"
 
-#: src/Pdf.php:538 templates/webapplication_dashboard_support.html.twig:65
+#: src/Pdf.php:538 templates/webapplication_dashboard_support.html.twig:40
 msgid "Phone support"
 msgstr "Support téléphonique"
 
@@ -316,18 +317,18 @@ msgstr[0] "Processus de l'entité"
 msgstr[1] "Processus de l'entité"
 msgstr[2] "Processus de l'entité"
 
-#: src/Dashboard.php:628
+#: src/Dashboard.php:627
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] "Liste des processus"
 msgstr[1] "Liste des processus"
 msgstr[2] "Liste des processus"
 
-#: src/Dashboard.php:233 src/Pdf.php:519
+#: src/Dashboard.php:231 src/Pdf.php:519
 msgid "Project leader"
 msgstr "Chef de projet"
 
-#: src/Dashboard.php:235 src/Pdf.php:526
+#: src/Dashboard.php:233 src/Pdf.php:526
 msgid "Project team"
 msgstr "Equipe du projet"
 
@@ -337,7 +338,7 @@ msgid "Protocol"
 msgstr "Protocole"
 
 #: src/Pdf.php:534 hook.php:678
-#: templates/webapplication_dashboard_support.html.twig:47
+#: templates/webapplication_dashboard_support.html.twig:38
 #: templates/webapplication_appliance_form.html.twig:248
 msgid "Referent editor"
 msgstr "Editeur référent"
@@ -385,14 +386,14 @@ msgstr[0] "Flux"
 msgstr[1] "Flux"
 msgstr[2] "Flux"
 
-#: src/Dashboard.php:636
+#: src/Dashboard.php:635
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] "Liste des flux"
 msgstr[1] "Liste des flux"
 msgstr[2] "Liste des flux"
 
-#: src/Dashboard.php:207 src/Pdf.php:648
+#: src/Dashboard.php:205 src/Pdf.php:648
 msgid "Summary"
 msgstr "Résumé"
 

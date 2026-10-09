@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 23:41+0000\n"
+"POT-Creation-Date: 2026-10-06 23:11+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Daisuke INOUE, 2026\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/infotelGLPI/"
@@ -59,6 +59,11 @@ msgstr "すべてのユーザー"
 msgid "An error has occurred"
 msgstr "エラーが発生しました"
 
+#: templates/webapplication_dashboard_select.html.twig:34
+msgid "Appliance"
+msgid_plural "Appliances"
+msgstr[0] ""
+
 #: setup.php:144 src/Profile.php:205 src/Dashboard.php:81
 #: src/Webapplication.php:49
 msgid "Appliance dashboard"
@@ -72,7 +77,7 @@ msgstr "アプライアンスの説明"
 msgid "Are you sure you want to do core migration ?"
 msgstr "コア移行を行います。よろしいですか？"
 
-#: templates/webapplication_dashboard_list.html.twig:37
+#: templates/webapplication_dashboard_list.html.twig:39
 msgctxt "button"
 msgid "Associate"
 msgstr "関連づける"
@@ -111,7 +116,7 @@ msgid "Category"
 msgid_plural "Categories"
 msgstr[0] "カテゴリー"
 
-#: src/Dashboard.php:634
+#: src/Dashboard.php:633
 msgid "Certificate list"
 msgid_plural "Certificates list"
 msgstr[0] "証明書リスト"
@@ -150,7 +155,7 @@ msgstr ""
 msgid "Data migration"
 msgstr "データ移行"
 
-#: src/Dashboard.php:632
+#: src/Dashboard.php:631
 msgid "Database list"
 msgid_plural "Databases list"
 msgstr[0] "データベースリスト"
@@ -173,7 +178,7 @@ msgstr "暗号化"
 msgid "Encryption type"
 msgstr "暗号化の型"
 
-#: src/Dashboard.php:626
+#: src/Dashboard.php:625
 msgid "Entity list"
 msgid_plural "Entities list"
 msgstr[0] "エンティティー リスト"
@@ -200,7 +205,7 @@ msgstr "インストール バージョン"
 msgid "Integrity"
 msgstr "インテグリティー"
 
-#: src/Dashboard.php:630
+#: src/Dashboard.php:629
 msgid "Item list"
 msgid_plural "Items list"
 msgstr[0] "アイテムリスト"
@@ -219,7 +224,7 @@ msgid "Logical infrastructure"
 msgid_plural "Logical infrastructure"
 msgstr[0] "論理インフラ"
 
-#: src/Pdf.php:536 templates/webapplication_dashboard_support.html.twig:56
+#: src/Pdf.php:536 templates/webapplication_dashboard_support.html.twig:39
 msgid "Mail support"
 msgstr "メールサポート"
 
@@ -227,7 +232,7 @@ msgstr "メールサポート"
 msgid "Migration was successful"
 msgstr "移行が成功しました"
 
-#: src/Appliance.php:639
+#: src/Appliance.php:637
 msgid "No associated contracts"
 msgstr "関連する契約なし"
 
@@ -235,13 +240,17 @@ msgstr "関連する契約なし"
 msgid "No associated documents"
 msgstr "関連文書なし"
 
-#: src/Appliance.php:646
+#: src/Appliance.php:642
 msgid "No associated links"
 msgstr "関連リンクなし"
 
-#: src/Dashboard.php:661
+#: src/Dashboard.php:660
 msgid "No associated objects"
 msgstr "関連オブジェクトなし"
+
+#: templates/webapplication_dashboard_from.html.twig:43
+msgid "No results found"
+msgstr ""
 
 #: templates/webapplication_appliance_form.html.twig:104
 msgid "Number of users"
@@ -253,7 +262,7 @@ msgstr "ユーザー数"
 msgid "Owner"
 msgstr "所有者"
 
-#: src/Pdf.php:538 templates/webapplication_dashboard_support.html.twig:65
+#: src/Pdf.php:538 templates/webapplication_dashboard_support.html.twig:40
 msgid "Phone support"
 msgstr "電話サポート"
 
@@ -285,16 +294,16 @@ msgid "Process Entity"
 msgid_plural "Processes Entity"
 msgstr[0] "プロセスエンティティー"
 
-#: src/Dashboard.php:628
+#: src/Dashboard.php:627
 msgid "Process list"
 msgid_plural "Processes list"
 msgstr[0] "プロセスリスト"
 
-#: src/Dashboard.php:233 src/Pdf.php:519
+#: src/Dashboard.php:231 src/Pdf.php:519
 msgid "Project leader"
 msgstr "プロジェクトリーダー"
 
-#: src/Dashboard.php:235 src/Pdf.php:526
+#: src/Dashboard.php:233 src/Pdf.php:526
 msgid "Project team"
 msgstr "プロジェクトチーム"
 
@@ -304,7 +313,7 @@ msgid "Protocol"
 msgstr "プロトコル"
 
 #: src/Pdf.php:534 hook.php:678
-#: templates/webapplication_dashboard_support.html.twig:47
+#: templates/webapplication_dashboard_support.html.twig:38
 #: templates/webapplication_appliance_form.html.twig:248
 msgid "Referent editor"
 msgstr "リファレンス エディター"
@@ -350,12 +359,12 @@ msgid "Stream"
 msgid_plural "Streams"
 msgstr[0] "ストリーム"
 
-#: src/Dashboard.php:636
+#: src/Dashboard.php:635
 msgid "Stream list"
 msgid_plural "Streams list"
 msgstr[0] "ストリームリスト"
 
-#: src/Dashboard.php:207 src/Pdf.php:648
+#: src/Dashboard.php:205 src/Pdf.php:648
 msgid "Summary"
 msgstr "概要"
 
