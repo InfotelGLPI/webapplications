@@ -29,6 +29,7 @@
  # objects already linked to the appliance. dropdown_html / hidden_html / objects_html come
  # from core helpers or from webapplication_object_cards. #}
 <form name="form" method="post" action="{{ form_action }}" class="card mb-3">
+    <input type="hidden" name="_glpi_csrf_token" value="{{ csrf_token() }}">
     <div class="card-body">
         <label class="form-label">{{ add_title }}</label>
         <div class="d-flex flex-wrap align-items-center gap-2">
