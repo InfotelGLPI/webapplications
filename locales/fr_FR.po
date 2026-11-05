@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 07:54+0000\n"
+"POT-Creation-Date: 2026-11-05 08:04+0000\n"
 "PO-Revision-Date: 2020-11-02 16:31+0000\n"
 "Last-Translator: Xavier CAILLAUD <thetsmr@gmail.com>, 2026\n"
 "Language-Team: French (France) (https://app.transifex.com/infotelGLPI/teams/"
@@ -68,7 +68,7 @@ msgstr[1] "Applicatifs"
 msgstr[2] "Applicatifs"
 
 #: src/Profile.php:205 src/Webapplication.php:49 src/Dashboard.php:81
-#: setup.php:144
+#: setup.php:142
 msgid "Appliance dashboard"
 msgstr "Dashboard applicatif"
 

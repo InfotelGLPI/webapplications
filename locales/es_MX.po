@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 07:54+0000\n"
+"POT-Creation-Date: 2026-11-05 08:04+0000\n"
 "PO-Revision-Date: 2026-01-15 15:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: Spanish (Mexico) (https://app.transifex.com/infotelGLPI/teams/"
@@ -65,7 +65,7 @@ msgstr[1] ""
 msgstr[2] ""
 
 #: src/Profile.php:205 src/Webapplication.php:49 src/Dashboard.php:81
-#: setup.php:144
+#: setup.php:142
 msgid "Appliance dashboard"
 msgstr ""
 
